@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IGORRProtocol</RootNamespace>
+    <AssemblyName>IGORRProtocol</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IgorrMessage.cs" />
+    <Compile Include="Messages\AssignPlayerMessage.cs" />
+    <Compile Include="Messages\AttackMessage.cs" />
+    <Compile Include="Messages\ChatMessage.cs" />
+    <Compile Include="Messages\ContainerMessage.cs" />
+    <Compile Include="Messages\SpawnAttackMessage.cs" />
+    <Compile Include="Messages\ExpMessage.cs" />
+    <Compile Include="Messages\KnockbackMessage.cs" />
+    <Compile Include="Messages\PlayerInfoMessage.cs" />
+    <Compile Include="Messages\SetHPMessage.cs" />
+    <Compile Include="Messages\ShadowMessage.cs" />
+    <Compile Include="Messages\SetGlowMessage.cs" />
+    <Compile Include="Messages\DamageMessage.cs" />
+    <Compile Include="Messages\DeSpawnMessage.cs" />
+    <Compile Include="Messages\JoinMessage.cs" />
+    <Compile Include="Messages\KillMessage.cs" />
+    <Compile Include="Messages\ChangeTileMessage.cs" />
+    <Compile Include="Messages\ChangeMapMessage.cs" />
+    <Compile Include="Messages\PlayMessage.cs" />
+    <Compile Include="Messages\SetAnimationMessage.cs" />
+    <Compile Include="Messages\LeaveMessage.cs" />
+    <Compile Include="Messages\PickupMessage.cs" />
+    <Compile Include="Messages\PositionMessage.cs" />
+    <Compile Include="Messages\SpawnMessage.cs" />
+    <Compile Include="Protocol.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

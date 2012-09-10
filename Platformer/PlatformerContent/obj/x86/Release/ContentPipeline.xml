@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Player.dds</Source>
+      <Name>Player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Player.xnb</Output>
+      <Time>2012-04-28T17:54:58.6670501+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Lava.png</Source>
+      <Name>Lava</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Lava.xnb</Output>
+      <Time>2012-04-28T21:36:12.0692452+02:00</Time>
+    </Item>
+    <Item>
+      <Source>blob.dds</Source>
+      <Name>blob</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\blob.xnb</Output>
+      <Time>2012-05-04T19:41:56.8289985+02:00</Time>
+    </Item>
+    <Item>
+      <Source>FeetIcon.dds</Source>
+      <Name>FeetIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\FeetIcon.xnb</Output>
+      <Time>2012-04-30T16:13:20.6552779+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Exit.bmp</Source>
+      <Name>Exit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Exit.xnb</Output>
+      <Time>2012-05-04T20:05:01.4691954+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Attack.dds</Source>
+      <Name>Attack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Attack.xnb</Output>
+      <Time>2012-05-10T21:53:35.9701765+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Wings.dds</Source>
+      <Name>Wings</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Wings.xnb</Output>
+      <Time>2012-05-13T20:51:28.8150827+02:00</Time>
+    </Item>
+    <Item>
+      <Source>White.png</Source>
+      <Name>White</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\White.xnb</Output>
+      <Time>2012-06-04T16:00:44.767616+02:00</Time>
+    </Item>
+    <Item>
+      <Source>kingblob.dds</Source>
+      <Name>kingblob</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\kingblob.xnb</Output>
+      <Time>2012-06-12T10:59:32.5058143+02:00</Time>
+    </Item>
+    <Item>
+      <Source>tileset.dds</Source>
+      <Name>tileset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\tileset.xnb</Output>
+      <Time>2012-06-20T12:32:12.2148445+02:00</Time>
+    </Item>
+    <Item>
+      <Source>castletileset.dds</Source>
+      <Name>castletileset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\castletileset.xnb</Output>
+      <Time>2012-06-20T14:58:32.6165731+02:00</Time>
+    </Item>
+    <Item>
+      <Source>test.txt</Source>
+      <Name>test</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\test.xnb</Output>
+      <Time>2012-06-13T11:43:50.1777827+02:00</Time>
+    </Item>
+    <Item>
+      <Source>default.chr</Source>
+      <Name>default</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\default.xnb</Output>
+      <Time>2012-06-19T10:43:58.2341762+02:00</Time>
+    </Item>
+    <Item>
+      <Source>boss.chr</Source>
+      <Name>boss</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\boss.xnb</Output>
+      <Time>2012-06-19T10:44:05.2385768+02:00</Time>
+    </Item>
+    <Item>
+      <Source>miniboss.chr</Source>
+      <Name>miniboss</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\miniboss.xnb</Output>
+      <Time>2012-06-19T10:44:17.8432978+02:00</Time>
+    </Item>
+    <Item>
+      <Source>bosstest.txt</Source>
+      <Name>bosstest</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\bosstest.xnb</Output>
+      <Time>2012-06-13T11:43:49.1277226+02:00</Time>
+    </Item>
+    <Item>
+      <Source>bossminion.chr</Source>
+      <Name>bossminion</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\bossminion.xnb</Output>
+      <Time>2012-06-19T12:42:36.4933173+02:00</Time>
+    </Item>
+    <Item>
+      <Source>mLevel01.txt</Source>
+      <Name>mLevel01</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\mLevel01.xnb</Output>
+      <Time>2012-06-19T00:54:24.2609006+02:00</Time>
+    </Item>
+    <Item>
+      <Source>font.spritefont</Source>
+      <Name>font</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\font.xnb</Output>
+      <Time>2012-04-28T21:19:22.0574759+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Boss01.mp3</Source>
+      <Name>Boss01</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Boss01.xnb</Output>
+      <Extra>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Boss01.wma</Extra>
+      <Time>2012-06-11T23:50:37.9429217+02:00</Time>
+    </Item>
+    <Item>
+      <Source>BossIntro01.mp3</Source>
+      <Name>BossIntro01</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\BossIntro01.xnb</Output>
+      <Extra>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\BossIntro01.wma</Extra>
+      <Time>2012-06-11T23:50:37.9759236+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Level01.wma</Source>
+      <Name>Level01</Name>
+      <Importer>WmaImporter</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Level01.xnb</Output>
+      <Extra>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\Level01.wma</Extra>
+      <Time>2012-06-12T15:45:10.2986521+02:00</Time>
+    </Item>
+    <Item>
+      <Source>ShadowEffect.fx</Source>
+      <Name>ShadowEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\ShadowEffect.xnb</Output>
+      <Time>2012-06-20T09:48:05.4416413+02:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Release</BuildConfiguration>
+      <CompressContent>true</CompressContent>
+      <RootDirectory>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\PlatformerContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\PlatformerContent\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\Platformer\bin\x86\Release\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Users\Ole\Documents\PlainTextPipeline.dll</Key>
+        <Value>2012-04-29T14:30:43.5076063+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-09-23T19:53:33.053438+02:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

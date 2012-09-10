@@ -1,0 +1,23 @@
+1
+Basic attack (Striker)
+
+2
+Basic attack 2 (Piercer)
+
+3
+Grenade
+
+4
+Explosion
+-------------------------
+5003
+Enemy Blob
+
+5004
+King Blob Stomp
+
+5005
+King Blob Shot
+
+5006
+King Blob Minion Shot

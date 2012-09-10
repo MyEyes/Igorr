@@ -1,0 +1,13 @@
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\bin\Debug\IGORRProtocol.dll
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\bin\Debug\IGORRProtocol.pdb
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\bin\Debug\Lidgren.Network.dll
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\bin\Debug\Lidgren.Network.pdb
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\obj\Debug\IGORRProtocol.dll
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\obj\Debug\IGORRProtocol.pdb
+C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\IGORRProtocol\bin\Debug\Lidgren.Network.xml
+C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\bin\Debug\IGORRProtocol.dll
+C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\bin\Debug\IGORRProtocol.pdb
+C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\obj\Debug\IGORRProtocol.dll
+C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\obj\Debug\IGORRProtocol.pdb
