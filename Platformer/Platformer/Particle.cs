@@ -42,6 +42,14 @@ namespace Platformer
 
         public void Update(Map map, float secs)
         {
+            if (_info.attractor != null)
+            {
+                Vector2 diff = (_info.attractor.MidPosition - _position);
+                float length = diff.Length();
+                _acceleration = diff*_info.attraction / (length);
+                if (length < 8)
+                    _alive = false;
+            }
             if (_info.collides)
             {
                 _position.Y += _speed.Y * secs;
@@ -66,6 +74,12 @@ namespace Platformer
                 _position += _speed * secs;
             }
             _speed += _acceleration * secs;
+            if (_info.maxSpeed > 0)
+            {
+                float len =_speed.Length();
+                if (_speed.Length() > _info.maxSpeed)
+                    _speed /= len / _info.maxSpeed;
+            }
             if (_stuck)
                 _speed = Vector2.Zero;
             _lifeTime -= secs;
@@ -76,7 +90,8 @@ namespace Platformer
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(_texture, _position, null, Color.Lerp(Color.Transparent, Color.White, _lifeTime), _rotation, _size / 2, _sizeMod, SpriteEffects.None, 0.53f);
+            if (_alive)
+                batch.Draw(_texture, _position, null, Color.Lerp(Color.Transparent, Color.White, _lifeTime), _rotation, _size / 2, _sizeMod, SpriteEffects.None, 0.53f);
         }
 
         public bool Alive

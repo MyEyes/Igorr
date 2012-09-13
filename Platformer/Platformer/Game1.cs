@@ -238,8 +238,8 @@ namespace Platformer
                 TextManager.Update(gameTime.ElapsedGameTime.Milliseconds);
                 prevKeyboard = keyboard;
                 _prevGamePadState = pad;
-
-                MusicPlayer.Update(gameTime.ElapsedGameTime.Milliseconds);
+                if (this.IsActive)
+                    MusicPlayer.Update(gameTime.ElapsedGameTime.Milliseconds);
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
             IGORRProtocol.Protocol.Update(gameTime.ElapsedGameTime.Milliseconds);

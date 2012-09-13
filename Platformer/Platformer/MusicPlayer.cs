@@ -31,14 +31,15 @@ namespace Platformer
         static ContentManager _content;
         static MusicEffect _effect = MusicEffect.None;
         static string currentName = "";
-        static float maxVolume = 0.3f;
-        static Semaphore _sem = new Semaphore(1,1);
+        static float maxVolume = 0.0f;
+        static Mutex _mutex;
         static bool Restarted = false;
 
         static MusicPlayer()
         {
             _songs = new Dictionary<string,Song>();
             _queue = new List<SongQueueItem>();
+            _mutex = new Mutex();
             //MediaPlayer.MediaStateChanged += new EventHandler<EventArgs>(SongStopped);
             MediaPlayer.Volume = maxVolume;
         }
@@ -46,21 +47,25 @@ namespace Platformer
         public static void SetContent(ContentManager content)
         {
             _content = content;
+            PlaySong("Level01", true, false);
         }
 
         public static void PlaySong(string name, bool loop, bool queue)
         {
+            _mutex.WaitOne();
             if (string.IsNullOrWhiteSpace(name))
             {
                 _effect = MusicEffect.FadeOut;
+                _mutex.ReleaseMutex();
                 return;
             }
             else if (name == currentName && !queue)
+            {
+                _mutex.ReleaseMutex();
                 return;
+            }
             lock (_queue)
             {
-
-
                 Song song = null;
                 if (_songs.ContainsKey(name))
                 {
@@ -87,6 +92,7 @@ namespace Platformer
                 }
                 else
                 {
+                    
                     MediaPlayer.Volume = 0;
                     _effect = MusicEffect.FadeIn;
                     MediaPlayer.IsRepeating = loop;
@@ -96,11 +102,12 @@ namespace Platformer
                     currentName = name;
                 }
             }
+            _mutex.ReleaseMutex();
         }
 
         public static void Update(float ms)
         {
-            return;
+            _mutex.WaitOne();
             lock (_queue)
             {
                 switch (_effect)
@@ -108,7 +115,6 @@ namespace Platformer
                     case MusicEffect.FadeIn: MediaPlayer.Volume += ms / 2000f * maxVolume; if (MediaPlayer.Volume >= maxVolume) { MediaPlayer.Volume = maxVolume; _effect = MusicEffect.None; } break;
                     case MusicEffect.FadeOut: MediaPlayer.Volume -= ms / 2000f * maxVolume; if (MediaPlayer.Volume <= 0) { MediaPlayer.Volume = 0; MediaPlayer.Stop(); _effect = MusicEffect.None; } break;
                 }
-
                 FrameworkDispatcher.Update();
                 if (!Restarted && MediaPlayer.State == MediaState.Stopped)
                 {
@@ -132,6 +138,7 @@ namespace Platformer
                 }
 
             }
+            _mutex.ReleaseMutex();
         }
 
         static void SongStopped(object state, EventArgs args)

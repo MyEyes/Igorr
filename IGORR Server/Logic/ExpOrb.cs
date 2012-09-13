@@ -22,7 +22,7 @@ namespace IGORR_Server.Logic
 
         public override void Event(Player obj)
         {
-            _map.ObjectManager.GiveXP(_expAmount);
+            _map.ObjectManager.GiveXP(_expAmount, MidPosition);
             _map.ObjectManager.Remove(this);
             _parent.RemoveChild();
         }

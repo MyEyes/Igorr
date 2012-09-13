@@ -11,3 +11,11 @@ C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\bin\Debug\IGORRProtoc
 C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\obj\Debug\IGORRProtocol.dll
 C:\Users\Ole\Documents\Platformer\Platformer\IGORRProtocol\obj\Debug\IGORRProtocol.pdb
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\obj\Debug\IGORRProtocol.dll
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\obj\Debug\IGORRProtocol.pdb
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\bin\Debug\IGORRProtocol.dll
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\bin\Debug\IGORRProtocol.pdb
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\bin\Debug\Lidgren.Network.dll
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\bin\Debug\Lidgren.Network.pdb
+C:\Users\Ole\Documents\IGORR\Igorr\IGORRProtocol\bin\Debug\Lidgren.Network.xml

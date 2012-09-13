@@ -29,8 +29,10 @@ namespace IGORR_Server
 
         public Server()
         {
+            LuaVM.DoString("Print(\"Lua Test\")");
+            LuaVM.DoFile("settings.lua");
             NetPeerConfiguration config = new NetPeerConfiguration("IGORR");
-            config.Port = 5445;
+            config.Port = LuaVM.GetValue<int>("port", 5445);
             //config.SimulatedMinimumLatency = 2f;
             //config.SimulatedRandomLatency = 1f;
             //config.LocalAddress = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 });

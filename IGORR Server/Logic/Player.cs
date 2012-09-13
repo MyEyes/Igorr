@@ -247,11 +247,12 @@ namespace IGORR_Server.Logic
             _moveVector = Vector2.Zero;
         }
 
-        public void GetExp(int xp)
+        public void GetExp(int xp, Vector2 startPos)
         {
             _baseBody.Exp += xp;
             IGORRProtocol.Messages.ExpMessage xpm = (IGORRProtocol.Messages.ExpMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.ExpMessage);
             xpm.exp = xp;
+            xpm.startPos = startPos;
             xpm.Encode();
             _map.ObjectManager.Server.SendClient(this, xpm);
             if (_baseBody.Exp > _baseBody.ExpToNextLevel)

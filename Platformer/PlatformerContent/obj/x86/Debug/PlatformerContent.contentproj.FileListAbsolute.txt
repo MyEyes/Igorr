@@ -1,2 +1,3 @@
 C:\Users\Ole\Documents\Visual Studio 2010\Projects\Platformer\Platformer\PlatformerContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Ole\Documents\Platformer\Platformer\Platformer\PlatformerContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Ole\Documents\IGORR\Igorr\Platformer\PlatformerContent\obj\x86\Debug\ResolveAssemblyReference.cache

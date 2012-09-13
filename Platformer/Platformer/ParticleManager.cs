@@ -12,6 +12,9 @@ namespace Platformer
     {
         public bool collides;
         public bool sticky;
+        public GameObject attractor;
+        public float attraction;
+        public float maxSpeed;
     }
 
     public class ParticleManager
@@ -25,6 +28,7 @@ namespace Platformer
         Texture2D _boomTex;
         Texture2D _splatTex;
         Texture2D _bloodTex;
+        Texture2D _expTex;
 
         public ParticleManager(ContentManager content)
         {
@@ -40,6 +44,7 @@ namespace Platformer
             _boomTex = content.Load<Texture2D>("Boom");
             _splatTex = content.Load<Texture2D>("splat");
             _bloodTex = content.Load<Texture2D>("blood");
+            _expTex = content.Load<Texture2D>("expOrb");
         }
 
         public void Update(Map map, float secs)
@@ -67,6 +72,18 @@ namespace Platformer
 
             for (int x = 0; x < 8; x++)
                 AddParticle(_dustTex, 0.25f, positionRight, new Vector2((float)-_random.NextDouble() * 15 + 40, (float)-(15 + _random.NextDouble() * 10)), new Vector2(0, 20), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() * 0.5f + 0.2f, info);
+        }
+
+        public void ExpParticles(int amount, Vector2 startPos, Player player)
+        {
+            ParticleInfo info = new ParticleInfo();
+            info.attractor = player;
+            info.maxSpeed = 200f;
+            info.attraction = 1000;
+            for (int x = 0; x <= amount / 10; x++)
+            {
+                AddParticle(_expTex, 5f, startPos, new Vector2((float)_random.NextDouble() * 100 - 50, (float)(-50 + _random.NextDouble() * 100)), new Vector2(0, 0), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), 1, info);
+            }
         }
 
         public void Boom(LightMap light, Vector2 pos)

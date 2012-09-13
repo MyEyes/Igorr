@@ -304,7 +304,10 @@ namespace Platformer
         {
             ExpMessage xpm=(ExpMessage)message;
             if (manager.Player != null)
+            {
                 manager.Player.GetExp(xpm.exp);
+                Particles.ExpParticles(xpm.exp, xpm.startPos, manager.Player);
+            }
         }
 
         public static void HandleKnockback(IgorrMessage message)

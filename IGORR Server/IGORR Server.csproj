@@ -34,9 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\..\..\Downloads\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
+      <HintPath>..\..\lua51.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface">
+      <HintPath>..\..\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -93,6 +99,7 @@
     <Compile Include="Logic\Player.cs" />
     <Compile Include="Logic\Tile.cs" />
     <Compile Include="Logic\TouchTrigger.cs" />
+    <Compile Include="LuaVM.cs" />
     <Compile Include="Management\LoginData.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="Program.cs" />

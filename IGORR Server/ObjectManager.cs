@@ -299,7 +299,7 @@ namespace IGORR_Server
                     pum.Encode();
                     _map.ObjectManager.Server.SendClient(player, pum);
                 }
-                newPlayer.GetExp(player.TotalXP);
+                newPlayer.GetExp(player.TotalXP, Vector2.Zero);
                 //Change the local clients stored playerid
                 _server.getClient(player).PlayerID = newPlayer.ID;
                 KillMessage km = (KillMessage)Protocol.NewMessage(MessageTypes.Kill);
@@ -315,18 +315,18 @@ namespace IGORR_Server
                 Player killer = GetPlayer(player.Attacker);
                 if (killer != null)
                 {
-                    killer.GetExp((player as NPC).XPBonus);
+                    killer.GetExp((player as NPC).XPBonus, player.MidPosition);
                     Console.WriteLine("Giving " + (player as NPC).XPBonus.ToString() + " XP to " + killer.Name);
                 }
             }
         }
 
-        public void GiveXP(int xp)
+        public void GiveXP(int xp, Vector2 startPos)
         {
             for (int x = 0; x < _objects.Count; x++)
             {
                 if (_objects[x] is Player && !(_objects[x] is NPC))
-                    (_objects[x] as Player).GetExp(xp);
+                    (_objects[x] as Player).GetExp(xp, startPos);
             }
         }
 
