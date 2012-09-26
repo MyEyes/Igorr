@@ -65,6 +65,7 @@ namespace IGORR_Server
                 _playerCounter++;
             SpawnMessage spawn = (SpawnMessage)Protocol.NewMessage(MessageTypes.Spawn);
             spawn.id = obj.ID;
+            if (obj is Player) spawn.groupID = (obj as Player).GroupID;
             spawn.position = obj.MidPosition;
             spawn.objectType = obj.ObjectType;
             spawn.move = obj.Movement;
@@ -193,6 +194,17 @@ namespace IGORR_Server
             return null;
         }
 
+        public Player GetPlayerInArea(Rectangle area, int groupID)
+        {
+
+            for (int x = 0; x < _objects.Count; x++)
+            {
+                if (area.Contains((int)_objects[x].MidPosition.X, (int)_objects[x].MidPosition.Y) && (_objects[x] is Player) && !(_objects[x] is NPC) && (_objects[x] as Player).GroupID==groupID)
+                    return _objects[x] as Player;
+            }
+            return null;
+        }
+
         public void Update(float ms)
         {
             _server.SetChannel(2);
@@ -283,6 +295,7 @@ namespace IGORR_Server
                 Point spawnPoint = _map.getRandomSpawn();
                 Player newPlayer = new Player(_map, new Rectangle(spawnPoint.X, spawnPoint.Y, 16, 15), getID());
                 newPlayer.Name = player.Name;
+                newPlayer.SetTeam(player.GroupID);
                 Console.WriteLine("Killed Player: " + player.ID.ToString());
                 //Send client their new playerID
                 AssignPlayerMessage apm = (AssignPlayerMessage)Protocol.NewMessage(MessageTypes.AssignPlayer);

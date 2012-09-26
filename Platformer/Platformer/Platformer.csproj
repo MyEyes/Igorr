@@ -93,6 +93,9 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="RuminateGui">
+      <HintPath>..\..\..\..\..\Downloads\RuminateGui.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -119,7 +122,11 @@
     <Compile Include="EventObject.cs" />
     <Compile Include="Exit.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameScreen.cs" />
     <Compile Include="Glow.cs" />
+    <Compile Include="IScreen.cs" />
+    <Compile Include="MainMenuScreen.cs" />
+    <Compile Include="ScorePost.cs" />
     <Compile Include="Lava.cs" />
     <Compile Include="LightMap.cs" />
     <Compile Include="MapManager.cs" />
@@ -135,6 +142,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="BattleText.cs" />
+    <Compile Include="ScreenManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SpriteEffect.cs" />
     <Compile Include="Striker.cs" />

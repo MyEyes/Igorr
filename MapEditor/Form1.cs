@@ -20,7 +20,6 @@ namespace MapEditor
         private void Form1_Load(object sender, EventArgs e)
         {
             mapDisplay1.SetTileSelecter(tileSelecter1);
-            tileSelecter1.SetScrollbar(hScrollBar1);
             mapDisplay1.SetMap(new Map(mapDisplay1.Content, 100, 100, "tileset"));
             mapDisplay1.Click += mapDisplay1_Click;
             tileSelecter1.Click += tileSelecter1_Click;

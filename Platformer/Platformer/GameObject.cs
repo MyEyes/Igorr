@@ -74,5 +74,10 @@ namespace Platformer
         {
             get { return _rect; }
         }
+
+        public virtual void GetInfo(string info)
+        {
+
+        }
     }
 }

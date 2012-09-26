@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -38,7 +38,6 @@
             this.btnNew = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tileSelecter1 = new MapEditor.TileSelecter();
             this.mapDisplay1 = new MapEditor.MapDisplay();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -49,21 +48,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hScrollBar1.LargeChange = 1;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 0);
-            this.hScrollBar1.Maximum = 0;
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(677, 17);
-            this.hScrollBar1.TabIndex = 2;
             // 
             // radioButton1
             // 
@@ -151,7 +136,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.splitContainer3);
+            this.splitContainer1.Panel1.Controls.Add(this.tileSelecter1);
             // 
             // splitContainer1.Panel2
             // 
@@ -183,32 +168,12 @@
             this.splitContainer2.SplitterDistance = 196;
             this.splitContainer2.TabIndex = 11;
             // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.hScrollBar1);
-            this.splitContainer3.Panel1MinSize = 10;
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.tileSelecter1);
-            this.splitContainer3.Size = new System.Drawing.Size(677, 70);
-            this.splitContainer3.SplitterDistance = 17;
-            this.splitContainer3.TabIndex = 0;
-            this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
-            // 
             // tileSelecter1
             // 
             this.tileSelecter1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tileSelecter1.Location = new System.Drawing.Point(0, 0);
             this.tileSelecter1.Name = "tileSelecter1";
-            this.tileSelecter1.Size = new System.Drawing.Size(677, 49);
+            this.tileSelecter1.Size = new System.Drawing.Size(677, 70);
             this.tileSelecter1.TabIndex = 1;
             this.tileSelecter1.Text = "tileSelecter1";
             this.tileSelecter1.Click += new System.EventHandler(this.tileSelecter1_Click);
@@ -229,6 +194,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(877, 596);
             this.Controls.Add(this.splitContainer2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "IGORR Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -241,10 +207,6 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -253,7 +215,6 @@
 
         private MapDisplay mapDisplay1;
         private TileSelecter tileSelecter1;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
@@ -263,7 +224,6 @@
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.SplitContainer splitContainer3;
     }
 }
 

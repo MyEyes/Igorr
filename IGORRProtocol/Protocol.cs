@@ -66,7 +66,8 @@ namespace IGORRProtocol
         PlayerInfoMessage,
         ExpMessage,
         Knockback,
-        SpawnAttack
+        SpawnAttack,
+        ObjectInfo
     }
 
     public delegate void MessageHandler(IgorrMessage message);
@@ -150,6 +151,7 @@ namespace IGORRProtocol
                 case MessageTypes.PlayerInfoMessage: message = new Messages.PlayerInfoMessage(outgoing, _timeStamp); break;
                 case MessageTypes.ExpMessage: message = new Messages.ExpMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Knockback: message = new Messages.KnockbackMessage(outgoing, _timeStamp); break;
+                case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(outgoing, _timeStamp); break;
             }
              
             return message;
@@ -191,6 +193,7 @@ namespace IGORRProtocol
                 case MessageTypes.PlayerInfoMessage: message = new Messages.PlayerInfoMessage(m); break;
                 case MessageTypes.ExpMessage: message = new Messages.ExpMessage(m); break;
                 case MessageTypes.Knockback: message = new Messages.KnockbackMessage(m); break;
+                case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(m); break;
             }
             return message;
         }

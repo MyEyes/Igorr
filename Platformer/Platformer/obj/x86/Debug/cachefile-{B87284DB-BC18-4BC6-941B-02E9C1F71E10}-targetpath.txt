@@ -50,3 +50,8 @@ Content\BossIntro01.wma
 Content\Level01.xnb
 Content\Level01.wma
 Content\ShadowEffect.xnb
+Content\BlueTel.xnb
+Content\RedTel.xnb
+Content\ScorePost.xnb
+Content\ImageMap.xnb
+Content\Map.xnb

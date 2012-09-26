@@ -375,5 +375,10 @@ namespace IGORR_Server
         {
             get { return _enableSend; }
         }
+
+        public int Channel
+        {
+            get { return currentChannel; }
+        }
     }
 }

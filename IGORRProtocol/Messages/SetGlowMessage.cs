@@ -11,6 +11,7 @@ namespace IGORRProtocol.Messages
     {
         public int id;
         public Vector2 Position;
+        public Color Color = Color.White;
         public float radius;
         public bool shadows=false;
 

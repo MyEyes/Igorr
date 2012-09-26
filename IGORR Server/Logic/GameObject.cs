@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Lidgren.Network;
 
 namespace IGORR_Server.Logic
 {
@@ -62,6 +63,11 @@ namespace IGORR_Server.Logic
         public virtual bool Collides(GameObject obj)
         {
             return obj._rect.Intersects(this._rect);
+        }
+
+        public virtual void SendInfo(NetConnection connection)
+        {
+
         }
 
         public int ID

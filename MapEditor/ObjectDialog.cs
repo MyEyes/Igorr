@@ -126,7 +126,7 @@ namespace MapEditor
             int index = comboBox1.SelectedIndex;
             if (index >= 0)
             {
-                if (comboBox1.SelectedIndex == _names.IndexOf("Teleporter"))
+                if (_names[index].Contains("Teleporter"))
                 {
                     TeleportPoint tp = new TeleportPoint();
                     try
@@ -143,7 +143,7 @@ namespace MapEditor
                     }
 
                 }
-                else if (comboBox1.SelectedIndex == _names.IndexOf("TouchTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredBlocker") || comboBox1.SelectedIndex == _names.IndexOf("AttackTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredInvBlocker"))
+                else if (_names[index].Contains("Trigger"))
                 {
                     TriggerParams trpa = new TriggerParams();
                     try
@@ -175,7 +175,10 @@ namespace MapEditor
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex == _names.IndexOf("Teleporter"))
+            int index = comboBox1.SelectedIndex;
+            if (index < 0)
+                return;
+            if (_names[index].Contains("Teleporter"))
             {
                 label3.Show();
                 label4.Show();
@@ -196,7 +199,7 @@ namespace MapEditor
                 txtTargetPosY.Hide();
             }
 
-            if (comboBox1.SelectedIndex == _names.IndexOf("TouchTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredBlocker") || comboBox1.SelectedIndex == _names.IndexOf("AttackTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredInvBlocker"))
+            if (_names[index].Contains("Trigger"))
             {
                 txtTrigName.Show();
                 chkGlobal.Show();

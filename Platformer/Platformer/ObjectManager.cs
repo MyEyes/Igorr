@@ -93,7 +93,7 @@ namespace Platformer
             _light = light;
         }
 
-        public void SpawnObject(Vector2 position,Vector2 move, int objectType, int id, string name, string charName)
+        public void SpawnObject(Vector2 position,Vector2 move, int objectType,int groupID, int id, string name, string charName)
         {
             if (_map == null)
                 return;
@@ -117,9 +117,17 @@ namespace Platformer
                     if (playerID != -1 && playerID == id)
                         _player = player;
                     _objects.Add(player); 
-                    _draw.Add(player); break;
+                    _draw.Add(player); 
+                    player.SetGroup(groupID);
+                    break;
                 case 'e' - 'a': pp = new PartPickup(new Wings(_content.Load<Texture2D>("Wings")), _map, new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize), id); _map.AddObject(pp); _objects.Add(pp); break;
                 case 'g' - 'a': exit = new Exit(_content.Load<Texture2D>("Exit"), _map, new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize - 1), id); _map.AddObject(exit); _objects.Add(exit); break;
+                case 22: ScorePost sp = new ScorePost(_map, _content.Load<Texture2D>("ScorePost"), new Rectangle((int)(position.X - 12), (int)(position.Y - 56), 24, 64), id); _map.AddObject(sp); _objects.Add(sp); sp.SetColor(ScorePost.ScoreColor.Red); break;
+                case 23: sp = new ScorePost(_map, _content.Load<Texture2D>("ScorePost"), new Rectangle((int)(position.X - 12), (int)(position.Y - 56), 24, 64), id); _map.AddObject(sp); _objects.Add(sp); sp.SetColor(ScorePost.ScoreColor.Blue); break;
+                case 29: sp = new ScorePost(_map, _content.Load<Texture2D>("ScorePost"), new Rectangle((int)(position.X - 12), (int)(position.Y - 56), 24, 64), id); _map.AddObject(sp); _objects.Add(sp); sp.SetColor(ScorePost.ScoreColor.Neutral); break;
+                case 26: exit = new Exit(_content.Load<Texture2D>("RedTel"), _map, new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize - 1), id); _map.AddObject(exit); _objects.Add(exit); break;
+                case 27: exit = new Exit(_content.Load<Texture2D>("BlueTel"), _map, new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize - 1), id); _map.AddObject(exit); _objects.Add(exit); break;
+                case 28: exit = new Exit(_content.Load<Texture2D>("Exit"), _map, new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize - 1), id); _map.AddObject(exit); _objects.Add(exit); break;
             }
             _sem.Release();
         }
@@ -142,6 +150,18 @@ namespace Platformer
             _objects.Add(attack);
             _draw.Add(attack);
             _sem.Release();
+        }
+
+        public void GetObjectInfo(int id, string info)
+        {
+            for (int x = 0; x < _objects.Count; x++)
+            {
+                if (_objects[x].ID == id)
+                {
+                    _objects[x].GetInfo(info);
+                    break;
+                }
+            }
         }
 
         public Player GetPlayer(int id)

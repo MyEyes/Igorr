@@ -12,6 +12,7 @@ namespace Platformer
     public class LightSource
     {
         public Vector2 position;
+        public Color color;
         public float radius;
         public int id;
         public bool shadows;
@@ -36,7 +37,7 @@ namespace Platformer
         BlendState blendShadow;
         BlendState generateShadow;
         BlendState generateShadow2;
-        BlendState generateShadow3;
+        BlendState addLight;
         DepthStencilState generateShadowStencil;
         DepthStencilState drawShadowedLight;
         DepthStencilState disableShadows;
@@ -50,9 +51,12 @@ namespace Platformer
         const int maxX = 30;
         const int maxY = 30;
 
+        public static LightMap LightReference = null;
+
         public LightMap(GraphicsDevice device, ContentManager content)
         {
             this.device = device;
+            LightReference = this;
             //Four triangles per shadow three shadows per block so 4*3*3*maxX*maxY
             shadowIB = new IndexBuffer(device, IndexElementSize.SixteenBits, 4 * 3 * 3 * maxX * maxY, BufferUsage.WriteOnly);
             short[] indices = new short[4 * 3 * 3 * maxX * maxY];
@@ -97,11 +101,11 @@ namespace Platformer
             generateShadow2.ColorDestinationBlend = Blend.One;
             generateShadow2.ColorWriteChannels = ColorWriteChannels.All;
 
-            generateShadow3 = new BlendState();
-            generateShadow3.ColorBlendFunction = BlendFunction.Add;
-            generateShadow3.ColorSourceBlend = Blend.One;
-            generateShadow3.ColorDestinationBlend = Blend.One;
-            generateShadow3.ColorWriteChannels = ColorWriteChannels.All;
+            addLight = new BlendState();
+            addLight.ColorBlendFunction = BlendFunction.Add;
+            addLight.ColorSourceBlend = Blend.One;
+            addLight.ColorDestinationBlend = Blend.One;
+            addLight.ColorWriteChannels = ColorWriteChannels.All;
 
             generateShadowStencil = new DepthStencilState();
             generateShadowStencil.StencilEnable = true;
@@ -152,7 +156,7 @@ namespace Platformer
 
             _lightMutex = new Mutex();
         }
-        public void SetGlow(int id, Vector2 position, float radius, bool shadows)
+        public void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows)
         {
             _lightMutex.WaitOne();
             for (int x = 0; x < _glows.Count; x++)
@@ -161,6 +165,7 @@ namespace Platformer
                 {
                     _glows[x].position = position;
                     _glows[x].radius = radius;
+                    _glows[x].color = color;
                     if (radius < 0)
                         _glows.RemoveAt(x);
                     _lightMutex.ReleaseMutex();
@@ -172,11 +177,12 @@ namespace Platformer
             glow.position = position;
             glow.radius = radius;
             glow.shadows = shadows;
+            glow.color = color;
             _glows.Add(glow);
             _lightMutex.ReleaseMutex();
         }
 
-        public void SetGlow(int id, Vector2 position, float radius,bool shadows, float timeout)
+        public void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows, float timeout)
         {
             _lightMutex.WaitOne();
             for (int x = 0; x < _glows.Count; x++)
@@ -186,6 +192,7 @@ namespace Platformer
                     _glows[x].position = position;
                     _glows[x].radius = radius;
                     _glows[x].timeOut = timeout;
+                    _glows[x].color = color;
                     if (radius < 0)
                         _glows.RemoveAt(x);
                     _lightMutex.ReleaseMutex();
@@ -198,6 +205,7 @@ namespace Platformer
             glow.radius = radius;
             glow.timeOut = timeout;
             glow.timeOutStart = timeout;
+            glow.color = color;
             glow.shadows = shadows;
             _glows.Add(glow);
             _lightMutex.ReleaseMutex();
@@ -217,7 +225,7 @@ namespace Platformer
             shadowEffect.Parameters["View"].SetValue(cam.ViewMatrix);
             shadowEffect.Parameters["Projection"].SetValue(cam.ProjectionMatrix);
 
-            shadowEffect.Parameters["shadowDarkness"].SetValue(1-intensity);
+            shadowEffect.Parameters["shadowDarkness"].SetValue(0.9f-intensity);
             shadowEffect.Parameters["viewDistance"].SetValue((float)(1 / (0.001f + 0.999 * intensity)));
 
             device.DepthStencilState = clearStencil;
@@ -260,7 +268,7 @@ namespace Platformer
             if (light.shadows)
             {
                 //Build shadow geometry for the light
-                int vertexCount = map.CreateShadowGeometry(light.position, cam.ViewSpace, shadowVB);
+                int vertexCount = map.CreateShadowGeometry(light.position, new Rectangle((int)light.position.X - cam.ViewSpace.Width / 2, (int)light.position.Y - cam.ViewSpace.Height / 2, cam.ViewSpace.Width, cam.ViewSpace.Height), shadowVB);
                 
                 //Disable shadowing collision tiles
                 shadowEffect.CurrentTechnique = shadowEffect.Techniques["Tile"];
@@ -281,8 +289,8 @@ namespace Platformer
                     device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertexCount, 0, 4 * vertexCount / 6);
             }
             shadowEffect.CurrentTechnique = shadowEffect.Techniques["Glow"];
-            batch.Begin(SpriteSortMode.Immediate, generateShadow3, null, drawShadowedLight, RasterizerState.CullNone, shadowEffect);
-            batch.Draw(_unusedTexture, new Rectangle((int)(light.position.X - light.radius), (int)(light.position.Y - light.radius), (int)(light.radius * 2), (int)(light.radius * 2)), Color.Lerp(Color.White, Color.Black, 1-light.brightness));
+            batch.Begin(SpriteSortMode.Immediate, addLight, null, drawShadowedLight, RasterizerState.CullNone, shadowEffect);
+            batch.Draw(_unusedTexture, new Rectangle((int)(light.position.X - light.radius), (int)(light.position.Y - light.radius), (int)(light.radius * 2), (int)(light.radius * 2)), Color.Lerp(light.color, Color.Black, 1-light.brightness));
             batch.End();
 
         }
@@ -320,7 +328,7 @@ namespace Platformer
         public void DrawShadows(Camera cam, SpriteBatch batch, float intensity)
         {
             shadowEffect.CurrentTechnique = shadowEffect.Techniques["Glow"];
-            batch.Begin(SpriteSortMode.Immediate, generateShadow3, null, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
+            batch.Begin(SpriteSortMode.Immediate, addLight, null, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
             for (int x = 0; x < _glows.Count; x++)
             {
                 batch.Draw(_unusedTexture, new Rectangle((int)(_glows[x].position.X - _glows[x].radius), (int)(_glows[x].position.Y - _glows[x].radius), (int)(_glows[x].radius * 2), (int)(_glows[x].radius * 2)), Color.Gray);

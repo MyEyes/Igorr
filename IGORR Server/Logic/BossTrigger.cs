@@ -47,7 +47,7 @@ namespace IGORR_Server.Logic
                         restart = false;
                         _map.ChangeTile(1, this.MidPosition, 12);
                     }
-                    if (wasAlive && boss.defeated || boss.HP<0)
+                    if (boss!=null && wasAlive && boss.defeated || boss.HP<0)
                     {
                         boss = null;
                         done = true;

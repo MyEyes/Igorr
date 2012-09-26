@@ -13,6 +13,7 @@ namespace IGORRProtocol.Messages
         public Vector2 move;
         public int objectType;
         public int id;
+        public int groupID;
         public string Name;
         public string CharName = "";
 
@@ -31,6 +32,7 @@ namespace IGORRProtocol.Messages
             _outgoing.Write(move.Y);
             _outgoing.Write(objectType);
             _outgoing.Write(id);
+            _outgoing.Write(groupID);
             _outgoing.Write(Name);
             _outgoing.Write(CharName);
         }
@@ -41,6 +43,7 @@ namespace IGORRProtocol.Messages
             move = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
             objectType = _incoming.ReadInt32();
             id = _incoming.ReadInt32();
+            groupID = _incoming.ReadInt32();
             Name = _incoming.ReadString();
             CharName = _incoming.ReadString();
         }

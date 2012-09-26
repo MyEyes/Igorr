@@ -31,3 +31,14 @@ C:\Users\Ole\Documents\IGORR\Igorr\MapEditor\obj\x86\Debug\GenerateResource.read
 C:\Users\Ole\Documents\IGORR\Igorr\MapEditor\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\Ole\Documents\IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.exe
 C:\Users\Ole\Documents\IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.pdb
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\bin\Debug\MapEditor.exe
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\bin\Debug\MapEditor.pdb
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.Form1.resources
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.NewMapDialog.resources
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.ObjectDialog.resources
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.Properties.Resources.resources
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.exe
+C:\Users\Ole\Documents\Git IGORR\Igorr\MapEditor\obj\x86\Debug\MapEditor.pdb

@@ -31,7 +31,7 @@ namespace Platformer
         static ContentManager _content;
         static MusicEffect _effect = MusicEffect.None;
         static string currentName = "";
-        static float maxVolume = 0.0f;
+        static float maxVolume = 0f;
         static Mutex _mutex;
         static bool Restarted = false;
 

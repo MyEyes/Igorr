@@ -19,7 +19,6 @@ namespace MapEditor
         int selected = -1;
         int offset=0;
         float scale = 1;
-        HScrollBar scrollbar;
         MouseState _prevMouse;
 
         protected override void Initialize()
@@ -29,43 +28,12 @@ namespace MapEditor
             batch = new SpriteBatch(GraphicsDevice);
         }
 
-        public void SetScrollbar(HScrollBar bar)
-        {
-            scrollbar = bar;
-            if (tileSet != null)
-            {
-                if (tileSet.Width >= GraphicsDevice.PresentationParameters.BackBufferWidth)
-                {
-                    scrollbar.Maximum = tileSet.Width - GraphicsDevice.PresentationParameters.BackBufferWidth;
-                    scrollbar.Enabled = true;
-                }
-                else
-                {
-                    scrollbar.Maximum = 0;
-                    scrollbar.Enabled = false;
-                }
-            }
-        }
-
         public void LoadTileSet(string name)
         {
             try
             {
                 this.tileSet = content.Load<Texture2D>(name);
                 scale = this.Bounds.Height / tileSize;
-
-                if (scrollbar!=null && tileSet.Width*scale >= GraphicsDevice.PresentationParameters.BackBufferWidth)
-                {
-                    scrollbar.Maximum = (int)(tileSet.Width*scale) - GraphicsDevice.PresentationParameters.BackBufferWidth;
-                    scrollbar.SmallChange = 16;
-                    scrollbar.LargeChange = 60;
-                    scrollbar.Enabled = true;
-                }
-                else
-                {
-                    scrollbar.Maximum = 0;
-                    scrollbar.Enabled = false;
-                }
             }
             catch (ContentLoadException e)
             {
@@ -92,34 +60,12 @@ namespace MapEditor
             {
                 offset -= (int)((mouse.X - _prevMouse.X));
                 offset = offset >= 0 ? offset : 0;
-                offset = offset < scrollbar.Maximum ? offset : scrollbar.Maximum;
-                scrollbar.Value = offset;
             }
             _prevMouse = mouse;
         }
 
         protected override void Draw()
         {
-            if (scrollbar != null)
-            {
-                offset = scrollbar.Value;
-                #region scaling
-                scale = this.Bounds.Height / (float)tileSize;
-
-                if (scrollbar != null && tileSet.Width * scale >= GraphicsDevice.PresentationParameters.BackBufferWidth)
-                {
-                    scrollbar.Maximum = (int)((tileSet.Width+32)*scale) - GraphicsDevice.PresentationParameters.BackBufferWidth;
-                    scrollbar.SmallChange = (int)(16*scale);
-                    scrollbar.LargeChange = (int)(60*scale);
-                    scrollbar.Enabled = true;
-                }
-                else
-                {
-                    scrollbar.Maximum = 0;
-                    scrollbar.Enabled = false;
-                }
-                #endregion
-            }
             GraphicsDevice.Clear(Color.Black);
             if (tileSet != null)
             {

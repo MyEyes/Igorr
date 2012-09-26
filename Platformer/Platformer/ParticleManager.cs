@@ -89,12 +89,15 @@ namespace Platformer
         public void Boom(LightMap light, Vector2 pos)
         {
             ParticleInfo info = new ParticleInfo();
-            light.SetGlow(-2, pos, 300, true, 500);
-            for (int x = 0; x < 80; x++)
+            light.SetGlow(-2, pos,Color.LightYellow, 300, true, 500);
+            for (int x = 0; x < 60; x++)
                 AddParticle(_dustTex, 1.2f, pos+new Vector2((float)_random.NextDouble()*40-20,(float)_random.NextDouble()*40-20), new Vector2((float)_random.NextDouble() * 40 - 20, (float)-(15 + _random.NextDouble() * 10)), new Vector2(0, 20), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() + 0.7f, info);
 
+            for (int x = 0; x < 12; x++)
+                AddParticle(_boomTex, 0.7f, pos + new Vector2((float)_random.NextDouble() * 20 - 10, (float)_random.NextDouble() * 20 - 10), new Vector2((float)_random.NextDouble() * 40 - 20, (float)-(15 + _random.NextDouble() * 10)), new Vector2(0, 20), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() * 0.5f + 0.7f, info);
+            info.collides = true;
             for (int x = 0; x < 6; x++)
-                AddParticle(_boomTex, 0.5f, pos + new Vector2((float)_random.NextDouble() * 20 - 10, (float)_random.NextDouble() * 20 - 10), new Vector2((float)_random.NextDouble() * 40 - 20, (float)-(15 + _random.NextDouble() * 10)), new Vector2(0, 20), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() * 0.4f + 0.7f, info);
+                AddParticle(_expTex, 0.8f, pos, new Vector2((float)_random.NextDouble() * 600 - 300, (float)_random.NextDouble() * 600 - 300), new Vector2(0, 0), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() * 0.2f + 0.4f, info);
         }
 
         public void Splat(Vector2 position, Vector2 dir)

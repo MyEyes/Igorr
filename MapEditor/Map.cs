@@ -156,7 +156,7 @@ for (int x = 0; x < tpCount; x++)
                         {
                             _spawns[x, y] = new SpawnPoint();
                             _spawns[x, y].objectID = objectID;
-                            if (_spawns[x, y].objectID == 'g' - 'a')
+                            if (_spawns[x, y].objectID == 'g' - 'a' || (_spawns[x, y].objectID >= 26 && _spawns[x, y].objectID <= 28))
                             {
                                 _spawns[x, y].tepo = new TeleportPoint();
                                 _spawns[x, y].tepo.mapID = reader.ReadInt32();

@@ -259,6 +259,12 @@ for (int x = 0; x < tpCount; x++)
                     case 16: newObject = new HPOrb(10, this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
                     case 17: newObject = new HPOrb(20, this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
                     case 20: newObject = new ExpOrb(6, this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
+                    case 22: newObject = new ScorePost(ScorePost.ScoreColor.Red, this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
+                    case 23: newObject = new ScorePost(ScorePost.ScoreColor.Blue, this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
+                    case 29: newObject = new ScorePost(ScorePost.ScoreColor.Neutral, this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
+                    case 26: if (reader == null) return; RedTeamTeleporter rtt = new RedTeamTeleporter(this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); rtt.targetMapID = reader.ReadInt32(); rtt.targetPos = new Vector2(reader.ReadInt32(), reader.ReadInt32()); newObject = rtt; break;
+                    case 27: if (reader == null) return; BlueTeamTeleporter btt = new BlueTeamTeleporter(this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); btt.targetMapID = reader.ReadInt32(); btt.targetPos = new Vector2(reader.ReadInt32(), reader.ReadInt32()); newObject = btt; break;
+                    case 28: if (reader == null) return; PvETeleporter pvet = new PvETeleporter(this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); pvet.targetMapID = reader.ReadInt32(); pvet.targetPos = new Vector2(reader.ReadInt32(), reader.ReadInt32()); newObject = pvet; break;
                     case 100: newObject = new Blocker(this, new Rectangle(p.X, p.Y, tileSize, tileSize), ObjectManager.getID()); break;
                     //case 'c' - 'a': targetTile.SetChild(new Exit(_content.Load<Texture2D>("Exit"), this, new Rectangle(p.X, p.Y, tileSize, tileSize))); break;
                 }

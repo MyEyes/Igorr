@@ -58,10 +58,12 @@ namespace IGORR_Server
                 sm.position = _currentMap.ObjectManager.Objects[x].MidPosition;
                 sm.objectType = _currentMap.ObjectManager.Objects[x].ObjectType;
                 sm.id = _currentMap.ObjectManager.Objects[x].ID;
+                if (_currentMap.ObjectManager.Objects[x] is Logic.Player) sm.groupID = (_currentMap.ObjectManager.Objects[x] as Logic.Player).GroupID;
                 sm.Name = _currentMap.ObjectManager.Objects[x].Name;
                 if (_currentMap.ObjectManager.Objects[x] is Logic.Player)
                     sm.CharName = (_currentMap.ObjectManager.Objects[x] as Logic.Player).CharFile;
                 Protocol.SendContainer(sm, Connection);
+                _currentMap.ObjectManager.Objects[x].SendInfo(Connection);
                 if(_currentMap.ObjectManager.Objects[x] is Logic.Player)
                 {
                     Logic.Player play=_currentMap.ObjectManager.Objects[x] as Logic.Player;

@@ -6,6 +6,8 @@
 *.exe
 *.o
 *.so
+*.pdb
+*.cache
 
 # Packages #
 ############
@@ -36,3 +38,14 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Content Files #
+#################
+*.png
+*.bmp
+*.dds
+*.wma
+*.mp3
+*.map
+*.lst
+*.xnb

@@ -22,17 +22,19 @@ namespace Platformer
             int val = name.GetHashCode();
             this.color = new Color(val%256, (val /= 256)%256, (val /= 256)%256);
             _textureOffset.X = tex.Width;
-            _textureOffset.Y = tex.Height / 2;
+            _textureOffset.Y = tex.Height/2;
         }
 
         public void Draw(SpriteBatch batch, Vector2 pos, Camera cam)
         {
             pos.X = (int)pos.X;
+            pos.X += 8;
             pos.Y = (int)pos.Y;
             Vector2 targetEnd = pos;
-            targetEnd.Y -= 16;
+            targetEnd.Y -= 8;
             Rectangle viewSpace=cam.ViewSpace;
             Vector2 diff = targetEnd - cam.Position;
+            
             if(Math.Abs(diff.X)>viewSpace.Width/2 || Math.Abs(diff.Y)>viewSpace.Height/2)
             {
                 if (Math.Abs(diff.X) / viewSpace.Width > Math.Abs(diff.Y) / viewSpace.Height)
@@ -45,6 +47,7 @@ namespace Platformer
                 }
                 targetEnd = cam.Position + diff;
             }
+            
             float angle = (float)Math.Atan2(pos.Y - targetEnd.Y, pos.X - targetEnd.X);
             batch.Draw(tex, targetEnd, null, color, angle, _textureOffset, 1, SpriteEffects.None, 0.1f);
         }
@@ -52,8 +55,13 @@ namespace Platformer
         public void SetName(string name)
         {
             this.name = name;
-            int val = name.GetHashCode();
-            this.color = new Color(val % 256, (val /= 256) % 256, (val /= 256) % 256);
+            //int val = name.GetHashCode();
+            //this.color = new Color(val % 256, (val /= 256) % 256, (val /= 256) % 256);
+        }
+
+        public void SetColor(Color color)
+        {
+            this.color = color;
         }
     }
 
@@ -68,6 +76,7 @@ namespace Platformer
         int _maxhp = 50;
         int _hp = 50;
         float _invincibleTime = 3;
+        int groupID = 1;
 
         int _exp=0;
         int _targetExp=0;
@@ -346,7 +355,7 @@ namespace Platformer
                 if (_nameSize == Vector2.Zero)
                     _nameSize = font.MeasureString(_name);
                 batch.DrawString(font, this.Name, new Vector2(_rect.X + _rect.Width / 2 - 0.2f*_nameSize.X / 2, _rect.Y + _rect.Height), Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
-                _pointer.Draw(batch, this.MidPosition, WorldController.Camera);
+                _pointer.Draw(batch, new Vector2(_rect.X,_rect.Y), WorldController.Camera);
             }
             if (_lifeBar != null && !string.IsNullOrWhiteSpace(this.Name))
             {
@@ -405,6 +414,17 @@ namespace Platformer
                  _completeBody.airJumpCount++;
                 _speed.Y -= _completeBody.airJumpStrength;
                 _speed.Y = _speed.Y > -_completeBody.jumpBonus ? _speed.Y : -_completeBody.jumpBonus;
+            }
+        }
+
+        public void SetGroup(int id)
+        {
+            groupID = id;
+            switch(id)
+            {
+                case 1: _pointer.SetColor(Color.Green); break;
+                case 2: _pointer.SetColor(Color.Red); break;
+                case 3: _pointer.SetColor(Color.RoyalBlue); break;
             }
         }
 

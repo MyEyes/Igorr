@@ -14,7 +14,7 @@ namespace Platformer
 {
     static class WorldController
     {
-        static Game1 _gameRef;
+        static GameScreen _gameRef;
         static NetClient connection;
         static ObjectManager manager;
         public static ContentManager Content;
@@ -61,6 +61,7 @@ namespace Platformer
             Protocol.RegisterMessageHandler(MessageTypes.PlayerInfoMessage, new MessageHandler(HandlePlayerInfo));
             Protocol.RegisterMessageHandler(MessageTypes.ExpMessage, new MessageHandler(HandleExp));
             Protocol.RegisterMessageHandler(MessageTypes.Knockback, new MessageHandler(HandleKnockback));
+            Protocol.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -82,7 +83,7 @@ namespace Platformer
             Content = manager;
         }
 
-        public static void SetGame(Game1 game)
+        public static void SetGame(GameScreen game)
         {
             _gameRef = game;
         }
@@ -174,7 +175,7 @@ namespace Platformer
         public static void HandleSpawn(IgorrMessage message)
         {
             SpawnMessage sm = (SpawnMessage)message;
-            manager.SpawnObject(sm.position,sm.move, sm.objectType, sm.id, sm.Name, sm.CharName);
+            manager.SpawnObject(sm.position,sm.move, sm.objectType,sm.groupID, sm.id, sm.Name, sm.CharName);
         }
 
         public static void HandleAssignPlayer(IgorrMessage message)
@@ -271,11 +272,17 @@ namespace Platformer
             MusicPlayer.PlaySong(pm.SongName, pm.Loop, pm.Queue);
         }
 
+        public static void HandleObjectInfo(IgorrMessage message)
+        {
+            ObjectInfoMessage oim = (ObjectInfoMessage)message;
+            manager.GetObjectInfo(oim.objectID, oim.info);
+        }
+
         public static void HandleSetGlow(IgorrMessage message)
         {
             SetGlowMessage sgm = (SetGlowMessage)message;
             if (_gameRef.Map != null)
-                _gameRef.Light.SetGlow(sgm.id, sgm.Position, sgm.radius, sgm.shadows);
+                _gameRef.Light.SetGlow(sgm.id, sgm.Position, sgm.Color, sgm.radius, sgm.shadows);
         }
 
         public static void HandleSetHP(IgorrMessage message)
@@ -320,7 +327,8 @@ namespace Platformer
 
         public static void Exit()
         {
-            receiveThread.Abort();
+            if (receiveThread != null)
+                receiveThread.Abort();
         }
 
         public static ParticleManager Particles

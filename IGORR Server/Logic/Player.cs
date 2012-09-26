@@ -398,7 +398,7 @@ namespace IGORR_Server.Logic
                     att = new Grenade(_map, 0, startRect, new Vector2(this.LastSpeed.X + (this.LookLeft ? -60 : 60), this.LastSpeed.Y-70), 2500, this.ID, this.GroupID, 3);
                     att.HitOnce = false;
                     att.Penetrates = true;
-                    this.Attack(1f);
+                    this.Attack(5f);
                     break;
             }
             return att;
@@ -503,6 +503,11 @@ namespace IGORR_Server.Logic
                     updateCountdown = updateAtLeastAllXFrames;
                 return val;
             }
+        }
+
+        public void SetTeam(int id)
+        {
+            _groupID = id;
         }
     }
 }

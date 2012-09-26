@@ -80,6 +80,10 @@
     <Compile Include="Logic\ExpOrb.cs" />
     <Compile Include="Logic\Grenade.cs" />
     <Compile Include="Logic\HPOrb.cs" />
+    <Compile Include="Logic\Blue Team Teleport.cs" />
+    <Compile Include="Logic\ScorePost.cs" />
+    <Compile Include="Logic\PvETeleport.cs" />
+    <Compile Include="Logic\Red Team Teleport.cs" />
     <Compile Include="Logic\ShadowOff.cs" />
     <Compile Include="Logic\ShadowOn.cs" />
     <Compile Include="Logic\TurnOnBlocker.cs" />

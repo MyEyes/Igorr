@@ -2,7 +2,8 @@ float4x4 View;
 float4x4 Projection;
 
 float2   TextureSize     : register(c1);
-texture ScreenTexture;    
+texture ScreenTexture;
+float4 Color;
 sampler TexSampler:register(s0);
 sampler TextureSampler:register(s1)
 = sampler_state 
@@ -146,7 +147,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     // TODO: Fügen Sie Ihren Pixel-Shader-Code hier hinzu.
-	return float4(1,1,1,1)*saturate(1-length(input.ScreenPos.xy)/viewDistance)/shadowDarkness;
+	return float4(input.Color.rgb,1)*saturate(1-length(input.ScreenPos.xy)/viewDistance)/shadowDarkness;
     return float4(1,1,1,1)*(input.Color.rgba);//*(1-length(input.ScreenPos.xy));
 }
 
