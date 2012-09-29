@@ -64,7 +64,7 @@ namespace MapEditor
             }
             catch (ContentLoadException)
             {
-                MessageBox.Show ("Could not find asset: " + tileSet);
+                MessageBox.Show ("Could not find asset: " + name);
             }
         }
 
@@ -135,7 +135,7 @@ namespace MapEditor
 				}
 
 				// Draw the tile highlight for the eraser tile
-				if (selected == -1)
+				if (selected == -1 && tileHighlight!=null)
 					batch.Draw (tileHighlight, new Rectangle(0, 0, targetSize, targetSize), Color.White);
                 
 				batch.End();
