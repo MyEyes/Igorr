@@ -297,7 +297,7 @@ for (int x = 0; x < tpCount; x++)
             int y = (int)(worldY / tileSize);
             if (isValidOrNull(0, x, y))
             {
-                ObjectDialog od = new ObjectDialog(x, y, _spawns[x, y]);
+				frmObjectDialog od = new frmObjectDialog (x, y, _spawns[x, y]);
                 if (od.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     _spawns[x, y] = od.SpawnPoint;
             }

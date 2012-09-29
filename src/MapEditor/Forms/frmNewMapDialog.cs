@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
-    public partial class NewMapDialog : Form
+    public partial class frmNewMapDialog : Form
     {
         public int sizeX;
         public int sizeY;
         public string tileMap;
 
-        public NewMapDialog()
+        public frmNewMapDialog()
         {
             InitializeComponent();
         }

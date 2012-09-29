@@ -20,6 +20,8 @@ namespace MapEditor
         SamplerState _drawState;
         TileSelecter selecter;
         int layer = -1;
+		float minZoom = 2f;
+		float maxZoom = 0.02f;
 
         protected override void Initialize()
         {
@@ -35,6 +37,7 @@ namespace MapEditor
         public void SetTileSelecter(TileSelecter ts)
         {
             selecter = ts;
+
             if (map != null)
                 selecter.LoadTileSet(map.TileSet);
         }
@@ -47,9 +50,10 @@ namespace MapEditor
 
         protected void UpdateInput()
         {
+			Mouse.WindowHandle = this.Handle;
             MouseState mouse = Mouse.GetState();
-            Vector2 correction = -new Vector2(Parent.PointToScreen(this.Location).X, Parent.PointToScreen(this.Location).Y);
-            Vector2 mousePos = new Vector2(mouse.X, mouse.Y) + correction;
+            Vector2 mousePos = new Vector2(mouse.X, mouse.Y);
+
             if (mousePos.X < 0 || mousePos.Y < 0 || mousePos.X > this.Width || mousePos.Y > this.Height)
             {
                 return;
@@ -60,7 +64,7 @@ namespace MapEditor
             }
             if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
-                Vector2 worldPos = cam.ScreenToWorld(new Vector2(mouse.X,mouse.Y)+correction);
+                Vector2 worldPos = cam.ScreenToWorld(new Vector2(mouse.X,mouse.Y));
                 if (selecter != null && layer >= 0 && layer < 3)
                     map.ChangeTile(layer, worldPos.X, worldPos.Y, selecter.SelectedTile);
                 else if(selecter!=null && layer ==3)
@@ -68,6 +72,12 @@ namespace MapEditor
                     map.SetObject(worldPos.X, worldPos.Y);
                 }
             }
+			if (mouse.ScrollWheelValue != _prevMouse.ScrollWheelValue)
+			{
+				float scrollValue = ((mouse.ScrollWheelValue - _prevMouse.ScrollWheelValue) / 120) * 0.1f;
+				cam.ZoomFactor = MathHelper.Clamp (cam.ZoomFactor + scrollValue, maxZoom, minZoom);
+			}
+
             _prevMouse = mouse;
         }
 

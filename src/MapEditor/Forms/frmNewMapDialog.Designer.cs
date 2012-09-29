@@ -1,6 +1,6 @@
 ﻿namespace MapEditor
 {
-    partial class NewMapDialog
+    partial class frmNewMapDialog
     {
         /// <summary>
         /// Erforderliche Designervariable.
