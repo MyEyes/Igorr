@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer", "Platformer\Platformer\Platformer.csproj", "{32D5CC37-D6D4-45A9-B693-9A3B8E53C01B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer", "src\Platformer\Platformer\Platformer.csproj", "{32D5CC37-D6D4-45A9-B693-9A3B8E53C01B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformerContent", "Platformer\PlatformerContent\PlatformerContent.contentproj", "{B87284DB-BC18-4BC6-941B-02E9C1F71E10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformerContent", "src\Platformer\PlatformerContent\PlatformerContent.contentproj", "{B87284DB-BC18-4BC6-941B-02E9C1F71E10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORR Server", "IGORR Server\IGORR Server.csproj", "{E9C022D5-5379-4DAB-B5BD-EBC6C5E35207}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORR Server", "src\IGORR Server\IGORR Server.csproj", "{E9C022D5-5379-4DAB-B5BD-EBC6C5E35207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORRProtocol", "IGORRProtocol\IGORRProtocol.csproj", "{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORRProtocol", "src\IGORRProtocol\IGORRProtocol.csproj", "{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "MapEditor\MapEditor.csproj", "{7A07A362-9ADA-4950-ACA9-30E8335D98D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "src\MapEditor\MapEditor.csproj", "{7A07A362-9ADA-4950-ACA9-30E8335D98D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

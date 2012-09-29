@@ -60,8 +60,9 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lidgren.Network">
-      <HintPath>..\..\..\..\..\Downloads\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
@@ -94,7 +95,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RuminateGui">
-      <HintPath>..\..\..\..\..\Downloads\RuminateGui.dll</HintPath>
+      <HintPath>..\..\..\lib\RuminateGui.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
