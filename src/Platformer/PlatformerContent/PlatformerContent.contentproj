@@ -56,7 +56,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="PlainTextPipeline">
-      <HintPath>..\..\PlainTextPipeline.dll</HintPath>
+      <HintPath>..\..\..\lib\PlainTextPipeline.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

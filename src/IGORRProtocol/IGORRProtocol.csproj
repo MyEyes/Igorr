@@ -32,7 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Lidgren.Network">
-      <HintPath>..\..\..\..\Downloads\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
+      <HintPath>..\..\lib\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface">
+      <HintPath>..\..\lib\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
