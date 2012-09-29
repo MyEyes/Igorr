@@ -5,7 +5,7 @@ using System.Text;
 using System.Reflection;
 using Lidgren.Network;
 
-namespace IGORRProtocol
+namespace IGORR.Protocol
 {
     public class IgorrMessage
     {

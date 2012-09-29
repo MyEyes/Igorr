@@ -68,7 +68,7 @@ namespace IGORR_Server.Logic
             {
                 if (!active)
                 {
-                    IGORRProtocol.Messages.PlayMessage pm = (IGORRProtocol.Messages.PlayMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Play);
+                    IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Play);
                     pm.SongName = "";
                     pm.Encode();
                     server.SendAllMap(_map, pm, true);

@@ -157,13 +157,14 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IGORRProtocol\IGORRProtocol.csproj">
+    <ProjectReference Include="..\..\IGORRProtocol\IGORR Protocol.csproj">
       <Project>{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}</Project>
-      <Name>IGORRProtocol</Name>
+      <Name>IGORR Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\PlatformerContent\PlatformerContent.contentproj">
-      <Name>PlatformerContent</Name>
+      <Name>PlatformerContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{B87284DB-BC18-4BC6-941B-02E9C1F71E10}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

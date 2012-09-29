@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Lidgren.Network;
 
-namespace IGORRProtocol.Messages
+namespace IGORR.Protocol.Messages
 {
     public class DamageMessage:IgorrMessage
     {       

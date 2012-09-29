@@ -164,7 +164,7 @@ namespace IGORR_Server.Logic
             stunned = true;
             airstun = true;
             _onGround = false;
-            IGORRProtocol.Messages.KnockbackMessage kbm = (IGORRProtocol.Messages.KnockbackMessage) IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Knockback);
+            IGORR.Protocol.Messages.KnockbackMessage kbm = (IGORR.Protocol.Messages.KnockbackMessage) IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Knockback);
             kbm.id = this.ID;
             kbm.Move = move;
             kbm.Encode();
@@ -250,7 +250,7 @@ namespace IGORR_Server.Logic
         public void GetExp(int xp, Vector2 startPos)
         {
             _baseBody.Exp += xp;
-            IGORRProtocol.Messages.ExpMessage xpm = (IGORRProtocol.Messages.ExpMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.ExpMessage);
+            IGORR.Protocol.Messages.ExpMessage xpm = (IGORR.Protocol.Messages.ExpMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.ExpMessage);
             xpm.exp = xp;
             xpm.startPos = startPos;
             xpm.Encode();
@@ -270,7 +270,7 @@ namespace IGORR_Server.Logic
             if (_baseBody.Level % 2 == 0)
             {
                 _baseBody.AttBonus += _baseBody.Level / 7 + 1;
-                IGORRProtocol.Messages.PlayerInfoMessage pim = (IGORRProtocol.Messages.PlayerInfoMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.PlayerInfoMessage);
+                IGORR.Protocol.Messages.PlayerInfoMessage pim = (IGORR.Protocol.Messages.PlayerInfoMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.PlayerInfoMessage);
                 pim.playerID = this.ID;
                 pim.Text = "Level UP!\n" + "Att+: " + (_baseBody.Level / 7 + 1).ToString();
                 pim.Encode();
@@ -280,7 +280,7 @@ namespace IGORR_Server.Logic
             {
                 _baseBody.DefBonus += _baseBody.Level / 13 + 1;
 
-                IGORRProtocol.Messages.PlayerInfoMessage pim = (IGORRProtocol.Messages.PlayerInfoMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.PlayerInfoMessage);
+                IGORR.Protocol.Messages.PlayerInfoMessage pim = (IGORR.Protocol.Messages.PlayerInfoMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.PlayerInfoMessage);
                 pim.playerID = this.ID;
                 pim.Text = "Level UP!\n" + "Def+: " + (_baseBody.Level / 13 + 1).ToString();
                 pim.Encode();
@@ -303,7 +303,7 @@ namespace IGORR_Server.Logic
                 _hp = _maxhp > _hp ? _hp : _maxhp;
                 _invincibleTime = 0.6f;
 
-                IGORRProtocol.Messages.DamageMessage dm = (IGORRProtocol.Messages.DamageMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Damage);
+                IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Damage);
                 dm.posX = this.MidPosition.X;
                 dm.posY = this.MidPosition.Y;
                 dm.playerID = this.ID;

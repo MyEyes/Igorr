@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 
 using Lidgren.Network;
-using IGORRProtocol;
-using IGORRProtocol.Messages;
+using IGORR.Protocol;
+using IGORR.Protocol.Messages;
 using Microsoft.Xna.Framework;
 using System.Reflection;
 

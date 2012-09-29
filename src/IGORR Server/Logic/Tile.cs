@@ -31,7 +31,7 @@ namespace IGORR_Server.Logic
         {
             _selectRect = new Rectangle(16 * id, 0, 16, 16);
             SetCollides(collides);
-            IGORRProtocol.Messages.ChangeTileMessage ctm = (IGORRProtocol.Messages.ChangeTileMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.ChangeTile);
+            IGORR.Protocol.Messages.ChangeTileMessage ctm = (IGORR.Protocol.Messages.ChangeTileMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.ChangeTile);
             ctm.x = _rect.X / 16;
             ctm.y = _rect.Y / 16;
             ctm.tileID = id;

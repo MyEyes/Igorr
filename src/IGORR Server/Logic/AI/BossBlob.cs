@@ -84,19 +84,19 @@ namespace IGORR_Server.Logic.AI
             _invincible = true;
             ShootDuration = 0.3f;
             ShootCountdown = 1.5f;
-            IGORRProtocol.Messages.PlayMessage pm = (IGORRProtocol.Messages.PlayMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Play);
+            IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Play);
             pm.SongName = "BossIntro01";
             pm.Loop = false;
             pm.Queue = false;
             pm.Encode();
             _map.ObjectManager.Server.SendAllMap(_map, pm, true);
-            pm = (IGORRProtocol.Messages.PlayMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Play);
+            pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Play);
             pm.SongName = "Boss01";
             pm.Loop = true;
             pm.Queue = true;
             pm.Encode();
             _map.ObjectManager.Server.SendAllMap(_map, pm, true);
-            pm = (IGORRProtocol.Messages.PlayMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Play);
+            pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Play);
             pm.SongName = "Level01";
             pm.Loop = true;
             pm.Queue = true;
@@ -104,7 +104,7 @@ namespace IGORR_Server.Logic.AI
             _map.ObjectManager.Server.SendAllMap(_map, pm, true);
             _hp = (int)(_hp * HPmod);
             _maxhp = (int)(_maxhp * HPmod);
-            IGORRProtocol.Messages.SetPlayerStatusMessage hpm = (IGORRProtocol.Messages.SetPlayerStatusMessage) IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.SetHP);
+            IGORR.Protocol.Messages.SetPlayerStatusMessage hpm = (IGORR.Protocol.Messages.SetPlayerStatusMessage) IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetHP);
             hpm.playerID = id;
             hpm.maxHP = _maxhp;
             hpm.currentHP = _hp;
@@ -120,7 +120,7 @@ namespace IGORR_Server.Logic.AI
                 if (activityCountdown < 0)
                 {
                     _invincible = false;
-                    IGORRProtocol.Messages.SetAnimationMessage sam = (IGORRProtocol.Messages.SetAnimationMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = false;
                     sam.animationNumber = 0;
                     sam.objectID = ID;
@@ -131,7 +131,7 @@ namespace IGORR_Server.Logic.AI
 
                 if (!SetIntro)
                 {
-                    IGORRProtocol.Messages.SetAnimationMessage sam = (IGORRProtocol.Messages.SetAnimationMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = true;
                     sam.animationNumber = 1;
                     sam.objectID = ID;
@@ -147,7 +147,7 @@ namespace IGORR_Server.Logic.AI
                     AcquireTarget();
                     if (_hp < _maxhp && _phase != BossBlobPhase.EndPhase && target == null)
                     {
-                        IGORRProtocol.Messages.DamageMessage dm = (IGORRProtocol.Messages.DamageMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Damage);
+                        IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Damage);
                         dm.posX=this._position.X;
                         dm.posY = this._position.Y;
                         dm.playerID = this.ID;
@@ -174,7 +174,7 @@ namespace IGORR_Server.Logic.AI
                     defeated = true;
                     attackerTimeout = 15;
                     _phase = BossBlobPhase.EndPhase;
-                    IGORRProtocol.Messages.SetAnimationMessage sam = (IGORRProtocol.Messages.SetAnimationMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = true;
                     sam.animationNumber = 0;
                     sam.objectID = ID;
@@ -305,14 +305,14 @@ namespace IGORR_Server.Logic.AI
                                 
                                 _invincible = false;
                                 GetDamage(1000);
-                                IGORRProtocol.Messages.DamageMessage dm = (IGORRProtocol.Messages.DamageMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Damage);
+                                IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Damage);
                                 dm.playerID = this._id;
                                 dm.posX = this._position.X;
                                 dm.posY = this._position.Y;
                                 dm.damage = 1000;
                                 dm.Encode();
                                 _map.ObjectManager.Server.SendAllMap(_map, dm, false);
-                                IGORRProtocol.Messages.PlayMessage pm = (IGORRProtocol.Messages.PlayMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.Play);
+                                IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.Play);
                                 pm.SongName = "";
                                 pm.Loop = false;
                                 pm.Queue = false;

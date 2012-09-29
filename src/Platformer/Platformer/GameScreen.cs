@@ -200,7 +200,7 @@ namespace Platformer
                 _prevGamePadState = pad;
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
-            IGORRProtocol.Protocol.Update((int)gameTime.ElapsedGameTime.Milliseconds);
+            IGORR.Protocol.Protocol.Update((int)gameTime.ElapsedGameTime.Milliseconds);
         }
 
         void DrawExpBar()

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using IGORR.Content;
 
 namespace MapEditor
 {
@@ -35,7 +36,8 @@ namespace MapEditor
 
         protected override void Initialize()
         {
-            content = new ContentManager(Services, "Content");
+            content = new PackedContentManager(Services, "Content.7z", Nomad.Archive.SevenZip.KnownSevenZipFormat.SevenZip);
+
             batch = new SpriteBatch(GraphicsDevice);
 
 			Application.Idle += (o, e) => Invalidate();
@@ -54,17 +56,25 @@ namespace MapEditor
 
         public void LoadTileSet(string name)
         {
+            if (tileHighlight == null)
+                try
+                {
+                    tileHighlight = content.Load<Texture2D>("tileHighlight");
+                }
+                catch (ContentLoadException e)
+                {
+                    MessageBox.Show("Could not find asset: tileHighlight");
+                }
             try
             {
-                tileSet = content.Load<Texture2D> (name);
-				tileHighlight = content.Load<Texture2D> ("tileHighlight");
-				tileCount = tileSet.Width / tileSize;
+                tileSet = content.Load<Texture2D>(name);
+                tileCount = tileSet.Width / tileSize;
 
-				invalidateScrollbar();
+                invalidateScrollbar();
             }
-            catch (ContentLoadException)
+            catch (ContentLoadException e)
             {
-                MessageBox.Show ("Could not find asset: " + name);
+                MessageBox.Show("Could not find asset: " + name);
             }
         }
 
@@ -122,7 +132,7 @@ namespace MapEditor
 					
 					batch.Draw (tileSet, destRect, sourceRect, Color.White);
 
-					if (selected == i-1)
+                    if (selected == i - 1 && tileHighlight != null)
 						batch.Draw (tileHighlight, destRect, Color.White);
 
 					index++;

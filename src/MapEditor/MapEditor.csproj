@@ -114,6 +114,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IGORR Content Manager\IGORR Content Manager.csproj">
+      <Project>{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}</Project>
+      <Name>IGORR Content Manager</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

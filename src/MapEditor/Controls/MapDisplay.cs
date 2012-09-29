@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Windows.Forms;
+using IGORR.Content;
 
 namespace MapEditor
 {
@@ -25,7 +26,7 @@ namespace MapEditor
 
         protected override void Initialize()
         {
-            content=new ContentManager(Services, "Content");
+            content=new PackedContentManager(Services, "Content.7z", Nomad.Archive.SevenZip.KnownSevenZipFormat.SevenZip);
             batch = new SpriteBatch(GraphicsDevice);
             cam = new Camera(new Vector2(0, 0), new Rectangle(this.Bounds.X,this.Bounds.Y,this.Bounds.Width,this.Bounds.Height));
             //map = new Map(content, 100, 100);

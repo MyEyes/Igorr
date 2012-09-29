@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Lidgren.Network;
 
-namespace IGORRProtocol
+namespace IGORR.Protocol
 {
     using System.IO;
     public static class Logger

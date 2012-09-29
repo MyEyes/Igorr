@@ -110,9 +110,9 @@
     <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IGORRProtocol\IGORRProtocol.csproj">
+    <ProjectReference Include="..\IGORRProtocol\IGORR Protocol.csproj">
       <Project>{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}</Project>
-      <Name>IGORRProtocol</Name>
+      <Name>IGORR Protocol</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

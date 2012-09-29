@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Lidgren.Network;
-using IGORRProtocol;
-using IGORRProtocol.Messages;
+using IGORR.Protocol;
+using IGORR.Protocol.Messages;
 
 namespace IGORR_Server
 {
@@ -46,7 +46,7 @@ namespace IGORR_Server
                 _currentMap.ObjectManager.Add(p);
             }
 
-            IGORRProtocol.Messages.ChangeMapMessage cmm = (IGORRProtocol.Messages.ChangeMapMessage)IGORRProtocol.Protocol.NewMessage(MessageTypes.ChangeMap);
+            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)IGORR.Protocol.Protocol.NewMessage(MessageTypes.ChangeMap);
             cmm.mapid = map.ID;
             cmm.Encode();
             _clientConnection.SendMessage(cmm.GetMessage(), NetDeliveryMethod.ReliableOrdered, 1);

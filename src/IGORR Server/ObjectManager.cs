@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using IGORR_Server.Logic;
-using IGORRProtocol;
-using IGORRProtocol.Messages;
+using IGORR.Protocol;
+using IGORR.Protocol.Messages;
 
 namespace IGORR_Server
 {

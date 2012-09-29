@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Lidgren.Network;
 
-namespace IGORRProtocol.Messages
+namespace IGORR.Protocol.Messages
 {
     public class ExpMessage : IgorrMessage
     {
