@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E9C022D5-5379-4DAB-B5BD-EBC6C5E35207}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IGORR_Server</RootNamespace>
+    <AssemblyName>IGORR Server</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\lib\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="lua51">
+      <HintPath>..\..\lib\lua51.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface">
+      <HintPath>..\..\lib\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client.cs" />
+    <Compile Include="Logic\AI\LookAround.cs" />
+    <Compile Include="Logic\Blocker.cs" />
+    <Compile Include="Logic\AI\BossBlob.cs" />
+    <Compile Include="Logic\AI\BossMinions.cs" />
+    <Compile Include="Logic\AI\Bird.cs" />
+    <Compile Include="Logic\AI\MiniBossBlob.cs" />
+    <Compile Include="Logic\AI\Mysterycat.cs" />
+    <Compile Include="Logic\AI\ShyFollower.cs" />
+    <Compile Include="Logic\AI\Slimer.cs" />
+    <Compile Include="Logic\AttackManager.cs" />
+    <Compile Include="Logic\Body Parts\BaseBody.cs" />
+    <Compile Include="Logic\Body Parts\BodyPart.cs" />
+    <Compile Include="Logic\Body Parts\BigBlobLegs.cs" />
+    <Compile Include="Logic\Body Parts\BossBlobAttacks.cs" />
+    <Compile Include="Logic\Body Parts\BossBlobLegs.cs" />
+    <Compile Include="Logic\Body Parts\Grenade.cs" />
+    <Compile Include="Logic\Body Parts\LowHPPlus.cs" />
+    <Compile Include="Logic\Body Parts\Striker2.cs" />
+    <Compile Include="Logic\Body Parts\Wings.cs" />
+    <Compile Include="Logic\BossTrigger.cs" />
+    <Compile Include="Logic\AttackTrigger.cs" />
+    <Compile Include="Logic\ExpOrb.cs" />
+    <Compile Include="Logic\Grenade.cs" />
+    <Compile Include="Logic\HPOrb.cs" />
+    <Compile Include="Logic\Blue Team Teleport.cs" />
+    <Compile Include="Logic\ScorePost.cs" />
+    <Compile Include="Logic\PvETeleport.cs" />
+    <Compile Include="Logic\Red Team Teleport.cs" />
+    <Compile Include="Logic\ShadowOff.cs" />
+    <Compile Include="Logic\ShadowOn.cs" />
+    <Compile Include="Logic\TurnOnBlocker.cs" />
+    <Compile Include="Logic\TurnOffBlocker.cs" />
+    <Compile Include="Logic\EventObject.cs" />
+    <Compile Include="Logic\GameObject.cs" />
+    <Compile Include="Logic\Body Parts\Strike.cs" />
+    <Compile Include="Logic\GlobalTriggers.cs" />
+    <Compile Include="Logic\Lava.cs" />
+    <Compile Include="Logic\Body Parts\Legs.cs" />
+    <Compile Include="Logic\LogicHandler.cs" />
+    <Compile Include="Logic\Map.cs" />
+    <Compile Include="Logic\MapChanger.cs" />
+    <Compile Include="Logic\MapManager.cs" />
+    <Compile Include="Logic\NPC.cs" />
+    <Compile Include="Logic\PartPickup.cs" />
+    <Compile Include="Logic\Player.cs" />
+    <Compile Include="Logic\Tile.cs" />
+    <Compile Include="Logic\TouchTrigger.cs" />
+    <Compile Include="LuaVM.cs" />
+    <Compile Include="Management\LoginData.cs" />
+    <Compile Include="ObjectManager.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IGORRProtocol\IGORRProtocol.csproj">
+      <Project>{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}</Project>
+      <Name>IGORRProtocol</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
