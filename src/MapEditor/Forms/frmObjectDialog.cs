@@ -11,13 +11,13 @@ using System.IO;
 namespace MapEditor
 {
 
-    public partial class ObjectDialog : Form
+    public partial class frmObjectDialog : Form
     {
         static List<string> _names;
         static List<int> _ids;
         SpawnPoint _spawnPoint;
 
-        public ObjectDialog(int x, int y, SpawnPoint sp)
+        public frmObjectDialog(int x, int y, SpawnPoint sp)
         {
             InitializeComponent();
 
@@ -126,7 +126,7 @@ namespace MapEditor
             int index = comboBox1.SelectedIndex;
             if (index >= 0)
             {
-                if (_names[index].Contains("Teleporter"))
+                if (comboBox1.SelectedIndex == _names.IndexOf("Teleporter"))
                 {
                     TeleportPoint tp = new TeleportPoint();
                     try
@@ -143,7 +143,7 @@ namespace MapEditor
                     }
 
                 }
-                else if (_names[index].Contains("Trigger"))
+                else if (comboBox1.SelectedIndex == _names.IndexOf("TouchTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredBlocker") || comboBox1.SelectedIndex == _names.IndexOf("AttackTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredInvBlocker"))
                 {
                     TriggerParams trpa = new TriggerParams();
                     try
@@ -175,10 +175,7 @@ namespace MapEditor
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = comboBox1.SelectedIndex;
-            if (index < 0)
-                return;
-            if (_names[index].Contains("Teleporter"))
+            if (comboBox1.SelectedIndex == _names.IndexOf("Teleporter"))
             {
                 label3.Show();
                 label4.Show();
@@ -199,7 +196,7 @@ namespace MapEditor
                 txtTargetPosY.Hide();
             }
 
-            if (_names[index].Contains("Trigger"))
+            if (comboBox1.SelectedIndex == _names.IndexOf("TouchTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredBlocker") || comboBox1.SelectedIndex == _names.IndexOf("AttackTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredInvBlocker"))
             {
                 txtTrigName.Show();
                 chkGlobal.Show();

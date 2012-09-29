@@ -87,6 +87,7 @@ namespace MapEditor
         public float ZoomFactor
         {
             get { return zoom; }
+			set { zoom = value; }
         }
     }
 }
