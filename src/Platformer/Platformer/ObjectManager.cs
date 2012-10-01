@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using System.Threading;
 using System.Collections.Concurrent;
 
-namespace Platformer
+namespace IGORR.Game
 {
     class ObjectManager
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 
-namespace Platformer
+namespace IGORR.Game
 {
     static class Settings
     {

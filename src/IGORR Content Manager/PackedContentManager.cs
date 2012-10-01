@@ -78,6 +78,16 @@ namespace IGORR.Content
             return base.OpenStream(assetName);
         }
 
+        public List<string> GetContentList()
+        {
+            List<string> list = new List<string>();
+            foreach (object obj in m_hash.Keys)
+            {
+                list.Add(obj.ToString());
+            }
+            return list;
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

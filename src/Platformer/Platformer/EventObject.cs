@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Platformer
+namespace IGORR.Game
 {
     public class EventObject:GameObject
     {

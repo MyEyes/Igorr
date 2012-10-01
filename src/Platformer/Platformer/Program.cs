@@ -1,6 +1,6 @@
 using System;
 
-namespace Platformer
+namespace IGORR.Game
 {
 #if WINDOWS || XBOX
     static class Program

@@ -105,5 +105,11 @@ namespace MapEditor
 		{
 			tileSelecter1.Focus();
 		}
+
+        private void btnContent_Click(object sender, EventArgs e)
+        {
+            frmContent cont = new frmContent(mapDisplay1.Content);
+            cont.Show();
+        }
     }
 }

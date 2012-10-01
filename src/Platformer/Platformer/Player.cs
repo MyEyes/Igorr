@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
-namespace Platformer
+namespace IGORR.Game
 {
     class PlayerPointer
     {

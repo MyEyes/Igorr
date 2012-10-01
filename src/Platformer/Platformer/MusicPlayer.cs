@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Threading;
 
-namespace Platformer
+namespace IGORR.Game
 {
 
     class SongQueueItem
