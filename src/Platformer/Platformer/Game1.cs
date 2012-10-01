@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Platformer
+namespace IGORR.Game
 {
     /// <summary>
     /// Dies ist der Haupttyp für Ihr Spiel

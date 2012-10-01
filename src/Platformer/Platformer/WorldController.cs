@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Windows.Forms;
 
-namespace Platformer
+namespace IGORR.Game
 {
     static class WorldController
     {

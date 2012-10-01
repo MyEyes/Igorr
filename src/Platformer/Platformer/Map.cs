@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Threading;
 
-namespace Platformer
+namespace IGORR.Game
 {
 
     public class Map

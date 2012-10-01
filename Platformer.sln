@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer", "src\Platformer\Platformer\Platformer.csproj", "{32D5CC37-D6D4-45A9-B693-9A3B8E53C01B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORR Game", "src\Platformer\Platformer\IGORR Game.csproj", "{32D5CC37-D6D4-45A9-B693-9A3B8E53C01B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformerContent", "src\Platformer\PlatformerContent\PlatformerContent.contentproj", "{B87284DB-BC18-4BC6-941B-02E9C1F71E10}"
 EndProject

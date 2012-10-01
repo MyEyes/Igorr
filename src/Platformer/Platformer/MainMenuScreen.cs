@@ -9,7 +9,7 @@ using Ruminate.GUI;
 using Ruminate.Utils;
 using Ruminate.GUI.Framework;
 
-namespace Platformer
+namespace IGORR.Game
 {
     class MainMenuScreen : IScreen
     {

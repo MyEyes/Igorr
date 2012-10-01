@@ -14,7 +14,7 @@ namespace MapEditor
     class MapDisplay : GraphicsDeviceControl
     {
         Map map;
-        ContentManager content;
+        PackedContentManager content;
         SpriteBatch batch;
         Camera cam;
         MouseState _prevMouse;
@@ -113,7 +113,7 @@ namespace MapEditor
             map.Save();
         }
 
-        public ContentManager Content
+        public PackedContentManager Content
         {
             get { return content; }
         }
