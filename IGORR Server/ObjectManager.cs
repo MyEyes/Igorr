@@ -250,7 +250,7 @@ namespace IGORR_Server
             //Protocol.FlushContainer(null);
         }
 
-        public void SpawnAttack(int playerID, int attackID)
+        public void SpawnAttack(int playerID, int attackID, int info)
         {
             Player player = GetPlayer(playerID);
             if (player != null)
@@ -270,8 +270,9 @@ namespace IGORR_Server
                             break;
                     }
                      */
-                    Attack a = player.GetAttack(attackID);
-                    _attacks.Spawn(a);
+                    Attack a = player.GetAttack(attackID, info);
+                    if (a != null)
+                        _attacks.Spawn(a);
                 }
             }
         }

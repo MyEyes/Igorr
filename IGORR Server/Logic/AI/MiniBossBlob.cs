@@ -63,7 +63,7 @@ namespace IGORR_Server.Logic.AI
                     if (target.Position.Y < this._position.Y)
                         Jump();
                     if ((target.Position+new Vector2(target.Rect.Width,target.Rect.Height)/2 - this.Position - new Vector2(Rect.Width, Rect.Height) / 2).Length() < 55 && _random.NextDouble() > 0.99f)
-                        _map.ObjectManager.SpawnAttack(this.ID, 1);
+                        _map.ObjectManager.SpawnAttack(this.ID, 1,0);
                 }
                 else
                     follow = false;

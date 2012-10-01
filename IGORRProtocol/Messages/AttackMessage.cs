@@ -12,6 +12,7 @@ namespace IGORRProtocol.Messages
         public int attackID;
         public int attackerID;
         public Vector2 attackDir;
+        public int attackInfo;
 
         public AttackMessage(NetOutgoingMessage outgoing, long timestamp)
             : base(outgoing, timestamp, MessageTypes.Attack)
@@ -26,6 +27,7 @@ namespace IGORRProtocol.Messages
             _outgoing.Write(attackerID);
             _outgoing.Write(attackDir.X);
             _outgoing.Write(attackDir.Y);
+            _outgoing.Write(attackInfo);
         }
 
         protected override void Decode()
@@ -33,6 +35,7 @@ namespace IGORRProtocol.Messages
             attackID = _incoming.ReadInt32();
             attackerID = _incoming.ReadInt32();
             attackDir = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
+            attackInfo = _incoming.ReadInt32();
         }
     }
 }

@@ -16,7 +16,6 @@ namespace IGORR_Server.Logic.AI
             : base(map,spawnPos, id)
         {
             _groupID = 2;
-            GivePart(new BossBlobAttack1());
             GivePart(new BossBlobLegs());
         }
 
@@ -25,7 +24,6 @@ namespace IGORR_Server.Logic.AI
         {
             _groupID = 2;
             GivePart(new BossBlobLegs());
-            GivePart(new BossBlobAttack1());
         }
 
         public override void Update(Map map, float seconds)
@@ -58,12 +56,12 @@ namespace IGORR_Server.Logic.AI
                     Move(1);
                 if (_random.NextDouble() > 0.99f)
                     Jump();
-                _map.ObjectManager.SpawnAttack(ID, 1);
+                _map.ObjectManager.SpawnAttack(ID, 0, 0);
             }
             base.Update(map, seconds);
         }
-
-        public override Attack GetAttack(int id)
+        /*
+        public override Attack GetAttack(int id, int info)
         {
             Logic.Attack att;
             if (LookLeft)
@@ -78,6 +76,7 @@ namespace IGORR_Server.Logic.AI
             Attack(1);
             return att;
         }
+         */
 
         public override PartPickup GetDrop(Map map)
         {

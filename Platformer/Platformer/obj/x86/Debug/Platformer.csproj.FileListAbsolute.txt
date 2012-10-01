@@ -184,3 +184,5 @@ C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Lidgren.N
 C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\IGORRProtocol.pdb
 C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Lidgren.Network.pdb
 C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Lidgren.Network.xml
+C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Content\Cave.xnb
+C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Content\Cave.wma

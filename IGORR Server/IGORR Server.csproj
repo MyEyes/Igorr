@@ -71,6 +71,7 @@
     <Compile Include="Logic\Body Parts\BigBlobLegs.cs" />
     <Compile Include="Logic\Body Parts\BossBlobAttacks.cs" />
     <Compile Include="Logic\Body Parts\BossBlobLegs.cs" />
+    <Compile Include="Logic\Body Parts\Builder.cs" />
     <Compile Include="Logic\Body Parts\Grenade.cs" />
     <Compile Include="Logic\Body Parts\LowHPPlus.cs" />
     <Compile Include="Logic\Body Parts\Striker2.cs" />

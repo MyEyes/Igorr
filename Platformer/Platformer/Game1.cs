@@ -141,7 +141,7 @@ namespace Platformer
                     if (keyboard.IsKeyDown(Keys.Space) && !prevKeyboard.IsKeyDown(Keys.Space))
                         player.Jump();
                     if (keyboard.IsKeyDown(Keys.LeftControl) && !prevKeyboard.IsKeyDown(Keys.LeftControl))
-                        WorldController.SendAttack(1, player.ID);
+                        WorldController.SendAttack(0, player.ID);
 
                     if (keyboard.IsKeyDown(Keys.Left))
                         player.Move(-1);
@@ -150,13 +150,13 @@ namespace Platformer
                     if (keyboard.IsKeyDown(Keys.Right))
                         player.Move(1);
                     if (keyboard.IsKeyDown(Keys.Y) && !prevKeyboard.IsKeyDown(Keys.Y))
-                        WorldController.SendAttack(1, player.ID);
+                        WorldController.SendAttack(0, player.ID);
                     if (keyboard.IsKeyDown(Keys.Z) && !prevKeyboard.IsKeyDown(Keys.Z))
-                        WorldController.SendAttack(1, player.ID);
+                        WorldController.SendAttack(0, player.ID);
                     if (keyboard.IsKeyDown(Keys.X) && !prevKeyboard.IsKeyDown(Keys.X))
-                        WorldController.SendAttack(2, player.ID);
+                        WorldController.SendAttack(1, player.ID);
                     if (keyboard.IsKeyDown(Keys.C) && !prevKeyboard.IsKeyDown(Keys.C))
-                        WorldController.SendAttack(3, player.ID);
+                        WorldController.SendAttack(2, player.ID);
                     /*                
                                     if (keyboard.IsKeyDown(Keys.Q))
                                         cam.ZoomInOn(1.1f, new Vector2(mouse.X, mouse.Y));
@@ -172,9 +172,9 @@ namespace Platformer
                     if (pad.IsButtonDown(Buttons.A) && !_prevGamePadState.IsButtonDown(Buttons.A))
                         player.Jump();
                     if (pad.IsButtonDown(Buttons.X) && !_prevGamePadState.IsButtonDown(Buttons.X))
-                        WorldController.SendAttack(1, player.ID);
+                        WorldController.SendAttack(0, player.ID);
                     if (pad.IsButtonDown(Buttons.B) && !_prevGamePadState.IsButtonDown(Buttons.B))
-                        WorldController.SendAttack(2, player.ID);
+                        WorldController.SendAttack(1, player.ID);
                     if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
                         WorldController.SendAttack(3, player.ID);
                     //Test stuff

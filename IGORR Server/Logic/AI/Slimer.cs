@@ -24,7 +24,9 @@ namespace IGORR_Server.Logic.AI
         {
             _XPBonus = 25;
             GivePart(new Legs());
-            GivePart(new Striker());
+            BodyPart part = new Striker();
+            GivePart(part);
+            EquipAttack(0, part);
             _groupID = 5;
 
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
@@ -35,7 +37,8 @@ namespace IGORR_Server.Logic.AI
             : base(map, charfile, spawnRect, id)
         {
             GivePart(new Legs());
-            GivePart(new Striker());
+            BodyPart part = new Striker();
+            GivePart(part);
             _groupID = 5;
             _XPBonus = 25;
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
@@ -90,7 +93,7 @@ namespace IGORR_Server.Logic.AI
             {
                 attackCooldown = 1;
                 attack = false;
-                _map.ObjectManager.SpawnAttack(ID, 1);
+                _map.ObjectManager.SpawnAttack(ID, 0,0);
                 _Move = Left != _target.MidPosition.X < this.MidPosition.X;
                 Left = _target.MidPosition.X < this.MidPosition.X;
                 IGORRProtocol.Messages.SetAnimationMessage sam = (IGORRProtocol.Messages.SetAnimationMessage)IGORRProtocol.Protocol.NewMessage(IGORRProtocol.MessageTypes.SetAnimation);
@@ -111,8 +114,8 @@ namespace IGORR_Server.Logic.AI
             attackCooldown -= seconds;
             base.Update(map, seconds);
         }
-
-        public override Attack GetAttack(int id)
+        /*
+        public override Attack GetAttack(int id, int info)
         {
             Rectangle startRect = this.Rect;
             startRect.Height -= 4;
@@ -123,6 +126,7 @@ namespace IGORR_Server.Logic.AI
             att.Penetrates = false;
             return att;
         }
+         */
 
         public override PartPickup GetDrop(Map map)
         {

@@ -35,6 +35,7 @@ namespace IGORR_Server.Logic
         protected bool _invincible = false;
         string _charFile = "";
         List<BodyPart> _bodyParts;
+        BodyPart[] _attackSlots = new BodyPart[3];
         BodyPart _completeBody;
         bool jump = false;
         bool flying = false;
@@ -65,10 +66,10 @@ namespace IGORR_Server.Logic
             _onGround = false;
             _bodyParts = new List<BodyPart>();
             _bodyParts.Add(_baseBody);
-            _bodyParts.Add(new GrenadeLauncher());
             _collisionOffset = new Vector4((((16 - spawnPos.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - spawnPos.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
             flying = true;
             _completeBody = new BodyPart();
+            GivePart(new GrenadeLauncher());
             CalculateTotalBonus();
             ShadowsOn = true;
             _objectType = 0;
@@ -224,13 +225,11 @@ namespace IGORR_Server.Logic
         public bool CanAttack(int attackID)
         {
             bool can = false;
+
             if (attackCooldown < 0)
-                for (int x = 0; x < _bodyParts.Count; x++)
-                    if (_bodyParts[x].attackID == attackID)
-                    {
-                        can = true;
-                        break;
-                    }
+                if (attackID>=0 && attackID<3 && _attackSlots[attackID] != null)
+                    can = true;
+             
             if (stunned)
                 can = false;
             return can;
@@ -337,6 +336,15 @@ namespace IGORR_Server.Logic
             for (int x = 0; x < _bodyParts.Count; x++)
                 if (_bodyParts[x].GetID() == part.GetID())
                     return false;
+            if (part.hasAttack)
+            {
+                for (int x = 0; x < _attackSlots.Length; x++)
+                    if (_attackSlots[x] == null)
+                    {
+                        EquipAttack(x, part);
+                        break;
+                    }
+            }
             _bodyParts.Add(part);
             CalculateTotalBonus();
             return true;
@@ -365,10 +373,25 @@ namespace IGORR_Server.Logic
             }
         }
 
-        public virtual Attack GetAttack(int id)
+        public void EquipAttack(int slot, BodyPart part)
+        {
+            if (slot < 0 || slot > 2)
+                return;
+            _attackSlots[slot] = part;
+        }
+
+        public Attack GetAttack(int id, int info)
         {
             Logic.Attack att = null;
+            if (id < 0 || id > 2 || _attackSlots[id]==null)
+                return null;
+            att = _attackSlots[id].GetAttack(this,info);
+            if (att == null)
+                return null;
             int DmgBonus = _random.Next(_baseBody.AttBonus / 2, _baseBody.AttBonus + 1);
+            att.Damage += DmgBonus;
+            return att;
+            /*
             switch (id)
             {
                 case 1:
@@ -402,6 +425,7 @@ namespace IGORR_Server.Logic
                     break;
             }
             return att;
+             * */
         }
 
         public int HP

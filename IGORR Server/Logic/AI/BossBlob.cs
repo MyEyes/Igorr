@@ -76,7 +76,17 @@ namespace IGORR_Server.Logic.AI
             _XPBonus = 250;
             _groupID = 2;
             startPos = new Vector2(spawnPos.X, spawnPos.Y);
-            GivePart(new BossBlobLegs());
+            BodyPart currentPart = new BossBlobLegs();
+            GivePart(currentPart);
+            currentPart = new BossBlobAttack1();
+            GivePart(currentPart);
+            EquipAttack(0, currentPart);
+            currentPart = new BossBlobAttack2();
+            GivePart(currentPart);
+            EquipAttack(1, currentPart);
+            currentPart = new BossBlobAttack3();
+            GivePart(currentPart);
+            EquipAttack(2, currentPart);
             GivePart(new BossBlobAttack1());
             GivePart(new BossBlobAttack2());
             GivePart(new BossBlobAttack3());
@@ -193,8 +203,8 @@ namespace IGORR_Server.Logic.AI
                             {
                                 if (!Landed)
                                 {
-                                    _map.ObjectManager.SpawnAttack(ID, 1);
-                                    _map.ObjectManager.SpawnAttack(ID, 2);
+                                    _map.ObjectManager.SpawnAttack(ID, 0, 0);
+                                    _map.ObjectManager.SpawnAttack(ID, 1, 0);
                                     Landed = true;
                                 }
                                 jumpDelay -= seconds;
@@ -239,7 +249,7 @@ namespace IGORR_Server.Logic.AI
                             ShootCountdown -= seconds;
                             if (ShootCountdown <= 0)
                             {
-                                _map.ObjectManager.SpawnAttack(ID, 3);
+                                _map.ObjectManager.SpawnAttack(ID, 2,0);
                                 ShootDuration -= seconds;
                                 if (ShootDuration <= 0)
                                 {
@@ -337,8 +347,8 @@ namespace IGORR_Server.Logic.AI
         {
             HPmod = hpMod;
         }
-
-        public override Logic.Attack GetAttack(int id)
+        /*
+        public override Logic.Attack GetAttack(int id, int info)
         {
             Logic.Attack att = null;
             switch (id)
@@ -367,6 +377,7 @@ namespace IGORR_Server.Logic.AI
             }
             return att;
         }
+         */
 
         private void AcquireTarget()
         {

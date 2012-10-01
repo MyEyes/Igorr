@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace IGORR_Server.Logic
 {
@@ -10,7 +11,16 @@ namespace IGORR_Server.Logic
         public BossBlobAttack1()
             : base()
         {
-            attackID = 1;
+            hasAttack = true;
+        }
+
+        public override Attack GetAttack(Player owner, int info)
+        {
+            Attack att = null;
+            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), new Vector2(-200, 0), 500, owner.ID, owner.GroupID, 5004);
+            att.HitOnce = true;
+            att.Knockback = new Vector2(-200, -50);
+            return att;
         }
         public override int GetID()
         {
@@ -23,7 +33,15 @@ namespace IGORR_Server.Logic
         public BossBlobAttack2()
             : base()
         {
-            attackID = 2;
+            hasAttack = true;
+        }
+        public override Attack GetAttack(Player owner, int info)
+        {
+            Attack att = null;
+            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), new Vector2(200, 0), 500, owner.ID, owner.GroupID, 5004);
+            att.HitOnce = true;
+            att.Knockback = new Vector2(200, -50);
+            return att;
         }
 
         public override int GetID()
@@ -37,7 +55,23 @@ namespace IGORR_Server.Logic
         public BossBlobAttack3()
             : base()
         {
-            attackID = 3;
+            //attackID = 3;
+            hasAttack = true;
+        }
+
+        public override Attack GetAttack(Player owner, int info)
+        {
+            Attack att = null;
+            if (owner.LookLeft)
+            {
+                att = new Attack(owner.map, 4, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 16, 5, 8), new Vector2(-200, 0), 2200, owner.ID, owner.GroupID, 5005);
+            }
+            else
+            {
+                att = new Attack(owner.map, 4, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 16, 5, 8), new Vector2(200, 0), 2200, owner.ID, owner.GroupID, 5005);
+            }
+            att.HitOnce = true;
+            return att;
         }
 
         public override int GetID()

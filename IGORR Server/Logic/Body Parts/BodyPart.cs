@@ -11,7 +11,8 @@ namespace IGORR_Server.Logic
     {
         public float speedBonus = 0f;
         public float jumpBonus = 0f;
-        public int attackID = -1;
+        //public int attackID = -1;
+        public bool hasAttack=false;
 
         public int airJumpMax = 0;
         public int airJumpCount = 0;
@@ -58,6 +59,11 @@ namespace IGORR_Server.Logic
         public virtual int GetID()
         {
             return 0;
+        }
+
+        public virtual Attack GetAttack(Player owner, int info)
+        {
+            return null;
         }
 
         public virtual float GetSpawnTime()

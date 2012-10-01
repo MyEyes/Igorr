@@ -50,3 +50,5 @@ Content\BossIntro01.wma
 Content\Level01.xnb
 Content\Level01.wma
 Content\ShadowEffect.xnb
+Content\Cave.xnb
+Content\Cave.wma

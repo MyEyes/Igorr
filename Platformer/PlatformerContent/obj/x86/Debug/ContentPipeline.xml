@@ -445,6 +445,16 @@
       <Output>C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Content\ShadowEffect.xnb</Output>
       <Time>2012-09-10T18:24:30.4794392+02:00</Time>
     </Item>
+    <Item>
+      <Source>Cave.mp3</Source>
+      <Name>Cave</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Content\Cave.xnb</Output>
+      <Extra>C:\Users\Ole\Documents\IGORR\Igorr\Platformer\Platformer\bin\x86\Debug\Content\Cave.wma</Extra>
+      <Time>2012-09-13T16:58:45.6366208+02:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
