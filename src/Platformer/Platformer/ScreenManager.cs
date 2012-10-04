@@ -31,7 +31,7 @@ namespace IGORR.Game
 
         public void AddScreen(IScreen screen)
         {
-            screen.Initialize(_content, _device, this);
+            screen.Initialize(_device, this);
             _screens.Add(screen);
         }
 

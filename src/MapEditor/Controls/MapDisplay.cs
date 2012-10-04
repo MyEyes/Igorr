@@ -14,7 +14,6 @@ namespace MapEditor
     class MapDisplay : GraphicsDeviceControl
     {
         Map map;
-        PackedContentManager content;
         SpriteBatch batch;
         Camera cam;
         MouseState _prevMouse;
@@ -26,7 +25,6 @@ namespace MapEditor
 
         protected override void Initialize()
         {
-            content=new PackedContentManager(Services, "Content.7z", Nomad.Archive.SevenZip.KnownSevenZipFormat.SevenZip);
             batch = new SpriteBatch(GraphicsDevice);
             cam = new Camera(new Vector2(0, 0), new Rectangle(this.Bounds.X,this.Bounds.Y,this.Bounds.Width,this.Bounds.Height));
             //map = new Map(content, 100, 100);
@@ -108,14 +106,14 @@ namespace MapEditor
                 selecter.LoadTileSet(map.TileSet);
         }
 
+        public void SetUpContent()
+        {
+            ContentInterface.SetContent(Services, "Content", "Content.7z");
+        }
+
         public void Save()
         {
             map.Save();
-        }
-
-        public PackedContentManager Content
-        {
-            get { return content; }
         }
     }
 }

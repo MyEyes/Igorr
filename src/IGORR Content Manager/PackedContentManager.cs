@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace IGORR.Content
 {
-    public class PackedContentManager : ContentManager
+    class PackedContentManager : ContentManager
     {
         static string SevenZipDllPath
         {
@@ -29,31 +29,40 @@ namespace IGORR.Content
         IArchiveOpenCallback m_callback;
         ulong m_checkPos;
         Hashtable m_hash; // used for file-index lookups
+        bool _hasArchive = true;
 
-        public PackedContentManager(IServiceProvider serviceProvider, string archivePath, KnownSevenZipFormat archiveFormat)
+        public PackedContentManager(IServiceProvider serviceProvider, string archivePath,string contentPath, KnownSevenZipFormat archiveFormat)
             : base(serviceProvider)
         {
             m_format = new SevenZipFormat(SevenZipDllPath);
             m_archive = m_format.CreateInArchive(SevenZipFormat.GetClassIdFromKnownFormat(archiveFormat));
-            m_inStream = new InStreamWrapper(File.OpenRead(archivePath));
-            m_callback = new ArchiveOpenCallback();
-
-            m_checkPos = 128 * 1024;
-            m_archive.Open(m_inStream, ref m_checkPos, m_callback);
-
-            m_hash = new Hashtable();
-            uint count = m_archive.GetNumberOfItems();
-            for (uint i = 0; i < count; i++)
+            base.RootDirectory = contentPath;
+            try
             {
-                PropVariant name = new PropVariant();
-                m_archive.GetProperty(i, ItemPropId.kpidPath, ref name);
+                m_inStream = new InStreamWrapper(File.OpenRead(archivePath));
+                m_callback = new ArchiveOpenCallback();
 
-                string strName = (name.GetObject() as string).ToLower();
-                int xnbIndex = strName.IndexOf(".xnb");
-                if (xnbIndex >= 0)
-                    strName = strName.Remove(xnbIndex, 4);
+                m_checkPos = 128 * 1024;
+                m_archive.Open(m_inStream, ref m_checkPos, m_callback);
 
-                m_hash.Add(strName, i);
+                m_hash = new Hashtable();
+                uint count = m_archive.GetNumberOfItems();
+                for (uint i = 0; i < count; i++)
+                {
+                    PropVariant name = new PropVariant();
+                    m_archive.GetProperty(i, ItemPropId.kpidPath, ref name);
+
+                    string strName = (name.GetObject() as string).ToLower();
+                    int xnbIndex = strName.IndexOf(".xnb");
+                    if (xnbIndex >= 0)
+                        strName = strName.Remove(xnbIndex, 4);
+
+                    m_hash.Add(strName, i);
+                }
+            }
+            catch (IOException ioe)
+            {
+                _hasArchive = false;
             }
         }
 
@@ -62,7 +71,17 @@ namespace IGORR.Content
         protected override Stream OpenStream(string assetName)
         {
             string nameLower = assetName.ToLower();
-            if (m_hash.ContainsKey(nameLower))
+            try
+            {
+                if (File.Exists(this.RootDirectory + "/" + assetName + ".xnb"))
+                {
+                    return base.OpenStream(assetName);
+                }
+            }
+            catch (ContentLoadException cle)
+            {
+            }
+            if (_hasArchive && m_hash.ContainsKey(nameLower))
             {
                 uint index = (uint)m_hash[nameLower];
                 m_extractIndices[0] = index;
@@ -75,7 +94,12 @@ namespace IGORR.Content
                 extractCallback.Stream.BaseStream.Position = 0L;
                 return extractCallback.Stream.BaseStream;
             }
-            return base.OpenStream(assetName);
+            throw new ContentLoadException(assetName);
+        }
+
+        public override T Load<T>(string assetName)
+        {
+            return base.Load<T>(assetName);
         }
 
         public List<string> GetContentList()

@@ -60,7 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.dds">
+    <Compile Include="gfx\Player.dds">
       <Name>Player</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -74,14 +74,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="font.spritefont">
+    <Compile Include="fonts\font.spritefont">
       <Name>font2</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="blob.dds">
+    <Compile Include="gfx\blob.dds">
       <Name>blob</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -110,49 +110,49 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeetIcon.dds">
+    <Compile Include="gfx\FeetIcon.dds">
       <Name>FeetIcon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attack.dds">
+    <Compile Include="gfx\Attack.dds">
       <Name>Attack</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Wings.dds">
+    <Compile Include="gfx\Wings.dds">
       <Name>Wings</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="default.chr">
+    <Compile Include="chars\default.chr">
       <Name>default</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="boss.chr">
+    <Compile Include="chars\boss.chr">
       <Name>boss</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="White.png">
+    <Compile Include="gfx\White.png">
       <Name>White</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="miniboss.chr">
+    <Compile Include="chars\miniboss.chr">
       <Name>miniboss</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -166,33 +166,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bossminion.chr">
+    <Compile Include="chars\bossminion.chr">
       <Name>bossminion</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="kingblob.dds">
+    <Compile Include="gfx\kingblob.dds">
       <Name>kingblob</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Boss01.mp3">
+    <Compile Include="sound\Boss01.mp3">
       <Name>Boss01</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
-    <Compile Include="BossIntro01.mp3">
+    <Compile Include="sound\BossIntro01.mp3">
       <Name>BossIntro01</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Level01.wma">
+    <Compile Include="sound\Level01.wma">
       <Name>Level01</Name>
       <Importer>WmaImporter</Importer>
       <Processor>SongProcessor</Processor>
@@ -206,237 +206,237 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ShadowEffect.fx">
+    <Compile Include="shaders\ShadowEffect.fx">
       <Name>ShadowEffect</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tileset.dds">
+    <Compile Include="gfx\tileset.dds">
       <Name>tileset</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="castletileset.dds">
+    <Compile Include="gfx\castletileset.dds">
       <Name>castletileset</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="shy.chr">
+    <Compile Include="chars\shy.chr">
       <Name>shy</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bird.dds">
+    <Compile Include="gfx\Bird.dds">
       <Name>Bird</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cbird.chr">
+    <Compile Include="chars\cbird.chr">
       <Name>cbird</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mysterycat.chr">
+    <Compile Include="chars\mysterycat.chr">
       <Name>mysterycat</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mystical.dds">
+    <Compile Include="gfx\Mystical.dds">
       <Name>Mystical</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blocker.dds">
+    <Compile Include="gfx\Blocker.dds">
       <Name>Blocker</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block.chr">
+    <Compile Include="chars\Block.chr">
       <Name>Block</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lava.dds">
+    <Compile Include="gfx\Lava.dds">
       <Name>Lava</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exit.dds">
+    <Compile Include="gfx\Exit.dds">
       <Name>Exit</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Slimer.chr">
+    <Compile Include="chars\Slimer.chr">
       <Name>Slimer</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Slimer.dds">
+    <Compile Include="gfx\Slimer.dds">
       <Name>GSlimer</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="tileset2.dds">
+    <Compile Include="gfx\tileset2.dds">
       <Name>tileset2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blobdger.dds">
+    <Compile Include="gfx\Blobdger.dds">
       <Name>Blobdger</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Cynical Blob.dds">
+    <Compile Include="gfx\Cynical Blob.dds">
       <Name>Cynical Blob</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Jesse Blobs.dds">
+    <Compile Include="gfx\Jesse Blobs.dds">
       <Name>Jesse Blobs</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cDodger.chr">
+    <Compile Include="chars\cDodger.chr">
       <Name>cDodger</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cJesse.chr">
+    <Compile Include="chars\cJesse.chr">
       <Name>cJesse</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cTB.chr">
+    <Compile Include="chars\cTB.chr">
       <Name>cTB</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="expOrb.dds">
+    <Compile Include="gfx\expOrb.dds">
       <Name>expOrb</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="healthOrb.dds">
+    <Compile Include="gfx\healthOrb.dds">
       <Name>healthOrb</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="testfont.png">
+    <Compile Include="fonts\testfont.png">
       <Name>font</Name>
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExpBar.dds">
+    <Compile Include="gfx\ExpBar.dds">
       <Name>ExpBar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="splat.dds">
+    <Compile Include="gfx\splat.dds">
       <Name>splat</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dust.dds">
+    <Compile Include="gfx\dust.dds">
       <Name>dust</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arrow.dds">
+    <Compile Include="gfx\Arrow.dds">
       <Name>Arrow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="blood.png">
+    <Compile Include="gfx\blood.png">
       <Name>blood</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Grenade.dds">
+    <Compile Include="gfx\Grenade.dds">
       <Name>Grenade</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Boom.dds">
+    <Compile Include="gfx\Boom.dds">
       <Name>Boom</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlueTel.dds">
+    <Compile Include="gfx\BlueTel.dds">
       <Name>BlueTel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="RedTel.dds">
+    <Compile Include="gfx\RedTel.dds">
       <Name>RedTel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScorePost.dds">
+    <Compile Include="gfx\ScorePost.dds">
       <Name>ScorePost</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageMap.png">
+    <Compile Include="gfx\ImageMap.png">
       <Name>ImageMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -447,6 +447,24 @@
       <Name>Map</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="effects\" />
+    <Folder Include="map\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sound\Cave.mp3">
+      <Name>Cave</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gfx\default.png">
+      <Name>default</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

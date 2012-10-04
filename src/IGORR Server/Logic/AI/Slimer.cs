@@ -81,7 +81,7 @@ namespace IGORR_Server.Logic.AI
                     _Move = false;
                     attack = true;
                     attackCooldown = 0.4f; 
-                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = true;
                     sam.animationNumber = 0;
                     sam.objectID = ID;
@@ -96,7 +96,7 @@ namespace IGORR_Server.Logic.AI
                 _map.ObjectManager.SpawnAttack(ID, 0,0);
                 _Move = Left != _target.MidPosition.X < this.MidPosition.X;
                 Left = _target.MidPosition.X < this.MidPosition.X;
-                IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                 sam.force = false;
                 sam.animationNumber = 0;
                 sam.objectID = ID;

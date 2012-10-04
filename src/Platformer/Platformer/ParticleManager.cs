@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using IGORR.Content;
 
 namespace IGORR.Game
 {
@@ -30,7 +31,7 @@ namespace IGORR.Game
         Texture2D _bloodTex;
         Texture2D _expTex;
 
-        public ParticleManager(ContentManager content)
+        public ParticleManager()
         {
             _random = new Random();
             _particles = new Particle[maxParticles];
@@ -40,11 +41,11 @@ namespace IGORR.Game
             }
             startIndex = 0;
             numParticles = 0;
-            _dustTex = content.Load<Texture2D>("dust");
-            _boomTex = content.Load<Texture2D>("Boom");
-            _splatTex = content.Load<Texture2D>("splat");
-            _bloodTex = content.Load<Texture2D>("blood");
-            _expTex = content.Load<Texture2D>("expOrb");
+            _dustTex = ContentInterface.LoadTexture("dust");
+            _boomTex = ContentInterface.LoadTexture("Boom");
+            _splatTex = ContentInterface.LoadTexture("splat");
+            _bloodTex = ContentInterface.LoadTexture("blood");
+            _expTex = ContentInterface.LoadTexture("expOrb");
         }
 
         public void Update(Map map, float secs)

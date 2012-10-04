@@ -153,10 +153,17 @@
     <Compile Include="WorldController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="7za.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\IGORR Content Manager\IGORR Content Manager.csproj">
+      <Project>{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}</Project>
+      <Name>IGORR Content Manager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\IGORRProtocol\IGORR Protocol.csproj">
       <Project>{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}</Project>
       <Name>IGORR Protocol</Name>

@@ -13,14 +13,14 @@ namespace IGORR.Game
     {
         static List<Map> _maps;
 
-        public static void LoadMaps(ContentManager content, GraphicsDevice dev)
+        public static void LoadMaps(GraphicsDevice dev)
         {
             _maps = new List<Map>();
             StreamReader reader = new StreamReader("maps.lst");
             string[] lines = reader.ReadToEnd().Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             for (int x = 0; x < lines.Length; x++)
             {
-                _maps.Add(new Map(lines[x],content,dev));
+                _maps.Add(new Map(lines[x],dev));
             }
         }
 

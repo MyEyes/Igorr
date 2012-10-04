@@ -72,14 +72,14 @@ namespace IGORR.Protocol
 
     public delegate void MessageHandler(IgorrMessage message);
 
-    public static class Protocol
+    public static class ProtocolHelper
     {
         static NetPeer _connection;
         static long _timeStamp;
         static Dictionary<MessageTypes, MessageHandler> _handlers;
         static Dictionary<NetConnection, Messages.ContainerMessage> _containers;
         static Messages.ContainerMessage _allcontainer;
-        static Protocol()
+        static ProtocolHelper()
         {
             _handlers = new Dictionary<MessageTypes, MessageHandler>();
             _containers = new Dictionary<NetConnection, Messages.ContainerMessage>();

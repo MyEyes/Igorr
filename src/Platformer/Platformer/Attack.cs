@@ -32,10 +32,9 @@ namespace IGORR.Game
             Movement = mov;
             _size.X = tex.Width;
             _size.Y = tex.Height;
-            _rect.X += (int)(_size.X / 2);
-            _rect.Y += (int)(_size.Y / 2);
+            _rect = rect;
             lifeTime = _info.LifeTime;
-            _angle = 0;
+            _angle = (float)Math.Atan2(Movement.Y, Movement.X);
         }
 
         public bool Update(Map map, float seconds)

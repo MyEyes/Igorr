@@ -6,6 +6,7 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using IGORR.Content;
 
 namespace IGORR.Game
 {
@@ -53,7 +54,7 @@ namespace IGORR.Game
 
         public static LightMap LightReference = null;
 
-        public LightMap(GraphicsDevice device, ContentManager content)
+        public LightMap(GraphicsDevice device)
         {
             this.device = device;
             LightReference = this;
@@ -81,7 +82,7 @@ namespace IGORR.Game
             }
             shadowIB.SetData<short>(indices);
             shadowVB = new VertexBuffer(device, VertexPositionColor.VertexDeclaration, 6 * 3 * maxX * maxY, BufferUsage.WriteOnly);
-            shadowEffect = content.Load<Effect>("ShadowEffect");
+            shadowEffect = ContentInterface.LoadShader("ShadowEffect");
             shadowTarget = new RenderTarget2D(device, device.PresentationParameters.BackBufferWidth, device.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 1, RenderTargetUsage.DiscardContents);
             blendShadow = new BlendState();
             blendShadow.ColorWriteChannels = ColorWriteChannels.All;

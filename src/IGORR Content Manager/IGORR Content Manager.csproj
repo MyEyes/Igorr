@@ -8,7 +8,7 @@
     <ProjectGuid>{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IGORR_Content_Manager</RootNamespace>
+    <RootNamespace>IGORR.Content</RootNamespace>
     <AssemblyName>IGORR Content Manager</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -55,10 +55,14 @@
     <Compile Include="7Zip Helpers\ArchiveExtractCallback.cs" />
     <Compile Include="7Zip Helpers\ArchiveOpenCallback.cs" />
     <Compile Include="7Zip Helpers\Ole32.cs" />
+    <Compile Include="CharTemplate.cs" />
+    <Compile Include="ContentInterface.cs" />
+    <Compile Include="EffectTemplate.cs" />
     <Compile Include="PackedContentManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="7Zip Helpers\SevenZipFormat.cs" />
     <Compile Include="7Zip Helpers\SevenZipInterface.cs" />
+    <Compile Include="TextureLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

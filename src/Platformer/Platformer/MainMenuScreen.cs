@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Ruminate.GUI;
 using Ruminate.Utils;
 using Ruminate.GUI.Framework;
+using IGORR.Content;
 
 namespace IGORR.Game
 {
@@ -23,12 +24,12 @@ namespace IGORR.Game
             _gameRef = game;
         }
 
-        public void Initialize(ContentManager Content, GraphicsDevice Device, ScreenManager manager)
+        public void Initialize(GraphicsDevice Device, ScreenManager manager)
         {
             _manager=manager;
             _device = Device;
-            TextRenderer text = new TextRenderer(Content.Load<SpriteFont>("font"), Color.White);
-            Skin skin = new Skin(Content.Load<Texture2D>("ImageMap"), Content.Load<string>("Map"));
+            TextRenderer text = new TextRenderer(ContentInterface.LoadFont("font"), Color.White);
+            Skin skin = new Skin(ContentInterface.LoadTexture("ImageMap"), ContentInterface.LoadFile("Map"));
             _gui = new Gui(_gameRef, skin, text);
             _gui.AddWidget(new Ruminate.GUI.Content.Panel(300, 200, 200, 300));
             _gui.AddWidget(new Ruminate.GUI.Content.Button(350, 230, 50, "Start",

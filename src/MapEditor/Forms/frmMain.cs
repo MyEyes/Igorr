@@ -21,10 +21,11 @@ namespace MapEditor
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            mapDisplay1.SetUpContent();
             mapDisplay1.SetTileSelecter(tileSelecter1);
             tileSelecter1.SetScrollbar(vScrollBar1);
 
-            mapDisplay1.SetMap(new Map(mapDisplay1.Content, 100, 100, "tileset"));
+            mapDisplay1.SetMap(new Map(100, 100, "tileset"));
             mapDisplay1.Focus();
 
 			layerButtons = new [] { btnBackground, btnObstacle, btnObject, btnForeground };
@@ -54,7 +55,7 @@ namespace MapEditor
             try
             {
                 if (nmd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    mapDisplay1.SetMap(new Map(mapDisplay1.Content, nmd.sizeX, nmd.sizeY, nmd.tileMap));
+                    mapDisplay1.SetMap(new Map(nmd.sizeX, nmd.sizeY, nmd.tileMap));
             }
             catch (ContentLoadException cle)
             {
@@ -75,7 +76,7 @@ namespace MapEditor
 
             if (!string.IsNullOrWhiteSpace(ofd.SafeFileName))
             {
-                mapDisplay1.SetMap(new Map(mapDisplay1.Content, ofd.SafeFileName));
+                mapDisplay1.SetMap(new Map(ofd.SafeFileName));
 
                 int layer = -1;
                 if (btnBackground.Checked)
@@ -108,8 +109,6 @@ namespace MapEditor
 
         private void btnContent_Click(object sender, EventArgs e)
         {
-            frmContent cont = new frmContent(mapDisplay1.Content);
-            cont.Show();
         }
     }
 }

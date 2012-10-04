@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using Lidgren.Network;
 using System.Threading;
-using IGORR.Protocol;
-using IGORR.Protocol.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Windows.Forms;
+
+using IGORR.Protocol;
+using IGORR.Protocol.Messages;
 
 namespace IGORR.Game
 {
@@ -17,7 +18,6 @@ namespace IGORR.Game
         static GameScreen _gameRef;
         static NetClient connection;
         static ObjectManager manager;
-        public static ContentManager Content;
         static Thread receiveThread;
         static bool _started = false;
         static Random _random;
@@ -42,30 +42,30 @@ namespace IGORR.Game
                 MessageBox.Show("Could not connect to server.\nAddress: " + Settings.ServerAddress, "Connection Error");
                 Thread.CurrentThread.Abort();
             }
-            Protocol.SetUp(connection);
-            Protocol.RegisterMessageHandler(MessageTypes.Spawn, new MessageHandler(HandleSpawn));
-            Protocol.RegisterMessageHandler(MessageTypes.SpawnAttack, new MessageHandler(HandleSpawnAttack));
-            Protocol.RegisterMessageHandler(MessageTypes.AssignPlayer, new MessageHandler(HandleAssignPlayer));
-            Protocol.RegisterMessageHandler(MessageTypes.Position, new MessageHandler(HandlePosition));
-            Protocol.RegisterMessageHandler(MessageTypes.DeSpawn, new MessageHandler(HandleDespawn));
-            Protocol.RegisterMessageHandler(MessageTypes.Pickup, new MessageHandler(HandlePickup));
-            Protocol.RegisterMessageHandler(MessageTypes.Kill, new MessageHandler(HandleKill));
-            Protocol.RegisterMessageHandler(MessageTypes.Damage, new MessageHandler(HandleDamage));
-            Protocol.RegisterMessageHandler(MessageTypes.SetAnimation, new MessageHandler(HandleSetAnimation));
-            Protocol.RegisterMessageHandler(MessageTypes.SetGlow, new MessageHandler(HandleSetGlow));
-            Protocol.RegisterMessageHandler(MessageTypes.ChangeTile, new MessageHandler(HandleChangeTile));
-            Protocol.RegisterMessageHandler(MessageTypes.ChangeMap, new MessageHandler(HandleChangeMap));
-            Protocol.RegisterMessageHandler(MessageTypes.Play, new MessageHandler(HandlePlay));
-            Protocol.RegisterMessageHandler(MessageTypes.Shadow, new MessageHandler(HandleShadows));
-            Protocol.RegisterMessageHandler(MessageTypes.SetHP, new MessageHandler(HandleSetHP));
-            Protocol.RegisterMessageHandler(MessageTypes.PlayerInfoMessage, new MessageHandler(HandlePlayerInfo));
-            Protocol.RegisterMessageHandler(MessageTypes.ExpMessage, new MessageHandler(HandleExp));
-            Protocol.RegisterMessageHandler(MessageTypes.Knockback, new MessageHandler(HandleKnockback));
-            Protocol.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
+            ProtocolHelper.SetUp(connection);
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Spawn, new MessageHandler(HandleSpawn));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.SpawnAttack, new MessageHandler(HandleSpawnAttack));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.AssignPlayer, new MessageHandler(HandleAssignPlayer));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Position, new MessageHandler(HandlePosition));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.DeSpawn, new MessageHandler(HandleDespawn));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Pickup, new MessageHandler(HandlePickup));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Kill, new MessageHandler(HandleKill));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Damage, new MessageHandler(HandleDamage));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.SetAnimation, new MessageHandler(HandleSetAnimation));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.SetGlow, new MessageHandler(HandleSetGlow));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.ChangeTile, new MessageHandler(HandleChangeTile));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.ChangeMap, new MessageHandler(HandleChangeMap));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Play, new MessageHandler(HandlePlay));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Shadow, new MessageHandler(HandleShadows));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.SetHP, new MessageHandler(HandleSetHP));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.PlayerInfoMessage, new MessageHandler(HandlePlayerInfo));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.ExpMessage, new MessageHandler(HandleExp));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Knockback, new MessageHandler(HandleKnockback));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
-            JoinMessage m = (JoinMessage)Protocol.NewMessage(MessageTypes.Join);
+            JoinMessage m = (JoinMessage)ProtocolHelper.NewMessage(MessageTypes.Join);
             m.Name = Settings.LoginName;
             m.Password = Settings.LoginPassword;
             m.Encode();
@@ -78,10 +78,6 @@ namespace IGORR.Game
             manager = om;
         }
 
-        public static void SetContent(ContentManager manager)
-        {
-            Content = manager;
-        }
 
         public static void SetGame(GameScreen game)
         {
@@ -92,7 +88,7 @@ namespace IGORR.Game
         {
             if (!_started)
                 return;
-            ChatMessage message = (ChatMessage)Protocol.NewMessage(MessageTypes.Chat);
+            ChatMessage message = (ChatMessage)ProtocolHelper.NewMessage(MessageTypes.Chat);
             message.Text = value; 
             SendReliable(message);
         }
@@ -119,7 +115,7 @@ namespace IGORR.Game
                         case NetIncomingMessageType.WarningMessage:
                             Console.WriteLine(msg.MessageType.ToString() + ": " + msg.ReadString());
                             break;
-                        case NetIncomingMessageType.Data: try { Protocol.HandleMessage(msg, -1); }
+                        case NetIncomingMessageType.Data: try { ProtocolHelper.HandleMessage(msg, -1); }
                             catch (Exception e) {MessageBox.Show(e.ToString(),"ERROR"); } break;
                         default: Console.WriteLine("Unhandled Message Type: " + msg.MessageType.ToString());
                             break;
@@ -135,7 +131,7 @@ namespace IGORR.Game
         {
             if (!_started)
                 return;
-            LeaveMessage message = (LeaveMessage)Protocol.NewMessage(MessageTypes.Leave);
+            LeaveMessage message = (LeaveMessage)ProtocolHelper.NewMessage(MessageTypes.Leave);
             message.Encode();
             SendReliable(message);
         }
@@ -144,7 +140,7 @@ namespace IGORR.Game
         {
             if (!_started)
                 return;
-            PositionMessage message = (PositionMessage)Protocol.NewMessage(MessageTypes.Position);
+            PositionMessage message = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
             message.Position = obj.Position;
             if (obj is Player)
                 message.Move = (obj as Player).Speed;
@@ -154,7 +150,7 @@ namespace IGORR.Game
 
         public static void SendAttack(int attackID, int playerID)
         {
-            AttackMessage am = (AttackMessage)Protocol.NewMessage(MessageTypes.Attack);
+            AttackMessage am = (AttackMessage)ProtocolHelper.NewMessage(MessageTypes.Attack);
             am.attackerID = playerID;
             am.attackID = attackID;
             am.Encode();
@@ -169,7 +165,7 @@ namespace IGORR.Game
                     connection.SendMessage(message.GetMessage(), NetDeliveryMethod.Unreliable);
                 else
                     connection.SendMessage(message.GetMessage(), NetDeliveryMethod.UnreliableSequenced);
-                //Protocol.Send(message, connection.ServerConnection);
+                //ProtocolHelper.Send(message, connection.ServerConnection);
         }
 
         public static void HandleSpawn(IgorrMessage message)

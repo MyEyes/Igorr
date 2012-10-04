@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "src\MapEditor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORR Content Manager", "src\IGORR Content Manager\IGORR Content Manager.csproj", "{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGORR Editor", "src\IGORR Editor\IGORR Editor.csproj", "{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,18 @@ Global
 		{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}.Release|x86.ActiveCfg = Release|Any CPU
 		{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}.Release|Xbox 360.ActiveCfg = Release|Any CPU
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Debug|x86.ActiveCfg = Debug|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Debug|x86.Build.0 = Debug|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Release|Any CPU.ActiveCfg = Release|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Release|Mixed Platforms.Build.0 = Release|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Release|x86.ActiveCfg = Release|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Release|x86.Build.0 = Release|x86
+		{60BF55DB-4FF6-48A9-9251-06BDF8B12F7E}.Release|Xbox 360.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

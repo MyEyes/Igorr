@@ -63,10 +63,10 @@ namespace IGORR_Server
             _objects.Add(obj);
             if (obj is Player && !(obj is NPC))
                 _playerCounter++;
-            SpawnMessage spawn = (SpawnMessage)Protocol.NewMessage(MessageTypes.Spawn);
+            SpawnMessage spawn = (SpawnMessage)ProtocolHelper.NewMessage(MessageTypes.Spawn);
             spawn.id = obj.ID;
             if (obj is Player) spawn.groupID = (obj as Player).GroupID;
-            spawn.position = obj.MidPosition;
+            spawn.position = obj.Rect;
             spawn.objectType = obj.ObjectType;
             spawn.move = obj.Movement;
             spawn.Name = obj.Name;
@@ -88,7 +88,7 @@ namespace IGORR_Server
             if (_objects.Contains(obj))
             {
                 _objects.Remove(obj);
-                DeSpawnMessage deSpawn = (DeSpawnMessage)Protocol.NewMessage(MessageTypes.DeSpawn);
+                DeSpawnMessage deSpawn = (DeSpawnMessage)ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
                 deSpawn.id = obj.ID;
                 if (obj is Player && !(obj is NPC))
                 {
@@ -222,7 +222,7 @@ namespace IGORR_Server
                     npc.Update(_map, ms / 1000f);
                     if (_server.Enabled && (updateCounter == 0 || (npc._lastPosition-npc.Position).LengthSquared()>100f || (npc._lastlastSpeed-npc.LastSpeed).LengthSquared()>0.01f))
                     {
-                        PositionMessage pm = (PositionMessage)Protocol.NewMessage(MessageTypes.Position);
+                        PositionMessage pm = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
                         pm.id = npc.ID;
                         pm.Move = npc.LastSpeed;
                         pm.Position = npc.Position;
@@ -251,7 +251,7 @@ namespace IGORR_Server
                     }
                     if (player.ShadowsOn != shadows)
                     {
-                        ShadowMessage sm = (ShadowMessage)Protocol.NewMessage(MessageTypes.Shadow);
+                        ShadowMessage sm = (ShadowMessage)ProtocolHelper.NewMessage(MessageTypes.Shadow);
                         sm.shadows = player.ShadowsOn;
                         sm.Encode();
                         _server.SendClient(player, sm);
@@ -299,7 +299,7 @@ namespace IGORR_Server
                 newPlayer.SetTeam(player.GroupID);
                 Console.WriteLine("Killed Player: " + player.ID.ToString());
                 //Send client their new playerID
-                AssignPlayerMessage apm = (AssignPlayerMessage)Protocol.NewMessage(MessageTypes.AssignPlayer);
+                AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);
                 apm.objectID = newPlayer.ID;
                 apm.Encode();
                 _server.SendClient(player, apm);
@@ -308,7 +308,7 @@ namespace IGORR_Server
                 for (int x = 0; x < player.Parts.Count; x++)
                 {
                     newPlayer.GivePart(player.Parts[x]);
-                    PickupMessage pum = (PickupMessage)Protocol.NewMessage(MessageTypes.Pickup);
+                    PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
                     pum.id = player.Parts[x].GetID();
                     pum.Encode();
                     _map.ObjectManager.Server.SendClient(player, pum);
@@ -316,7 +316,7 @@ namespace IGORR_Server
                 newPlayer.GetExp(player.TotalXP, Vector2.Zero);
                 //Change the local clients stored playerid
                 _server.getClient(player).PlayerID = newPlayer.ID;
-                KillMessage km = (KillMessage)Protocol.NewMessage(MessageTypes.Kill);
+                KillMessage km = (KillMessage)ProtocolHelper.NewMessage(MessageTypes.Kill);
                 km.killerID = player.Attacker;
                 km.deadID = player.ID;
                 km.Encode();

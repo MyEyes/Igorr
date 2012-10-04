@@ -9,7 +9,7 @@ namespace IGORR.Protocol.Messages
 {
     public class SpawnMessage : IgorrMessage
     {
-        public Vector2 position;
+        public Rectangle position;
         public Vector2 move;
         public int objectType;
         public int id;
@@ -28,6 +28,8 @@ namespace IGORR.Protocol.Messages
             base.Encode();
             _outgoing.Write(position.X);
             _outgoing.Write(position.Y);
+            _outgoing.Write(position.Width);
+            _outgoing.Write(position.Height);
             _outgoing.Write(move.X);
             _outgoing.Write(move.Y);
             _outgoing.Write(objectType);
@@ -39,7 +41,7 @@ namespace IGORR.Protocol.Messages
 
         protected override void Decode()
         {
-            position = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
+            position = new Rectangle(_incoming.ReadInt32(), _incoming.ReadInt32(), _incoming.ReadInt32(), _incoming.ReadInt32());
             move = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
             objectType = _incoming.ReadInt32();
             id = _incoming.ReadInt32();

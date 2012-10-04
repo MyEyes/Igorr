@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using IGORR.Content;
 
 namespace MapEditor
 {
@@ -77,10 +78,10 @@ namespace MapEditor
             activeLayer = layer;
         }
 
-        public Map(ContentManager content, int sizeX, int sizeY, string tileset)
+        public Map(int sizeX, int sizeY, string tileset)
         {
-            tileSet = content.Load<Texture2D>(tileset);
-            font = content.Load<SpriteFont>("font");
+            tileSet = ContentInterface.LoadTexture(tileset);
+            font = ContentInterface.LoadFont("font");
             tileSetName = tileset;
             
             _layers = new Tile[3][,]; //0=background, 1=collisionlayer, 2=foreground
@@ -111,15 +112,15 @@ namespace MapEditor
             }
         }
 
-        public Map(ContentManager content, string fileName)
+        public Map(string fileName)
         {
-            font = content.Load<SpriteFont>("font");
+            font = ContentInterface.LoadFont("font");
             _fileName = fileName;
             BinaryReader reader = new BinaryReader(File.OpenRead(_fileName));
             int sizeX = reader.ReadInt32();
             int sizeY = reader.ReadInt32();
             tileSetName = reader.ReadString();
-            tileSet = content.Load<Texture2D>(tileSetName);
+            tileSet = ContentInterface.LoadTexture(tileSetName);
             /*
 int tpCount = reader.ReadInt32();
 for (int x = 0; x < tpCount; x++)

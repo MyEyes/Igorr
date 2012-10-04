@@ -107,12 +107,12 @@ namespace IGORR_Server.Logic
         public void Spawn(Attack attack)
         {
             _server.SetChannel(3);
-            SpawnAttackMessage sam = (SpawnAttackMessage)Protocol.NewMessage(MessageTypes.SpawnAttack);
+            SpawnAttackMessage sam = (SpawnAttackMessage)ProtocolHelper.NewMessage(MessageTypes.SpawnAttack);
             sam.id = attack.ID;
-            sam.position = attack.Position;
+            sam.position = attack.Rect;
             sam.move = attack.Movement;
             sam.Encode();
-            _server.SendAllMapReliable(attack.map,sam,true);
+            _server.SendAllMapReliable(attack.map, sam, true);
             attack.SetAttackManager(this);
             _addAttack.Add(attack);
         }

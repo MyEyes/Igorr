@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Threading;
-
+using IGORR.Content;
 namespace IGORR.Game
 {
 
@@ -21,12 +21,10 @@ namespace IGORR.Game
         const int tileSize = 16;
 
         Random random;
-        ContentManager _content;
 
-        public Map(string fileName, ContentManager content, GraphicsDevice device)
+        public Map(string fileName, GraphicsDevice device)
         {
             random = new Random();
-            _content = content;
             int maxX = 30;
             int maxY = 30;
             
@@ -86,7 +84,7 @@ namespace IGORR.Game
             BinaryReader reader = new BinaryReader(File.OpenRead(file + ".map"));
             int sizeX = reader.ReadInt32();
             int sizeY = reader.ReadInt32();
-            tileSet = _content.Load<Texture2D>(reader.ReadString());
+            tileSet = ContentInterface.LoadTexture(reader.ReadString());
             /*
             int tpCount = reader.ReadInt32();
             for (int x = 0; x < tpCount; x++)

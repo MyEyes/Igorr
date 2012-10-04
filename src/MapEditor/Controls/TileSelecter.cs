@@ -15,7 +15,6 @@ namespace MapEditor
     public class TileSelecter
 		: GraphicsDeviceControl
     {
-        ContentManager content;
         SpriteBatch batch;
         Texture2D tileSet;
 		Texture2D tileHighlight;
@@ -36,7 +35,6 @@ namespace MapEditor
 
         protected override void Initialize()
         {
-            content = new PackedContentManager(Services, "Content.7z", Nomad.Archive.SevenZip.KnownSevenZipFormat.SevenZip);
 
             batch = new SpriteBatch(GraphicsDevice);
 
@@ -59,7 +57,7 @@ namespace MapEditor
             if (tileHighlight == null)
                 try
                 {
-                    tileHighlight = content.Load<Texture2D>("tileHighlight");
+                    tileHighlight = ContentInterface.LoadTexture("tileHighlight");
                 }
                 catch (ContentLoadException e)
                 {
@@ -67,7 +65,7 @@ namespace MapEditor
                 }
             try
             {
-                tileSet = content.Load<Texture2D>(name);
+                tileSet = ContentInterface.LoadTexture(name);
                 tileCount = tileSet.Width / tileSize;
 
                 invalidateScrollbar();
@@ -76,6 +74,8 @@ namespace MapEditor
             {
                 MessageBox.Show("Could not find asset: " + name);
             }
+            if(tileSet==null)
+                MessageBox.Show("Could not find asset: " + name);
         }
 
         protected void UpdateLogic()

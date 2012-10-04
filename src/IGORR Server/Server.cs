@@ -38,12 +38,12 @@ namespace IGORR_Server
             //config.LocalAddress = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 });
             connection = new NetServer(config);
             connection.Start();
-            Protocol.SetUp(connection);
-            Protocol.RegisterMessageHandler(MessageTypes.Chat, new MessageHandler(HandleChat));
-            Protocol.RegisterMessageHandler(MessageTypes.Position, new MessageHandler(HandlePosition));
-            Protocol.RegisterMessageHandler(MessageTypes.Leave, new MessageHandler(HandleLeave));
-            Protocol.RegisterMessageHandler(MessageTypes.Join, new MessageHandler(HandleJoin));
-            Protocol.RegisterMessageHandler(MessageTypes.Attack, new MessageHandler(HandleAttack));
+            ProtocolHelper.SetUp(connection);
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Chat, new MessageHandler(HandleChat));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Position, new MessageHandler(HandlePosition));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Leave, new MessageHandler(HandleLeave));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Join, new MessageHandler(HandleJoin));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Attack, new MessageHandler(HandleAttack));
             _clientids = new Dictionary<long, int>();
             _clients = new Dictionary<int, Client>();
             _connections = new List<NetConnection>();
@@ -90,7 +90,7 @@ namespace IGORR_Server
                             Console.WriteLine(msg.MessageType.ToString() + ": " + msg.ReadString());
                             break;
                         case NetIncomingMessageType.Data: 
-                            Protocol.HandleMessage(msg, id); break;
+                            ProtocolHelper.HandleMessage(msg, id); break;
                         case NetIncomingMessageType.StatusChanged:
                             NetConnectionStatus status = (NetConnectionStatus)msg.ReadByte();
                             if (status == NetConnectionStatus.Disconnected)
@@ -247,7 +247,7 @@ namespace IGORR_Server
             Client client;
             if (_clients.TryGetValue(message.clientID, out client))
             {
-                PositionMessage pm2 = (PositionMessage)Protocol.NewMessage(MessageTypes.Position);
+                PositionMessage pm2 = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
                 pm2.id = pm.id;
                 pm2.Position = pm.Position;
                 pm2.Move = pm.Move;
@@ -298,7 +298,7 @@ namespace IGORR_Server
                 Point spawnPoint = targetMap.getRandomSpawn();
                 targetMap.ObjectManager.Add(new Vector2(spawnPoint.X, spawnPoint.Y), id, client.Name);
 
-                AssignPlayerMessage apm = (AssignPlayerMessage)Protocol.NewMessage(MessageTypes.AssignPlayer);
+                AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);
                 apm.objectID = id;
                 apm.Encode();
                 SendClient(client, apm);
@@ -324,7 +324,7 @@ namespace IGORR_Server
                 _clientids.Remove(client.Connection.RemoteUniqueIdentifier);
                 Console.WriteLine("Removing: " + client.Connection.RemoteEndpoint.ToString());
                 _connections.Remove(client.Connection);
-                DeSpawnMessage dsm = (DeSpawnMessage)Protocol.NewMessage(MessageTypes.DeSpawn);
+                DeSpawnMessage dsm = (DeSpawnMessage)ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
                 dsm.id = client.PlayerID;
                 _clients[client.ID].CurrentMap.ObjectManager.Remove(client.PlayerID);
                 _clients.Remove(client.ID);

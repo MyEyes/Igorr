@@ -395,7 +395,7 @@ for (int x = 0; x < tpCount; x++)
                 else
                     _layers[layer][posX, posY] = newTile;
 
-                IGORR.Protocol.Messages.ChangeTileMessage ctm = (IGORR.Protocol.Messages.ChangeTileMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.ChangeTile);
+                IGORR.Protocol.Messages.ChangeTileMessage ctm = (IGORR.Protocol.Messages.ChangeTileMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.ChangeTile);
                 ctm.tileID = tileID;
                 ctm.x = posX;
                 ctm.y = posY;

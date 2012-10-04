@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using IGORR.Content;
 
 namespace IGORR.Game
 {
@@ -106,8 +107,8 @@ namespace IGORR.Game
             : base(texture, spawnPos, id)
         {
             if (_lifeBar == null)
-                _lifeBar=WorldController.Content.Load<Texture2D>("White");
-            _pointer = new PlayerPointer(this._name, WorldController.Content.Load<Texture2D>("Arrow"));
+                _lifeBar = ContentInterface.LoadTexture("White");
+            _pointer = new PlayerPointer(this._name, ContentInterface.LoadTexture("Arrow"));
             _speed = Vector2.Zero;
             _onGround = false;
             _bodyParts = new List<BodyPart>();
@@ -129,10 +130,10 @@ namespace IGORR.Game
         public Player(string CharFile, Rectangle spawnPos, int id):base(null,spawnPos,id)
         {
             if (_lifeBar == null)
-                _lifeBar = WorldController.Content.Load<Texture2D>("White");
-            
+                _lifeBar = ContentInterface.LoadTexture("White");
 
-            string fileContent = WorldController.Content.Load<string>(CharFile);
+
+            string fileContent = ContentInterface.LoadFile("chars/" + CharFile);
             string[] lines = fileContent.Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.None);
             int.TryParse(lines[0], out _rect.Width);
             int.TryParse(lines[1], out _rect.Height);
@@ -141,7 +142,7 @@ namespace IGORR.Game
             int.TryParse(lines[2], out dimX);
             int.TryParse(lines[3], out dimY);
             string texture = lines[4];
-            _texture = WorldController.Content.Load<Texture2D>(texture);
+            _texture = ContentInterface.LoadTexture(texture);
             int.TryParse(lines[5], out _hp);
             _maxhp = _hp;
 
@@ -176,7 +177,13 @@ namespace IGORR.Game
             _collisionOffset = new Vector4((((16 - _rect.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - _rect.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
             _completeBody = new BodyPart(null);
             CalculateTotalBonus();
-            _pointer = new PlayerPointer(this._name, WorldController.Content.Load<Texture2D>("Arrow"));
+            _pointer = new PlayerPointer(this._name, ContentInterface.LoadTexture("Arrow"));
+
+        }
+
+        public Player(CharTemplate info, Rectangle spawnPos, int id)
+            : base(null, spawnPos, id)
+        {
 
         }
 

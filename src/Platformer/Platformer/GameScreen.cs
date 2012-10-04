@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using IGORR.Content;
+
 namespace IGORR.Game
 {
     class GameScreen : IScreen
@@ -32,27 +34,25 @@ namespace IGORR.Game
         Player[] players;
         #endif
 
-        public void Initialize(ContentManager Content, GraphicsDevice Device, ScreenManager manager)
+        public void Initialize(GraphicsDevice Device, ScreenManager manager)
         {
             GraphicsDevice = Device;
             spriteBatch = new SpriteBatch(Device);
             cam = new Camera(new Vector2(520, 440), new Rectangle(0, 0, 800, 600));
-            MapManager.LoadMaps(Content, Device);
+            MapManager.LoadMaps(Device);
             //map = MapManager.GetMapByID(0);
-            objectManager = new ObjectManager(map, Content);
-            _lightMap = new LightMap(Device, Content);
+            objectManager = new ObjectManager(map);
+            _lightMap = new LightMap(Device);
             objectManager.SetLight(_lightMap);
-            pm = new ParticleManager(Content);
-            TextManager.SetUp(Content.Load<SpriteFont>("font"));
-            Player.font = Content.Load<SpriteFont>("font");
-            font = Content.Load<SpriteFont>("font");
-            bar = Content.Load<Texture2D>("White");
-            expBorder = Content.Load<Texture2D>("ExpBar");
-            _spriteEffect = Content.Load<Effect>("ShadowEffect");
+            pm = new ParticleManager();
+            TextManager.SetUp(ContentInterface.LoadFont("font"));
+            Player.font = ContentInterface.LoadFont("font");
+            font = ContentInterface.LoadFont("font");
+            bar = ContentInterface.LoadTexture("White");
+            expBorder = ContentInterface.LoadTexture("ExpBar");
+            _spriteEffect = ContentInterface.LoadShader("ShadowEffect");
             _spriteEffect.CurrentTechnique = _spriteEffect.Techniques["Sprite"];
-            MusicPlayer.SetContent(Content);
             WorldController.SetObjectManager(objectManager);
-            WorldController.SetContent(Content);
             WorldController.SetGame(this);
             WorldController.Start();
         }
@@ -200,7 +200,7 @@ namespace IGORR.Game
                 _prevGamePadState = pad;
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
-            IGORR.Protocol.Protocol.Update((int)gameTime.ElapsedGameTime.Milliseconds);
+            IGORR.Protocol.ProtocolHelper.Update((int)gameTime.ElapsedGameTime.Milliseconds);
         }
 
         void DrawExpBar()

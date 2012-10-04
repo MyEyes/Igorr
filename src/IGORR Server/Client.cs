@@ -46,7 +46,7 @@ namespace IGORR_Server
                 _currentMap.ObjectManager.Add(p);
             }
 
-            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)IGORR.Protocol.Protocol.NewMessage(MessageTypes.ChangeMap);
+            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)IGORR.Protocol.ProtocolHelper.NewMessage(MessageTypes.ChangeMap);
             cmm.mapid = map.ID;
             cmm.Encode();
             _clientConnection.SendMessage(cmm.GetMessage(), NetDeliveryMethod.ReliableOrdered, 1);
@@ -54,46 +54,46 @@ namespace IGORR_Server
             SpawnMessage sm;
             for (int x = 0; x < _currentMap.ObjectManager.Objects.Count; x++)
             {
-                sm = (SpawnMessage)Protocol.GetContainerMessage(MessageTypes.Spawn, Connection);
-                sm.position = _currentMap.ObjectManager.Objects[x].MidPosition;
+                sm = (SpawnMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Spawn, Connection);
+                sm.position = _currentMap.ObjectManager.Objects[x].Rect;
                 sm.objectType = _currentMap.ObjectManager.Objects[x].ObjectType;
                 sm.id = _currentMap.ObjectManager.Objects[x].ID;
                 if (_currentMap.ObjectManager.Objects[x] is Logic.Player) sm.groupID = (_currentMap.ObjectManager.Objects[x] as Logic.Player).GroupID;
                 sm.Name = _currentMap.ObjectManager.Objects[x].Name;
                 if (_currentMap.ObjectManager.Objects[x] is Logic.Player)
                     sm.CharName = (_currentMap.ObjectManager.Objects[x] as Logic.Player).CharFile;
-                Protocol.SendContainer(sm, Connection);
+                ProtocolHelper.SendContainer(sm, Connection);
                 _currentMap.ObjectManager.Objects[x].SendInfo(Connection);
                 if(_currentMap.ObjectManager.Objects[x] is Logic.Player)
                 {
                     Logic.Player play=_currentMap.ObjectManager.Objects[x] as Logic.Player;
-                SetPlayerStatusMessage dm = (SetPlayerStatusMessage)Protocol.GetContainerMessage(MessageTypes.SetHP, Connection);
+                SetPlayerStatusMessage dm = (SetPlayerStatusMessage)ProtocolHelper.GetContainerMessage(MessageTypes.SetHP, Connection);
                 dm.playerID = play.ID;
                 dm.currentHP = play.HP;
                 dm.maxHP = play.MaxHP;
                 dm.Exp = play.TotalXP;
                 dm.lastLevelExp = play.LastLevelXP;
                 dm.nextLevelExp = play.NextLevelXP;
-                Protocol.SendContainer(dm, Connection);
+                ProtocolHelper.SendContainer(dm, Connection);
                 }
             }
 
             for (int x = 0; x < _currentMap.TileMods.Count; x++)
             {
-                ChangeTileMessage ctm = (ChangeTileMessage)Protocol.GetContainerMessage(MessageTypes.ChangeTile, Connection);
+                ChangeTileMessage ctm = (ChangeTileMessage)ProtocolHelper.GetContainerMessage(MessageTypes.ChangeTile, Connection);
                 ctm.tileID = _currentMap.TileMods[x].TileID;
                 ctm.x = _currentMap.TileMods[x].Position.X;
                 ctm.y = _currentMap.TileMods[x].Position.Y;
                 ctm.layer = _currentMap.TileMods[x].layer;
-                Protocol.SendContainer(ctm, Connection);
+                ProtocolHelper.SendContainer(ctm, Connection);
             }
             if (p != null)
             {
-                AssignPlayerMessage apm = (AssignPlayerMessage)Protocol.GetContainerMessage(MessageTypes.AssignPlayer, Connection);
+                AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.GetContainerMessage(MessageTypes.AssignPlayer, Connection);
                 apm.objectID = p.ID;
-                Protocol.SendContainer(apm, Connection);
+                ProtocolHelper.SendContainer(apm, Connection);
             }
-            PlayMessage pm = (PlayMessage)Protocol.GetContainerMessage(MessageTypes.Play, Connection);
+            PlayMessage pm = (PlayMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Play, Connection);
             pm.Loop = true;
             pm.Queue = false;
             pm.SongName = "Level01";
@@ -102,13 +102,13 @@ namespace IGORR_Server
             {
                 for (int x = 0; x < p.Parts.Count; x++)
                 {
-                    PickupMessage pum = (PickupMessage)Protocol.GetContainerMessage(MessageTypes.Pickup, Connection);
+                    PickupMessage pum = (PickupMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Pickup, Connection);
                     pum.id = p.Parts[x].GetID();
-                    Protocol.SendContainer(pum, Connection);
+                    ProtocolHelper.SendContainer(pum, Connection);
                 }
             }
 
-            Protocol.FlushContainer(Connection, 1);
+            ProtocolHelper.FlushContainer(Connection, 1);
         }
 
         public int ID

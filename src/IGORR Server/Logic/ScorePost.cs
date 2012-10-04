@@ -66,7 +66,7 @@ namespace IGORR_Server.Logic
                 if (_currentColor != ScoreColor.Blue)
                 {
                     _currentColor = ScoreColor.Blue;
-                    ObjectInfoMessage oim = (ObjectInfoMessage)Protocol.NewMessage(MessageTypes.ObjectInfo);
+                    ObjectInfoMessage oim = (ObjectInfoMessage)ProtocolHelper.NewMessage(MessageTypes.ObjectInfo);
                     oim.objectID=_id;
                     oim.info="b";
                     oim.Encode();
@@ -86,7 +86,7 @@ namespace IGORR_Server.Logic
                 if (_currentColor != ScoreColor.Neutral)
                 {
                     _currentColor = ScoreColor.Neutral;
-                    ObjectInfoMessage oim = (ObjectInfoMessage)Protocol.NewMessage(MessageTypes.ObjectInfo);
+                    ObjectInfoMessage oim = (ObjectInfoMessage)ProtocolHelper.NewMessage(MessageTypes.ObjectInfo);
                     oim.objectID = _id;
                     oim.info = "n";
                     oim.Encode();
@@ -101,7 +101,7 @@ namespace IGORR_Server.Logic
                 if (_currentColor != ScoreColor.Red)
                 {
                     _currentColor = ScoreColor.Red;
-                    ObjectInfoMessage oim = (ObjectInfoMessage)Protocol.NewMessage(MessageTypes.ObjectInfo);
+                    ObjectInfoMessage oim = (ObjectInfoMessage)ProtocolHelper.NewMessage(MessageTypes.ObjectInfo);
                     oim.objectID = _id;
                     oim.info = "r";
                     oim.Encode();
@@ -120,10 +120,10 @@ namespace IGORR_Server.Logic
 
         public override void SendInfo(Lidgren.Network.NetConnection connection)
         {
-            ObjectInfoMessage oim = (ObjectInfoMessage)Protocol.GetContainerMessage(MessageTypes.ObjectInfo, connection);
+            ObjectInfoMessage oim = (ObjectInfoMessage)ProtocolHelper.GetContainerMessage(MessageTypes.ObjectInfo, connection);
             oim.objectID = _id;
             oim.info = _currentColor == ScoreColor.Neutral ? "n" : _currentColor == ScoreColor.Red ? "r" : "b";
-            Protocol.SendContainer(oim, connection);
+            ProtocolHelper.SendContainer(oim, connection);
         }
 
         public override void Event(Player obj)

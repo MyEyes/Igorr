@@ -26,7 +26,7 @@ namespace IGORR.Protocol.Messages
                 try
                 {
                     IgorrMessage m = new IgorrMessage(_incoming);
-                    _messages.Add(Protocol.DecodeMessage(m));
+                    _messages.Add(ProtocolHelper.DecodeMessage(m));
                 }
                 catch (Exception e)
                 {

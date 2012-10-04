@@ -10,7 +10,7 @@ namespace IGORR.Game
 {
     interface IScreen
     {
-        void Initialize(ContentManager Content, GraphicsDevice Device, ScreenManager manager);
+        void Initialize(GraphicsDevice Device, ScreenManager manager);
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime);
     }

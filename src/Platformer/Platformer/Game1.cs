@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using IGORR.Content;
+
 namespace IGORR.Game
 {
     /// <summary>
@@ -55,6 +57,8 @@ namespace IGORR.Game
         protected override void LoadContent()
         {
             // Erstellen Sie einen neuen SpriteBatch, der zum Zeichnen von Texturen verwendet werden kann.
+            ContentInterface.SetContent(Services, "Content", "Content.7z");
+            ContentInterface.SetGraphicsDevice(GraphicsDevice);
             manager = new ScreenManager(Content, GraphicsDevice);
             manager.AddScreen(new MainMenuScreen(this));
             // TODO: Verwenden Sie this.Content, um Ihren Spiel-Content hier zu laden

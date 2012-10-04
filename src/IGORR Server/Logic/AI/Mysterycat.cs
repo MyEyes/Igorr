@@ -36,7 +36,7 @@ namespace IGORR_Server.Logic.AI
             flickering += more ? speed * seconds : -speed * seconds;
             if (map.GetTrigger("MoveCat1"))
             {
-                IGORR.Protocol.Messages.SetGlowMessage sgm = (IGORR.Protocol.Messages.SetGlowMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetGlow);
+                IGORR.Protocol.Messages.SetGlowMessage sgm = (IGORR.Protocol.Messages.SetGlowMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetGlow);
                 sgm.id = _id;
                 sgm.Position = MidPosition - Vector2.UnitY * 20;
                 sgm.radius = baseRadius + flickering;
@@ -52,7 +52,7 @@ namespace IGORR_Server.Logic.AI
                 if (map.GetTrigger("MoveCat3"))
                 {
                     baseRadius -= 220 * seconds;
-                    sgm = (IGORR.Protocol.Messages.SetGlowMessage)IGORR.Protocol.Protocol.NewMessage(IGORR.Protocol.MessageTypes.SetGlow);
+                    sgm = (IGORR.Protocol.Messages.SetGlowMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetGlow);
                     sgm.id = _id;
                     sgm.Position = MidPosition - Vector2.UnitY * 20;
                     sgm.radius = baseRadius;
