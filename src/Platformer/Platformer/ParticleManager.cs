@@ -90,15 +90,45 @@ namespace IGORR.Game
         public void Boom(LightMap light, Vector2 pos)
         {
             ParticleInfo info = new ParticleInfo();
+            info.collides = true;
             light.SetGlow(-2, pos,Color.LightYellow, 300, true, 500);
             for (int x = 0; x < 60; x++)
                 AddParticle(_dustTex, 1.2f, pos+new Vector2((float)_random.NextDouble()*40-20,(float)_random.NextDouble()*40-20), new Vector2((float)_random.NextDouble() * 40 - 20, (float)-(15 + _random.NextDouble() * 10)), new Vector2(0, 20), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() + 0.7f, info);
 
             for (int x = 0; x < 12; x++)
                 AddParticle(_boomTex, 0.7f, pos + new Vector2((float)_random.NextDouble() * 20 - 10, (float)_random.NextDouble() * 20 - 10), new Vector2((float)_random.NextDouble() * 40 - 20, (float)-(15 + _random.NextDouble() * 10)), new Vector2(0, 20), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() * 0.5f + 0.7f, info);
-            info.collides = true;
             for (int x = 0; x < 6; x++)
                 AddParticle(_expTex, 0.8f, pos, new Vector2((float)_random.NextDouble() * 600 - 300, (float)_random.NextDouble() * 600 - 300), new Vector2(0, 0), (float)(_random.NextDouble() * Math.PI * 2), (float)(_random.NextDouble() * Math.PI * 2), (float)_random.NextDouble() * 0.2f + 0.4f, info);
+        }
+
+        public void FromTemplate(string name, Vector2 position, Vector2 dir, bool Right)
+        {
+            EffectTemplate temp = ContentInterface.LoadEffect(name);
+            if(temp==null)
+                return;
+            FromTemplate(temp, position, dir, Right);
+                    
+            
+        }
+
+        public void FromTemplate(EffectTemplate temp, Vector2 position, Vector2 dir, bool Right)
+        {
+            ParticleInfo info = new ParticleInfo();
+            info.collides = temp.Collides;
+            info.sticky = temp.Sticky;
+            for (int x = 0; x < temp.NumParticles; x++)
+            {
+                float angle = (float)(_random.NextDouble() * Math.PI * 2);
+                while (!temp.isInAngles(angle))
+                    angle = (float)(_random.NextDouble() * Math.PI * 2);
+
+                AddParticle(temp.Texture,
+                    (float)_random.NextDouble() * (temp.LifeTimeRange.X - temp.LifeTimeRange.Y) + temp.LifeTimeRange.X,
+                    position + new Vector2(Right ? temp.Offset.X : -temp.Offset.X, temp.Offset.Y),
+                    new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * ((float)_random.NextDouble() * (temp.SpeedRange.Y - temp.SpeedRange.X) + temp.SpeedRange.X) + temp.InitialSpeedFactor * dir,
+                    Vector2.Zero, 0, 0, (float)_random.NextDouble() * (temp.SizeModRange.Y - temp.SizeModRange.X) + temp.SizeModRange.X, info);
+
+            }
         }
 
         public void Splat(Vector2 position, Vector2 dir)

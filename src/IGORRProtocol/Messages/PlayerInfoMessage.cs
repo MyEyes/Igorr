@@ -11,7 +11,7 @@ namespace IGORR.Protocol.Messages
         public string Text;
         public int playerID;
 
-        public PlayerInfoMessage(NetOutgoingMessage outgoing, long timestamp) : base(outgoing, timestamp, MessageTypes.PlayerInfoMessage) { }
+        public PlayerInfoMessage(NetOutgoingMessage outgoing, long timestamp) : base(outgoing, timestamp, MessageTypes.PlayerInfo) { }
 
         public PlayerInfoMessage(IgorrMessage incoming) : base(incoming) { }
 

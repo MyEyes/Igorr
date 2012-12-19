@@ -120,6 +120,7 @@
     <Compile Include="Attack.cs" />
     <Compile Include="BodyPart.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="MessageBoard.cs" />
     <Compile Include="EventObject.cs" />
     <Compile Include="Exit.cs" />
     <Compile Include="GameObject.cs" />

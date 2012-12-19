@@ -58,7 +58,7 @@ namespace IGORR.Game
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Play, new MessageHandler(HandlePlay));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Shadow, new MessageHandler(HandleShadows));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.SetHP, new MessageHandler(HandleSetHP));
-            ProtocolHelper.RegisterMessageHandler(MessageTypes.PlayerInfoMessage, new MessageHandler(HandlePlayerInfo));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.PlayerInfo, new MessageHandler(HandlePlayerInfo));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.ExpMessage, new MessageHandler(HandleExp));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Knockback, new MessageHandler(HandleKnockback));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
@@ -148,10 +148,12 @@ namespace IGORR.Game
             Send(message, true);
         }
 
-        public static void SendAttack(int attackID, int playerID)
+        public static void SendAttack(int attackID, Vector2 dir, int playerID)
         {
             AttackMessage am = (AttackMessage)ProtocolHelper.NewMessage(MessageTypes.Attack);
             am.attackerID = playerID;
+            dir.Normalize();
+            am.attackDir = dir;
             am.attackID = attackID;
             am.Encode();
             Send(am, false);

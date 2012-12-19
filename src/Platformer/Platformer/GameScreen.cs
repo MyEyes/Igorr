@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using IGORR.Content;
 
+
+//TODO: Hide mouse cursor after a while of inactivity
 namespace IGORR.Game
 {
     class GameScreen : IScreen
@@ -17,8 +19,9 @@ namespace IGORR.Game
         Camera cam;
         ObjectManager objectManager;
         ParticleManager pm;
-        KeyboardState prevKeyboard;
+        KeyboardState _prevKeyboard;
         GamePadState _prevGamePadState;
+        MouseState _prevMouseState;
         SpriteFont font;
         Effect _spriteEffect;
         LightMap _lightMap;
@@ -27,7 +30,10 @@ namespace IGORR.Game
         bool shadowTurnOn = true;
         Texture2D expBorder;
         Texture2D bar;
+        Texture2D crosshair;
         GraphicsDevice GraphicsDevice;
+
+        Vector2 _mouseDir = Vector2.Zero;
         #if WINDOWS
         Player player;
         #elif XBOX
@@ -50,6 +56,7 @@ namespace IGORR.Game
             font = ContentInterface.LoadFont("font");
             bar = ContentInterface.LoadTexture("White");
             expBorder = ContentInterface.LoadTexture("ExpBar");
+            crosshair = ContentInterface.LoadTexture("Crosshair");
             _spriteEffect = ContentInterface.LoadShader("ShadowEffect");
             _spriteEffect.CurrentTechnique = _spriteEffect.Techniques["Sprite"];
             WorldController.SetObjectManager(objectManager);
@@ -62,13 +69,14 @@ namespace IGORR.Game
             map = MapManager.GetMapByID(id);
             objectManager.SetMap(map);
             _lightMap.SetMap(map);
+            cam.JumpNext();
         }
 
 
 
         public void Draw(GameTime gameTime)
         {
-            if (map != null)
+            if (map != null && player!=null)
             {
                 _lightMap.DrawLights(shadowCountdown, cam, spriteBatch);
                 GraphicsDevice.Clear(Color.Black);
@@ -79,6 +87,7 @@ namespace IGORR.Game
                 map.Draw(spriteBatch, cam);
 
                 objectManager.Draw(spriteBatch);
+                spriteBatch.Draw(crosshair, player.MidPosition, null, Color.White, (float)Math.Atan2(_mouseDir.Y, _mouseDir.X), new Vector2(-32, 16),0.5f, SpriteEffects.None, 0.1f);
                 pm.Draw(spriteBatch);
                 TextManager.Draw(spriteBatch);
                 spriteBatch.End();
@@ -95,7 +104,7 @@ namespace IGORR.Game
                 GraphicsDevice.Clear(Color.Black);
                 spriteBatch.Begin();
                 if (font != null)
-                    spriteBatch.DrawString(font, "Not connected", new Vector2(50, 50), Color.White);
+                    spriteBatch.DrawString(font, "Loading", new Vector2(50, 50), Color.White);
                 spriteBatch.End();
             }
         }
@@ -108,6 +117,11 @@ namespace IGORR.Game
                 KeyboardState keyboard = Keyboard.GetState();
 
                 MouseState mouse = Mouse.GetState();
+                if (player != null && (mouse.X != _prevMouseState.X || mouse.Y != _prevMouseState.Y))
+                {
+                    _mouseDir = Vector2.Zero;
+                    _mouseDir = cam.ViewToWorldPosition(new Vector2(mouse.X, mouse.Y)) - player.MidPosition;
+                }
                 GamePadState pad = GamePad.GetState(PlayerIndex.One);
                 player = objectManager.Player;
                 if (player != null)
@@ -116,31 +130,36 @@ namespace IGORR.Game
                         player.Move(-1);
                     if (keyboard.IsKeyDown(Keys.D))
                         player.Move(1);
-                    if (keyboard.IsKeyDown(Keys.Space) && !prevKeyboard.IsKeyDown(Keys.Space))
+                    if (keyboard.IsKeyDown(Keys.Space) && !_prevKeyboard.IsKeyDown(Keys.Space))
                         player.Jump();
-                    if (keyboard.IsKeyDown(Keys.LeftControl) && !prevKeyboard.IsKeyDown(Keys.LeftControl))
-                        WorldController.SendAttack(0, player.ID);
+                    if (keyboard.IsKeyDown(Keys.LeftControl) && !_prevKeyboard.IsKeyDown(Keys.LeftControl))
+                        WorldController.SendAttack(0,_mouseDir, player.ID);
 
                     if (keyboard.IsKeyDown(Keys.Left))
                         player.Move(-1);
-                    if (keyboard.IsKeyDown(Keys.Up) && !prevKeyboard.IsKeyDown(Keys.Up))
+                    if (keyboard.IsKeyDown(Keys.Up) && !_prevKeyboard.IsKeyDown(Keys.Up))
                         player.Jump();
                     if (keyboard.IsKeyDown(Keys.Right))
                         player.Move(1);
-                    if (keyboard.IsKeyDown(Keys.Y) && !prevKeyboard.IsKeyDown(Keys.Y))
-                        WorldController.SendAttack(0, player.ID);
-                    if (keyboard.IsKeyDown(Keys.Z) && !prevKeyboard.IsKeyDown(Keys.Z))
-                        WorldController.SendAttack(0, player.ID);
-                    if (keyboard.IsKeyDown(Keys.X) && !prevKeyboard.IsKeyDown(Keys.X))
-                        WorldController.SendAttack(1, player.ID);
-                    if (keyboard.IsKeyDown(Keys.C) && !prevKeyboard.IsKeyDown(Keys.C))
-                        WorldController.SendAttack(2, player.ID);
+                    if (keyboard.IsKeyDown(Keys.Y) && !_prevKeyboard.IsKeyDown(Keys.Y))
+                        WorldController.SendAttack(0, _mouseDir, player.ID);
+                    if (keyboard.IsKeyDown(Keys.Z) && !_prevKeyboard.IsKeyDown(Keys.Z))
+                        WorldController.SendAttack(0, _mouseDir, player.ID);
+                    if (keyboard.IsKeyDown(Keys.X) && !_prevKeyboard.IsKeyDown(Keys.X))
+                        WorldController.SendAttack(1, _mouseDir, player.ID);
+                    if (keyboard.IsKeyDown(Keys.C) && !_prevKeyboard.IsKeyDown(Keys.C))
+                        WorldController.SendAttack(2, _mouseDir, player.ID);
                     /*                
                                     if (keyboard.IsKeyDown(Keys.Q))
                                         cam.ZoomInOn(1.1f, new Vector2(mouse.X, mouse.Y));
                                     if (keyboard.IsKeyDown(Keys.E))
                                         cam.ZoomInOn(1 / 1.1f, new Vector2(mouse.X, mouse.Y));
                      */
+                    if (pad.ThumbSticks.Right.LengthSquared() > 0.2f)
+                    {
+                        _mouseDir = pad.ThumbSticks.Right;
+                        _mouseDir.Y = -_mouseDir.Y;
+                    }
 
                     player.Move(pad.ThumbSticks.Left.X);
                     if (pad.IsButtonDown(Buttons.DPadLeft))
@@ -150,17 +169,18 @@ namespace IGORR.Game
                     if (pad.IsButtonDown(Buttons.A) && !_prevGamePadState.IsButtonDown(Buttons.A))
                         player.Jump();
                     if (pad.IsButtonDown(Buttons.X) && !_prevGamePadState.IsButtonDown(Buttons.X))
-                        WorldController.SendAttack(0, player.ID);
+                        WorldController.SendAttack(0, _mouseDir, player.ID);
                     if (pad.IsButtonDown(Buttons.B) && !_prevGamePadState.IsButtonDown(Buttons.B))
-                        WorldController.SendAttack(1, player.ID);
+                        WorldController.SendAttack(1, _mouseDir, player.ID);
                     if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
-                        WorldController.SendAttack(3, player.ID);
+                        WorldController.SendAttack(2, _mouseDir, player.ID);
                     //Test stuff
-                    if (keyboard.IsKeyDown(Keys.T) && !prevKeyboard.IsKeyDown(Keys.T))
+                    if (keyboard.IsKeyDown(Keys.T) && !_prevKeyboard.IsKeyDown(Keys.T))
                         pm.Boom(Light, player.MidPosition);
                     WorldController.SendPosition(player);
                     objectManager.Update((float)gameTime.ElapsedGameTime.Milliseconds);
-                    cam.SetPos(player.Position);
+                    cam.MoveTo(player.Position , 0.1f);
+                    //cam.SetPos(player.Position);
                     _lightMap.SetGlow(-1, player.MidPosition, Color.White, shadowCountdown * 50, true);
                 }
 
@@ -196,8 +216,9 @@ namespace IGORR.Game
 
 
                 TextManager.Update(gameTime.ElapsedGameTime.Milliseconds);
-                prevKeyboard = keyboard;
+                _prevKeyboard = keyboard;
                 _prevGamePadState = pad;
+                _prevMouseState = mouse;
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
             IGORR.Protocol.ProtocolHelper.Update((int)gameTime.ElapsedGameTime.Milliseconds);

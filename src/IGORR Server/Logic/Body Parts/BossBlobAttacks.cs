@@ -14,10 +14,10 @@ namespace IGORR_Server.Logic
             hasAttack = true;
         }
 
-        public override Attack GetAttack(Player owner, int info)
+        public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
             Attack att = null;
-            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), new Vector2(-200, 0), 500, owner.ID, owner.GroupID, 5004);
+            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), dir*200, 500, owner.ID, owner.GroupID, 5004);
             att.HitOnce = true;
             att.Knockback = new Vector2(-200, -50);
             return att;
@@ -35,7 +35,7 @@ namespace IGORR_Server.Logic
         {
             hasAttack = true;
         }
-        public override Attack GetAttack(Player owner, int info)
+        public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
             Attack att = null;
             att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), new Vector2(200, 0), 500, owner.ID, owner.GroupID, 5004);
@@ -59,7 +59,7 @@ namespace IGORR_Server.Logic
             hasAttack = true;
         }
 
-        public override Attack GetAttack(Player owner, int info)
+        public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
             Attack att = null;
             if (owner.LookLeft)

@@ -15,11 +15,13 @@ namespace IGORR.Content
         static PackedContentManager _content;
         static GraphicsDevice _device;
         static Mutex _mutex = new Mutex();
+        static bool _contentSet = false;
 
         public static void SetContent(IServiceProvider serviceProvider, string ContentPath, string PackFile)
         {
             _content = new PackedContentManager(serviceProvider, PackFile, ContentPath, Nomad.Archive.SevenZip.KnownSevenZipFormat.SevenZip);
             TextureLoader.LoadDefault(_content);
+            _contentSet = true;
         }
 
         public static void SetGraphicsDevice(GraphicsDevice device)
@@ -29,6 +31,8 @@ namespace IGORR.Content
 
         public static Texture2D LoadTexture(string file)
         {
+            if (!_contentSet)
+                return null;
             _mutex.WaitOne();
             Texture2D tex = TextureLoader.GetTexture(_content, _device, file);
             _mutex.ReleaseMutex();
@@ -37,6 +41,8 @@ namespace IGORR.Content
 
         public static string LoadFile(string file)
         {
+            if (!_contentSet)
+                return "";
             _mutex.WaitOne();
             try
             {
@@ -66,6 +72,8 @@ namespace IGORR.Content
 
         public static Effect LoadShader(string file)
         {
+            if (!_contentSet)
+                return null;
             _mutex.WaitOne();
             try
             {
@@ -76,6 +84,8 @@ namespace IGORR.Content
 
         public static Song LoadSong(string file)
         {
+            if (!_contentSet)
+                return null;
             _mutex.WaitOne();
             try
             {
@@ -86,12 +96,19 @@ namespace IGORR.Content
 
         public static SpriteFont LoadFont(string file)
         {
+            if (!_contentSet)
+                return null;
             _mutex.WaitOne();
             try
             {
                 return _content.Load<SpriteFont>("fonts/" + file);
             }
             finally { _mutex.ReleaseMutex(); }
+        }
+
+        public static bool ContentSet
+        {
+            get { return _contentSet; }
         }
     }
 }

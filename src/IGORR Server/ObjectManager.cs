@@ -194,12 +194,12 @@ namespace IGORR_Server
             return null;
         }
 
-        public Player GetPlayerInArea(Rectangle area, int groupID)
+        public Player GetPlayerInArea(Rectangle area, int groupID, bool sameGroup)
         {
 
             for (int x = 0; x < _objects.Count; x++)
             {
-                if (area.Contains((int)_objects[x].MidPosition.X, (int)_objects[x].MidPosition.Y) && (_objects[x] is Player) && !(_objects[x] is NPC) && (_objects[x] as Player).GroupID==groupID)
+                if (area.Contains((int)_objects[x].MidPosition.X, (int)_objects[x].MidPosition.Y) && (_objects[x] is Player) && !(_objects[x] is NPC) && ((_objects[x] as Player).GroupID==groupID)==sameGroup)
                     return _objects[x] as Player;
             }
             return null;
@@ -262,7 +262,7 @@ namespace IGORR_Server
             //Protocol.FlushContainer(null);
         }
 
-        public void SpawnAttack(int playerID, int attackID, int info)
+        public void SpawnAttack(int playerID,Vector2 dir, int attackID, int info)
         {
             Player player = GetPlayer(playerID);
             if (player != null)
@@ -282,7 +282,7 @@ namespace IGORR_Server
                             break;
                     }
                      */
-                    Attack a = player.GetAttack(attackID, info);
+                    Attack a = player.GetAttack(attackID,dir, info);
                     if (a != null)
                         _attacks.Spawn(a);
                 }

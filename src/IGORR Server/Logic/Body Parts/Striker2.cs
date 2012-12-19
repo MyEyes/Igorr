@@ -15,15 +15,15 @@ namespace IGORR_Server.Logic
             hasAttack = true;
         }
 
-        public override Attack GetAttack(Player owner, int info)
+        public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
             Attack att = null;
             Rectangle startRect = owner.Rect;
             startRect = owner.Rect;
             startRect.Height -= 4;
             startRect.Y += 3;
-            startRect.X += owner.LookLeft ? -8 : 8;
-            att = new Attack(owner.map, 1, startRect, new Vector2(owner.LastSpeed.X + (owner.LookLeft ? -200 : 200), 0), 200, owner.ID, owner.GroupID, 2);
+            startRect.X += (int)(dir.X * 8);
+            att = new Attack(owner.map, 1, startRect, new Vector2(owner.LastSpeed.X,0) +200*dir, 200, owner.ID, owner.GroupID, 2);
             att.HitOnce = false;
             att.Penetrates = true;
             owner.Attack(0.6f);

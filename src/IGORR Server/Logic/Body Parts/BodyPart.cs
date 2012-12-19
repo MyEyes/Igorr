@@ -61,7 +61,7 @@ namespace IGORR_Server.Logic
             return 0;
         }
 
-        public virtual Attack GetAttack(Player owner, int info)
+        public virtual Attack GetAttack(Player owner,Vector2 dir,int dmgBonus, int info)
         {
             return null;
         }

@@ -13,6 +13,7 @@ namespace IGORR.Game
         Rectangle _screenSize;
         Vector2 _dim;
         float zoom=2f;
+        bool _jump;
 
         public Camera(Vector2 position, Rectangle ScreenSize)
         {
@@ -24,6 +25,22 @@ namespace IGORR.Game
         public void Move(Vector2 diff)
         {
             _position += diff;
+        }
+
+        public void JumpNext()
+        {
+            _jump = true;
+        }
+
+        public void MoveTo(Vector2 pos, float factor)
+        {
+            if (!_jump)
+                _position += (pos - _position) * factor;
+            else
+            {
+                _position = pos;
+                _jump = false;
+            }
         }
 
         public void SetPos(Vector2 position)
@@ -63,6 +80,21 @@ namespace IGORR.Game
             {
                 return Matrix.CreateTranslation(-_screenSize.Width / 2 - 0.5f, -_screenSize.Height / 2 - 0.5f, 0) * Matrix.CreateScale(2 / ((float)_screenSize.Width), -2 / ((float)_screenSize.Height), 1);
             }
+        }
+
+        public Vector2 Size
+        {
+            get
+            {
+                return _dim / zoom;
+            }
+        }
+
+        public Vector2 ViewToWorldPosition(Vector2 pos)
+        {
+            Matrix inversion = Matrix.Invert(ViewMatrix);
+            pos=Vector2.Transform(pos, inversion);
+            return pos;
         }
 
         public Rectangle ViewSpace

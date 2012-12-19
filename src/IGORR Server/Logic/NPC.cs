@@ -44,6 +44,11 @@ namespace IGORR_Server.Logic
             base.Update(map, seconds);
         }
 
+        public virtual void Interact(Player player)
+        {
+
+        }
+
         public virtual PartPickup GetDrop(Map map)
         {
             if (_random.NextDouble() < _dropchance)

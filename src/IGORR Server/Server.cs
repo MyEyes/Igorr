@@ -261,7 +261,7 @@ namespace IGORR_Server
         void HandleAttack(IgorrMessage message)
         {
             AttackMessage am = (AttackMessage)(message);
-            _clients[message.clientID].CurrentMap.ObjectManager.SpawnAttack(am.attackerID, am.attackID, am.attackInfo);
+            _clients[message.clientID].CurrentMap.ObjectManager.SpawnAttack(am.attackerID,am.attackDir, am.attackID, am.attackInfo);
         }
 
         void HandleJoin(IgorrMessage message)

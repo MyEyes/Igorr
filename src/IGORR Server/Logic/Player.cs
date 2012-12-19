@@ -269,7 +269,7 @@ namespace IGORR_Server.Logic
             if (_baseBody.Level % 2 == 0)
             {
                 _baseBody.AttBonus += _baseBody.Level / 7 + 1;
-                IGORR.Protocol.Messages.PlayerInfoMessage pim = (IGORR.Protocol.Messages.PlayerInfoMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.PlayerInfoMessage);
+                IGORR.Protocol.Messages.PlayerInfoMessage pim = (IGORR.Protocol.Messages.PlayerInfoMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.PlayerInfo);
                 pim.playerID = this.ID;
                 pim.Text = "Level UP!\n" + "Att+: " + (_baseBody.Level / 7 + 1).ToString();
                 pim.Encode();
@@ -279,7 +279,7 @@ namespace IGORR_Server.Logic
             {
                 _baseBody.DefBonus += _baseBody.Level / 13 + 1;
 
-                IGORR.Protocol.Messages.PlayerInfoMessage pim = (IGORR.Protocol.Messages.PlayerInfoMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.PlayerInfoMessage);
+                IGORR.Protocol.Messages.PlayerInfoMessage pim = (IGORR.Protocol.Messages.PlayerInfoMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.PlayerInfo);
                 pim.playerID = this.ID;
                 pim.Text = "Level UP!\n" + "Def+: " + (_baseBody.Level / 13 + 1).ToString();
                 pim.Encode();
@@ -380,16 +380,15 @@ namespace IGORR_Server.Logic
             _attackSlots[slot] = part;
         }
 
-        public Attack GetAttack(int id, int info)
+        public Attack GetAttack(int id,Vector2 dir, int info)
         {
             Logic.Attack att = null;
             if (id < 0 || id > 2 || _attackSlots[id]==null)
                 return null;
-            att = _attackSlots[id].GetAttack(this,info);
+            int DmgBonus = _random.Next(_baseBody.AttBonus / 2, _baseBody.AttBonus + 1);
+            att = _attackSlots[id].GetAttack(this,dir,DmgBonus,info);
             if (att == null)
                 return null;
-            int DmgBonus = _random.Next(_baseBody.AttBonus / 2, _baseBody.AttBonus + 1);
-            att.Damage += DmgBonus;
             return att;
             /*
             switch (id)

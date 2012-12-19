@@ -31,14 +31,16 @@ namespace IGORR.Game
             TextRenderer text = new TextRenderer(ContentInterface.LoadFont("font"), Color.White);
             Skin skin = new Skin(ContentInterface.LoadTexture("ImageMap"), ContentInterface.LoadFile("Map"));
             _gui = new Gui(_gameRef, skin, text);
-            _gui.AddWidget(new Ruminate.GUI.Content.Panel(300, 200, 200, 300));
-            _gui.AddWidget(new Ruminate.GUI.Content.Button(350, 230, 50, "Start",
-                new WidgetEvent(delegate { _manager.RemoveScreen(this); _manager.AddScreen(new GameScreen()); })));
+            Ruminate.GUI.Content.Panel panel = new Ruminate.GUI.Content.Panel(300, 200, 200, 300);
+            _gui.AddWidget(panel);
+            Ruminate.GUI.Content.Button button = new Ruminate.GUI.Content.Button(350, 230, 50, "Start");
+            button.ClickEvent = new WidgetEvent(delegate { _manager.RemoveScreen(this); _gui.RemoveWidget(button); _gui.RemoveWidget(panel); _manager.AddScreen(new GameScreen()); });
+            _gui.AddWidget(button);
         }
 
         public void Update(GameTime gameTime)
         {
-            _gui.Update();
+            
         }
 
         public void Draw(GameTime gameTime)

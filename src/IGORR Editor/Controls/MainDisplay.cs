@@ -26,8 +26,9 @@ namespace IGORR.Editor
         {
         }
 
-        public void SetUpContent()
+        public void SetUpContent(string Content, string Pack)
         {
+            ContentInterface.SetContent(Services, Content, Pack);
         }
 
         public void Save()

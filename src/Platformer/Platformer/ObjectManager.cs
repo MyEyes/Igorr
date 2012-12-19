@@ -109,9 +109,9 @@ namespace IGORR.Game
                 //case 'a' - 'a': Player player = new Player(ContentInterface.LoadTexture("blob"), new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), 2*standardSize, 2*standardSize-1), id);
                 case 'a' - 'a': Player player;
                     if (string.IsNullOrEmpty(charName))
-                        player = new Player(ContentInterface.LoadTexture("blob"), new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize - 1), id);
+                        player = new Player(ContentInterface.LoadTexture("blob"), position, id);
                     else
-                        player = new Player(charName, new Rectangle((int)(position.X - standardSize / 2), (int)(position.Y - standardSize / 2), standardSize, standardSize - 1), id);
+                        player = new Player(charName, position, id);
                     player.Name = name;
                     if (playerID != -1 && playerID == id)
                         _player = player;
@@ -123,6 +123,7 @@ namespace IGORR.Game
                 case 'g' - 'a': exit = new Exit(ContentInterface.LoadTexture("Exit"), _map, position, id); _map.AddObject(exit); _objects.Add(exit); break;
                 case 22: ScorePost sp = new ScorePost(_map, ContentInterface.LoadTexture("ScorePost"), position, id); _map.AddObject(sp); _objects.Add(sp); sp.SetColor(ScorePost.ScoreColor.Red); break;
                 case 23: sp = new ScorePost(_map, ContentInterface.LoadTexture("ScorePost"), position, id); _map.AddObject(sp); _objects.Add(sp); sp.SetColor(ScorePost.ScoreColor.Blue); break;
+                case 24: MessageBoard mb = new MessageBoard(_map, ContentInterface.LoadTexture("MessageBoard"), position, id); _map.AddObject(mb); _objects.Add(mb);  break;
                 case 29: sp = new ScorePost(_map, ContentInterface.LoadTexture("ScorePost"), position, id); _map.AddObject(sp); _objects.Add(sp); sp.SetColor(ScorePost.ScoreColor.Neutral); break;
                 case 26: exit = new Exit(ContentInterface.LoadTexture("RedTel"), _map, position, id); _map.AddObject(exit); _objects.Add(exit); break;
                 case 27: exit = new Exit(ContentInterface.LoadTexture("BlueTel"), _map, position, id); _map.AddObject(exit); _objects.Add(exit); break;

@@ -203,8 +203,8 @@ namespace IGORR_Server.Logic.AI
                             {
                                 if (!Landed)
                                 {
-                                    _map.ObjectManager.SpawnAttack(ID, 0, 0);
-                                    _map.ObjectManager.SpawnAttack(ID, 1, 0);
+                                    _map.ObjectManager.SpawnAttack(ID, Vector2.Zero, 0, 0);
+                                    _map.ObjectManager.SpawnAttack(ID, Vector2.Zero, 1, 0);
                                     Landed = true;
                                 }
                                 jumpDelay -= seconds;
@@ -249,7 +249,7 @@ namespace IGORR_Server.Logic.AI
                             ShootCountdown -= seconds;
                             if (ShootCountdown <= 0)
                             {
-                                _map.ObjectManager.SpawnAttack(ID, 2,0);
+                                _map.ObjectManager.SpawnAttack(ID, Vector2.Zero, 2, 0);
                                 ShootDuration -= seconds;
                                 if (ShootDuration <= 0)
                                 {

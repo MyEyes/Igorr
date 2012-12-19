@@ -1,6 +1,6 @@
-﻿namespace IGORR.Editor
+﻿namespace IGORR.Editor.Forms
 {
-    partial class frmMain
+    partial class frmContentSelecter
     {
         /// <summary>
         /// Required designer variable.
@@ -28,22 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.mainDisplay1 = new IGORR.Editor.MainDisplay();
             this.SuspendLayout();
             // 
-            // frmMain
+            // mainDisplay1
+            // 
+            this.mainDisplay1.Location = new System.Drawing.Point(262, 255);
+            this.mainDisplay1.Name = "mainDisplay1";
+            this.mainDisplay1.Size = new System.Drawing.Size(10, 10);
+            this.mainDisplay1.TabIndex = 0;
+            this.mainDisplay1.Text = "mainDisplay1";
+            this.mainDisplay1.Visible = false;
+            // 
+            // frmContentSelecter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Name = "frmMain";
-            this.Text = "Form1";
+            this.Controls.Add(this.mainDisplay1);
+            this.Name = "frmContentSelecter";
+            this.Text = "frmContentSelecter";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-
+        private MainDisplay mainDisplay1;
     }
 }
-

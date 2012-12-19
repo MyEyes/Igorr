@@ -52,6 +52,7 @@
     <Compile Include="Messages\AttackMessage.cs" />
     <Compile Include="Messages\ChatMessage.cs" />
     <Compile Include="Messages\ContainerMessage.cs" />
+    <Compile Include="Messages\InteractMessage.cs" />
     <Compile Include="Messages\ObjectInfoMessage.cs" />
     <Compile Include="Messages\SpawnAttackMessage.cs" />
     <Compile Include="Messages\ExpMessage.cs" />

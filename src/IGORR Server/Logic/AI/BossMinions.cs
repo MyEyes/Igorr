@@ -56,7 +56,7 @@ namespace IGORR_Server.Logic.AI
                     Move(1);
                 if (_random.NextDouble() > 0.99f)
                     Jump();
-                _map.ObjectManager.SpawnAttack(ID, 0, 0);
+                _map.ObjectManager.SpawnAttack(ID,Vector2.Zero, 0, 0);
             }
             base.Update(map, seconds);
         }

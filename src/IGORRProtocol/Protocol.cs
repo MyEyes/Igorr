@@ -63,11 +63,12 @@ namespace IGORR.Protocol
         SetGlow,
         Shadow,
         SetHP,
-        PlayerInfoMessage,
+        PlayerInfo,
         ExpMessage,
         Knockback,
         SpawnAttack,
-        ObjectInfo
+        ObjectInfo,
+        Interact
     }
 
     public delegate void MessageHandler(IgorrMessage message);
@@ -148,10 +149,11 @@ namespace IGORR.Protocol
                 case MessageTypes.SetGlow: message = new Messages.SetGlowMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Shadow: message = new Messages.ShadowMessage(outgoing, _timeStamp); break;
                 case MessageTypes.SetHP: message = new Messages.SetPlayerStatusMessage(outgoing, _timeStamp); break;
-                case MessageTypes.PlayerInfoMessage: message = new Messages.PlayerInfoMessage(outgoing, _timeStamp); break;
+                case MessageTypes.PlayerInfo: message = new Messages.PlayerInfoMessage(outgoing, _timeStamp); break;
                 case MessageTypes.ExpMessage: message = new Messages.ExpMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Knockback: message = new Messages.KnockbackMessage(outgoing, _timeStamp); break;
                 case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(outgoing, _timeStamp); break;
+                case MessageTypes.Interact: message = new Messages.InteractMessage(outgoing, _timeStamp); break;
             }
              
             return message;
@@ -190,10 +192,11 @@ namespace IGORR.Protocol
                 case MessageTypes.SetGlow: message = new Messages.SetGlowMessage(m); break;
                 case MessageTypes.Shadow: message = new Messages.ShadowMessage(m); break;
                 case MessageTypes.SetHP: message = new Messages.SetPlayerStatusMessage(m); break;
-                case MessageTypes.PlayerInfoMessage: message = new Messages.PlayerInfoMessage(m); break;
+                case MessageTypes.PlayerInfo: message = new Messages.PlayerInfoMessage(m); break;
                 case MessageTypes.ExpMessage: message = new Messages.ExpMessage(m); break;
                 case MessageTypes.Knockback: message = new Messages.KnockbackMessage(m); break;
                 case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(m); break;
+                case MessageTypes.Interact: message = new Messages.InteractMessage(m); break;
             }
             return message;
         }

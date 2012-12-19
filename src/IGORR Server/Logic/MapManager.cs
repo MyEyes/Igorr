@@ -19,6 +19,7 @@ namespace IGORR_Server.Logic
             {
                 _maps.Add(new Map(lines[x],server,x));
             }
+            _maps[0].ObjectManager.Add(new LuaNPC("test", _maps[0], "Cleo", new Microsoft.Xna.Framework.Rectangle(190, 150, 16, 24), ObjectManager.getID()));
         }
 
         public static Map GetMapByID(int id)

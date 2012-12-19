@@ -53,6 +53,7 @@ namespace IGORR.Game
 
         public static void PlaySong(string name, bool loop, bool queue)
         {
+            return;
             _mutex.WaitOne();
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -77,7 +78,8 @@ namespace IGORR.Game
                     try
                     {
                         song = _content.Load<Song>(name);
-                        _songs.Add(name, song);
+                        if (song != null)
+                            _songs.Add(name, song);
                     }
                     catch (Exception e)
                     {
@@ -108,6 +110,7 @@ namespace IGORR.Game
 
         public static void Update(float ms)
         {
+            return;
             _mutex.WaitOne();
             lock (_queue)
             {

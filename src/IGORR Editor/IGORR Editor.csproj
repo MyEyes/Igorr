@@ -59,6 +59,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ElenimoGraphicsDeviceService.cs" />
+    <Compile Include="Forms\frmContentSelecter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmContentSelecter.Designer.cs">
+      <DependentUpon>frmContentSelecter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,9 +72,16 @@
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphicsDeviceService.cs" />
+    <Compile Include="ParticleEditor\Particle.cs" />
+    <Compile Include="ParticleEditor\ParticleDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceContainer.cs" />
+    <EmbeddedResource Include="Forms\frmContentSelecter.resx">
+      <DependentUpon>frmContentSelecter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>

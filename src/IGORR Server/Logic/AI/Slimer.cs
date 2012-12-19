@@ -93,7 +93,7 @@ namespace IGORR_Server.Logic.AI
             {
                 attackCooldown = 1;
                 attack = false;
-                _map.ObjectManager.SpawnAttack(ID, 0,0);
+                _map.ObjectManager.SpawnAttack(ID,new Vector2(Left?-1:1,0), 0,0);
                 _Move = Left != _target.MidPosition.X < this.MidPosition.X;
                 Left = _target.MidPosition.X < this.MidPosition.X;
                 IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
