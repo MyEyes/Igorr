@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
 
     public class Tile : GameObject
@@ -54,7 +54,7 @@ namespace IGORR.Game
             if(_eventObject!=null)_eventObject.Draw(batch);
         }
 
-        public override bool Collides(GameObject obj)
+        public virtual bool Collides(GameObject obj)
         {
             if (_collides)
                 return base.Collides(obj);

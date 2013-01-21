@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     class ExpOrb : EventObject
     {
@@ -22,7 +22,7 @@ namespace IGORR_Server.Logic
 
         public override void Event(Player obj)
         {
-            _map.ObjectManager.GiveXP(_expAmount, MidPosition);
+            obj.GetExp(_expAmount, MidPosition);
             _map.ObjectManager.Remove(this);
             _parent.RemoveChild();
         }

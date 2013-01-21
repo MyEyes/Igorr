@@ -7,12 +7,13 @@ using System.Threading;
 using Lidgren.Network;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
+using IGORR.Content;
 using Microsoft.Xna.Framework;
 using System.Reflection;
 
-namespace IGORR_Server
+namespace IGORR.Server
 {
-    public class Server
+    public class Server:Logic.IServer
     {
         NetServer connection;
         Thread receiveThread;
@@ -29,8 +30,12 @@ namespace IGORR_Server
 
         public Server()
         {
-            LuaVM.DoString("Print(\"Lua Test\")");
             LuaVM.DoFile("settings.lua");
+
+            string Content = LuaVM.GetValue<string>("Content", "Content");
+            Modules.ModuleManager.SetContentDir(Content);
+            Modules.ModuleManager.LoadAllModules();
+
             NetPeerConfiguration config = new NetPeerConfiguration("IGORR");
             config.Port = LuaVM.GetValue<int>("port", 5445);
             //config.SimulatedMinimumLatency = 2f;
@@ -140,6 +145,8 @@ namespace IGORR_Server
 
         public Client getClient(Logic.Player player)
         {
+            if (player == null)
+                return null;
             foreach (Client client in _clients.Values)
                 if (client.PlayerID == player.ID)
                     return client;
@@ -154,7 +161,7 @@ namespace IGORR_Server
         }
         */ 
 
-        public void SendAllMap(Logic.Map map, IgorrMessage message, bool Reliable)
+        public void SendAllMap(Logic.IMap map, IgorrMessage message, bool Reliable)
         {
             List<NetConnection> recipients = new List<NetConnection>();
             recipients.AddRange(_connections);
@@ -179,7 +186,7 @@ namespace IGORR_Server
                 connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.UnreliableSequenced, currentChannel);
         }
 
-        public void SendAllMapReliable(Logic.Map map, IgorrMessage message, bool ordered)
+        public void SendAllMapReliable(Logic.IMap map, IgorrMessage message, bool ordered)
         {
             List<NetConnection> recipients = new List<NetConnection>();
             recipients.AddRange(_connections);
@@ -206,8 +213,9 @@ namespace IGORR_Server
                     connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.ReliableUnordered, currentChannel);
             }
         }
-        public void SendAllExcept(Logic.Map map, Client client, IgorrMessage message, bool Reliable)
+        public void SendAllExcept(Logic.IMap map, Logic.Player player, IgorrMessage message, bool Reliable)
         {
+            Client client = getClient(player);
             if (_connections.Count > 1)
             {
                 List<NetConnection> recipients = new List<NetConnection>();
@@ -254,7 +262,7 @@ namespace IGORR_Server
                 pm2.TimeStamp = pm.TimeStamp;
                 pm2.Encode();
                 if (client.CurrentMap.ObjectManager.UpdatePosition(pm.Position, pm.Move, pm.id, pm.TimeStamp))
-                    SendAllExcept(client.CurrentMap, client, pm2, true);
+                    SendAllExcept(client.CurrentMap, client.CurrentMap.ObjectManager.GetPlayer(client.PlayerID), pm2, true);
             }
         }
 
@@ -270,7 +278,9 @@ namespace IGORR_Server
 
             if (Management.LoginData.CheckLogin(jm.Name, jm.Password))
             {
-                int id = ObjectManager.getID();
+
+                Logic.Map targetMap = Logic.MapManager.GetMapByID(0);
+                int id = targetMap.ObjectManager.getID();
 
                 Client client = new Client(message.SenderConnection, jm.Name);
                 client.PlayerID = id;
@@ -278,7 +288,6 @@ namespace IGORR_Server
                 _clients.Add(client.ID, client);
                 _connections.Add(client.Connection);
 
-                Logic.Map targetMap = Logic.MapManager.GetMapByID(0);
                 client.SetMap(targetMap, Vector2.Zero);
 
                 /*
@@ -296,7 +305,9 @@ namespace IGORR_Server
                 Protocol.FlushContainer(client.Connection);
                  */
                 Point spawnPoint = targetMap.getRandomSpawn();
-                targetMap.ObjectManager.Add(new Vector2(spawnPoint.X, spawnPoint.Y), id, client.Name);
+                Logic.Player player = new Logic.Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
+                player.Name = jm.Name;
+                targetMap.ObjectManager.Add(player);
 
                 AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);
                 apm.objectID = id;
@@ -338,7 +349,7 @@ namespace IGORR_Server
         public void Status(string par)
         {
             TimeSpan totalTime = DateTime.Now - _lastTime;
-            Console.WriteLine("Active Maps: " + IGORR_Server.Logic.MapManager.ActiveMaps().ToString());
+            Console.WriteLine("Active Maps: " + IGORR.Server.Logic.MapManager.ActiveMaps().ToString());
             Console.WriteLine();
             Console.WriteLine("Sent Bytes: "+(connection.Statistics.SentBytes).ToString());
             Console.WriteLine("Sent Messages: " + (connection.Statistics.SentMessages ).ToString());
@@ -357,7 +368,7 @@ namespace IGORR_Server
         public void StatusTotal(string par)
         {
             TimeSpan totalTime = DateTime.Now - _startTime;
-            Console.WriteLine("Active Maps: " + IGORR_Server.Logic.MapManager.ActiveMaps().ToString());
+            Console.WriteLine("Active Maps: " + IGORR.Server.Logic.MapManager.ActiveMaps().ToString());
             Console.WriteLine();
             Console.WriteLine("Sent Bytes: " + connection.Statistics.SentBytes.ToString());
             Console.WriteLine("Sent Messages: " + connection.Statistics.SentMessages.ToString());

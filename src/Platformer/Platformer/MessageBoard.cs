@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     class MessageBoard : EventObject
     {

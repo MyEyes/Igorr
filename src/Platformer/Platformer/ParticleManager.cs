@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     public struct ParticleInfo
     {

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     class HPOrb : EventObject
     {

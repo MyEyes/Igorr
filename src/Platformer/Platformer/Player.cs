@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     class PlayerPointer
     {

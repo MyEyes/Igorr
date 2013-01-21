@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     class Legs:BodyPart
     {

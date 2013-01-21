@@ -6,7 +6,7 @@ using LuaInterface;
 using Lua511;
 using System.Reflection;
 
-namespace IGORR_Server
+namespace IGORR.Server
 {
     static class LuaVM
     {

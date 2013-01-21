@@ -6,45 +6,12 @@ using Microsoft.Xna.Framework;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
 
-    public class Attack : GameObject
-    {
-        protected AttackManager _manager;
-        public int Damage;
-        public float lifeTime;
-        public int parentID = -1;
-        public int groupID = 0;
-        public bool HitOnce = false;
-        public bool Penetrates = false;
-        public Vector2 Knockback = Vector2.Zero;
+    
 
-        public Attack(Map map, int damage, Rectangle rect, Vector2 mov, float lifeTime,int parentID,int groupID, int id)
-            : base(map,rect, id)
-        {
-            Damage = damage;
-            _movement = mov;
-            this.groupID = groupID;
-            this.parentID = parentID;
-            this.lifeTime = lifeTime;
-            _objectType = 'z' - 'a';
-            _name = "Attack";
-        }
-
-        public void SetAttackManager(AttackManager am)
-        {
-            _manager = am;
-        }
-
-        public virtual void Update(float ms)
-        {
-            Move(_movement * ms / 1000f);
-            lifeTime -= ms;
-        }
-    }
-
-    public class AttackManager
+    public class AttackManager:IAttackManager
     {
         List<Attack> _attacks;
         List<Attack> _addAttack;
@@ -98,7 +65,7 @@ namespace IGORR_Server.Logic
             return damage;
         }
 
-        public void Spawn(Map map, int damage, Rectangle rect, Vector2 mov, float lifeTime,int parentID, int id)
+        public void Spawn(IMap map, int damage, Rectangle rect, Vector2 mov, float lifeTime,int parentID, int id)
         {
             Attack attack = new Attack(map, damage, rect, mov, lifeTime, parentID,0, id);
             Spawn(attack);
@@ -117,7 +84,7 @@ namespace IGORR_Server.Logic
             _addAttack.Add(attack);
         }
 
-        public void Update(Map map, float ms)
+        public void Update(IMap map, float ms)
         {
             _attacks.AddRange(_addAttack);
             _addAttack.Clear();

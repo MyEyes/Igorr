@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     /// <summary>
     /// Dies ist der Haupttyp für Ihr Spiel

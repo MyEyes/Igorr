@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     public class PartPickup:EventObject
     {
@@ -47,7 +47,7 @@ namespace IGORR_Server.Logic
                 return;
             _parent.RemoveChild();
             if (_respawn)
-                _map.TimeSpawn(_bodyPart.GetID(), _bodyPart.GetSpawnTime());
+                _map.TimeSpawn(_bodyPart.GetID(), _position, _bodyPart.GetSpawnTime());
             PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
             pum.id = _bodyPart.GetID();
             pum.Encode();

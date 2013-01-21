@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 using System.Threading;
+using IGORR.Content;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     static class LogicHandler
     {

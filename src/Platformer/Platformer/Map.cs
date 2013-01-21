@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Threading;
 using IGORR.Content;
-namespace IGORR.Game
+namespace IGORR.Client
 {
 
     public class Map
@@ -233,13 +233,17 @@ namespace IGORR.Game
             Vector2 center = pos;
             Rectangle drawRect = viewSpace;
             int minX = (int)(pos.X / tileSize)-drawRect.Width/2;
+            minX = minX >= 0 ? minX : 0;
             int minY = (int)(pos.Y / tileSize)-drawRect.Height/2;
+            minY = minY >= 0 ? minY : 0;
             int maxX = (drawRect.Width + drawRect.X) / tileSize + 1;
+            maxX = maxX < _layers[1].GetLength(0) ? maxX : _layers[1].GetLength(0);
             int maxY = (drawRect.Height + drawRect.Y) / tileSize + 1;
+            maxY = maxY < _layers[1].GetLength(1) ? maxY : _layers[1].GetLength(1);
             int vertexCount = 0;
             for (int x = minX; x < maxX; x++)
                 for (int y = minY; y < maxY; y++)
-                    if (isValid(x, y) && _layers[1][x, y] != null)
+                    if (_layers[1][x, y] != null)
                     {
                         Vector3 diff = new Vector3(_layers[1][x, y].MidPosition - center, 0);
                         Vector3 edge1, edge2, edge3, edge4;
@@ -367,7 +371,7 @@ namespace IGORR.Game
             for (int x = minX; x < maxX; x++)
                 for (int y = minY; y < maxY; y++)
                     if (isValid(x, y) && _layers[2][x, y] != null)
-                        _layers[2][x, y].Draw(0.5f, batch);
+                        _layers[2][x, y].Draw(0.4f, batch);
         }
 
         public void ChangeTile(int x, int y, int layer, int tileID)
@@ -425,7 +429,7 @@ namespace IGORR.Game
 
         private bool isValid(int x, int y)
         {
-            return x >= 0 && x < _layers[0].GetLength(0) && y >= 0 && y < _layers[0].GetLength(1);
+            return (uint)x < _layers[0].GetLength(0) && (uint)y < _layers[0].GetLength(1);
         }
     }
 }

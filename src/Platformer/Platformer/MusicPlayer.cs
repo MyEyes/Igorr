@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Threading;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
 
     class SongQueueItem

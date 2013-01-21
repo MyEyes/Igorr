@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     static class Settings
     {

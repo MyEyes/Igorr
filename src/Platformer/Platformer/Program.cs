@@ -1,6 +1,6 @@
 using System;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
 #if WINDOWS || XBOX
     static class Program

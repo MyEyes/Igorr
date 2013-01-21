@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     class AttackTrigger : EventObject
     {

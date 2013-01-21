@@ -12,6 +12,8 @@ sampler TextureSampler:register(s1)
 };
 float viewDistance = 1.0f;
 float shadowDarkness = 10.0f;
+float xTexelDist=1;
+float yTexelDist=1;
 
 // TODO: Fügen Sie Effektparameter hier hinzu.
 
@@ -83,7 +85,7 @@ TilePSInput TileVSFunction(TileVSInput input)
 
 float4 TilePSFunction(TilePSInput input) : COLOR
 {
-	return float4(float3(1,1,1),1);//*(1-length(input.ScreenPos.xy)/viewDistance),1);
+	return float4(float3(1,1,1),1)*(1-length(input.ScreenPos.xy)/viewDistance);
 }
 
 ForegroundTilePSInput ForegroundTileVSFunction(TileVSInput input)
@@ -108,6 +110,38 @@ float4 SpritePSFunction(SpritePSInput input) : COLOR
 	float4 color = tex2D(TexSampler, input.TexCoord);
 	clip(color.a-0.5f);
 	return color*input.Color;
+}
+
+float4 ShadowBlurHPSFunction(SpritePSInput input) : COLOR
+{
+	float4 color = tex2D(TexSampler, input.TexCoord);
+	//clip(color.a-0.5f);
+	color.xyz=color.xyz*(70.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(xTexelDist,0)).xyz*(56.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(2*xTexelDist,0)).xyz*(28.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(3*xTexelDist,0)).xyz*(8.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(4*xTexelDist,0)).xyz*(1.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(-xTexelDist,0)).xyz*(56.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(-2*xTexelDist,0)).xyz*(28.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(-3*xTexelDist,0)).xyz*(8.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(-4*xTexelDist,0)).xyz*(1.0f/256);
+	return color;
+}
+
+float4 ShadowBlurVPSFunction(SpritePSInput input) : COLOR
+{
+	float4 color = tex2D(TexSampler, input.TexCoord);
+	//clip(color.a-0.5f);
+	color.xyz=color.xyz*(70.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,yTexelDist)).xyz*(56.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,2*yTexelDist)).xyz*(28.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,3*yTexelDist)).xyz*(8.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,4*yTexelDist)).xyz*(1.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,-yTexelDist)).xyz*(56.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,-2*yTexelDist)).xyz*(28.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,-3*yTexelDist)).xyz*(8.0f/256);
+	color.xyz+=tex2D(TexSampler, input.TexCoord+float2(0,-4*yTexelDist)).xyz*(1.0f/256);
+	return color;
 }
 
 VertexShaderOutput GlowVSFunction(VertexShaderInput input)
@@ -194,6 +228,22 @@ technique Sprite
 	pass Pass1
 	{
 		PixelShader = compile ps_2_0 SpritePSFunction();
+	}
+}
+
+technique ShadowBlurH
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 ShadowBlurHPSFunction();
+	}
+}
+
+technique ShadowBlurV
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 ShadowBlurVPSFunction();
 	}
 }
 

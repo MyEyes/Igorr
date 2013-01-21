@@ -5,6 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
 }

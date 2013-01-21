@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace IGORR_Server.Management
+namespace IGORR.Server.Management
 {
 
     class Login

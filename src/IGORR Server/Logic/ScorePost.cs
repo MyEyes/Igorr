@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     class ScorePost:EventObject
     {

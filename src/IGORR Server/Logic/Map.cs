@@ -7,12 +7,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     class SpawnCountdown
     {
         public float countDown;
         public int id;
+        public Vector2 position;
     }
 
     struct TeleportPoint
@@ -29,7 +30,7 @@ namespace IGORR_Server.Logic
         public int TileID;
     }
 
-    public class Map
+    public class Map:IMap
     {
         Tile[][,] _layers;
         Texture2D tileSet;
@@ -41,6 +42,7 @@ namespace IGORR_Server.Logic
         List<TileModification> _tileMods = new List<TileModification>();
         Dictionary<string,bool> _triggers = new Dictionary<string, bool>();
         ObjectManager manager;
+        List<IGORR.Modules.ObjectModule> _modules;
 
         Random random;
         ContentManager _content;
@@ -56,8 +58,11 @@ namespace IGORR_Server.Logic
             _id = id;
 
             _spawns = new List<SpawnCountdown>();
-            manager = new IGORR_Server.ObjectManager(server);
+            manager = new IGORR.Server.Logic.ObjectManager(server);
             manager.SetMap(this);
+
+            _modules = Modules.ModuleManager.Modules;
+
             LoadNew(fileName);
             /*
             StreamReader reader = new StreamReader(fileName+".txt");
@@ -143,6 +148,7 @@ namespace IGORR_Server.Logic
 
         public void LoadNew(string file)
         {
+            Console.WriteLine("Loading Map " + file);
             BinaryReader reader = new BinaryReader(File.OpenRead(file+".map"));
             int sizeX = reader.ReadInt32();
             int sizeY = reader.ReadInt32();
@@ -195,18 +201,12 @@ for (int x = 0; x < tpCount; x++)
                         int objectID = reader.ReadInt32();
                         if (objectID >= 0)
                         {
-                            if (objectID >= 5000)
-                            {
-                                manager.SpawnMob((objectID-5000).ToString() + " " + (x * tileSize).ToString() + " " + (y * tileSize).ToString());
-                            }
-                            else
-                            {
-                                _spawnIDs[x, y] = objectID;
-                                if (!_spawnPoints.ContainsKey(objectID))
-                                    _spawnPoints.Add(objectID, new List<Point>());
-                                _spawnPoints[objectID].Add(new Point(x * tileSize, y * tileSize));
-                                SpawnItem(objectID, reader);
-                            }
+                            _spawnIDs[x, y] = objectID;
+                            if (!_spawnPoints.ContainsKey(objectID))
+                                _spawnPoints.Add(objectID, new List<Point>());
+                            _spawnPoints[objectID].Add(new Point(x * tileSize, y * tileSize));
+                            SpawnItem(objectID,new Vector2(x*tileSize,y*tileSize), reader);
+
                         }
                         else
                             _spawnIDs[x, y] = -1;
@@ -216,6 +216,7 @@ for (int x = 0; x < tpCount; x++)
             {
             }
             reader.Close();
+            Console.WriteLine();
         }
 
         public Point getRandomSpawn()
@@ -225,6 +226,27 @@ for (int x = 0; x < tpCount; x++)
             else return Point.Zero;
         }
 
+        public void SpawnItem(int typeId, Vector2 position, BinaryReader reader)
+        {
+            Tile targetTile = null;
+            if (isValid((int)(position.X / tileSize), (int)(position.Y / tileSize))) 
+                targetTile = _layers[3][(int)(position.X / tileSize), (int)(position.Y / tileSize)];
+            GameObject obj = null;
+            int id=ObjectManager.getID();
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                obj = _modules[x].SpawnByIdServer(this, typeId, id, new Point((int)position.X, (int)position.Y), reader);
+            }
+            if(obj==null)
+                return;
+            if (obj is Player)
+                manager.Add(obj as Player);
+            else if (obj is EventObject && targetTile != null)
+            {
+                manager.Add(obj);
+                targetTile.SetChild(obj as EventObject);
+            }
+        }
 
         public void SpawnItem(int id, BinaryReader reader)
         {
@@ -273,7 +295,7 @@ for (int x = 0; x < tpCount; x++)
                 {
                     if (newObject is EventObject)
                         targetTile.SetChild(newObject as EventObject);
-                    Console.WriteLine("Spawned new object: " + newObject.ToString());
+                    //Console.WriteLine("Spawned new object: " + newObject.ToString());
                     //ChangeTile(0, new Vector2(p.X, p.Y), 25);
                     manager.Add(newObject);
                 }
@@ -298,10 +320,11 @@ for (int x = 0; x < tpCount; x++)
             manager.Add(pickup);
         }
 
-        public void TimeSpawn(int id, float countdown)
+        public void TimeSpawn(int id, Vector2 position, float countdown)
         {
             SpawnCountdown cd = new SpawnCountdown();
             cd.countDown = countdown;
+            cd.position = position;
             cd.id = id;
             _spawns.Add(cd);
         }
@@ -322,7 +345,7 @@ for (int x = 0; x < tpCount; x++)
                 _spawns[x].countDown -= ms;
                 if (_spawns[x].countDown < 0)
                 {
-                    SpawnItem(_spawns[x].id, null);
+                    SpawnItem(_spawns[x].id,_spawns[x].position, null);
                     _spawns.RemoveAt(x);
                     x--;
                 }
@@ -447,7 +470,7 @@ for (int x = 0; x < tpCount; x++)
             return x >= 0 && x < _layers[0].GetLength(0) && y >= 0 && y < _layers[0].GetLength(1);
         }
 
-        public ObjectManager ObjectManager
+        public IObjectManager ObjectManager
         {
             get { return manager; }
         }

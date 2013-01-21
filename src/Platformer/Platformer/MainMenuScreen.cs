@@ -10,7 +10,7 @@ using Ruminate.Utils;
 using Ruminate.GUI.Framework;
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     class MainMenuScreen : IScreen
     {

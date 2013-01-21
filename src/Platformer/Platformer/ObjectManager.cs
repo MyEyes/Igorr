@@ -9,7 +9,7 @@ using System.Threading;
 using System.Collections.Concurrent;
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     class ObjectManager
     {

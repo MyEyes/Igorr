@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace IGORR_Server.Logic
+namespace IGORR.Server.Logic
 {
     static class MapManager
     {
@@ -12,6 +12,7 @@ namespace IGORR_Server.Logic
 
         public static void LoadMaps(Server server)
         {
+            Console.WriteLine();
             _maps = new List<Map>();
             StreamReader reader = new StreamReader("maps.lst");
             string[] lines = reader.ReadToEnd().Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -19,7 +20,6 @@ namespace IGORR_Server.Logic
             {
                 _maps.Add(new Map(lines[x],server,x));
             }
-            _maps[0].ObjectManager.Add(new LuaNPC("test", _maps[0], "Cleo", new Microsoft.Xna.Framework.Rectangle(190, 150, 16, 24), ObjectManager.getID()));
         }
 
         public static Map GetMapByID(int id)

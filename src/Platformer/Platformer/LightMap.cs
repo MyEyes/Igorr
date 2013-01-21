@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using IGORR.Content;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     public class LightSource
     {
@@ -28,6 +28,8 @@ namespace IGORR.Game
         List<LightSource> _glows = new List<LightSource>();
         Mutex _lightMutex;
 
+        const int lightMapDownSample = 1;
+
         static VertexBuffer clearVBuffer;
         static IndexBuffer clearIBuffer;
         public static Matrix rotateLeft = Matrix.Identity;
@@ -35,6 +37,7 @@ namespace IGORR.Game
         VertexBuffer shadowVB;
         IndexBuffer shadowIB;
         RenderTarget2D shadowTarget;
+        RenderTarget2D shadowTarget2;
         BlendState blendShadow;
         BlendState generateShadow;
         BlendState generateShadow2;
@@ -83,7 +86,8 @@ namespace IGORR.Game
             shadowIB.SetData<short>(indices);
             shadowVB = new VertexBuffer(device, VertexPositionColor.VertexDeclaration, 6 * 3 * maxX * maxY, BufferUsage.WriteOnly);
             shadowEffect = ContentInterface.LoadShader("ShadowEffect");
-            shadowTarget = new RenderTarget2D(device, device.PresentationParameters.BackBufferWidth, device.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 1, RenderTargetUsage.DiscardContents);
+            shadowTarget = new RenderTarget2D(device, device.PresentationParameters.BackBufferWidth/lightMapDownSample, device.PresentationParameters.BackBufferHeight/lightMapDownSample, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 1, RenderTargetUsage.DiscardContents);
+            shadowTarget2 = new RenderTarget2D(device, device.PresentationParameters.BackBufferWidth / lightMapDownSample, device.PresentationParameters.BackBufferHeight / lightMapDownSample, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 1, RenderTargetUsage.DiscardContents);
             blendShadow = new BlendState();
             blendShadow.ColorWriteChannels = ColorWriteChannels.All;
             blendShadow.ColorBlendFunction = BlendFunction.Add;
@@ -155,6 +159,9 @@ namespace IGORR.Game
             }
             _unusedTexture=new Texture2D(device, 1,1);
 
+            shadowEffect.Parameters["xTexelDist"].SetValue(1.0f / (device.PresentationParameters.BackBufferWidth/lightMapDownSample));
+            shadowEffect.Parameters["yTexelDist"].SetValue(1.0f / (device.PresentationParameters.BackBufferHeight/lightMapDownSample));
+
             _lightMutex = new Mutex();
         }
         public void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows)
@@ -214,8 +221,8 @@ namespace IGORR.Game
 
         public void ApplyLight(SpriteBatch batch)
         {
-            batch.Begin(SpriteSortMode.FrontToBack, blendShadow, null, DepthStencilState.Default, null);
-            batch.Draw(shadowTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.19f);
+            batch.Begin(SpriteSortMode.FrontToBack, blendShadow, SamplerState.LinearClamp, DepthStencilState.Default, null);
+            batch.Draw(shadowTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, lightMapDownSample, SpriteEffects.None, 0.19f);
             batch.End();
         }
 
@@ -257,8 +264,33 @@ namespace IGORR.Game
                 }
             }
             _lightMutex.ReleaseMutex();
+
+            BlurShadowTarget(batch);
+            //Disable shadowing collision tiles
+            
+            shadowEffect.CurrentTechnique = shadowEffect.Techniques["Tile"];
+            batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, null, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
+            map.DrawTileHighlight(cam, batch);
+            batch.End();
+            
             device.SetRenderTarget(null);
             device.DepthStencilState = DepthStencilState.None;
+        }
+
+        void BlurShadowTarget(SpriteBatch batch)
+        {
+            device.SetRenderTarget(shadowTarget2);
+            shadowEffect.CurrentTechnique = shadowEffect.Techniques["ShadowBlurH"];
+            batch.Begin(SpriteSortMode.Immediate, null, SamplerState.LinearClamp, DepthStencilState.None, null, shadowEffect);
+            batch.Draw(shadowTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, lightMapDownSample, SpriteEffects.None, 0.19f);
+            batch.End();
+            
+            device.SetRenderTarget(shadowTarget);
+            shadowEffect.CurrentTechnique = shadowEffect.Techniques["ShadowBlurV"];
+            batch.Begin(SpriteSortMode.Immediate, null, SamplerState.LinearClamp, DepthStencilState.None, null, shadowEffect);
+            batch.Draw(shadowTarget2, Vector2.Zero, null, Color.White, 0, Vector2.Zero, lightMapDownSample, SpriteEffects.None, 0.19f);
+            batch.End();
+            
         }
 
         public void DrawLight(Camera cam, LightSource light, Map map, SpriteBatch batch)
@@ -271,12 +303,6 @@ namespace IGORR.Game
                 //Build shadow geometry for the light
                 int vertexCount = map.CreateShadowGeometry(light.position, new Rectangle((int)light.position.X - cam.ViewSpace.Width / 2, (int)light.position.Y - cam.ViewSpace.Height / 2, cam.ViewSpace.Width, cam.ViewSpace.Height), shadowVB);
                 
-                //Disable shadowing collision tiles
-                shadowEffect.CurrentTechnique = shadowEffect.Techniques["Tile"];
-                shadowEffect.CurrentTechnique.Passes[0].Apply();
-                batch.Begin(SpriteSortMode.Immediate, generateShadow, null, disableShadows, RasterizerState.CullNone, shadowEffect);
-                map.DrawTileHighlight(cam, batch);
-                batch.End();
                 //device.Clear(ClearOptions.Stencil, Color.White, 0, 0);
                 //Draw Shadows
                 device.BlendState = generateShadow;

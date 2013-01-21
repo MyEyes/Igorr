@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     public class GameObject
     {
@@ -57,7 +57,12 @@ namespace IGORR.Game
 
         public virtual bool Collides(GameObject obj)
         {
-            return obj._rect.Intersects(this._rect);
+            return obj.Rect.Intersects(this._rect);
+        }
+
+        public virtual void Update(float ms)
+        {
+
         }
 
         public virtual void Draw(SpriteBatch batch)

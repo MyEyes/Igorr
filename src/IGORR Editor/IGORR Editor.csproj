@@ -110,6 +110,10 @@
       <Project>{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}</Project>
       <Name>IGORR Content Manager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IGORR.Module\IGORR.Module.csproj">
+      <Project>{7B5193AD-C540-4453-9A20-9C3F3BCEEC69}</Project>
+      <Name>IGORR.Module</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

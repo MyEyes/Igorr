@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR.Game
+namespace IGORR.Client
 {
     static class WorldController
     {

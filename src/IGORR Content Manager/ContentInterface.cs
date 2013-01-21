@@ -6,6 +6,7 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 using System.IO;
 
 namespace IGORR.Content
@@ -19,6 +20,8 @@ namespace IGORR.Content
 
         public static void SetContent(IServiceProvider serviceProvider, string ContentPath, string PackFile)
         {
+            if (serviceProvider == null)
+                return;
             _content = new PackedContentManager(serviceProvider, PackFile, ContentPath, Nomad.Archive.SevenZip.KnownSevenZipFormat.SevenZip);
             TextureLoader.LoadDefault(_content);
             _contentSet = true;

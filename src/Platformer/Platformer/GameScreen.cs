@@ -10,7 +10,7 @@ using IGORR.Content;
 
 
 //TODO: Hide mouse cursor after a while of inactivity
-namespace IGORR.Game
+namespace IGORR.Client
 {
     class GameScreen : IScreen
     {

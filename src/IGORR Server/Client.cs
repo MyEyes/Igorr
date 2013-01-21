@@ -7,7 +7,7 @@ using Lidgren.Network;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
 
-namespace IGORR_Server
+namespace IGORR.Server
 {
     public class Client
     {
