@@ -12,6 +12,7 @@ namespace IGORR.Protocol.Messages
         public Rectangle position;
         public Vector2 move;
         public int id;
+        public string info;
 
         public SpawnAttackMessage(NetOutgoingMessage outgoing, long timestamp)
             : base(outgoing, timestamp, MessageTypes.SpawnAttack)
@@ -29,6 +30,7 @@ namespace IGORR.Protocol.Messages
             _outgoing.Write(move.X);
             _outgoing.Write(move.Y);
             _outgoing.Write(id);
+            _outgoing.Write(info);
         }
 
         protected override void Decode()
@@ -36,6 +38,7 @@ namespace IGORR.Protocol.Messages
             position = new Rectangle(_incoming.ReadInt32(), _incoming.ReadInt32(), _incoming.ReadInt32(), _incoming.ReadInt32());
             move = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
             id = _incoming.ReadInt32();
+            info = _incoming.ReadString();
         }
     }
 }

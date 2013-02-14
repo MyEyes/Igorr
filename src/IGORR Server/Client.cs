@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Lidgren.Network;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
+using IGORR.Server.Logic;
 
 namespace IGORR.Server
 {
@@ -16,7 +17,7 @@ namespace IGORR.Server
         int playerID;
         int id;
         string _name;
-        Logic.Map _currentMap;
+        Map _currentMap;
 
         public Client(NetConnection connection, string name)
         {
@@ -30,9 +31,9 @@ namespace IGORR.Server
             get { return _clientConnection; }
         }
 
-        public void SetMap(Logic.Map map, Vector2 pos)
+        public void SetMap(Map map, Vector2 pos)
         {
-            Logic.Player p = null;
+            Player p = null;
             if (_currentMap != null)
             {
                 p = _currentMap.ObjectManager.GetPlayer(playerID);
@@ -58,15 +59,17 @@ namespace IGORR.Server
                 sm.position = _currentMap.ObjectManager.Objects[x].Rect;
                 sm.objectType = _currentMap.ObjectManager.Objects[x].ObjectType;
                 sm.id = _currentMap.ObjectManager.Objects[x].ID;
-                if (_currentMap.ObjectManager.Objects[x] is Logic.Player) sm.groupID = (_currentMap.ObjectManager.Objects[x] as Logic.Player).GroupID;
-                sm.Name = _currentMap.ObjectManager.Objects[x].Name;
-                if (_currentMap.ObjectManager.Objects[x] is Logic.Player)
-                    sm.CharName = (_currentMap.ObjectManager.Objects[x] as Logic.Player).CharFile;
+                if (_currentMap.ObjectManager.Objects[x] is Player)
+                {
+                    sm.Info += (_currentMap.ObjectManager.Objects[x] as Player).GroupID.ToString()+":";
+                    sm.Info += _currentMap.ObjectManager.Objects[x].Name+":";
+                    sm.Info += (_currentMap.ObjectManager.Objects[x] as Player).CharFile;
+                }
                 ProtocolHelper.SendContainer(sm, Connection);
                 _currentMap.ObjectManager.Objects[x].SendInfo(Connection);
-                if(_currentMap.ObjectManager.Objects[x] is Logic.Player)
+                if(_currentMap.ObjectManager.Objects[x] is Player)
                 {
-                    Logic.Player play=_currentMap.ObjectManager.Objects[x] as Logic.Player;
+                    Player play=_currentMap.ObjectManager.Objects[x] as Player;
                 SetPlayerStatusMessage dm = (SetPlayerStatusMessage)ProtocolHelper.GetContainerMessage(MessageTypes.SetHP, Connection);
                 dm.playerID = play.ID;
                 dm.currentHP = play.HP;
@@ -122,7 +125,7 @@ namespace IGORR.Server
             set { playerID = value; }
         }
 
-        public Logic.Map CurrentMap
+        public Map CurrentMap
         {
             get { return _currentMap; }
         }

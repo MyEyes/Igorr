@@ -50,7 +50,7 @@ namespace IGORR.Server.Logic
         string _mapname;
         int _id;
 
-        public Map(string fileName, Server server, int id)
+        public Map(string fileName, IGORR.Server.Server server, int id)
         {
             random = new Random();
 

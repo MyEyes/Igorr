@@ -16,7 +16,7 @@ namespace IGORR.Client.Logic
         public float bounceFactor;
     }
 
-    class Attack : GameObject
+    public class Attack : GameObject
     {
         public Vector2 Movement;
         public float lifeTime;
@@ -37,7 +37,7 @@ namespace IGORR.Client.Logic
             _angle = (float)Math.Atan2(Movement.Y, Movement.X);
         }
 
-        public bool Update(IMap map, float seconds)
+        public virtual bool Update(IMap map, float seconds)
         {
             if (_info.Physics)
             {
@@ -71,8 +71,8 @@ namespace IGORR.Client.Logic
         public override void Draw(SpriteBatch batch)
         {
             Rectangle drawRect = _rect;
-            drawRect.X += (int)_size.X / 2;
-            drawRect.Y += (int)_size.Y / 2;
+            drawRect.X += (int)_rect.Width / 2;
+            drawRect.Y += (int)_rect.Height / 2;
             batch.Draw(_texture, drawRect, null, Color.White, _angle, _size/2, (Movement.X < 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0.45f);
         }
     }

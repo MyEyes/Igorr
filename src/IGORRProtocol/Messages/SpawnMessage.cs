@@ -13,13 +13,11 @@ namespace IGORR.Protocol.Messages
         public Vector2 move;
         public int objectType;
         public int id;
-        public int groupID;
-        public string Name;
-        public string CharName = "";
+        public string Info = "";
 
         public SpawnMessage(NetOutgoingMessage outgoing, long timestamp)
             : base(outgoing, timestamp, MessageTypes.Spawn)
-        { Name = id.ToString(); move = Vector2.Zero; }
+        { move = Vector2.Zero; }
 
         public SpawnMessage(IgorrMessage m) : base(m) { }
 
@@ -34,9 +32,7 @@ namespace IGORR.Protocol.Messages
             _outgoing.Write(move.Y);
             _outgoing.Write(objectType);
             _outgoing.Write(id);
-            _outgoing.Write(groupID);
-            _outgoing.Write(Name);
-            _outgoing.Write(CharName);
+            _outgoing.Write(Info);
         }
 
         protected override void Decode()
@@ -45,9 +41,7 @@ namespace IGORR.Protocol.Messages
             move = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
             objectType = _incoming.ReadInt32();
             id = _incoming.ReadInt32();
-            groupID = _incoming.ReadInt32();
-            Name = _incoming.ReadString();
-            CharName = _incoming.ReadString();
+            Info = _incoming.ReadString();
         }
     }
 }

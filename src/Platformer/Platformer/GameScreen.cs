@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using IGORR.Content;
+using IGORR.Client.Logic;
 
 
 //TODO: Hide mouse cursor after a while of inactivity
@@ -175,8 +176,6 @@ namespace IGORR.Client
                     if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
                         WorldController.SendAttack(2, _mouseDir, player.ID);
                     //Test stuff
-                    if (keyboard.IsKeyDown(Keys.T) && !_prevKeyboard.IsKeyDown(Keys.T))
-                        pm.Boom(Light, player.MidPosition);
                     WorldController.SendPosition(player);
                     objectManager.Update((float)gameTime.ElapsedGameTime.Milliseconds);
                     cam.MoveTo(player.Position , 0.1f);
@@ -237,7 +236,7 @@ namespace IGORR.Client
                 spriteBatch.DrawString(font, (player.Exp - player.LastLevelExp).ToString() + "/" + (player.NextLevelExp - player.LastLevelExp).ToString(), new Vector2(sizeX / 2 - 50, 600 - 16 - 20), Color.White, 0, Vector2.Zero, 0.45f, SpriteEffects.None, 0.5f);
         }
 
-        public Map Map
+        public IMap Map
         {
             get { return map; }
         }

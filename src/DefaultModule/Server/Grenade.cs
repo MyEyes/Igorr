@@ -13,6 +13,7 @@ namespace IGORR.Server.Logic
             :base(map,damage,rect,mov,lifeTime,parentID,groupID,id)
         {
             Penetrates = true;
+            _objectType = 3;
         }
 
         public override void Update(float ms)

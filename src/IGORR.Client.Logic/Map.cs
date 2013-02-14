@@ -16,7 +16,10 @@ namespace IGORR.Client.Logic
         bool Collides(Vector2 position);
         bool Collides(GameObject obj);
         void RemoveEvent(EventObject obj);
-        EventObject GetEvent(Player player);
+        void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows);
+        void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows, float timeout);
+        EventObject GetEvent(GameObject obj);
+        ParticleManager Particles { get; }
     }
 
 }

@@ -24,7 +24,6 @@ namespace IGORR.Client
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Window.Title = "IGORR";
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1 / 61f);
@@ -61,6 +60,7 @@ namespace IGORR.Client
             ContentInterface.SetGraphicsDevice(GraphicsDevice);
             manager = new ScreenManager(Content, GraphicsDevice);
             manager.AddScreen(new MainMenuScreen(this));
+            Window.Title = "IGORR";
             // TODO: Verwenden Sie this.Content, um Ihren Spiel-Content hier zu laden
         }
 

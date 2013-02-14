@@ -115,31 +115,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation.cs" />
-    <Compile Include="AnimationController.cs" />
-    <Compile Include="Attack.cs" />
-    <Compile Include="BodyPart.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="MessageBoard.cs" />
-    <Compile Include="EventObject.cs" />
-    <Compile Include="Exit.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="Glow.cs" />
     <Compile Include="IScreen.cs" />
     <Compile Include="MainMenuScreen.cs" />
-    <Compile Include="ScorePost.cs" />
-    <Compile Include="Lava.cs" />
     <Compile Include="LightMap.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="MapManager.cs" />
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="ObjectManager.cs" />
-    <Compile Include="Particle.cs" />
-    <Compile Include="ParticleManager.cs" />
-    <Compile Include="PartPickup.cs" />
-    <Compile Include="Legs.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -147,10 +131,7 @@
     <Compile Include="ScreenManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SpriteEffect.cs" />
-    <Compile Include="Striker.cs" />
     <Compile Include="TextManager.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="Wings.cs" />
     <Compile Include="WorldController.cs" />
   </ItemGroup>
   <ItemGroup>

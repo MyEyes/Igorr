@@ -15,9 +15,9 @@ namespace IGORR.Server.Logic
     {
         List<Attack> _attacks;
         List<Attack> _addAttack;
-        Server _server;
+        IGORR.Server.Server _server;
 
-        public AttackManager(Server server)
+        public AttackManager(IGORR.Server.Server server)
         {
             _attacks = new List<Attack>();
             _addAttack = new List<Attack>();

@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Lidgren.Network">
       <HintPath>..\..\..\..\..\Downloads\lidgren-network-gen3-2012-05-26\Lidgren.Network\bin\Debug\Lidgren.Network.dll</HintPath>
@@ -45,7 +48,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Exit.cs" />
+    <Compile Include="Client\Grenade.cs" />
+    <Compile Include="Client\Lava.cs" />
+    <Compile Include="Client\Legs.cs" />
+    <Compile Include="Client\MessageBoard.cs" />
+    <Compile Include="Client\PartPickup.cs" />
+    <Compile Include="Client\ScorePost.cs" />
+    <Compile Include="Client\Striker.cs" />
+    <Compile Include="Client\Wings.cs" />
+    <Compile Include="Templates\BossBlobSpawnerTemplate.cs" />
     <Compile Include="Templates\BossBlobTemplate.cs" />
+    <Compile Include="Templates\AttackTriggerTemplate.cs" />
+    <Compile Include="Templates\BlockerTemplate.cs" />
+    <Compile Include="Templates\BirdTemplate.cs" />
+    <Compile Include="Templates\BossAttackTemplates.cs" />
+    <Compile Include="Templates\ExpOrbTemplate.cs" />
+    <Compile Include="Templates\Striker2AttackTemplate.cs" />
+    <Compile Include="Templates\GrenadeAttackTemplate.cs" />
+    <Compile Include="Templates\Heal20Template.cs" />
+    <Compile Include="Templates\Heal10Template.cs" />
+    <Compile Include="Templates\Heal5Template.cs" />
+    <Compile Include="Templates\Player.cs" />
+    <Compile Include="Templates\SlimerTemplate.cs" />
+    <Compile Include="Templates\InvTriggeredBlockerTemplate.cs" />
+    <Compile Include="Templates\StrikerAttackTemplate.cs" />
+    <Compile Include="Templates\TriggeredBlockerTemplate.cs" />
+    <Compile Include="Templates\Striker2Template.cs" />
+    <Compile Include="Templates\WingsTemplate.cs" />
+    <Compile Include="Templates\StrikerTemplate.cs" />
     <Compile Include="Templates\LavaTemplate.cs" />
     <Compile Include="Templates\LegsTemplate.cs" />
     <Compile Include="Templates\MapChangerTemplate.cs" />
@@ -117,6 +148,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(ProjectDir)$(OutDir)$(ProjectName).dll" "$(SolutionDir)src\Platformer\Platformer\bin\x86\Debug\Content\modules\$(ProjectName).dll"
+
+copy /Y "$(ProjectDir)$(OutDir)$(ProjectName).dll" "$(SolutionDir)src\IGORR Server\bin\Debug\Content\modules\$(ProjectName).dll"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

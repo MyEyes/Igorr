@@ -15,12 +15,12 @@ namespace IGORR.Modules
             return null;
         }
 
-        public virtual Client.Logic.GameObject CreateClient(Client.Logic.IMap map, int objectID, Point p, BinaryReader bin)
+        public virtual Client.Logic.GameObject CreateClient(Client.Logic.IMap map, int objectID, Point p, string info)
         {
             return null;
         }
 
-        public virtual Control GetEditorControl()
+        public virtual ObjectControl GetEditorControl(byte[] bytes)
         {
             return null;
         }

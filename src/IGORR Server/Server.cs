@@ -10,10 +10,11 @@ using IGORR.Protocol.Messages;
 using IGORR.Content;
 using Microsoft.Xna.Framework;
 using System.Reflection;
+using IGORR.Server.Logic;
 
 namespace IGORR.Server
 {
-    public class Server:Logic.IServer
+    public class Server:IServer
     {
         NetServer connection;
         Thread receiveThread;
@@ -54,8 +55,8 @@ namespace IGORR.Server
             _connections = new List<NetConnection>();
             receiveThread = new Thread(new ThreadStart(ReceiveMessage));
             receiveThread.Start();
-            Logic.EventObject.server = this;
-            Logic.LogicHandler.SetUp(this);
+            EventObject.server = this;
+            LogicHandler.SetUp(this);
             _startTime = DateTime.Now;
             _lastTime = DateTime.Now;
         }
@@ -111,10 +112,10 @@ namespace IGORR.Server
             }
         }
 
-        public void ChangePlayerMap(Logic.Player player, int mapID, Vector2 position)
+        public void ChangePlayerMap(Player player, int mapID, Vector2 position)
         {
             Client client = getClient(player);
-            Logic.Map map = Logic.MapManager.GetMapByID(mapID);
+            Map map = MapManager.GetMapByID(mapID);
             if (map != null && client != null)
                 client.SetMap(map, position);
         }
@@ -129,7 +130,7 @@ namespace IGORR.Server
             currentChannel = channel;
         }
 
-        public void SendClient(Logic.Player player, IgorrMessage message)
+        public void SendClient(Player player, IgorrMessage message)
         {
             if (!message.Encoded)
             {
@@ -143,7 +144,7 @@ namespace IGORR.Server
                     connection.SendMessage(message.GetMessage(), client.Connection, NetDeliveryMethod.ReliableOrdered,currentChannel);
         }
 
-        public Client getClient(Logic.Player player)
+        public Client getClient(Player player)
         {
             if (player == null)
                 return null;
@@ -161,7 +162,7 @@ namespace IGORR.Server
         }
         */ 
 
-        public void SendAllMap(Logic.IMap map, IgorrMessage message, bool Reliable)
+        public void SendAllMap(IMap map, IgorrMessage message, bool Reliable)
         {
             List<NetConnection> recipients = new List<NetConnection>();
             recipients.AddRange(_connections);
@@ -186,7 +187,7 @@ namespace IGORR.Server
                 connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.UnreliableSequenced, currentChannel);
         }
 
-        public void SendAllMapReliable(Logic.IMap map, IgorrMessage message, bool ordered)
+        public void SendAllMapReliable(IMap map, IgorrMessage message, bool ordered)
         {
             List<NetConnection> recipients = new List<NetConnection>();
             recipients.AddRange(_connections);
@@ -213,7 +214,7 @@ namespace IGORR.Server
                     connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.ReliableUnordered, currentChannel);
             }
         }
-        public void SendAllExcept(Logic.IMap map, Logic.Player player, IgorrMessage message, bool Reliable)
+        public void SendAllExcept(IMap map, Player player, IgorrMessage message, bool Reliable)
         {
             Client client = getClient(player);
             if (_connections.Count > 1)
@@ -279,7 +280,7 @@ namespace IGORR.Server
             if (Management.LoginData.CheckLogin(jm.Name, jm.Password))
             {
 
-                Logic.Map targetMap = Logic.MapManager.GetMapByID(0);
+                Map targetMap = MapManager.GetMapByID(0);
                 int id = targetMap.ObjectManager.getID();
 
                 Client client = new Client(message.SenderConnection, jm.Name);
@@ -305,7 +306,8 @@ namespace IGORR.Server
                 Protocol.FlushContainer(client.Connection);
                  */
                 Point spawnPoint = targetMap.getRandomSpawn();
-                Logic.Player player = new Logic.Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
+                Player player = new Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
+                player.GivePart(new GrenadeLauncher());
                 player.Name = jm.Name;
                 targetMap.ObjectManager.Add(player);
 

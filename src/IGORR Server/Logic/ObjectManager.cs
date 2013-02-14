@@ -16,13 +16,13 @@ namespace IGORR.Server.Logic
         int updateCounter = 0;
         List<GameObject> _objects;
         Map _map;
-        Server _server;
+        IGORR.Server.Server _server;
 
         IAttackManager _attacks;
         int _playerCounter = 0;
         float _updateTimeout = 0;
 
-        public ObjectManager(Server server)
+        public ObjectManager(IGORR.Server.Server server)
         {
             _server = server;
             _objects = new List<GameObject>();
@@ -35,7 +35,7 @@ namespace IGORR.Server.Logic
             _map = map;
         }
 
-        public void SetServer(Server server)
+        public void SetServer(IGORR.Server.Server server)
         {
             _server = server;
         }
@@ -63,14 +63,14 @@ namespace IGORR.Server.Logic
                 _playerCounter++;
             SpawnMessage spawn = (SpawnMessage)ProtocolHelper.NewMessage(MessageTypes.Spawn);
             spawn.id = obj.ID;
-            if (obj is Player) spawn.groupID = (obj as Player).GroupID;
             spawn.position = obj.Rect;
             spawn.objectType = obj.ObjectType;
             spawn.move = obj.Movement;
-            spawn.Name = obj.Name;
             if (obj is Player)
             {
-                spawn.CharName = (obj as Player).CharFile;
+                spawn.Info += (obj as Player).GroupID.ToString()+":";
+                spawn.Info += obj.Name+":";
+                spawn.Info += (obj as Player).CharFile;
             }
             spawn.Encode();
             if (!(obj is Attack))

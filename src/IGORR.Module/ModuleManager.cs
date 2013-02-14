@@ -56,6 +56,42 @@ namespace IGORR.Modules
             }
         }
 
+        public static IGORR.Server.Logic.GameObject SpawnByIdServer(Server.Logic.IMap map, int typeId, int objectID, Microsoft.Xna.Framework.Point p, BinaryReader bin)
+        {
+            IGORR.Server.Logic.GameObject obj = null;
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                obj = _modules[x].SpawnByIdServer(map, typeId, objectID, p, bin);
+                if (obj != null)
+                    return obj;
+            }
+            return obj;
+        }
+
+        public static IGORR.Client.Logic.GameObject SpawnByIdClient(Client.Logic.IMap map, int typeId, int objectID, Microsoft.Xna.Framework.Point p, string info)
+        {
+            IGORR.Client.Logic.GameObject obj = null;
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                obj = _modules[x].SpawnByIdClient(map, typeId, objectID, p, info);
+                if (obj != null)
+                    return obj;
+            }
+            return obj;
+        }
+
+        public static Client.Logic.Attack SpawnByIdClient(int typeID, int objectID, Microsoft.Xna.Framework.Vector2 dir, Microsoft.Xna.Framework.Point position, string info)
+        {
+            IGORR.Client.Logic.Attack obj = null;
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                obj = _modules[x].SpawnByIdClient(typeID, objectID, dir, position, info);
+                if (obj != null)
+                    return obj;
+            }
+            return obj;
+        }
+
         public static List<IGORR.Modules.ObjectModule> Modules
         {
             get { return _modules; }

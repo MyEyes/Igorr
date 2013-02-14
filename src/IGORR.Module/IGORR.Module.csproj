@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,7 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttackTemplate.cs" />
     <Compile Include="ModuleManager.cs" />
+    <Compile Include="ObjectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ObjectControl.Designer.cs">
+      <DependentUpon>ObjectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjectModule.cs" />
     <Compile Include="ObjectTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

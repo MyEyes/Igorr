@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Content;
 using System.Threading;
 using System.Collections.Concurrent;
 using IGORR.Content;
+using IGORR.Client.Logic;
+using IGORR.Modules;
 
 namespace IGORR.Client
 {
@@ -92,11 +94,21 @@ namespace IGORR.Client
             _light = light;
         }
 
-        public void SpawnObject(Rectangle position,Vector2 move, int objectType,int groupID, int id, string name, string charName)
+        public void SpawnObject(Rectangle position,Vector2 move, int objectType, int id, string info)
         {
             if (_map == null)
                 return;
+
+            GameObject obj = ModuleManager.SpawnByIdClient(_map, objectType, id, new Point(position.X, position.Y), info);
+            if (obj == null)
+                return;
             _sem.WaitOne();
+            if (obj is EventObject)
+                _map.AddObject(obj as EventObject);
+            else
+                _draw.Add(obj);
+            _objects.Add(obj);
+            /*
             switch (objectType)
             {
                 case 't' - 'a': Lava lava = new Lava(_map, ContentInterface.LoadTexture("Lava"), position, id); _map.AddObject(lava); _objects.Add(lava); break;
@@ -129,13 +141,27 @@ namespace IGORR.Client
                 case 27: exit = new Exit(ContentInterface.LoadTexture("BlueTel"), _map, position, id); _map.AddObject(exit); _objects.Add(exit); break;
                 case 28: exit = new Exit(ContentInterface.LoadTexture("Exit"), _map, position, id); _map.AddObject(exit); _objects.Add(exit); break;
             }
+             */
+            if ((obj is Player) && playerID != -1 && playerID == id)
+                _player = obj as Player;
             _sem.Release();
         }
 
-        public void SpawnAttack(Rectangle pos, Vector2 mov, int type)
+        public void SpawnAttack(Rectangle pos, Vector2 mov, int type, string info)
         {
+            
             if (_map == null)
                 return;
+            GameObject obj = ModuleManager.SpawnByIdClient(type,-2,mov,new Point(pos.X,pos.Y),info);
+            if (obj != null && obj is Attack)
+            {
+                _sem.WaitOne();
+                _objects.Add(obj as Attack);
+                _draw.Add(obj as Attack);
+                _sem.Release();
+            }
+
+            /*
             if (!_attackTypes.ContainsKey(type))
                 return;
             Texture2D tex;
@@ -145,11 +171,13 @@ namespace IGORR.Client
                 case 4: WorldController.Particles.Boom(_light,new Vector2(pos.X+20, pos.Y+20)); return;
                 default: tex = ContentInterface.LoadTexture("Attack"); break;
             }
+            
             Attack attack = new Attack(tex,pos,mov,-2, _attackTypes[type]);
             _sem.WaitOne();
             _objects.Add(attack);
             _draw.Add(attack);
             _sem.Release();
+             */
         }
 
         public void GetObjectInfo(int id, string info)

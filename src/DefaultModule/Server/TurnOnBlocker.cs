@@ -11,6 +11,7 @@ namespace IGORR.Server.Logic
         string triggerName;
         bool wantToBlock;
         bool blocked;
+        float countdown = 1000f;
 
         public TurnOnBlocker(string triggerName, bool global, IMap map, Rectangle position, int id)
             : base(map, position, id)
@@ -22,11 +23,15 @@ namespace IGORR.Server.Logic
 
         public override void Update(float ms)
         {
-            if (!blocked && wantToBlock)
+            if (!blocked && wantToBlock && countdown <= 0)
             {
                 _map.ChangeTile(1, this.MidPosition, 20);
                 wantToBlock = false;
             }
+            if (wantToBlock)
+                countdown -= ms;
+            if (blocked && countdown < 1000)
+                countdown = 1000;
             blocked = false;
         }
 

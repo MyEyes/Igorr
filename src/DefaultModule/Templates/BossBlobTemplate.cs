@@ -14,6 +14,11 @@ namespace DefaultModule
             return new IGORR.Server.Logic.AI.BossBlob(map, "kingblob", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 64, 64), objectID);
         }
 
+        public override IGORR.Client.Logic.GameObject CreateClient(IGORR.Client.Logic.IMap map, int objectID, Microsoft.Xna.Framework.Point p, string info)
+        {
+            return new IGORR.Client.Logic.Player("boss", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 64, 64), objectID);
+        }
+
         public override int TypeID
         {
             get

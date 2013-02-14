@@ -54,6 +54,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="ObjectManager.cs" />
+    <Compile Include="PartContainer.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="ParticleManager.cs" />
     <Compile Include="Player.cs" />

@@ -12,6 +12,8 @@ namespace IGORR.Client
         {
             try
             {
+                IGORR.Modules.ModuleManager.SetContentDir("Content");
+                IGORR.Modules.ModuleManager.LoadAllModules();
                 using (Game1 game = new Game1())
                 {
                     game.Run();

@@ -11,7 +11,7 @@ using IGORR.Content;
 
 namespace IGORR.Client.Logic
 {
-    interface IObjectManager
+    public interface IObjectManager
     {
 
     }

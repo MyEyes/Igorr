@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Client.Logic
 {
-    class Animation
+    public class Animation
     {
         float _frameDiff;
         float _counter;

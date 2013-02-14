@@ -20,6 +20,7 @@ namespace IGORR.Server.Logic
             _triggerName = triggerName;
             _global = global;
             Val = false;
+            _objectType = 11;
         }
 
         public override void Update(float ms)

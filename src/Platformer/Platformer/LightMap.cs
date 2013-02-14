@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using IGORR.Content;
+using IGORR.Client.Logic;
 
 namespace IGORR.Client
 {

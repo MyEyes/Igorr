@@ -46,7 +46,11 @@ namespace IGORR.Server.Logic
                     damaged = false;
                 }
             }
-            blocked = false;
+            if (blocked && countdown < 0)
+            {
+                countdown = 1;
+                blocked = false;
+            }
         }
 
         public override void Event(Player obj)

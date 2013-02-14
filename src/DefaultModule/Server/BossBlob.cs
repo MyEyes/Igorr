@@ -75,6 +75,7 @@ namespace IGORR.Server.Logic.AI
         {
             _XPBonus = 250;
             _groupID = 2;
+            _objectType = 5002;
             startPos = new Vector2(spawnPos.X, spawnPos.Y);
             BodyPart currentPart = new BossBlobLegs();
             GivePart(currentPart);
@@ -87,9 +88,6 @@ namespace IGORR.Server.Logic.AI
             currentPart = new BossBlobAttack3();
             GivePart(currentPart);
             EquipAttack(2, currentPart);
-            GivePart(new BossBlobAttack1());
-            GivePart(new BossBlobAttack2());
-            GivePart(new BossBlobAttack3());
             _name = "King Blob";
             _invincible = true;
             ShootDuration = 0.3f;

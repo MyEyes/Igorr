@@ -17,14 +17,14 @@ namespace IGORR.Server.Logic
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
             Attack att = null;
-            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), dir*200, 500, owner.ID, owner.GroupID, 5004);
+            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 16, 10, 16), new Vector2(-200, 0), 500, owner.ID, owner.GroupID, 5004);
             att.HitOnce = true;
             att.Knockback = new Vector2(-200, -50);
             return att;
         }
         public override int GetID()
         {
-            return 2;
+            return 5004;
         }
     }
 
@@ -38,7 +38,7 @@ namespace IGORR.Server.Logic
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
             Attack att = null;
-            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 8, 5, 8), new Vector2(200, 0), 500, owner.ID, owner.GroupID, 5004);
+            att = new Attack(owner.map, 17, new Rectangle((int)owner.MidPosition.X, (int)owner.Position.Y + owner.Rect.Height - 16, 10, 16), new Vector2(200, 0), 500, owner.ID, owner.GroupID, 5004);
             att.HitOnce = true;
             att.Knockback = new Vector2(200, -50);
             return att;
@@ -46,7 +46,7 @@ namespace IGORR.Server.Logic
 
         public override int GetID()
         {
-            return 3;
+            return 5004;
         }
     }
 
@@ -76,7 +76,7 @@ namespace IGORR.Server.Logic
 
         public override int GetID()
         {
-            return 4;
+            return 5005;
         }
     }
 }

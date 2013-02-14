@@ -31,6 +31,7 @@ namespace IGORR.Server.Logic.AI
 
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
+            _objectType = 5000;
         }
 
         public Slimer(IMap map, string charfile, Rectangle spawnRect, int id)
@@ -43,6 +44,7 @@ namespace IGORR.Server.Logic.AI
             _XPBonus = 25;
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
+            _objectType = 5000;
         }
 
         public override void Update(IMap map, float seconds)
@@ -89,7 +91,7 @@ namespace IGORR.Server.Logic.AI
                     _map.ObjectManager.Server.SendAllMap(_map, sam, true);
                 }
             }
-            if (attack && attackCooldown <= 0)
+            if (_target!=null && attack && attackCooldown <= 0)
             {
                 attackCooldown = 1;
                 attack = false;

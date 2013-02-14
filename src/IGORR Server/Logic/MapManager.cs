@@ -10,7 +10,7 @@ namespace IGORR.Server.Logic
     {
         static List<Map> _maps;
 
-        public static void LoadMaps(Server server)
+        public static void LoadMaps(IGORR.Server.Server server)
         {
             Console.WriteLine();
             _maps = new List<Map>();

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
+using IGORR.Client.Logic;
+using IGORR.Modules;
 
 namespace IGORR.Client
 {
@@ -173,7 +175,7 @@ namespace IGORR.Client
         public static void HandleSpawn(IgorrMessage message)
         {
             SpawnMessage sm = (SpawnMessage)message;
-            manager.SpawnObject(sm.position,sm.move, sm.objectType,sm.groupID, sm.id, sm.Name, sm.CharName);
+            manager.SpawnObject(sm.position,sm.move, sm.objectType, sm.id, sm.Info);
         }
 
         public static void HandleAssignPlayer(IgorrMessage message)
@@ -197,12 +199,20 @@ namespace IGORR.Client
         public static void HandlePickup(IgorrMessage message)
         {
             PickupMessage pum = (PickupMessage)(message);
+            GameObject obj = ModuleManager.SpawnByIdClient(null, pum.id, -1, Point.Zero, "");
+            if (obj != null && obj is PartContainer)
+            {
+                manager.Player.GivePart((obj as PartContainer).Part);
+            }
+            /*
+            PickupMessage pum = (PickupMessage)(message);
             switch (pum.id)
             {
                 case 'b' - 'a': manager.Player.GivePart(new Legs(null)); break;
                 case 'd' - 'a': manager.Player.GivePart(new Striker(null)); break;
                 case 'e' - 'a': manager.Player.GivePart(new Wings(null)); break;
             }
+             */
         }
 
         public static void HandleShadows(IgorrMessage message)
@@ -231,7 +241,7 @@ namespace IGORR.Client
         public static void HandleSpawnAttack(IgorrMessage message)
         {
             SpawnAttackMessage sam = (SpawnAttackMessage)message;
-            manager.SpawnAttack(sam.position, sam.move, sam.id);
+            manager.SpawnAttack(sam.position, sam.move, sam.id, sam.info);
         }
 
         public static void HandleDamage(IgorrMessage message)

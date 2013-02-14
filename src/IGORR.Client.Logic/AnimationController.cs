@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Client.Logic
 {
-    class AnimationController
+    public class AnimationController
     {
         Animation idle;
         Animation run;

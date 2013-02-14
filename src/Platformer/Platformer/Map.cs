@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Threading;
 using IGORR.Content;
+using IGORR.Client.Logic;
 namespace IGORR.Client
 {
 
-    public class Map
+    public class Map:IMap
     {
         Semaphore _sem = new Semaphore(1,1);
         Tile[][,] _layers;
@@ -422,6 +423,16 @@ namespace IGORR.Client
             _sem.Release();                                                
         }
 
+        public void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows)
+        {
+            LightMap.LightReference.SetGlow(id, position, color, radius, shadows);
+        }
+
+        public void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows, float timeout)
+        {
+            LightMap.LightReference.SetGlow(id, position, color, radius, shadows,timeout);
+        }
+
         public Rectangle MapBoundaries
         {
             get { return new Rectangle(0, 0, _layers[0].GetLength(0) * tileSize, _layers[0].GetLength(1) * tileSize); }
@@ -430,6 +441,11 @@ namespace IGORR.Client
         private bool isValid(int x, int y)
         {
             return (uint)x < _layers[0].GetLength(0) && (uint)y < _layers[0].GetLength(1);
+        }
+
+        public ParticleManager Particles
+        {
+            get { return WorldController.Particles; }
         }
     }
 }
