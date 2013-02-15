@@ -5,13 +5,20 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 
 namespace IGORR.Modules
 {
     public partial class ObjectControl : UserControl
     {
-        public ObjectControl(byte[] bytes)
+
+        public ObjectControl(BinaryReader reader)
+        {
+            InitializeComponent();
+        }
+
+        public ObjectControl()
         {
             InitializeComponent();
         }

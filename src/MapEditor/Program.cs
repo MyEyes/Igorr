@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using IGORR.Modules;
+using System.IO;
 
 namespace MapEditor
 {
@@ -15,6 +17,11 @@ namespace MapEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            string dir = Directory.GetCurrentDirectory();
+            ModuleManager.SetContentDir(".");
+            ModuleManager.LoadAllModules();
+
             Application.Run(new frmMain());
         }
     }

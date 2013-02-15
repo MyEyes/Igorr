@@ -34,20 +34,15 @@
             this.lblPos = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtTargetMap = new System.Windows.Forms.TextBox();
-            this.txtTargetPosX = new System.Windows.Forms.TextBox();
-            this.txtTargetPosY = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtTrigName = new System.Windows.Forms.TextBox();
-            this.chkGlobal = new System.Windows.Forms.CheckBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(15, 115);
+            this.btnOK.Location = new System.Drawing.Point(18, 264);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -57,7 +52,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(135, 116);
+            this.btnCancel.Location = new System.Drawing.Point(177, 264);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -68,7 +63,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 19);
+            this.label1.Location = new System.Drawing.Point(3, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 2;
@@ -77,7 +72,7 @@
             // lblPos
             // 
             this.lblPos.AutoSize = true;
-            this.lblPos.Location = new System.Drawing.Point(114, 19);
+            this.lblPos.Location = new System.Drawing.Point(162, 17);
             this.lblPos.Name = "lblPos";
             this.lblPos.Size = new System.Drawing.Size(35, 13);
             this.lblPos.TabIndex = 3;
@@ -86,7 +81,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 44);
+            this.label2.Location = new System.Drawing.Point(3, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 4;
@@ -95,112 +90,44 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(117, 44);
+            this.comboBox1.Location = new System.Drawing.Point(6, 62);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(93, 21);
+            this.comboBox1.Size = new System.Drawing.Size(191, 21);
             this.comboBox1.TabIndex = 6;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // label3
+            // splitContainer1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Target:";
+            this.splitContainer1.Location = new System.Drawing.Point(12, 12);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // txtTargetMap
+            // splitContainer1.Panel1
             // 
-            this.txtTargetMap.Location = new System.Drawing.Point(75, 87);
-            this.txtTargetMap.Name = "txtTargetMap";
-            this.txtTargetMap.Size = new System.Drawing.Size(36, 20);
-            this.txtTargetMap.TabIndex = 8;
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.lblPos);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
+            this.splitContainer1.Size = new System.Drawing.Size(269, 226);
+            this.splitContainer1.SplitterDistance = 122;
+            this.splitContainer1.TabIndex = 7;
             // 
-            // txtTargetPosX
-            // 
-            this.txtTargetPosX.Location = new System.Drawing.Point(117, 87);
-            this.txtTargetPosX.Name = "txtTargetPosX";
-            this.txtTargetPosX.Size = new System.Drawing.Size(45, 20);
-            this.txtTargetPosX.TabIndex = 9;
-            // 
-            // txtTargetPosY
-            // 
-            this.txtTargetPosY.Location = new System.Drawing.Point(168, 87);
-            this.txtTargetPosY.Name = "txtTargetPosY";
-            this.txtTargetPosY.Size = new System.Drawing.Size(42, 20);
-            this.txtTargetPosY.TabIndex = 10;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(76, 71);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "MapID";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(121, 71);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "PosX";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(168, 71);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(32, 13);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "PosY";
-            // 
-            // txtTrigName
-            // 
-            this.txtTrigName.Location = new System.Drawing.Point(110, 90);
-            this.txtTrigName.Name = "txtTrigName";
-            this.txtTrigName.Size = new System.Drawing.Size(100, 20);
-            this.txtTrigName.TabIndex = 14;
-            this.txtTrigName.Text = "TriggerName";
-            // 
-            // chkGlobal
-            // 
-            this.chkGlobal.AutoSize = true;
-            this.chkGlobal.Location = new System.Drawing.Point(48, 92);
-            this.chkGlobal.Name = "chkGlobal";
-            this.chkGlobal.Size = new System.Drawing.Size(56, 17);
-            this.chkGlobal.TabIndex = 15;
-            this.chkGlobal.Text = "Global";
-            this.chkGlobal.UseVisualStyleBackColor = true;
-            // 
-            // ObjectDialog
+            // frmObjectDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(229, 143);
-            this.Controls.Add(this.chkGlobal);
-            this.Controls.Add(this.txtTrigName);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtTargetPosY);
-            this.Controls.Add(this.txtTargetPosX);
-            this.Controls.Add(this.txtTargetMap);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblPos);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(288, 302);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Name = "ObjectDialog";
+            this.Name = "frmObjectDialog";
             this.Text = "ObjectDialog";
             this.Load += new System.EventHandler(this.ObjectDialog_Load);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -212,14 +139,6 @@
         private System.Windows.Forms.Label lblPos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtTargetMap;
-        private System.Windows.Forms.TextBox txtTargetPosX;
-        private System.Windows.Forms.TextBox txtTargetPosY;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtTrigName;
-        private System.Windows.Forms.CheckBox chkGlobal;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

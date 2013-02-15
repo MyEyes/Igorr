@@ -445,6 +445,7 @@
   <ItemGroup>
     <Folder Include="effects\" />
     <Folder Include="map\" />
+    <Folder Include="modules\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="sound\Cave.mp3">

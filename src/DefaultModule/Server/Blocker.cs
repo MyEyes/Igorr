@@ -18,7 +18,8 @@ namespace IGORR.Server.Logic
             : base(map, position, id)
         {
             _objectType = 100;
-            _map.ChangeTile(1, this.MidPosition, 20);
+            if (_map != null)
+                _map.ChangeTile(1, this.MidPosition, 20);
         }
 
         public override void Update(float ms)

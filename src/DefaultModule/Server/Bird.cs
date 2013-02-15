@@ -27,12 +27,12 @@ namespace IGORR.Server.Logic.AI
         {
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
+            this.GivePart(new Legs());
             _objectType = 5006;
         }
 
         public override void Update(IMap map, float seconds)
         {
-
             changeCountdown -= seconds;
             //If the countdown has expired decide wether to move or not
             if (changeCountdown <= 0)
@@ -40,6 +40,8 @@ namespace IGORR.Server.Logic.AI
                 _Move = _random.NextDouble() > 0.9f;
                 Left = _random.NextDouble() > 0.5f;
                 changeCountdown = 0.5f + (float)_random.NextDouble();
+                if (_random.NextDouble() > 0.95)
+                    this.Jump();
             } 
             
             if (!followRect.Contains((int)this.MidPosition.X, (int)this.MidPosition.Y))
@@ -51,9 +53,9 @@ namespace IGORR.Server.Logic.AI
             if (_Move)
             {
                 if (Left)
-                    Move(-0.75f);
+                    Move(-0.5f);
                 else
-                    Move(0.75f);
+                    Move(0.5f);
             }
             base.Update(map, seconds);
         }

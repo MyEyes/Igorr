@@ -7,51 +7,48 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using IGORR.Modules;
 
 namespace MapEditor
 {
 
     public partial class frmObjectDialog : Form
     {
+        
+        /*
         static List<string> _names;
         static List<int> _ids;
+         */
+        static List<ObjectTemplate> _templates;
         SpawnPoint _spawnPoint;
+        IGORR.Modules.ObjectControl ctrl = null;
 
         public frmObjectDialog(int x, int y, SpawnPoint sp)
         {
             InitializeComponent();
-
             _spawnPoint = sp;
             if (_spawnPoint == null)
             {
                 _spawnPoint = new SpawnPoint();
                 _spawnPoint.objectID = -1;
-            }
-            else
-            {
-                if (_spawnPoint.tepo != null)
-                {
-                    txtTargetMap.Text = _spawnPoint.tepo.mapID.ToString();
-                    txtTargetPosX.Text = _spawnPoint.tepo.X.ToString();
-                    txtTargetPosY.Text = _spawnPoint.tepo.Y.ToString();
-                }
-                if (_spawnPoint.trpa != null)
-                {
-                    txtTrigName.Text = _spawnPoint.trpa.name;
-                    chkGlobal.Checked = _spawnPoint.trpa.global;
-                }
-            }
-            _spawnPoint.X = x;
-            _spawnPoint.Y = y;
+                _spawnPoint.X = x;
+                _spawnPoint.Y = y;
+            }   
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         private void ObjectDialog_Load(object sender, EventArgs e)
         {
+            if (_templates == null)
+            {
+                _templates = new List<ObjectTemplate>();
+                _templates.AddRange(ModuleManager.GetTemplates());
+            }
+            /*
             if (_names == null)
             {
                 _names = new List<string>();
@@ -104,16 +101,20 @@ namespace MapEditor
                 _ids.Add(5002);
 
                 _names.Add("Bossminion");
-                _ids.Add(5004);*/
+                _ids.Add(5004);
+            
             }
+             */ 
 
             lblPos.Text = "(" + _spawnPoint.X.ToString() + "," + SpawnPoint.Y.ToString() + ")";
             comboBox1.Items.Clear();
-            for (int x = 0; x < _names.Count; x++)
-                comboBox1.Items.Add(_names[x]);
-            int index=_ids.IndexOf(_spawnPoint.objectID);
-            if (index >= 0)
-                comboBox1.SelectedItem = comboBox1.Items[index];
+            int index=_spawnPoint.objectID;
+            for (int x = 0; x < _templates.Count; x++)
+            {
+                comboBox1.Items.Add(_templates[x]);
+                if(_templates[x].TypeID == index)
+                    comboBox1.SelectedItem = comboBox1.Items[x];
+            }
         }
 
         public SpawnPoint SpawnPoint
@@ -124,47 +125,14 @@ namespace MapEditor
         private void btnOK_Click(object sender, EventArgs e)
         {
             int index = comboBox1.SelectedIndex;
-            if (index >= 0)
-            {
-                if (comboBox1.SelectedIndex == _names.IndexOf("Teleporter"))
-                {
-                    TeleportPoint tp = new TeleportPoint();
-                    try
-                    {
-                        tp.mapID = int.Parse(txtTargetMap.Text);
-                        tp.X = int.Parse(txtTargetPosX.Text);
-                        tp.Y = int.Parse(txtTargetPosY.Text);
-                        _spawnPoint.tepo = tp;
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show("Please enter valid data for the teleport target!");
-                        return;
-                    }
 
-                }
-                else if (comboBox1.SelectedIndex == _names.IndexOf("TouchTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredBlocker") || comboBox1.SelectedIndex == _names.IndexOf("AttackTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredInvBlocker"))
-                {
-                    TriggerParams trpa = new TriggerParams();
-                    try
-                    {
-                        trpa.name = txtTrigName.Text;
-                        trpa.global = chkGlobal.Checked;
-                        _spawnPoint.trpa = trpa;
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show("Please enter valid data for the teleport target!");
-                        return;
-                    }
-                }
-
-                _spawnPoint.objectID = _ids[index];
-                if (_spawnPoint.objectID == -1)
-                    _spawnPoint = null;
-                DialogResult = System.Windows.Forms.DialogResult.OK;
-                this.Close();
-            }
+            _spawnPoint.objectID = _templates[index].TypeID;
+            if (ctrl != null)
+                _spawnPoint.bytes = ctrl.GetObjectBytes();
+            if (_spawnPoint.objectID == -1)
+                _spawnPoint = null;
+            DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -175,37 +143,16 @@ namespace MapEditor
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex == _names.IndexOf("Teleporter"))
-            {
-                label3.Show();
-                label4.Show();
-                label5.Show();
-                label6.Show();
-                txtTargetMap.Show();
-                txtTargetPosX.Show();
-                txtTargetPosY.Show();
-            }
+            ObjectTemplate tmplt = (ObjectTemplate)comboBox1.SelectedItem;
+            if (ctrl != null)
+                splitContainer1.Panel2.Controls.Remove(ctrl);
+            if (_spawnPoint.objectID == tmplt.TypeID && _spawnPoint.bytes!=null)
+                ctrl = tmplt.GetEditorControl(new BinaryReader(new MemoryStream(_spawnPoint.bytes)));
             else
-            {
-                label3.Hide();
-                label4.Hide();
-                label5.Hide();
-                label6.Hide();
-                txtTargetMap.Hide();
-                txtTargetPosX.Hide();
-                txtTargetPosY.Hide();
-            }
+                ctrl = tmplt.GetEditorControl(null);
+            if (ctrl != null)
+                splitContainer1.Panel2.Controls.Add(ctrl);
 
-            if (comboBox1.SelectedIndex == _names.IndexOf("TouchTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredBlocker") || comboBox1.SelectedIndex == _names.IndexOf("AttackTrigger") || comboBox1.SelectedIndex == _names.IndexOf("TriggeredInvBlocker"))
-            {
-                txtTrigName.Show();
-                chkGlobal.Show();
-            }
-            else
-            {
-                txtTrigName.Hide();
-                chkGlobal.Hide();
-            }
         }
 
 

@@ -42,6 +42,8 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +60,18 @@
     <Compile Include="Client\ScorePost.cs" />
     <Compile Include="Client\Striker.cs" />
     <Compile Include="Client\Wings.cs" />
+    <Compile Include="EditorControls\TeleporterInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorControls\TeleporterInfoControl.Designer.cs">
+      <DependentUpon>TeleporterInfoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditorControls\TriggerInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorControls\TriggerInfoControl.Designer.cs">
+      <DependentUpon>TriggerInfoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Templates\BossBlobSpawnerTemplate.cs" />
     <Compile Include="Templates\BossBlobTemplate.cs" />
     <Compile Include="Templates\AttackTriggerTemplate.cs" />
@@ -65,6 +79,7 @@
     <Compile Include="Templates\BirdTemplate.cs" />
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\ExpOrbTemplate.cs" />
+    <Compile Include="Templates\SpawnPointTemplate.cs" />
     <Compile Include="Templates\Striker2AttackTemplate.cs" />
     <Compile Include="Templates\GrenadeAttackTemplate.cs" />
     <Compile Include="Templates\Heal20Template.cs" />
@@ -148,11 +163,18 @@
       <Name>IGORR Protocol</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EditorControls\TeleporterInfoControl.resx">
+      <DependentUpon>TeleporterInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditorControls\TriggerInfoControl.resx">
+      <DependentUpon>TriggerInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)$(OutDir)$(ProjectName).dll" "$(SolutionDir)src\Platformer\Platformer\bin\x86\Debug\Content\modules\$(ProjectName).dll"
-
-copy /Y "$(ProjectDir)$(OutDir)$(ProjectName).dll" "$(SolutionDir)src\IGORR Server\bin\Debug\Content\modules\$(ProjectName).dll"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

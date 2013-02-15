@@ -10,7 +10,7 @@ namespace DefaultModule
     {
         public override IGORR.Server.Logic.GameObject CreateServer(IMap map, int objectID, Microsoft.Xna.Framework.Point p, System.IO.BinaryReader bin)
         {
-            return new IGORR.Server.Logic.AI.Bird(map, "cbird", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 64, 64), objectID);
+            return new IGORR.Server.Logic.AI.Bird(map, "cbird", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 16, 16), objectID);
         }
 
         public override IGORR.Client.Logic.GameObject CreateClient(IGORR.Client.Logic.IMap map, int objectID, Microsoft.Xna.Framework.Point p, string info)

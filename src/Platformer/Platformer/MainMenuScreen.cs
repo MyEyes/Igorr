@@ -40,7 +40,7 @@ namespace IGORR.Client
 
         public void Update(GameTime gameTime)
         {
-            
+            _gui.Update();
         }
 
         public void Draw(GameTime gameTime)

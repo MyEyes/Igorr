@@ -20,7 +20,7 @@ namespace IGORR.Modules
             return null;
         }
 
-        public virtual ObjectControl GetEditorControl(byte[] bytes)
+        public virtual ObjectControl GetEditorControl(BinaryReader reader)
         {
             return null;
         }

@@ -92,6 +92,28 @@ namespace IGORR.Modules
             return obj;
         }
 
+        public static ObjectControl GetControl(int typeId, BinaryReader reader)
+        {
+            ObjectControl ctrl = null;
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                ctrl = _modules[x].GetControl(typeId, reader);
+                if (ctrl != null)
+                    return ctrl;
+            }
+            return null;
+        }
+
+        public static List<ObjectTemplate> GetTemplates()
+        {
+            List<ObjectTemplate> _templates = new List<ObjectTemplate>();
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                _templates.AddRange(_modules[x].GetObjectTemplates());
+            }
+            return _templates;
+        }
+
         public static List<IGORR.Modules.ObjectModule> Modules
         {
             get { return _modules; }

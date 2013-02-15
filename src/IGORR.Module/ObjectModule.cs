@@ -60,6 +60,13 @@ namespace IGORR.Modules
             return null;
         }
 
+        public ObjectControl GetControl(int typeID, BinaryReader reader)
+        {
+            if (_templates.ContainsKey(typeID))
+                return _templates[typeID].GetEditorControl(reader);
+            return null;
+        }
+
         public void Register(ObjectTemplate template)
         {
             if (!_templates.ContainsKey(template.TypeID))
@@ -74,6 +81,11 @@ namespace IGORR.Modules
                 _attackTemplates.Add(template.TypeID, template);
             else
                 throw new InvalidOperationException(Environment.NewLine + "IDs must be unique! Conflicting: " + _attackTemplates[template.TypeID].ToString() + " and " + template.ToString() + Environment.NewLine);
+        }
+
+        public List<ObjectTemplate> GetObjectTemplates()
+        {
+            return _templates.Values.ToList();
         }
     }
 }

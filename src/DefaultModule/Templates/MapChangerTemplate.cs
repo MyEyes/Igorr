@@ -20,6 +20,10 @@ namespace DefaultModule.Templates
             return new IGORR.Client.Logic.Exit(IGORR.Content.ContentInterface.LoadTexture("Exit"), map, new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 16, 16), objectID);
         }
 
+        public override IGORR.Modules.ObjectControl GetEditorControl(System.IO.BinaryReader reader)
+        {
+            return new EditorControls.TeleporterInfoControl(reader);
+        }
         public override int TypeID
         {
             get

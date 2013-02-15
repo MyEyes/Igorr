@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using IGORR.Content;
+using IGORR.Modules;
 
 namespace MapEditor
 {
@@ -28,8 +29,7 @@ namespace MapEditor
         public int objectID;
         public int X;
         public int Y;
-        public TeleportPoint tepo;
-        public TriggerParams trpa;
+        public byte[] bytes;
     }
 
     class Tile
@@ -72,6 +72,7 @@ namespace MapEditor
         SpriteFont font;
         List<TeleportPoint> _teleportPoints = new List<TeleportPoint>();
         int activeLayer = 0;
+        IGORR.Server.Logic.DummyMap _dummy;
 
         public void SetActiveLayer(int layer)
         {
@@ -80,6 +81,7 @@ namespace MapEditor
 
         public Map(int sizeX, int sizeY, string tileset)
         {
+            _dummy = new IGORR.Server.Logic.DummyMap();
             tileSet = ContentInterface.LoadTexture(tileset);
             font = ContentInterface.LoadFont("font");
             tileSetName = tileset;
@@ -114,6 +116,7 @@ namespace MapEditor
 
         public Map(string fileName)
         {
+            _dummy = new IGORR.Server.Logic.DummyMap();
             font = ContentInterface.LoadFont("font");
             _fileName = fileName;
             BinaryReader reader = new BinaryReader(File.OpenRead(_fileName));
@@ -157,18 +160,14 @@ for (int x = 0; x < tpCount; x++)
                         {
                             _spawns[x, y] = new SpawnPoint();
                             _spawns[x, y].objectID = objectID;
-                            if (_spawns[x, y].objectID == 'g' - 'a' || (_spawns[x, y].objectID >= 26 && _spawns[x, y].objectID <= 28))
+                            _spawns[x, y].X = x;
+                            _spawns[x, y].Y = y;
+                            if (objectID > 0)
                             {
-                                _spawns[x, y].tepo = new TeleportPoint();
-                                _spawns[x, y].tepo.mapID = reader.ReadInt32();
-                                _spawns[x, y].tepo.X = reader.ReadInt32();
-                                _spawns[x, y].tepo.Y = reader.ReadInt32();
-                            }
-                            else if (_spawns[x, y].objectID == 8 || _spawns[x, y].objectID == 10 || _spawns[x, y].objectID == 11 || _spawns[x, y].objectID == 12)
-                            {
-                                _spawns[x, y].trpa = new TriggerParams();
-                                _spawns[x, y].trpa.name = reader.ReadString();
-                                _spawns[x, y].trpa.global = reader.ReadBoolean();
+                                ObjectControl ctrl =ModuleManager.GetControl(objectID, reader);
+                                if (ctrl != null)
+                                    _spawns[x, y].bytes = ctrl.GetObjectBytes();
+                                //ModuleManager.SpawnByIdServer(_dummy, objectID, 0, Point.Zero, reader);
                             }
 
                         }
@@ -198,12 +197,6 @@ for (int x = 0; x < tpCount; x++)
             writer.Write(_layers[0].GetLength(0));
             writer.Write(_layers[0].GetLength(1));
             writer.Write(tileSetName);
-            for (int x = 0; x < _layers[0].GetLength(0); x++)
-                for (int y = 0; y < _layers[0].GetLength(1); y++)
-                {
-                    if (_spawns[x, y] != null && _spawns[x, y].tepo != null)
-                        _teleportPoints.Add(_spawns[x, y].tepo);
-                }
             /*
             writer.Write(_teleportPoints.Count);
             for (int x = 0; x < _teleportPoints.Count; x++)
@@ -229,17 +222,8 @@ for (int x = 0; x < tpCount; x++)
                     if (_spawns[x, y] != null)
                     {
                         writer.Write(_spawns[x, y].objectID);
-                        if (_spawns[x, y].tepo != null)
-                        {
-                            writer.Write(_spawns[x, y].tepo.mapID);
-                            writer.Write(_spawns[x, y].tepo.X);
-                            writer.Write(_spawns[x, y].tepo.Y);
-                        }
-                        else if (_spawns[x, y].trpa != null)
-                        {
-                            writer.Write(_spawns[x, y].trpa.name);
-                            writer.Write(_spawns[x, y].trpa.global);
-                        }
+                        if (_spawns[x, y].bytes != null)
+                            writer.Write(_spawns[x, y].bytes);
                     }
                     else writer.Write(-1);
                 }
