@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using IGORR.Protocol;
+using IGORR.Protocol.Messages;
 
 namespace IGORR.Server.Logic
 {
@@ -155,6 +157,16 @@ namespace IGORR.Server.Logic
             if (stunTimeout <= 0 && !airstun)
                 stunned = false;
             stunTimeout -= seconds;
+        }
+
+        public void SetAnimation(bool force, int extraID)
+        {
+            SetAnimationMessage ani = (SetAnimationMessage)ProtocolHelper.NewMessage(MessageTypes.SetAnimation);
+            ani.force = force;
+            ani.animationNumber = extraID;
+            ani.objectID = _id;
+            ani.Encode();
+            _map.ObjectManager.Server.SendAllMapReliable(_map, ani, true);
         }
 
         public void Knockback(Vector2 move)

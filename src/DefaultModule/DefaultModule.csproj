@@ -72,12 +72,14 @@
     <Compile Include="EditorControls\TriggerInfoControl.Designer.cs">
       <DependentUpon>TriggerInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Server\SleepingOrb.cs" />
     <Compile Include="Templates\BossBlobSpawnerTemplate.cs" />
     <Compile Include="Templates\BossBlobTemplate.cs" />
     <Compile Include="Templates\AttackTriggerTemplate.cs" />
     <Compile Include="Templates\BlockerTemplate.cs" />
     <Compile Include="Templates\BirdTemplate.cs" />
     <Compile Include="Templates\BossAttackTemplates.cs" />
+    <Compile Include="Templates\SleepingOrbTemplate.cs" />
     <Compile Include="Templates\ExpOrbTemplate.cs" />
     <Compile Include="Templates\SpawnPointTemplate.cs" />
     <Compile Include="Templates\Striker2AttackTemplate.cs" />
