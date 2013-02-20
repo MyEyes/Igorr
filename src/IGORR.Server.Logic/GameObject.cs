@@ -17,6 +17,7 @@ namespace IGORR.Server.Logic
         protected int _id = 0;
         protected int _objectType = -1;
         protected string _name;
+        protected string _info = "";
         protected IMap _map;
         protected long lastUpdate = 0;
 
@@ -109,6 +110,11 @@ namespace IGORR.Server.Logic
         public IMap map
         {
             get { return _map; }
+        }
+
+        public string Info
+        {
+            get { return _info; }
         }
 
         public virtual void GetInfo(string info)

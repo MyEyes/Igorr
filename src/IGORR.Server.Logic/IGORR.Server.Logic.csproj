@@ -35,6 +35,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Lidgren.Network.dll</HintPath>
     </Reference>
+    <Reference Include="lua51">
+      <HintPath>..\..\lib\lua51.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface">
+      <HintPath>..\..\lib\LuaInterface.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
@@ -53,6 +59,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="IMap.cs" />
+    <Compile Include="LuaVM.cs" />
     <Compile Include="NPC.cs" />
     <Compile Include="IObjectManager.cs" />
     <Compile Include="Player.cs" />

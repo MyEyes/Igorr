@@ -59,12 +59,7 @@ namespace IGORR.Server
                 sm.position = _currentMap.ObjectManager.Objects[x].Rect;
                 sm.objectType = _currentMap.ObjectManager.Objects[x].ObjectType;
                 sm.id = _currentMap.ObjectManager.Objects[x].ID;
-                if (_currentMap.ObjectManager.Objects[x] is Player)
-                {
-                    sm.Info += (_currentMap.ObjectManager.Objects[x] as Player).GroupID.ToString()+":";
-                    sm.Info += _currentMap.ObjectManager.Objects[x].Name+":";
-                    sm.Info += (_currentMap.ObjectManager.Objects[x] as Player).CharFile;
-                }
+                sm.Info = _currentMap.ObjectManager.Objects[x].Info;
                 ProtocolHelper.SendContainer(sm, Connection);
                 _currentMap.ObjectManager.Objects[x].SendInfo(Connection);
                 if(_currentMap.ObjectManager.Objects[x] is Player)

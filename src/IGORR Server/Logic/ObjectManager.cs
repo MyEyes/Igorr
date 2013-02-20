@@ -66,12 +66,7 @@ namespace IGORR.Server.Logic
             spawn.position = obj.Rect;
             spawn.objectType = obj.ObjectType;
             spawn.move = obj.Movement;
-            if (obj is Player)
-            {
-                spawn.Info += (obj as Player).GroupID.ToString()+":";
-                spawn.Info += obj.Name+":";
-                spawn.Info += (obj as Player).CharFile;
-            }
+            spawn.Info = obj.Info;
             spawn.Encode();
             if (!(obj is Attack))
                 _server.SendAllMapReliable(_map, spawn, true);

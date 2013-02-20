@@ -212,7 +212,7 @@ for (int x = 0; x < tpCount; x++)
                             _spawnIDs[x, y] = -1;
                     }
             }
-            catch (Exception e)
+            catch (EndOfStreamException e)
             {
             }
             reader.Close();
