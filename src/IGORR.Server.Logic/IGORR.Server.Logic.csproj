@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyObject.cs" />
     <Compile Include="IAttackManager.cs" />
     <Compile Include="BaseBody.cs" />
     <Compile Include="BodyPart.cs" />

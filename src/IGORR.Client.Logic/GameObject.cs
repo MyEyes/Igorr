@@ -67,7 +67,8 @@ namespace IGORR.Client.Logic
 
         public virtual void Draw(SpriteBatch batch)
         {
-            batch.Draw(_texture, _rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.43f);
+            if (_texture != null)
+                batch.Draw(_texture, _rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.43f);
         }
 
         public int ID
