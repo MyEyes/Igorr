@@ -80,7 +80,7 @@ namespace IGORR.Server.Logic
         {
             _groupID = 1;
             _charFile = CharFile;
-            StreamReader reader = new StreamReader("chars/" + CharFile + ".chr");
+            StreamReader reader = new StreamReader("Content\\chars\\" + CharFile + ".chr");
             string fileContent = reader.ReadToEnd();
             reader.Close();
             string[] lines = fileContent.Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.None);

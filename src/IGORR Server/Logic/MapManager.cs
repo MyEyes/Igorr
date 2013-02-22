@@ -14,7 +14,8 @@ namespace IGORR.Server.Logic
         {
             Console.WriteLine();
             _maps = new List<Map>();
-            StreamReader reader = new StreamReader("maps.lst");
+            string curDir=Directory.GetCurrentDirectory();
+            StreamReader reader = new StreamReader("Content\\map\\maps.lst");
             string[] lines = reader.ReadToEnd().Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             for (int x = 0; x < lines.Length; x++)
             {

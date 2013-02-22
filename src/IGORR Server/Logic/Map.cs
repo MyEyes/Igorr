@@ -149,7 +149,7 @@ namespace IGORR.Server.Logic
         public void LoadNew(string file)
         {
             Console.WriteLine("Loading Map " + file);
-            BinaryReader reader = new BinaryReader(File.OpenRead(file+".map"));
+            BinaryReader reader = new BinaryReader(File.OpenRead("Content\\map\\"+file+".map"));
             int sizeX = reader.ReadInt32();
             int sizeY = reader.ReadInt32();
             reader.ReadString();

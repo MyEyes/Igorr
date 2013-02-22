@@ -18,8 +18,7 @@ namespace MapEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string dir = Directory.GetCurrentDirectory();
-            ModuleManager.SetContentDir(".");
+            ModuleManager.SetContentDir("Content");
             ModuleManager.LoadAllModules();
 
             Application.Run(new frmMain());
