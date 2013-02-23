@@ -105,6 +105,7 @@
     <Compile Include="Templates\StrikerAttackTemplate.cs" />
     <Compile Include="Templates\TriggeredBlockerTemplate.cs" />
     <Compile Include="Templates\Striker2Template.cs" />
+    <Compile Include="Templates\VaseTemplate.cs" />
     <Compile Include="Templates\WingsTemplate.cs" />
     <Compile Include="Templates\StrikerTemplate.cs" />
     <Compile Include="Templates\LavaTemplate.cs" />
