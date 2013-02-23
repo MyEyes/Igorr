@@ -39,7 +39,7 @@ namespace IGORR.Server.Logic.AI
                 target = map.ObjectManager.GetPlayerInArea(targetArea, 1, true);
                 if (target != null)
                 {
-                    DoEffect(1, this.Rect.Center, Vector2.Zero, "");
+                    //DoEffect(2, this.Rect.Center, Vector2.Zero, "");
                     SetAnimation(true, 0);
                 }
             }
