@@ -64,6 +64,7 @@ namespace IGORR.Client
             ProtocolHelper.RegisterMessageHandler(MessageTypes.ExpMessage, new MessageHandler(HandleExp));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Knockback, new MessageHandler(HandleKnockback));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.DoEffect, new MessageHandler(HandleDoEffect));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -313,6 +314,12 @@ namespace IGORR.Client
             Player player=manager.GetPlayer(pim.playerID);
             if (player != null)
                 TextManager.AddText(player.Position, 0, pim.Text, 5000, Microsoft.Xna.Framework.Color.Yellow, Microsoft.Xna.Framework.Color.Transparent);
+        }
+
+        public static void HandleDoEffect(IgorrMessage message)
+        {
+            DoEffectMessage dem = (DoEffectMessage)message;
+            IGORR.Modules.ModuleManager.DoEffect(dem.EffectID,manager.Map,dem.Dir,dem.Position,dem.Info);
         }
 
         public static void HandleExp(IgorrMessage message)

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttackTemplate.cs" />
+    <Compile Include="EffectTemplate.cs" />
     <Compile Include="ModuleManager.cs" />
     <Compile Include="ObjectControl.cs">
       <SubType>UserControl</SubType>

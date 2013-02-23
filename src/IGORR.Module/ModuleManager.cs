@@ -80,6 +80,14 @@ namespace IGORR.Modules
             return obj;
         }
 
+        public static void DoEffect(int typeID, IGORR.Client.Logic.IMap map, Microsoft.Xna.Framework.Vector2 dir, Microsoft.Xna.Framework.Point position, string info)
+        {
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                _modules[x].DoEffect(typeID, map,dir,position, info);
+            }
+        }
+
         public static Client.Logic.Attack SpawnByIdClient(int typeID, int objectID, Microsoft.Xna.Framework.Vector2 dir, Microsoft.Xna.Framework.Point position, string info)
         {
             IGORR.Client.Logic.Attack obj = null;

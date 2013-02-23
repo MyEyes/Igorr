@@ -71,6 +71,19 @@ namespace IGORR.Server.Logic
 
         }
 
+        public void DoEffect(int EffectID, Point pos, Vector2 dir, string info)
+        {
+            if(_map==null)
+                return;
+            IGORR.Protocol.Messages.DoEffectMessage dem = (IGORR.Protocol.Messages.DoEffectMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.DoEffect);
+            dem.Info = info;
+            dem.Position = pos;
+            dem.Dir = dir;
+            dem.EffectID = EffectID;
+            dem.Encode();
+            _map.ObjectManager.Server.SendAllMap(_map, dem, true);
+        }
+
         public virtual void Update(float ms)
         {
 

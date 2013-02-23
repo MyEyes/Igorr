@@ -155,6 +155,13 @@ namespace MapEditor
 
         }
 
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            _spawnPoint = null;
+            DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Close();
+        }
+
 
     }
 }

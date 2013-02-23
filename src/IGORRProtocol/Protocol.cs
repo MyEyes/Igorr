@@ -68,7 +68,8 @@ namespace IGORR.Protocol
         Knockback,
         SpawnAttack,
         ObjectInfo,
-        Interact
+        Interact,
+        DoEffect
     }
 
     public delegate void MessageHandler(IgorrMessage message);
@@ -154,6 +155,7 @@ namespace IGORR.Protocol
                 case MessageTypes.Knockback: message = new Messages.KnockbackMessage(outgoing, _timeStamp); break;
                 case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Interact: message = new Messages.InteractMessage(outgoing, _timeStamp); break;
+                case MessageTypes.DoEffect: message = new Messages.DoEffectMessage(outgoing, _timeStamp); break;
             }
              
             return message;
@@ -197,6 +199,7 @@ namespace IGORR.Protocol
                 case MessageTypes.Knockback: message = new Messages.KnockbackMessage(m); break;
                 case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(m); break;
                 case MessageTypes.Interact: message = new Messages.InteractMessage(m); break;
+                case MessageTypes.DoEffect: message = new Messages.DoEffectMessage(m); break;
             }
             return message;
         }

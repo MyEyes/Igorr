@@ -246,6 +246,9 @@ for (int x = 0; x < tpCount; x++)
                 manager.Add(obj);
                 targetTile.SetChild(obj as EventObject);
             }
+            else
+                manager.Add(obj);
+
         }
 
         public void SpawnItem(int id, BinaryReader reader)

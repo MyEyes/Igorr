@@ -79,6 +79,7 @@
     <Compile Include="EditorControls\TriggerInfoControl.Designer.cs">
       <DependentUpon>TriggerInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
     <Compile Include="Server\AIQueue.cs" />
     <Compile Include="Server\LuaNPC.cs" />
     <Compile Include="Server\SleepingOrb.cs" />
