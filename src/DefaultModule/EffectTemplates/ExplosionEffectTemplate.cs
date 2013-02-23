@@ -15,6 +15,7 @@ namespace DefaultModule.EffectTemplates
         Texture2D _smokeTex;
         Texture2D _fireTex;
         Texture2D _particleTex;
+
         public override void DoEffect(IGORR.Client.Logic.IMap map, Microsoft.Xna.Framework.Vector2 dir, Microsoft.Xna.Framework.Point position, string info)
         {
             if(_smokeTex==null)
