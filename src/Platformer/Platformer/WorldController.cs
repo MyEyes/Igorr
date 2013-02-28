@@ -65,6 +65,7 @@ namespace IGORR.Client
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Knockback, new MessageHandler(HandleKnockback));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.DoEffect, new MessageHandler(HandleDoEffect));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Chat, new MessageHandler(HandleChat));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -85,15 +86,6 @@ namespace IGORR.Client
         public static void SetGame(GameScreen game)
         {
             _gameRef = game;
-        }
-
-        public static void SendText(string value)
-        {
-            if (!_started)
-                return;
-            ChatMessage message = (ChatMessage)ProtocolHelper.NewMessage(MessageTypes.Chat);
-            message.Text = value; 
-            SendReliable(message);
         }
 
         public static void SendReliable(IgorrMessage m)
@@ -171,6 +163,18 @@ namespace IGORR.Client
                 else
                     connection.SendMessage(message.GetMessage(), NetDeliveryMethod.UnreliableSequenced);
                 //ProtocolHelper.Send(message, connection.ServerConnection);
+        }
+
+        public static void HandleChat(IgorrMessage message)
+        {
+            ChatMessage cm = (ChatMessage)message;
+            GameObject obj = null;
+            if (cm.objID >= 0)
+                obj = manager.GetObject(cm.objID);
+            if (obj != null)
+                TextManager.Say(obj, cm.Text, cm.timeout);
+            else
+                TextManager.Say(cm.pos, cm.Text, cm.timeout);
         }
 
         public static void HandleSpawn(IgorrMessage message)

@@ -609,7 +609,7 @@
       <Name>testmap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -645,6 +645,13 @@
       <Name>shard4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fonts\textFont.png">
+      <Name>textFont</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

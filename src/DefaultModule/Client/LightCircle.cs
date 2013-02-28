@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Client.Logic
 {
-    class LightCircle :EventObject
+    class LightCircle :GameObject
     {
         float frame=0;
         IMap _map;
 
         public LightCircle(IMap map, Texture2D texture, Rectangle position, int id)
-            : base(map,texture, position, id)
+            : base(texture, position, id)
         {
             _map = map;
         }

@@ -320,7 +320,6 @@ namespace IGORR.Client
             batch.Begin(SpriteSortMode.Immediate, addLight, null, drawShadowedLight, RasterizerState.CullNone, shadowEffect);
             batch.Draw(_unusedTexture, new Rectangle((int)(light.position.X - light.radius), (int)(light.position.Y - light.radius), (int)(light.radius * 2), (int)(light.radius * 2)), Color.Lerp(light.color, Color.Black, 1-light.brightness));
             batch.End();
-
         }
 
         public void DrawMapOutline(SpriteBatch batch, Map map)

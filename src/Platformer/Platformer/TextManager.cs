@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using IGORR.Client.Logic;
 
 namespace IGORR.Client
 {
@@ -18,12 +19,14 @@ namespace IGORR.Client
     {
         static List<BattleText> _texts;
         static List<InfoText> _info;
+        static List<TextBubble> _bubbles;
         static SpriteFont _font;
 
         static TextManager()
         {
             _texts = new List<BattleText>();
             _info = new List<InfoText>();
+            _bubbles = new List<TextBubble>();
         }
 
         public static void SetUp(SpriteFont font)
@@ -44,9 +47,20 @@ namespace IGORR.Client
             for (int x = 0; x < _info.Count; x++)
             {
                 if (_info[x].countdown < 0)
+                {
                     _info.RemoveAt(x);
+                    x--;
+                }
                 else
                     _info[x].countdown -= ms;
+            }
+            for (int x = 0; x < _bubbles.Count; x++)
+            {
+                if (!_bubbles[x].Update(ms))
+                {
+                    _bubbles.RemoveAt(x);
+                    x--;
+                }
             }
         }
 
@@ -55,10 +69,24 @@ namespace IGORR.Client
             _texts.Add(new BattleText(position, gravity, text, time, start, end, _font));
         }
 
-        public static void Draw(SpriteBatch batch)
+        public static void Draw(SpriteBatch batch, IGORR.Client.Logic.Camera cam)
         {
+            batch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp, DepthStencilState.Default, null, null, cam.ViewMatrix);
             for (int x = 0; x < _texts.Count; x++)
                 _texts[x].Draw(_font, batch);
+            for (int x = 0; x < _bubbles.Count; x++)
+                _bubbles[x].Draw(batch,cam);
+            batch.End();
+        }
+
+        public static void Say(GameObject obj, string Text, float timeout)
+        {
+            _bubbles.Add(new TextBubble(Text,obj,timeout));
+        }
+
+        public static void Say(Vector2 pos, string Text, float timeout)
+        {
+            _bubbles.Add(new TextBubble(Text, pos, timeout));
         }
 
         public static void AddInfo(string info)

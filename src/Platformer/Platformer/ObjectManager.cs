@@ -206,6 +206,48 @@ namespace IGORR.Client
             return p;
         }
 
+        public GameObject GetObject(int id)
+        {
+            GameObject p = null;
+            for (int x = 0; x < _objects.Count; x++)
+            {
+                if (_objects[x].ID == id)
+                {
+                    p = _objects[x];
+                    break;
+                }
+            }
+            return p;
+        }
+
+        public GameObject GetObject(Vector2 position, float radius)
+        {
+            GameObject p = null;
+            for (int x = 0; x < _objects.Count; x++)
+            {
+                if ((_objects[x].MidPosition-position).Length()<=radius)
+                {
+                    p = _objects[x];
+                    break;
+                }
+            }
+            return p;
+        }
+
+        public GameObject GetObjectInteract(Vector2 position, float radius)
+        {
+            GameObject p = null;
+            for (int x = 0; x < _objects.Count; x++)
+            {
+                if ((_objects[x].MidPosition - position).Length() <= radius && _objects[x].CanInteract)
+                {
+                    p = _objects[x];
+                    break;
+                }
+            }
+            return p;
+        }
+
         public void Update(float ms)
         {
             for (int x = 0; x < _draw.Count; x++)
@@ -213,12 +255,18 @@ namespace IGORR.Client
                 if (_draw[x] is Player)
                     (_draw[x] as Player).Update(_map, ms / 1000.0f);
                 else if (_draw[x] is Attack)
+                {
                     if (!(_draw[x] as Attack).Update(_map, ms / 1000.0f))
                     {
                         _objects.Remove(_draw[x]);
                         _draw.RemoveAt(x);
                         x--;
                     }
+                }
+                else
+                {
+                    _draw[x].Update(ms);
+                }
             }
         }
 

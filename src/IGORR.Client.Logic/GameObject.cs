@@ -85,5 +85,10 @@ namespace IGORR.Client.Logic
         {
 
         }
+
+        public virtual bool CanInteract
+        {
+            get { return true; }
+        }
     }
 }

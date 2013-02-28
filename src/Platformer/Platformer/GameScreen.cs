@@ -60,6 +60,7 @@ namespace IGORR.Client
             crosshair = ContentInterface.LoadTexture("Crosshair");
             _spriteEffect = ContentInterface.LoadShader("ShadowEffect");
             _spriteEffect.CurrentTechnique = _spriteEffect.Techniques["Sprite"];
+
             WorldController.SetObjectManager(objectManager);
             WorldController.SetGame(this);
             WorldController.Start();
@@ -90,8 +91,8 @@ namespace IGORR.Client
                 objectManager.Draw(spriteBatch);
                 spriteBatch.Draw(crosshair, player.MidPosition, null, Color.White, (float)Math.Atan2(_mouseDir.Y, _mouseDir.X), new Vector2(-32, 16),0.5f, SpriteEffects.None, 0.1f);
                 pm.Draw(spriteBatch);
-                TextManager.Draw(spriteBatch);
                 spriteBatch.End();
+                TextManager.Draw(spriteBatch, cam);
                 _lightMap.ApplyLight(spriteBatch);
 
                 spriteBatch.Begin();
@@ -175,6 +176,17 @@ namespace IGORR.Client
                         WorldController.SendAttack(1, _mouseDir, player.ID);
                     if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
                         WorldController.SendAttack(2, _mouseDir, player.ID);
+                    GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
+                    if (interactObject != null && keyboard.IsKeyDown(Keys.Enter) && !_prevKeyboard.IsKeyDown(Keys.Enter))
+                    {
+                        IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
+                        im.objectID = interactObject.ID;
+                        im.info = 0;
+                        im.sinfo = "";
+                        im.action = Protocol.Messages.InteractAction.StartInteract;
+                        im.Encode();
+                        WorldController.SendReliable(im);
+                    }
                     //Test stuff
                     WorldController.SendPosition(player);
                     objectManager.Update((float)gameTime.ElapsedGameTime.Milliseconds);

@@ -18,6 +18,7 @@ namespace IGORR.Client
         Game1 _gameRef;
         Gui _gui;
         ScreenManager _manager;
+        
 
         public MainMenuScreen(Game1 game)
         {

@@ -84,6 +84,18 @@ namespace IGORR.Server.Logic
             _map.ObjectManager.Server.SendAllMap(_map, dem, true);
         }
 
+        public void Say(string Text, float timeout)
+        {
+            if (map == null)
+                return;
+            IGORR.Protocol.Messages.ChatMessage cm = (IGORR.Protocol.Messages.ChatMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Chat);
+            cm.Text = Text;
+            cm.timeout = timeout;
+            cm.objID = this._id;
+            cm.Encode();
+            _map.ObjectManager.Server.SendAllMap(_map, cm, true);
+        }
+
         public virtual void Update(float ms)
         {
 

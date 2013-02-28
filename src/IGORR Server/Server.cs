@@ -50,6 +50,7 @@ namespace IGORR.Server
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Leave, new MessageHandler(HandleLeave));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Join, new MessageHandler(HandleJoin));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Attack, new MessageHandler(HandleAttack));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Interact, new MessageHandler(HandleInteract));
             _clientids = new Dictionary<long, int>();
             _clients = new Dictionary<int, Client>();
             _connections = new List<NetConnection>();
@@ -137,8 +138,6 @@ namespace IGORR.Server
                 Console.WriteLine("WARNING: Message not encoded: " + message.MessageType.ToString());
                 message.Encode();
             }
-            if (message.MessageType == MessageTypes.Chat)
-                Console.WriteLine("I am sending a strange message");
             foreach (Client client in _clients.Values)
                 if (client.PlayerID == player.ID)
                     connection.SendMessage(message.GetMessage(), client.Connection, NetDeliveryMethod.ReliableOrdered,currentChannel);
@@ -179,8 +178,6 @@ namespace IGORR.Server
                 Console.WriteLine("WARNING: Message not encoded: " + message.MessageType.ToString());
                 message.Encode();
             }
-            if (message.MessageType == MessageTypes.Chat || message.ReReadType == MessageTypes.Chat || message.ReReadType != message.MessageType)
-                Console.WriteLine("I am sending a strange message");
             if (recipients.Count > 0 && Reliable)
                 connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.ReliableSequenced, currentChannel);
             else if (recipients.Count > 0 && !Reliable && _enableSend)
@@ -204,8 +201,6 @@ namespace IGORR.Server
                 Console.WriteLine("WARNING: Message not encoded: " + message.MessageType.ToString());
                 message.Encode();
             }
-            if (message.MessageType == MessageTypes.Chat || message.ReReadType == MessageTypes.Chat || message.ReReadType != message.MessageType)
-                Console.WriteLine("I am sending a strange message");
             if (recipients.Count > 0)
             {
                 if (ordered)
@@ -327,6 +322,12 @@ namespace IGORR.Server
             LeaveMessage lm = (LeaveMessage)(message);
             Console.WriteLine("Leave Message: ClientID: " + message.clientID);
             RemoveClient(message.clientID);
+        }
+
+        void HandleInteract(IgorrMessage message)
+        {
+            InteractMessage im = (InteractMessage)message;
+            Console.WriteLine("Player {0} tried to interact with object {1}",im.clientID,im.objectID);
         }
 
         void RemoveClient(int clientID)

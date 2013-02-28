@@ -47,7 +47,7 @@ namespace IGORR.Client
         public void Draw(SpriteFont font, SpriteBatch batch)
         {
             //batch.DrawString(font, _text, _position - _size * 1.1f, Color.Lerp(Color.Black, _endColor, 1 - _timeLeft / _startTime), 0, Vector2.Zero, 1.1f, SpriteEffects.None, 0);
-            batch.DrawString(font, _text, _position - _size, Color.Lerp(_startColor, _endColor, 1 - _timeLeft / _startTime), 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0);
+            batch.DrawString(font, _text, _position - _size, Color.Lerp(_startColor, _endColor, 1 - _timeLeft / _startTime), 0, Vector2.Zero, 0.4f, SpriteEffects.None, 0.1f);
         }
     }
 }

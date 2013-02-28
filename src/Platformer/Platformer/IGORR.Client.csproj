@@ -131,6 +131,7 @@
     <Compile Include="ScreenManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SpriteEffect.cs" />
+    <Compile Include="TextBubble.cs" />
     <Compile Include="TextManager.cs" />
     <Compile Include="WorldController.cs" />
   </ItemGroup>

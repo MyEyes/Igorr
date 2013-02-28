@@ -128,9 +128,7 @@ namespace IGORR.Protocol
             IgorrMessage message = null;
             switch (type)
             {
-                case MessageTypes.Chat:
-                    Console.WriteLine("I am sending a chat message");
-                    message = new Messages.ChatMessage(outgoing, _timeStamp); break;
+                case MessageTypes.Chat: message = new Messages.ChatMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Position: message = new Messages.PositionMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Leave: message = new Messages.LeaveMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Join: message = new Messages.JoinMessage(outgoing, _timeStamp); break;
@@ -171,10 +169,7 @@ namespace IGORR.Protocol
             IgorrMessage message = null;
             switch (m.MessageType)
             {
-                case MessageTypes.Chat:
-                    Logger.LogMessageToFile("This should never happen: I got a Chat Message");
-                    message = new Messages.ChatMessage(m); 
-                    break;
+                case MessageTypes.Chat: message = new Messages.ChatMessage(m); break;
                 case MessageTypes.Position: message = new Messages.PositionMessage(m); break;
                 case MessageTypes.Leave: message = new Messages.LeaveMessage(m); break;
                 case MessageTypes.Join: message = new Messages.JoinMessage(m); break;
