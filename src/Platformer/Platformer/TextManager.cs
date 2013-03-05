@@ -89,6 +89,11 @@ namespace IGORR.Client
             _bubbles.Add(new TextBubble(Text, pos, timeout));
         }
 
+        public static void Ask(Choice[] choices, string text, GameObject obj)
+        {
+            _bubbles.Add(new InteractiveTextBubble(choices, text, obj));
+        }
+
         public static void AddInfo(string info)
         {
             InfoText nfo = new InfoText();

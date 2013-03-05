@@ -29,6 +29,11 @@ namespace IGORR.Server
             _lua.DoFile(file);
         }
 
+        public static void Register(string functionName, object invokee, MethodBase method)
+        {
+            _lua.RegisterFunction(functionName, invokee, method);
+        }
+
         public static void Print(string text)
         {
             Console.WriteLine(text);

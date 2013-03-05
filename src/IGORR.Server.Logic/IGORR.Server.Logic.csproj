@@ -52,14 +52,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIQueue.cs" />
     <Compile Include="DummyObject.cs" />
     <Compile Include="IAttackManager.cs" />
     <Compile Include="BaseBody.cs" />
     <Compile Include="BodyPart.cs" />
     <Compile Include="EventObject.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="IPartContainer.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="IMap.cs" />
+    <Compile Include="LuaNPC.cs" />
     <Compile Include="LuaVM.cs" />
     <Compile Include="NPC.cs" />
     <Compile Include="IObjectManager.cs" />

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using IGORR.Server;
+using IGORR.Server.Logic;
 
 namespace IGORR.Server.Logic.AI
 {
-    class LuaNPC : NPC
+    public class LuaNPC : NPC
     {
         string _script_file;
 
@@ -20,6 +21,8 @@ namespace IGORR.Server.Logic.AI
 
         public bool lookingForTarget = false;
         public bool lookingForFriend = false;
+
+        public bool interacts = false;
 
         bool _could_Attack = true;
         int _lastHP = 0;
@@ -34,6 +37,8 @@ namespace IGORR.Server.Logic.AI
 
             _script_file=script_file;
             queue = new AIQueue(this);
+            _objectType = 10001;
+            _info = charfile;
             LuaVM.SetValue("me", this);
             LuaVM.DoString("require \"" + script_file + "\"\n"+script_file+".spawn()\n"+script_file+".spawn_equip()");
         }
@@ -100,11 +105,14 @@ namespace IGORR.Server.Logic.AI
             queue.Add(new JumpCommand(this));
         }
 
-        public override void Interact(Player player)
+
+        public override void Interact(Player player, string sinfo, int info)
         {
+            if (!interacts)
+                return;
             LuaVM.SetValue("me", this);
             LuaVM.SetValue("player", player);
-            LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".interact()\n");
+            LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".interact(\"" + sinfo + "\"," + info.ToString() + ")\n");
         }
         
     }

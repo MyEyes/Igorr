@@ -9,7 +9,7 @@ using IGORR.Protocol.Messages;
 
 namespace IGORR.Server.Logic
 {
-    public class PartPickup:EventObject
+    public class PartPickup:EventObject, Logic.IPartContainer
     {
         BodyPart _bodyPart;
         bool _respawn = true;
@@ -54,6 +54,11 @@ namespace IGORR.Server.Logic
             _map.ObjectManager.Server.SendClient(plr, pum);
             Console.WriteLine("Player " + plr.ID.ToString() + " picked up " + _bodyPart.GetName());
             _map.ObjectManager.Remove(this);
+        }
+
+        public BodyPart Part
+        {
+            get { return _bodyPart; }
         }
     }
 }

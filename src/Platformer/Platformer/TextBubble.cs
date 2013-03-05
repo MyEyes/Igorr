@@ -10,13 +10,13 @@ namespace IGORR.Client
 {
     class TextBubble
     {
-        Vector2 _origin;
-        Vector2 _textStart;
-        Vector2 _origTextStart;
-        GameObject _speaker;
+        protected Vector2 _origin;
+        protected Vector2 _textStart;
+        protected Vector2 _origTextStart;
+        protected GameObject _speaker;
         string _text;
         Vector2 _textSize;
-        static SpriteFont _font;
+        protected static SpriteFont _font;
         VertexPositionColor[] _vertices;
         static BasicEffect _effect;
         float _timeOut = 0;
@@ -38,7 +38,8 @@ namespace IGORR.Client
         public TextBubble(string Text, GameObject speaker, float timeout)
         {
             _text = Text;
-            _origin = speaker.MidPosition - Vector2.UnitY * speaker.Rect.Height * 0.5f;
+            if (speaker != null)
+                _origin = speaker.MidPosition - Vector2.UnitY * speaker.Rect.Height * 0.5f;
             _speaker = speaker;
             if (_font == null)
                 _font = IGORR.Content.ContentInterface.LoadFont("textFont");
@@ -48,6 +49,13 @@ namespace IGORR.Client
             _timeOut = timeout;
         }
 
+        public void SetText(string text)
+        {
+            _text = text;
+            _textSize = _font.MeasureString(_text);
+            CalculateTextStart();
+        }
+
         private void CalculateVertices()
         {
             //First 3 vertices are from Speaker to box
@@ -55,59 +63,61 @@ namespace IGORR.Client
             //Next 8*3 are top,left,right,bottom
             //Next 16*3 are rounded corners
             float depth = 0.12f;
-
+            Color color = Color.White;
             if (_vertices == null)
                 _vertices = new VertexPositionColor[81];
             //Line to center of text box
-            _vertices[0] = new VertexPositionColor(new Vector3(_origin,depth),Color.White);
+            _vertices[0] = new VertexPositionColor(new Vector3(_origin,depth),color);
             Vector2 dir = _textStart + _textSize * 0.25f - _origin;
             dir.Normalize();
             dir = new Vector2(-dir.Y, dir.X)*5;
-            _vertices[1] = new VertexPositionColor(new Vector3(_textStart + _textSize * 0.25f + dir, depth), Color.White);
-            _vertices[2] = new VertexPositionColor(new Vector3(_textStart + _textSize * 0.25f - dir,depth), Color.White);
+            _vertices[1] = new VertexPositionColor(new Vector3(_textStart + _textSize * 0.25f + dir, depth), color);
+            _vertices[2] = new VertexPositionColor(new Vector3(_textStart + _textSize * 0.25f - dir,depth), color);
             //Center of text box
-            _vertices[3] = new VertexPositionColor(new Vector3(_textStart, depth), Color.White);
-            _vertices[4] = new VertexPositionColor(new Vector3(_textStart + new Vector2(_textSize.X, 0) * 0.5f, depth), Color.White);
-            _vertices[5] = new VertexPositionColor(new Vector3(_textStart + new Vector2(_textSize.X, _textSize.Y) * 0.5f, depth), Color.White);
-            _vertices[6] = new VertexPositionColor(new Vector3(_textStart, depth), Color.White);
-            _vertices[7] = new VertexPositionColor(new Vector3(_textStart + new Vector2(_textSize.X, _textSize.Y) * 0.5f, depth), Color.White);
-            _vertices[8] = new VertexPositionColor(new Vector3(_textStart + new Vector2(0, _textSize.Y) * 0.5f, depth), Color.White);
+            _vertices[3] = new VertexPositionColor(new Vector3(_textStart, depth), color);
+            _vertices[4] = new VertexPositionColor(new Vector3(_textStart + new Vector2(_textSize.X, 0) * 0.5f, depth), color);
+            _vertices[5] = new VertexPositionColor(new Vector3(_textStart + new Vector2(_textSize.X, _textSize.Y) * 0.5f, depth), color);
+            _vertices[6] = new VertexPositionColor(new Vector3(_textStart, depth), color);
+            _vertices[7] = new VertexPositionColor(new Vector3(_textStart + new Vector2(_textSize.X, _textSize.Y) * 0.5f, depth), color);
+            _vertices[8] = new VertexPositionColor(new Vector3(_textStart + new Vector2(0, _textSize.Y) * 0.5f, depth), color);
+            color = Color.Black;
+            Color color2 = Color.White;
             //Upper border
             Vector2 offset = new Vector2(0, -3);
             Vector2 wh = new Vector2(_textSize.X * 0.5f, 3);
-            _vertices[9] = new VertexPositionColor(new Vector3(_textStart+offset, depth), Color.White);
-            _vertices[10] = new VertexPositionColor(new Vector3(_textStart +offset+new Vector2(wh.X,0), depth), Color.White);
-            _vertices[11] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[12] = new VertexPositionColor(new Vector3(_textStart +offset, depth), Color.White);
-            _vertices[13] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[14] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), Color.White);
+            _vertices[9] = new VertexPositionColor(new Vector3(_textStart+offset, depth), color);
+            _vertices[10] = new VertexPositionColor(new Vector3(_textStart +offset+new Vector2(wh.X,0), depth), color);
+            _vertices[11] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color2);
+            _vertices[12] = new VertexPositionColor(new Vector3(_textStart +offset, depth), color);
+            _vertices[13] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color2);
+            _vertices[14] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), color2);
             //Lower border
             offset = new Vector2(0, _textSize.Y*0.5f);
             wh = new Vector2(_textSize.X * 0.5f, 3);
-            _vertices[15] = new VertexPositionColor(new Vector3(_textStart + offset, depth), Color.White);
-            _vertices[16] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, 0), depth), Color.White);
-            _vertices[17] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[18] = new VertexPositionColor(new Vector3(_textStart + offset, depth), Color.White);
-            _vertices[19] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[20] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), Color.White);
+            _vertices[15] = new VertexPositionColor(new Vector3(_textStart + offset, depth), color2);
+            _vertices[16] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, 0), depth), color2);
+            _vertices[17] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color);
+            _vertices[18] = new VertexPositionColor(new Vector3(_textStart + offset, depth), color2);
+            _vertices[19] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color);
+            _vertices[20] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), color);
             //Right border
             offset = new Vector2(_textSize.X*0.5f, 0);
             wh = new Vector2(3, _textSize.Y * 0.5f);
-            _vertices[21] = new VertexPositionColor(new Vector3(_textStart + offset, depth), Color.White);
-            _vertices[22] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, 0), depth), Color.White);
-            _vertices[23] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[24] = new VertexPositionColor(new Vector3(_textStart + offset, depth), Color.White);
-            _vertices[25] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[26] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), Color.White);
+            _vertices[21] = new VertexPositionColor(new Vector3(_textStart + offset, depth), color2);
+            _vertices[22] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, 0), depth), color);
+            _vertices[23] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color);
+            _vertices[24] = new VertexPositionColor(new Vector3(_textStart + offset, depth), color2);
+            _vertices[25] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color);
+            _vertices[26] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), color2);
             //Left border
             offset = new Vector2(-3, 0);
             wh = new Vector2(3, _textSize.Y * 0.5f);
-            _vertices[27] = new VertexPositionColor(new Vector3(_textStart + offset, depth), Color.White);
-            _vertices[28] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, 0), depth), Color.White);
-            _vertices[29] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[30] = new VertexPositionColor(new Vector3(_textStart + offset, depth), Color.White);
-            _vertices[31] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), Color.White);
-            _vertices[32] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), Color.White);
+            _vertices[27] = new VertexPositionColor(new Vector3(_textStart + offset, depth), color);
+            _vertices[28] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, 0), depth), color2);
+            _vertices[29] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color2);
+            _vertices[30] = new VertexPositionColor(new Vector3(_textStart + offset, depth), color);
+            _vertices[31] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(wh.X, wh.Y), depth), color2);
+            _vertices[32] = new VertexPositionColor(new Vector3(_textStart + offset + new Vector2(0, wh.Y), depth), color);
             //Corners
             float angleAdvance = (float)Math.PI / 8;
             float angle = 0;
@@ -117,9 +127,9 @@ namespace IGORR.Client
             offset = _textStart + new Vector2(_textSize.X, 0) * 0.5f;
             for (int x = 0; x < 4; x++)
             {
-                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), Color.White);
-                _vertices[count+1] = new VertexPositionColor(new Vector3(offset+radius*new Vector2((float)Math.Cos(angle+angleAdvance),(float)-Math.Sin(angle+angleAdvance)), depth), Color.White);
-                _vertices[count+2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), Color.White);
+                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), color2);
+                _vertices[count+1] = new VertexPositionColor(new Vector3(offset+radius*new Vector2((float)Math.Cos(angle+angleAdvance),(float)-Math.Sin(angle+angleAdvance)), depth), color);
+                _vertices[count+2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), color);
                 count += 3;
                 angle += angleAdvance;
             }
@@ -127,9 +137,9 @@ namespace IGORR.Client
             offset = _textStart;
             for (int x = 0; x < 4; x++)
             {
-                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), Color.White);
-                _vertices[count + 1] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle + angleAdvance), (float)-Math.Sin(angle + angleAdvance)), depth), Color.White);
-                _vertices[count + 2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), Color.White);
+                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), color2);
+                _vertices[count + 1] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle + angleAdvance), (float)-Math.Sin(angle + angleAdvance)), depth), color);
+                _vertices[count + 2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), color);
                 count += 3;
                 angle += angleAdvance;
             }
@@ -137,9 +147,9 @@ namespace IGORR.Client
             offset = _textStart + new Vector2(0, _textSize.Y) * 0.5f;
             for (int x = 0; x < 4; x++)
             {
-                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), Color.White);
-                _vertices[count + 1] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle + angleAdvance), (float)-Math.Sin(angle + angleAdvance)), depth), Color.White);
-                _vertices[count + 2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), Color.White);
+                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), color2);
+                _vertices[count + 1] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle + angleAdvance), (float)-Math.Sin(angle + angleAdvance)), depth), color);
+                _vertices[count + 2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), color);
                 count += 3;
                 angle += angleAdvance;
             }
@@ -147,9 +157,9 @@ namespace IGORR.Client
             offset = _textStart + new Vector2(_textSize.X, _textSize.Y) * 0.5f;
             for (int x = 0; x < 4; x++)
             {
-                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), Color.White);
-                _vertices[count + 1] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle + angleAdvance), (float)-Math.Sin(angle + angleAdvance)), depth), Color.White);
-                _vertices[count + 2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), Color.White);
+                _vertices[count] = new VertexPositionColor(new Vector3(offset, depth), color2);
+                _vertices[count + 1] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle + angleAdvance), (float)-Math.Sin(angle + angleAdvance)), depth), color);
+                _vertices[count + 2] = new VertexPositionColor(new Vector3(offset + radius * new Vector2((float)Math.Cos(angle), (float)-Math.Sin(angle)), depth), color);
                 count += 3;
                 angle += angleAdvance;
             }
@@ -160,7 +170,7 @@ namespace IGORR.Client
             _origTextStart = _origin + new Vector2(-_textSize.X / 4, -_textSize.Y/2 - 16);
         }
 
-        public bool Update(float ms)
+        public virtual bool Update(float ms)
         {
             if (_timeOut > 0)
             {
@@ -171,7 +181,7 @@ namespace IGORR.Client
             return inSight &&alive;
         }
 
-        public void Draw(SpriteBatch batch, Camera cam)
+        public virtual void Draw(SpriteBatch batch, Camera cam)
         {
             if (_speaker != null)
                 _origin = _speaker.MidPosition - Vector2.UnitY * _speaker.Rect.Height * 0.5f;

@@ -49,6 +49,7 @@ namespace IGORR.Server.Logic
 
         string _mapname;
         int _id;
+        static int idCounter = 0;
 
         public Map(string fileName, IGORR.Server.Server server, int id)
         {
@@ -148,6 +149,7 @@ namespace IGORR.Server.Logic
 
         public void LoadNew(string file)
         {
+            _id = idCounter++;
             Console.WriteLine("Loading Map " + file);
             BinaryReader reader = new BinaryReader(File.OpenRead("Content\\map\\"+file+".map"));
             int sizeX = reader.ReadInt32();
@@ -250,7 +252,7 @@ for (int x = 0; x < tpCount; x++)
                 manager.Add(obj);
 
         }
-
+        /*
         public void SpawnItem(int id, BinaryReader reader)
         {
             if (_spawnPoints.ContainsKey(id))
@@ -304,7 +306,7 @@ for (int x = 0; x < tpCount; x++)
                 }
             }
         }
-
+        /*
         public void SpawnItem(PartPickup pickup)
         {
             if (pickup == null)
@@ -322,6 +324,7 @@ for (int x = 0; x < tpCount; x++)
             Console.WriteLine("Spawned new object: " + pickup.Name);
             manager.Add(pickup);
         }
+         */
 
         public void TimeSpawn(int id, Vector2 position, float countdown)
         {

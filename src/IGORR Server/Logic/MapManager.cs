@@ -25,7 +25,7 @@ namespace IGORR.Server.Logic
 
         public static Map GetMapByID(int id)
         {
-            if (id < _maps.Count)
+            if (id>=0 && id < _maps.Count)
                 return _maps[id];
             return null;
         }
@@ -37,6 +37,15 @@ namespace IGORR.Server.Logic
                 if (_maps[x].Players > 0 || !_maps[x].TimedOut)
                     _maps[x].Update(ms);
             }
+        }
+
+
+        public static int GetMapID(IMap map)
+        {
+            for (int x = 0; x < _maps.Count; x++)
+                if (map!=null && map.ID == _maps[x].ID)
+                    return x;
+            return -1;
         }
 
         public static int ActiveMaps()

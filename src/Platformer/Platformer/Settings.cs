@@ -18,6 +18,8 @@ namespace IGORR.Client
             Type type = typeof(Settings);
             FieldInfo[] fields = type.GetFields();
 
+            if (!File.Exists("settings.cfg"))
+                return;
             StreamReader reader = new StreamReader("settings.cfg");
             string[] lines=null;
             if (reader != null)

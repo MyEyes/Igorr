@@ -66,6 +66,7 @@ namespace IGORR.Client
             ProtocolHelper.RegisterMessageHandler(MessageTypes.ObjectInfo, new MessageHandler(HandleObjectInfo));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.DoEffect, new MessageHandler(HandleDoEffect));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Chat, new MessageHandler(HandleChat));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Interact, new MessageHandler(HandleInteract));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -342,6 +343,25 @@ namespace IGORR.Client
             Player player = manager.GetPlayer(kbm.id);
             if (player != null)
                 player.Knockback(kbm.Move);
+        }
+
+        public static void HandleInteract(IgorrMessage message)
+        {
+            InteractMessage im = (InteractMessage)message;
+            if (im.action == InteractAction.Ask)
+            {
+                Player player = manager.GetPlayer(im.objectID);
+                string[] split = im.sinfo.Split(';');
+                List<Choice> choices = new List<Choice>();
+                string text = split[0];
+                int counter = 1;
+                while (counter + 1 < split.Length)
+                {
+                    choices.Add(new Choice(int.Parse(split[counter]), split[counter + 1]));
+                    counter += 2;
+                }
+                TextManager.Ask(choices.ToArray(), text, player);
+            }
         }
 
         public static void Exit()

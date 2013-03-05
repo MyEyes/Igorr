@@ -51,6 +51,7 @@ namespace IGORR.Server
                     }
                 }
                 Management.LoginData.Close();
+                Management.ClientInfoInterface.StoreInfo();
                 server.Exit();
             }
             catch (Exception e)
@@ -58,6 +59,7 @@ namespace IGORR.Server
                 Console.WriteLine(e);
                 Console.ReadLine();
                 Management.LoginData.Close();
+                Management.ClientInfoInterface.StoreInfo();
             }
         }
 

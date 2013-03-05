@@ -96,6 +96,35 @@ namespace IGORR.Server.Logic
             _map.ObjectManager.Server.SendAllMap(_map, cm, true);
         }
 
+        public void Say(string Text, float timeout, Player player)
+        {
+            if (map == null)
+                return;
+            IGORR.Protocol.Messages.ChatMessage cm = (IGORR.Protocol.Messages.ChatMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Chat);
+            cm.Text = Text;
+            cm.timeout = timeout;
+            cm.objID = this._id;
+            cm.Encode();
+            _map.ObjectManager.Server.SendClient(player, cm);
+        }
+
+        public void Ask(string questionString, Player player)
+        {
+            if (map == null)
+                return;
+            IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
+            im.action = Protocol.Messages.InteractAction.Ask;
+            im.objectID = this._id;
+            im.sinfo = questionString;
+            im.Encode();
+            _map.ObjectManager.Server.SendClient(player, im);
+        }
+
+        public virtual void Interact(Player player, string sinfo, int info)
+        {
+
+        }
+
         public virtual void Update(float ms)
         {
 

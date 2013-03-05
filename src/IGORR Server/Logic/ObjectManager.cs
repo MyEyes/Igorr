@@ -150,6 +150,20 @@ namespace IGORR.Server.Logic
             return true;
         }
 
+        public GameObject GetObject(int id)
+        {
+            GameObject obj = null;
+            for (int x = 0; x < _objects.Count; x++)
+            {
+                if (_objects[x].ID == id)
+                {
+                    obj = _objects[x];
+                    break;
+                }
+            }
+            return obj;
+        }
+
         public Player GetPlayer(int id)
         {
             Player player = null;
@@ -158,7 +172,7 @@ namespace IGORR.Server.Logic
                 if (_objects[x].ID == id)
                 {
                     if (_objects[x] is Player)
-                        player = _objects[x] as Player;
+                        player = (Player)_objects[x];
                     break;
                 }   
             }

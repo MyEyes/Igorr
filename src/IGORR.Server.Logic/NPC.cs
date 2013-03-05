@@ -44,11 +44,6 @@ namespace IGORR.Server.Logic
             base.Update(map, seconds);
         }
 
-        public virtual void Interact(Player player)
-        {
-
-        }
-
         public int XPBonus
         {
             get { return _XPBonus; }

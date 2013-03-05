@@ -20,5 +20,6 @@ namespace IGORR.Server.Logic
         void SetTrigger(string triggerName, bool val);
         void TimeSpawn(int id, Vector2 position, float countdown);
         Rectangle MapBoundaries { get; }
+        int ID { get; }
     }
 }

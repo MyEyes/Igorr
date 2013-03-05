@@ -21,6 +21,7 @@ namespace IGORR.Server.Logic
 
         bool UpdatePosition(Vector2 newPos, Vector2 newMove, int id, long timestamp);
 
+        GameObject GetObject(int id);
         Player GetPlayer(int id);
         Player GetPlayerAround(Vector2 position, float radius);
         Player GetPlayerInArea(Rectangle area);

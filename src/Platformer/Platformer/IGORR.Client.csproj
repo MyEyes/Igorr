@@ -115,8 +115,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConversationMenu.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="Glow.cs" />
+    <Compile Include="InteractiveTextBubble.cs" />
     <Compile Include="IScreen.cs" />
     <Compile Include="MainMenuScreen.cs" />
     <Compile Include="LightMap.cs" />

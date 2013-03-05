@@ -81,9 +81,7 @@
     </Compile>
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
-    <Compile Include="Server\AIQueue.cs" />
     <Compile Include="Server\Vase.cs" />
-    <Compile Include="Server\LuaNPC.cs" />
     <Compile Include="Server\SleepingOrb.cs" />
     <Compile Include="Templates\BossBlobSpawnerTemplate.cs" />
     <Compile Include="Templates\BossBlobTemplate.cs" />

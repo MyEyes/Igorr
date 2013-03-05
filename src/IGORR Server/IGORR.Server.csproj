@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Logic\AI\AIQueue.cs" />
     <Compile Include="Logic\AI\LookAround.cs" />
     <Compile Include="Logic\Blocker.cs" />
     <Compile Include="Logic\AI\BossBlob.cs" />
@@ -91,7 +90,6 @@
     <Compile Include="Logic\Body Parts\Wings.cs" />
     <Compile Include="Logic\BossTrigger.cs" />
     <Compile Include="Logic\AttackTrigger.cs" />
-    <Compile Include="Logic\AI\LuaNPC.cs" />
     <Compile Include="Logic\MessageBoard.cs" />
     <Compile Include="Logic\ExpOrb.cs" />
     <Compile Include="Logic\Grenade.cs" />
@@ -112,9 +110,8 @@
     <Compile Include="Logic\Map.cs" />
     <Compile Include="Logic\MapChanger.cs" />
     <Compile Include="Logic\MapManager.cs" />
-    <Compile Include="Logic\PartPickup.cs" />
     <Compile Include="Logic\TouchTrigger.cs" />
-    <Compile Include="LuaVM.cs" />
+    <Compile Include="Management\ClientInfo.cs" />
     <Compile Include="Management\LoginData.cs" />
     <Compile Include="Logic\ObjectManager.cs" />
     <Compile Include="Program.cs" />

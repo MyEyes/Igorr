@@ -21,6 +21,8 @@ namespace IGORR.Server.Management
         static LoginData()
         {
             _logins = new List<Login>();
+            if (!File.Exists("logins.lst"))
+                File.CreateText("logins.lst");
             StreamReader reader = new StreamReader("logins.lst");
             string[] lines = reader.ReadToEnd().Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             reader.Close();

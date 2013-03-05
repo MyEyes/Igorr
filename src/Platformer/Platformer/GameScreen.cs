@@ -64,6 +64,8 @@ namespace IGORR.Client
             WorldController.SetObjectManager(objectManager);
             WorldController.SetGame(this);
             WorldController.Start();
+
+            TextManager.Ask(new Choice[] { new Choice(1, "TestChoice 1"), new Choice(2, "TestChoice 2") }, "TestText", null);
         }
 
         public void LoadMap(int id)

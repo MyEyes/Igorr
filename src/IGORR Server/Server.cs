@@ -37,6 +37,10 @@ namespace IGORR.Server
             Modules.ModuleManager.SetContentDir(Content);
             Modules.ModuleManager.LoadAllModules();
 
+            Management.ClientInfoInterface.LoadInfos();
+            LuaVM.Register("GetInfo", null, typeof(Management.ClientInfoInterface).GetMethod("GetValue").GetBaseDefinition());
+            LuaVM.Register("SetInfo", null, typeof(Management.ClientInfoInterface).GetMethod("SetValue").GetBaseDefinition());
+
             NetPeerConfiguration config = new NetPeerConfiguration("IGORR");
             config.Port = LuaVM.GetValue<int>("port", 5445);
             //config.SimulatedMinimumLatency = 2f;
@@ -274,9 +278,14 @@ namespace IGORR.Server
 
             if (Management.LoginData.CheckLogin(jm.Name, jm.Password))
             {
-
                 Map targetMap = MapManager.GetMapByID(0);
                 int id = targetMap.ObjectManager.getID();
+
+                Player player = new Player(null, new Rectangle(0, 0, 16, 15), id);
+                player.Name = jm.Name;
+
+                Management.PlayerInfo pinfo = Management.ClientInfoInterface.GetInfo(player);
+                targetMap = MapManager.GetMapByID(pinfo.Map);
 
                 Client client = new Client(message.SenderConnection, jm.Name);
                 client.PlayerID = id;
@@ -284,7 +293,7 @@ namespace IGORR.Server
                 _clients.Add(client.ID, client);
                 _connections.Add(client.Connection);
 
-                client.SetMap(targetMap, Vector2.Zero);
+                client.SetMap(targetMap, new Vector2(pinfo.PosX, pinfo.PosY));
 
                 /*
                 SpawnMessage sm = (SpawnMessage)Protocol.NewMessage(MessageTypes.Spawn);
@@ -300,16 +309,33 @@ namespace IGORR.Server
                 Protocol.SendContainer(cm, client.Connection);
                 Protocol.FlushContainer(client.Connection);
                  */
-                Point spawnPoint = targetMap.getRandomSpawn();
-                Player player = new Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
-                player.GivePart(new GrenadeLauncher());
+                Point spawnPoint;
+                if (pinfo.PosX == 0 && pinfo.PosY == 0)
+                    spawnPoint = targetMap.getRandomSpawn();
+                else spawnPoint = new Point(pinfo.PosX, pinfo.PosY);
+                player = new Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
                 player.Name = jm.Name;
+                player.GivePart(new GrenadeLauncher());
                 targetMap.ObjectManager.Add(player);
 
                 AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);
                 apm.objectID = id;
                 apm.Encode();
                 SendClient(client, apm);
+
+                if (pinfo.Parts != null)
+                    for (int x = 0; x < pinfo.Parts.Count; x++)
+                    {
+                        GameObject obj = Modules.ModuleManager.SpawnByIdServer(null, pinfo.Parts[x], -1, Point.Zero, null);
+                        Logic.IPartContainer cont = obj as Logic.IPartContainer;
+                        if (cont == null)
+                            continue;
+                        player.GivePart(cont.Part);
+                        PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
+                        pum.id = cont.Part.GetID();
+                        pum.Encode();
+                        SendClient(client, pum);
+                    }
 
                 Console.WriteLine(client.Name + " joined");
             }
@@ -327,7 +353,10 @@ namespace IGORR.Server
         void HandleInteract(IgorrMessage message)
         {
             InteractMessage im = (InteractMessage)message;
-            Console.WriteLine("Player {0} tried to interact with object {1}",im.clientID,im.objectID);
+            Client cl = _clients[im.clientID];
+            Player player = cl.CurrentMap.ObjectManager.GetPlayer(cl.PlayerID);
+            GameObject obj = cl.CurrentMap.ObjectManager.GetObject(im.objectID);
+            obj.Interact(player, im.sinfo, im.info);
         }
 
         void RemoveClient(int clientID)
@@ -340,6 +369,8 @@ namespace IGORR.Server
                 _connections.Remove(client.Connection);
                 DeSpawnMessage dsm = (DeSpawnMessage)ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
                 dsm.id = client.PlayerID;
+                Player player = _clients[client.ID].CurrentMap.ObjectManager.GetPlayer(client.PlayerID);
+                Management.ClientInfoInterface.UpdateInfo(player);
                 _clients[client.ID].CurrentMap.ObjectManager.Remove(client.PlayerID);
                 _clients.Remove(client.ID);
                 dsm.Encode();
