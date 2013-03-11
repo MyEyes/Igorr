@@ -11,7 +11,7 @@ namespace IGORR.Server.Logic
         float timeOut = 0;
         float updateTimeout = 1000;
         bool _global = false;
-        bool val = true;
+        int val = 0;
         string _triggerName;
 
         public AttackTrigger(string triggerName, bool global, IMap map, Rectangle rect, int id)
@@ -19,7 +19,7 @@ namespace IGORR.Server.Logic
         {
             _triggerName = triggerName;
             _global = global;
-            Val = false;
+            Val = 0;
             _objectType = 11;
         }
 
@@ -32,20 +32,20 @@ namespace IGORR.Server.Logic
                     Val = GlobalTriggers.GetTriggerValue(_triggerName);
                 }
                 else
-                    Val = _map.GetTrigger(_triggerName);
+                    Val = _map.GetTrigger(_triggerName)?1:0;
                 updateTimeout = 1000;
             }
             if (timeOut <= 0 && _map.ObjectManager.AttackManager.CheckObject(this) > 0)
             {
                 if (_global)
                 {
-                    Val = !val;
+                    Val = 1-val;
                     GlobalTriggers.SetTriggerValue(_triggerName, val);
                 }
                 else
                 {
-                    Val = !val;
-                    _map.SetTrigger(_triggerName, val);
+                    Val = 1-val;
+                    _map.SetTrigger(_triggerName, val==1);
                 }
                 timeOut = 1000;
             }
@@ -54,14 +54,14 @@ namespace IGORR.Server.Logic
             base.Update(ms);
         }
 
-        private bool Val
+        private int Val
         {
             set
             {
                 if (val != value)
                 {
                     val = value;
-                    _map.ChangeTile(2, this.MidPosition, val?29:28);
+                    _map.ChangeTile(2, this.MidPosition, val==1?29:28);
                 }
             }
         }

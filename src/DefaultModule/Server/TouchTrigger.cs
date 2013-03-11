@@ -34,7 +34,7 @@ namespace IGORR.Server.Logic
             if (_touchAgain)
             {
                 if (_global)
-                    GlobalTriggers.SetTriggerValue(_triggerName, true);
+                    GlobalTriggers.SetTriggerValue(_triggerName, 1);
                 else
                     _map.SetTrigger(_triggerName, true);
 

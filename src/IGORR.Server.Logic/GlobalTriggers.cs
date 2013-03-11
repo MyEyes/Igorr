@@ -5,27 +5,27 @@ using System.Text;
 
 namespace IGORR.Server.Logic
 {
-    static class GlobalTriggers
+    public static class GlobalTriggers
     {
-        static Dictionary<string, bool> _triggers;
-        static Dictionary<string, List<Action<bool>>> _triggerCallbacks;
+        static Dictionary<string, int> _triggers;
+        static Dictionary<string, List<Action<int>>> _triggerCallbacks;
 
         static GlobalTriggers()
         {
-            _triggers = new Dictionary<string, bool>();
-            _triggerCallbacks = new Dictionary<string, List<Action<bool>>>();
+            _triggers = new Dictionary<string, int>();
+            _triggerCallbacks = new Dictionary<string, List<Action<int>>>();
         }
 
-        public static bool GetTriggerValue(string triggerName)
+        public static int GetTriggerValue(string triggerName)
         {
             if (!_triggers.ContainsKey(triggerName))
             {
-                _triggers.Add(triggerName, false);
+                _triggers.Add(triggerName, 0);
             }
             return _triggers[triggerName];
         }
 
-        public static void SetTriggerValue(string triggerName, bool val)
+        public static void SetTriggerValue(string triggerName, int val)
         {
             if (!_triggers.ContainsKey(triggerName))
             {
@@ -42,11 +42,11 @@ namespace IGORR.Server.Logic
                 }
         }
 
-        public static void RegisterTriggerCallback(string triggerName, Action<bool> callback)
+        public static void RegisterTriggerCallback(string triggerName, Action<int> callback)
         {
             if (!_triggerCallbacks.ContainsKey(triggerName))
             {
-                _triggerCallbacks.Add(triggerName, new List<Action<bool>>());
+                _triggerCallbacks.Add(triggerName, new List<Action<int>>());
             }
             _triggerCallbacks[triggerName].Add(callback);
         }

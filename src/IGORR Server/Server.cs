@@ -40,6 +40,8 @@ namespace IGORR.Server
             Management.ClientInfoInterface.LoadInfos();
             LuaVM.Register("GetInfo", null, typeof(Management.ClientInfoInterface).GetMethod("GetValue").GetBaseDefinition());
             LuaVM.Register("SetInfo", null, typeof(Management.ClientInfoInterface).GetMethod("SetValue").GetBaseDefinition());
+            LuaVM.Register("SetGlobal", null, typeof(GlobalTriggers).GetMethod("SetTriggerValue").GetBaseDefinition());
+            LuaVM.Register("GetGlobal", null, typeof(GlobalTriggers).GetMethod("GetTriggerValue").GetBaseDefinition());
 
             NetPeerConfiguration config = new NetPeerConfiguration("IGORR");
             config.Port = LuaVM.GetValue<int>("port", 5445);
@@ -155,6 +157,12 @@ namespace IGORR.Server
                 if (client.PlayerID == player.ID)
                     return client;
             return null;
+        }
+
+        public GameObject GetObject(int typeID)
+        {
+            GameObject obj = Modules.ModuleManager.SpawnByIdServer(null, typeID, -1, Point.Zero, null);
+            return obj;
         }
 
         /*
@@ -315,7 +323,7 @@ namespace IGORR.Server
                 else spawnPoint = new Point(pinfo.PosX, pinfo.PosY);
                 player = new Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
                 player.Name = jm.Name;
-                player.GivePart(new GrenadeLauncher());
+                //player.GivePart(new GrenadeLauncher());
                 targetMap.ObjectManager.Add(player);
 
                 AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);

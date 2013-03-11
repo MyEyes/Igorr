@@ -18,7 +18,7 @@ namespace IGORR.Server.Logic
         {
             _objectType = 100;
             _map.ChangeTile(1, this.MidPosition, -1);
-            GlobalTriggers.RegisterTriggerCallback(triggerName, new Action<bool>(FreeBlock));
+            GlobalTriggers.RegisterTriggerCallback(triggerName, new Action<int>(FreeBlock));
         }
 
         public override void Update(float ms)
@@ -35,9 +35,9 @@ namespace IGORR.Server.Logic
             blocked = false;
         }
 
-        public void FreeBlock(bool val)
+        public void FreeBlock(int val)
         {
-            if (val == false)
+            if (val == 1)
                 _map.ChangeTile(1, this.MidPosition, -1);
             else
                 wantToBlock = true;

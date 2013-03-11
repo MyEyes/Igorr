@@ -89,6 +89,7 @@
     <Compile Include="Templates\BlockerTemplate.cs" />
     <Compile Include="Templates\BirdTemplate.cs" />
     <Compile Include="Templates\BossAttackTemplates.cs" />
+    <Compile Include="Templates\EggLauncherTemplate.cs" />
     <Compile Include="Templates\LightCircleTemplate.cs" />
     <Compile Include="Templates\LuaNPCTemplate.cs" />
     <Compile Include="Templates\SleepingOrbTemplate.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Server\BossTrigger.cs" />
     <Compile Include="Server\Builder.cs" />
     <Compile Include="Server\ExpOrb.cs" />
-    <Compile Include="Server\GlobalTriggers.cs" />
     <Compile Include="Server\Grenade.cs" />
     <Compile Include="Server\GrenadeLauncher.cs" />
     <Compile Include="Server\HPOrb.cs" />

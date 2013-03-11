@@ -361,6 +361,19 @@ namespace IGORR.Server.Logic
             return true;
         }
 
+        public void GivePart(int id)
+        {
+            IPartContainer ip = _map.ObjectManager.Server.GetObject(id) as IPartContainer;
+            if (ip != null)
+            {
+                this.GivePart(ip.Part);
+                PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
+                pum.id = ip.Part.GetID();
+                pum.Encode();
+                _map.ObjectManager.Server.SendClient(this, pum);
+            }
+        }
+
         public void RemovePart(BodyPart part)
         {
             _bodyParts.Remove(part);

@@ -25,8 +25,8 @@ namespace IGORR.Server.Logic
             Attack att = null;
             Rectangle startRect;
             startRect = owner.Rect;
-            startRect.Height -= 4;
-            startRect.Width -= 4;
+            startRect.Height -= 10;
+            startRect.Width -= 10;
             startRect.Y += 3;
             startRect.X += (int)(dir.X);
             att = new Grenade(owner.map, 0, startRect, dir*250, 2500, owner.ID, owner.GroupID, 3);

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AIQueue.cs" />
     <Compile Include="DummyObject.cs" />
+    <Compile Include="GlobalTriggers.cs" />
     <Compile Include="IAttackManager.cs" />
     <Compile Include="BaseBody.cs" />
     <Compile Include="BodyPart.cs" />

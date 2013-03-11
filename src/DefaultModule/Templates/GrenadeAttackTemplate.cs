@@ -15,7 +15,7 @@ namespace IGORR.Client.Logic
             aInfo.Physics = true;
             aInfo.bounceFactor = 0.4f;
             aInfo.LifeTime = 2.5f;
-            return new Grenade(Content.ContentInterface.LoadTexture("Grenade"), new Microsoft.Xna.Framework.Rectangle(position.X, position.Y, 12, 12), dir, objectID, aInfo);
+            return new Grenade(Content.ContentInterface.LoadTexture("Egg"), new Microsoft.Xna.Framework.Rectangle(position.X, position.Y, 6, 6), dir, objectID, aInfo);
         }
         public override int TypeID
         {
