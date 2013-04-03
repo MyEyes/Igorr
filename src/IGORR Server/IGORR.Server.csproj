@@ -59,7 +59,9 @@
       <HintPath>..\..\lib\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +92,7 @@
     <Compile Include="Logic\Body Parts\Wings.cs" />
     <Compile Include="Logic\BossTrigger.cs" />
     <Compile Include="Logic\AttackTrigger.cs" />
+    <Compile Include="Logic\Clock.cs" />
     <Compile Include="Logic\MessageBoard.cs" />
     <Compile Include="Logic\ExpOrb.cs" />
     <Compile Include="Logic\Grenade.cs" />

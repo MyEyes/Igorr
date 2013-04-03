@@ -11,30 +11,37 @@ namespace IGORR.Server.Logic
     static class LogicHandler
     {
         static Server _server;
-        static System.Timers.Timer _updateTimer;
-        static DateTime lastTime;
+        //static System.Timers.Timer _updateTimer;
+        //static DateTime lastTime;
         static float timeRemainder;
         static SemaphoreSlim _sem;
+        static ClockTrigger _clock;
 
         public static void SetUp(Server server)
         {
             _server = server;
             MapManager.LoadMaps(server);
-            lastTime = DateTime.Now;
+            //lastTime = DateTime.Now;
             _sem = new SemaphoreSlim(1);
+            _clock = new ClockTrigger(Update, 16);
+            _clock.Run();
+            /*
             _updateTimer = new System.Timers.Timer(16);
             _updateTimer.Elapsed += new ElapsedEventHandler(Update);
             _updateTimer.Start();
+             */
         }
 
-        public static void Update(object state, ElapsedEventArgs args)
+        public static void Update(TimeSpan elapsedTime)
         {
             _sem.Wait();
             //Figure out time since last time
+            /*
             TimeSpan span = args.SignalTime - lastTime;
             span = (DateTime.Now - lastTime);
             lastTime = DateTime.Now;
-            float ms = (float)span.TotalMilliseconds + timeRemainder;
+             */
+            float ms = (float)elapsedTime.TotalMilliseconds + timeRemainder;
             try
             {
                 while (ms >= 16)
@@ -52,12 +59,14 @@ namespace IGORR.Server.Logic
                 //Store the remaining time since last call
                 timeRemainder = ms;
                 //Debug output
+                /*
                 TimeSpan timetaken = DateTime.Now - lastTime;
                 if (span.Milliseconds > 50 || timetaken.TotalMilliseconds > 7)
                 {
                     Console.WriteLine(span.Milliseconds.ToString() + " delay since last update");
                     Console.WriteLine("Current Update took: " + timetaken.TotalMilliseconds.ToString());
                 }
+                 */
             }
             catch (Exception e)
             {
