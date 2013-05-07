@@ -10,6 +10,7 @@ namespace IGORR.Client.Logic
 
     public class Tile : GameObject
     {
+        public TileGeometry Geometry;
         Rectangle _selectRect;
         bool _collides;
         EventObject _eventObject;
@@ -65,5 +66,6 @@ namespace IGORR.Client.Logic
         {
             get { return _eventObject; }
         }
+
     }
 }

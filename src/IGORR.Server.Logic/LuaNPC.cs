@@ -35,12 +35,15 @@ namespace IGORR.Server.Logic.AI
             _invincibleTime = 0;
             _baseBody.speedBonus = 30;
 
-            _script_file=script_file;
+            _script_file="Content/scripts/"+script_file;
             queue = new AIQueue(this);
             _objectType = 10001;
             _info = charfile;
             LuaVM.SetValue("me", this);
-            LuaVM.DoString("require \"" + script_file + "\"\n"+script_file+".spawn()\n"+script_file+".spawn_equip()");
+            LuaVM.DoString(script_file + " = require \"" + _script_file + "\"\n"+script_file+".spawn()\n"+script_file+".spawn_equip()");
+            _script_file=script_file;
+            if (interacts)
+                _info += ";i";
         }
 
         public override void Update(IMap map, float seconds)
@@ -49,32 +52,32 @@ namespace IGORR.Server.Logic.AI
             if (reacts_attackReady && !_could_Attack && CanAttack(0))
             {
                 LuaVM.SetValue("me", this);
-                LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".react_spawn()\n");
+                LuaVM.DoString(_script_file + ".react_spawn()\n");
             }
 
             if (reacts_idle && queue.Empty)
             {
                 LuaVM.SetValue("me", this);
-                LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".react_idle()\n");
+                LuaVM.DoString(_script_file + ".react_idle()\n");
             }
             Player player;
             if (reacts_spotEnemy && lookingForTarget && (player=_map.ObjectManager.GetPlayerInArea(new Rectangle(this._rect.Left-10,this._rect.Top-10,this._rect.Width+20,this._rect.Height+20),_groupID,false))!=null)
             {
                 LuaVM.SetValue("me", this);
                 LuaVM.SetValue("enemy", player);
-                LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".react_spotEnemy()\n");
+                LuaVM.DoString(_script_file+".react_spotEnemy()\n");
             }
             if (reacts_spotFriendly && lookingForFriend && (player = _map.ObjectManager.GetPlayerInArea(new Rectangle(this._rect.Left - 10, this._rect.Top - 10, this._rect.Width + 20, this._rect.Height + 20), _groupID, true)) != null)
             {
                 LuaVM.SetValue("me", this);
                 LuaVM.SetValue("enemy", player);
-                LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".react_spotFriendly()\n");
+                LuaVM.DoString(_script_file+".react_spotFriendly()\n");
             }
             if (reacts_damageTaken&&(_lastHP>_hp))
             {
                 int damage = _lastHP - _hp;
                 LuaVM.SetValue("me", this);
-                LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".react_damageTaken("+damage+")\n");
+                LuaVM.DoString(_script_file+".react_damageTaken("+damage+")\n");
             }
             #endregion
             #region State Machine
@@ -112,7 +115,7 @@ namespace IGORR.Server.Logic.AI
                 return;
             LuaVM.SetValue("me", this);
             LuaVM.SetValue("player", player);
-            LuaVM.DoString("require \"" + _script_file + "\"\n" + _script_file + ".interact(\"" + sinfo + "\"," + info.ToString() + ")\n");
+            LuaVM.DoString(_script_file + ".interact(\"" + sinfo + "\"," + info.ToString() + ")\n");
         }
         
     }

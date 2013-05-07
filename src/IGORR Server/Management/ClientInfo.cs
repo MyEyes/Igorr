@@ -59,10 +59,15 @@ namespace IGORR.Server.Management
 
         public void SetValue(string infoName, int value)
         {
-            if (!_infoValues.ContainsKey(infoName))
-                _infoValues.Add(infoName, value);
-            else
-                _infoValues[infoName] = value;
+            if (value > 0)
+            {
+                if (!_infoValues.ContainsKey(infoName))
+                    _infoValues.Add(infoName, value);
+                else
+                    _infoValues[infoName] = value;
+            }
+            else if (_infoValues.ContainsKey(infoName))
+                _infoValues.Remove(infoName);
         }
 
         public void Write(StreamWriter writer)

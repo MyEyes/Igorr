@@ -296,6 +296,8 @@ namespace IGORR.Server.Logic
 
         public void KillPlayer(Player player)
         {
+            if (player == null)
+                return;
             if (!(player is NPC))
             {
                 Point spawnPoint = _map.getRandomSpawn();
@@ -320,7 +322,10 @@ namespace IGORR.Server.Logic
                 }
                 newPlayer.GetExp(player.TotalXP, Vector2.Zero);
                 //Change the local clients stored playerid
-                _server.getClient(player).PlayerID = newPlayer.ID;
+                Client client = _server.getClient(player);
+                if (client == null)
+                    return;
+                client.PlayerID = newPlayer.ID;
                 KillMessage km = (KillMessage)ProtocolHelper.NewMessage(MessageTypes.Kill);
                 km.killerID = player.Attacker;
                 km.deadID = player.ID;

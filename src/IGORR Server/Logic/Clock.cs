@@ -33,7 +33,7 @@ namespace IGORR.Server.Logic
 
         public TimeSpan TotalTime { get { return _totalTime; } }
         public TimeSpan ElapsedTime { get { return _elapsedTime; } }
-        public TimeSpan ElapsedStampTime { get { return _elapsedTime; } }
+        public TimeSpan ElapsedStampTime { get { return _elapsedSinceStamp; } }
 
         public void Reset()
         {
@@ -55,7 +55,7 @@ namespace IGORR.Server.Logic
                 _lastTime = currentTime;
             _totalTime = TimestampToTimeSpan(currentTime - _startTime);
             _elapsedTime = TimestampToTimeSpan(currentTime - _lastTime);
-            _elapsedTime = TimestampToTimeSpan(currentTime - _lastStampTime);
+            _elapsedSinceStamp = TimestampToTimeSpan(currentTime - _lastStampTime);
             _lastTime = currentTime;
         }
 

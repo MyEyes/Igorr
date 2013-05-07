@@ -23,7 +23,7 @@ namespace IGORR.Server.Logic
             startRect.Height -= 4;
             startRect.Y += 3;
             startRect.X += (int)(dir.X * 8);
-            att = new Attack(owner.map, 1, startRect, new Vector2(owner.LastSpeed.X,0) +200*dir, 200, owner.ID, owner.GroupID, 2);
+            att = new Attack(owner.map, 1, startRect, new Vector2(owner.LastSpeed.X, 0) + 200 * dir, 200, owner.ID, owner.GroupID, 2, owner.map.ObjectManager.getID());
             att.HitOnce = false;
             att.Penetrates = true;
             owner.Attack(0.6f);

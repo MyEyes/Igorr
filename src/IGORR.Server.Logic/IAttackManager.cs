@@ -20,7 +20,7 @@ namespace IGORR.Server.Logic
         public bool Penetrates = false;
         public Vector2 Knockback = Vector2.Zero;
 
-        public Attack(IMap map, int damage, Rectangle rect, Vector2 mov, float lifeTime,int parentID,int groupID, int id)
+        public Attack(IMap map, int damage, Rectangle rect, Vector2 mov, float lifeTime,int parentID,int groupID, int attackID, int id)
             : base(map,rect, id)
         {
             Damage = damage;
@@ -28,6 +28,7 @@ namespace IGORR.Server.Logic
             this.groupID = groupID;
             this.parentID = parentID;
             this.lifeTime = lifeTime;
+            this.AttackID = attackID;
             _objectType = 'z' - 'a';
             _name = "Attack";
         }
@@ -41,6 +42,17 @@ namespace IGORR.Server.Logic
         {
             Move(_movement * ms / 1000f);
             lifeTime -= ms;
+        }
+
+        public int AttackID
+        {
+            get;
+            private set;
+        }
+
+        public virtual void Hit()
+        {
+
         }
     }
 

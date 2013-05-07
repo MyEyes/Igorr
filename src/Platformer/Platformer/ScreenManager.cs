@@ -14,11 +14,12 @@ namespace IGORR.Client
         ContentManager _content;
         GraphicsDevice _device;
 
-        public ScreenManager(ContentManager Content, GraphicsDevice device)
+        public ScreenManager(ContentManager Content, GraphicsDevice device, Game1 gameRef)
         {
             _content = Content;
             _device = device;
             _screens = new List<IScreen>();
+            Game = gameRef;
         }
 
         public void Update(GameTime gameTime)
@@ -46,6 +47,12 @@ namespace IGORR.Client
             {
                 _screens[x].Draw(gameTime);
             }
+        }
+
+        public Game1 Game
+        {
+            get;
+            private set;
         }
     }
 }

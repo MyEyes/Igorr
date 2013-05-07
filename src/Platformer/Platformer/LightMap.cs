@@ -220,6 +220,8 @@ namespace IGORR.Client
             _lightMutex.ReleaseMutex();
         }
 
+
+        //Multiplicative blend lightmap over drawn scene
         public void ApplyLight(SpriteBatch batch)
         {
             batch.Begin(SpriteSortMode.FrontToBack, blendShadow, SamplerState.LinearClamp, DepthStencilState.Default, null);
@@ -227,16 +229,21 @@ namespace IGORR.Client
             batch.End();
         }
 
+        //Draws the lightmap
         public void DrawLights(float intensity, Camera cam, SpriteBatch batch)
         {
+            //Intensity is considered to be between 0 and 1 outside of this routine
+            //but we only want values between 0 and 0.5 in here
             intensity /= 2;
 
+            //Set appropriate rendering paramaeters
             shadowEffect.Parameters["View"].SetValue(cam.ViewMatrix);
             shadowEffect.Parameters["Projection"].SetValue(cam.ProjectionMatrix);
 
             shadowEffect.Parameters["shadowDarkness"].SetValue(0.9f-intensity);
             shadowEffect.Parameters["viewDistance"].SetValue((float)(1 / (0.001f + 0.999 * intensity)));
 
+            //Set graphics device states and render target
             device.DepthStencilState = clearStencil;
             device.RasterizerState = RasterizerState.CullNone;
             device.BlendState = BlendState.Opaque;
@@ -249,13 +256,17 @@ namespace IGORR.Client
             device.Indices = clearIBuffer;
             shadowEffect.CurrentTechnique.Passes[0].Apply();
             device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 4, 0, 2);
+
+            //Make sure no server messages can change the light around while drawing
             _lightMutex.WaitOne();
             for (int x = 0; x < _glows.Count; x++)
             {
+                //Draws a single light, I am a lazy bum so I am assuming for lights with timeout that we run close enough to 60fps
+                //to not notice the difference
                 DrawLight(cam, _glows[x], map, batch);
                 if (_glows[x].timeOut > 0)
                 {
-                    _glows[x].timeOut -= 16;
+                    _glows[x].timeOut -= 16; //Previous comment referring to this
                     _glows[x].brightness = (_glows[x].timeOut / _glows[x].timeOutStart);
                     if (_glows[x].timeOut <= 0)
                     {
@@ -266,14 +277,14 @@ namespace IGORR.Client
             }
             _lightMutex.ReleaseMutex();
 
+            //Blur the shadow edges to get softer shadows using 5x5 kernel gaussian blur
             BlurShadowTarget(batch);
+
             //Disable shadowing collision tiles
-            
-            shadowEffect.CurrentTechnique = shadowEffect.Techniques["Tile"];
-            batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, null, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
-            map.DrawTileHighlight(cam, batch);
-            batch.End();
-            
+            //This must be done so that there are no weird shadows overlapping parts of geometry
+            UnShadowTiles(cam,batch,map);
+
+            //Unset rendertarget, we are done calculating the light map
             device.SetRenderTarget(null);
             device.DepthStencilState = DepthStencilState.None;
         }
@@ -294,6 +305,7 @@ namespace IGORR.Client
             
         }
 
+
         public void DrawLight(Camera cam, LightSource light, Map map, SpriteBatch batch)
         {
             //Clear stencil buffer
@@ -304,8 +316,7 @@ namespace IGORR.Client
                 //Build shadow geometry for the light
                 int vertexCount = map.CreateShadowGeometry(light.position, new Rectangle((int)light.position.X - cam.ViewSpace.Width / 2, (int)light.position.Y - cam.ViewSpace.Height / 2, cam.ViewSpace.Width, cam.ViewSpace.Height), shadowVB);
                 
-                //device.Clear(ClearOptions.Stencil, Color.White, 0, 0);
-                //Draw Shadows
+                //Draw Shadows into stencil buffer
                 device.BlendState = generateShadow;
                 device.DepthStencilState = generateShadowStencil;
                 shadowEffect.CurrentTechnique = shadowEffect.Techniques["Shadow"];
@@ -313,11 +324,14 @@ namespace IGORR.Client
                 device.Indices = shadowIB;
                 shadowEffect.CurrentTechnique.Passes[0].Apply();
 
+                //Check necessary because empty draw calls cause crashes
                 if (vertexCount > 0)
                     device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertexCount, 0, 4 * vertexCount / 6);
             }
+            //Draw glow over everything that has not been stenciled out
             shadowEffect.CurrentTechnique = shadowEffect.Techniques["Glow"];
             batch.Begin(SpriteSortMode.Immediate, addLight, null, drawShadowedLight, RasterizerState.CullNone, shadowEffect);
+            //I need to specify a texture to use this call, but since I use a custom shader it is never used, it might actually be null I am not sure
             batch.Draw(_unusedTexture, new Rectangle((int)(light.position.X - light.radius), (int)(light.position.Y - light.radius), (int)(light.radius * 2), (int)(light.radius * 2)), Color.Lerp(light.color, Color.Black, 1-light.brightness));
             batch.End();
         }
@@ -331,11 +345,11 @@ namespace IGORR.Client
         {
             device.BlendState = generateShadow;
             shadowEffect.CurrentTechnique = shadowEffect.Techniques["Tile"];
-            batch.Begin(SpriteSortMode.Immediate, generateShadow, null, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
+            batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, null, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
             map.DrawTileHighlight(cam, batch);
             batch.End();
 
-            batch.Begin(SpriteSortMode.Immediate, generateShadow, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
+            batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, shadowEffect);
             map.DrawForegroundTileHighlight(cam, batch, shadowEffect);
             batch.End();
         }

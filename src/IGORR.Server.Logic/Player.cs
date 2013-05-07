@@ -454,6 +454,7 @@ namespace IGORR.Server.Logic
         public int HP
         {
             get { return _hp; }
+            set { _hp = value; }
         }
 
         public int MaxHP

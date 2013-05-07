@@ -15,7 +15,14 @@ namespace DefaultModule
 
         public override IGORR.Client.Logic.GameObject CreateClient(IGORR.Client.Logic.IMap map, int objectID, Microsoft.Xna.Framework.Point p, string info)
         {
-            return new IGORR.Client.Logic.Player(info, new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 16, 16), objectID);
+            string[] splits = info.Split(';');
+            IGORR.Client.Logic.GameObject obj =new IGORR.Client.Logic.Player(splits[0], new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 16, 16), objectID);
+            for (int x = 0; x < splits.Length; x++)
+            {
+                if (splits[x] == "i")
+                    obj.CanInteract = true;
+            }
+            return obj;
         }
 
         public override IGORR.Modules.ObjectControl GetEditorControl(System.IO.BinaryReader reader)

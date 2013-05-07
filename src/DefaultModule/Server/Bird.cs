@@ -20,6 +20,7 @@ namespace IGORR.Server.Logic.AI
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
             _objectType = 5006;
+            _invincible = true;
         }
 
         public Bird(IMap map, string file, Rectangle spawnRect, int id)
@@ -29,6 +30,7 @@ namespace IGORR.Server.Logic.AI
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
             this.GivePart(new Legs());
             _objectType = 5006;
+            _invincible = true;
         }
 
         public override void Update(IMap map, float seconds)

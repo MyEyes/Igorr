@@ -61,7 +61,7 @@ namespace IGORR.Client
             {
                 _choiceRects[x].X = (int)(offset.X + _textStart.X);
                 _choiceRects[x].Y = (int)(offset.Y + _textStart.Y);
-                offset.Y += _font.MeasureString(_choices[x].text).Y/2.0f;
+                offset.Y += _font.LineSpacing/2.0f;
             }
         }
 

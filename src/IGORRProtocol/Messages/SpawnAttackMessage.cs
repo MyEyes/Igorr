@@ -11,6 +11,7 @@ namespace IGORR.Protocol.Messages
     {
         public Rectangle position;
         public Vector2 move;
+        public int attackID;
         public int id;
         public string info;
 
@@ -30,6 +31,7 @@ namespace IGORR.Protocol.Messages
             _outgoing.Write(move.X);
             _outgoing.Write(move.Y);
             _outgoing.Write(id);
+            _outgoing.Write(attackID);
             _outgoing.Write(info);
         }
 
@@ -38,6 +40,7 @@ namespace IGORR.Protocol.Messages
             position = new Rectangle(_incoming.ReadInt32(), _incoming.ReadInt32(), _incoming.ReadInt32(), _incoming.ReadInt32());
             move = new Vector2(_incoming.ReadFloat(), _incoming.ReadFloat());
             id = _incoming.ReadInt32();
+            attackID = _incoming.ReadInt32();
             info = _incoming.ReadString();
         }
     }

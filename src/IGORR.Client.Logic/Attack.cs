@@ -48,6 +48,8 @@ namespace IGORR.Client.Logic
                     Move(new Vector2(0, -Movement.Y*seconds));
                     Movement.Y *= -_info.bounceFactor;
                     Movement.X *= _info.bounceFactor;
+                    if (_info.CollisionDespawn)
+                        return false;
                 }
                 Move(new Vector2(Movement.X*seconds, 0));
                 if (map.Collides(this))
@@ -55,6 +57,8 @@ namespace IGORR.Client.Logic
                     Move(new Vector2(-Movement.X*seconds,0));
                     Movement.X *= -_info.bounceFactor;
                     Movement.Y *= _info.bounceFactor;
+                    if (_info.CollisionDespawn)
+                        return false;
                 }
             }
             else

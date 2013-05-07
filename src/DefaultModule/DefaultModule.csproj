@@ -12,6 +12,7 @@
     <AssemblyName>DefaultModule</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\StaticLight.cs" />
+    <Compile Include="Client\SlimeShot.cs" />
     <Compile Include="Client\LightCircle.cs" />
     <Compile Include="Client\Exit.cs" />
     <Compile Include="Client\Grenade.cs" />
@@ -79,8 +82,13 @@
     <Compile Include="EditorControls\TriggerInfoControl.Designer.cs">
       <DependentUpon>TriggerInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="EffectTemplates\SlimeTrailEffectTemplate.cs" />
+    <Compile Include="EffectTemplates\SlimeExplosionEffectTemplate.cs" />
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
+    <Compile Include="Server\SlimeLauncher.cs" />
+    <Compile Include="Server\SlimeShot.cs" />
+    <Compile Include="Server\SlimeShooter.cs" />
     <Compile Include="Server\Vase.cs" />
     <Compile Include="Server\SleepingOrb.cs" />
     <Compile Include="Templates\BossBlobSpawnerTemplate.cs" />
@@ -89,6 +97,9 @@
     <Compile Include="Templates\BlockerTemplate.cs" />
     <Compile Include="Templates\BirdTemplate.cs" />
     <Compile Include="Templates\BossAttackTemplates.cs" />
+    <Compile Include="Templates\StaticLightTemplate.cs" />
+    <Compile Include="Templates\SlimeShotAttackTemplate.cs" />
+    <Compile Include="Templates\SlimeShooterTemplate.cs" />
     <Compile Include="Templates\EggLauncherTemplate.cs" />
     <Compile Include="Templates\LightCircleTemplate.cs" />
     <Compile Include="Templates\LuaNPCTemplate.cs" />

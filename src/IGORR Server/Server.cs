@@ -228,7 +228,8 @@ namespace IGORR.Server
             {
                 List<NetConnection> recipients = new List<NetConnection>();
                 recipients.AddRange(_connections);
-                recipients.Remove(client.Connection);
+                if (client != null)
+                    recipients.Remove(client.Connection);
                 for (int x = 0; x < recipients.Count; x++)
                 {
                     if (_clients[_clientids[recipients[x].RemoteUniqueIdentifier]].CurrentMap != map)
@@ -378,8 +379,11 @@ namespace IGORR.Server
                 DeSpawnMessage dsm = (DeSpawnMessage)ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
                 dsm.id = client.PlayerID;
                 Player player = _clients[client.ID].CurrentMap.ObjectManager.GetPlayer(client.PlayerID);
-                Management.ClientInfoInterface.UpdateInfo(player);
-                _clients[client.ID].CurrentMap.ObjectManager.Remove(client.PlayerID);
+                if (player != null)
+                {
+                    Management.ClientInfoInterface.UpdateInfo(player);
+                    _clients[client.ID].CurrentMap.ObjectManager.Remove(client.PlayerID);
+                }
                 _clients.Remove(client.ID);
                 dsm.Encode();
                 SendAllMap(client.CurrentMap, dsm, true);

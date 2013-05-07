@@ -32,7 +32,9 @@ namespace IGORR.Client
         Texture2D expBorder;
         Texture2D bar;
         Texture2D crosshair;
+        Texture2D interactMarker;
         GraphicsDevice GraphicsDevice;
+        ScreenManager _manager;
 
         Vector2 _mouseDir = Vector2.Zero;
         #if WINDOWS
@@ -60,6 +62,7 @@ namespace IGORR.Client
             crosshair = ContentInterface.LoadTexture("Crosshair");
             _spriteEffect = ContentInterface.LoadShader("ShadowEffect");
             _spriteEffect.CurrentTechnique = _spriteEffect.Techniques["Sprite"];
+            _manager = manager;
 
             WorldController.SetObjectManager(objectManager);
             WorldController.SetGame(this);
@@ -76,6 +79,14 @@ namespace IGORR.Client
             cam.JumpNext();
         }
 
+        private void DrawInteractMarker()
+        {
+            GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
+            if (interactObject != null)
+            {
+                //spriteBatch.Draw();
+            }
+        }
 
 
         public void Draw(GameTime gameTime)
@@ -93,10 +104,11 @@ namespace IGORR.Client
                 objectManager.Draw(spriteBatch);
                 spriteBatch.Draw(crosshair, player.MidPosition, null, Color.White, (float)Math.Atan2(_mouseDir.Y, _mouseDir.X), new Vector2(-32, 16),0.5f, SpriteEffects.None, 0.1f);
                 pm.Draw(spriteBatch);
+
                 spriteBatch.End();
-                TextManager.Draw(spriteBatch, cam);
                 _lightMap.ApplyLight(spriteBatch);
 
+                TextManager.Draw(spriteBatch, cam);
                 spriteBatch.Begin();
                 DrawExpBar();
                 TextManager.DrawInfo(spriteBatch);
@@ -115,6 +127,12 @@ namespace IGORR.Client
 
         public void Update(GameTime gameTime)
         {
+            if (!WorldController.Connected)
+            {
+                _manager.RemoveScreen(this);
+                _manager.AddScreen(new MainMenuScreen(_manager.Game));
+            }
+
             if (map != null)
             {
 
@@ -191,7 +209,7 @@ namespace IGORR.Client
                     }
                     //Test stuff
                     WorldController.SendPosition(player);
-                    objectManager.Update((float)gameTime.ElapsedGameTime.Milliseconds);
+                    objectManager.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
                     cam.MoveTo(player.Position , 0.1f);
                     //cam.SetPos(player.Position);
                     _lightMap.SetGlow(-1, player.MidPosition, Color.White, shadowCountdown * 50, true);
@@ -205,7 +223,7 @@ namespace IGORR.Client
                         shadowCountdown = 2;
                     }
                     else if (shadowCountdown < 2)
-                        shadowCountdown += gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+                        shadowCountdown += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f;
                 }
                 else
                 {
@@ -215,26 +233,26 @@ namespace IGORR.Client
                         shadowCountdown = 0;
                     }
                     else if (shadowCountdown > 0)
-                        shadowCountdown -= gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+                        shadowCountdown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f;
                 }
 
 
-                map.Update(gameTime.ElapsedGameTime.Milliseconds, cam);
+                map.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds, cam);
                 if (player != null && player.HP <= 0)
                 {
                     //Point startPos = map.getRandomSpawn();
                     //player = new Player(Content.Load<Texture2D>("blob"), new Rectangle(startPos.X, startPos.Y, 16, 15));
                 }
-                pm.Update(map, gameTime.ElapsedGameTime.Milliseconds / 1000.0f);
+                pm.Update(map, (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f);
 
 
-                TextManager.Update(gameTime.ElapsedGameTime.Milliseconds);
+                TextManager.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
                 _prevKeyboard = keyboard;
                 _prevGamePadState = pad;
                 _prevMouseState = mouse;
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
-            IGORR.Protocol.ProtocolHelper.Update((int)gameTime.ElapsedGameTime.Milliseconds);
+            IGORR.Protocol.ProtocolHelper.Update((int)(float)gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
         void DrawExpBar()

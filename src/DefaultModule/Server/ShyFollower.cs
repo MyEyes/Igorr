@@ -19,6 +19,7 @@ namespace IGORR.Server.Logic.AI
         {
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
+            _invincible = true;
             _objectType = 5005;
         }
 
@@ -27,6 +28,7 @@ namespace IGORR.Server.Logic.AI
         {
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
             spawnPoint = new Point(spawnRect.X + spawnRect.Width / 2, spawnRect.Y + spawnRect.Height / 2);
+            _invincible = true;
             _objectType = 5005;
         }
 

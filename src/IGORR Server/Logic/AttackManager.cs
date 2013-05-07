@@ -32,18 +32,32 @@ namespace IGORR.Server.Logic
             {
                 if (player.Collides(_attacks[x]) && player.ID != _attacks[x].parentID &&(_attacks[x].groupID==0 || _attacks[x].groupID!= player.GroupID) && !player.Invincible)
                 {
+                    _attacks[x].Hit();
                     damage += _attacks[x].Damage;
                     player.GetDamage(_attacks[x].Damage, _attacks[x].parentID);
                     if (_attacks[x].Knockback != Vector2.Zero)
                         player.Knockback(_attacks[x].Knockback);
                     if (_attacks[x].HitOnce)
                     {
-                        _attacks.RemoveAt(x);
+                        Remove(x);
                         x--;
                     }
                 }
             }
             return damage;
+        }
+
+        public void Remove(int index)
+        {
+            if (_attacks.Count > index)
+            {
+                Protocol.Messages.DeSpawnMessage dsm = (Protocol.Messages.DeSpawnMessage) Protocol.ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
+                dsm.id = _attacks[index].ID;
+                dsm.Encode();
+                _server.SendAllMapReliable(_attacks[index].map, dsm, true);
+
+                _attacks.RemoveAt(index);
+            }
         }
 
         public int CheckObject(GameObject obj)
@@ -67,7 +81,7 @@ namespace IGORR.Server.Logic
 
         public void Spawn(IMap map, int damage, Rectangle rect, Vector2 mov, float lifeTime,int parentID, int id)
         {
-            Attack attack = new Attack(map, damage, rect, mov, lifeTime, parentID,0, id);
+            Attack attack = new Attack(map, damage, rect, mov, lifeTime, parentID, 0, id,map.ObjectManager.getID());
             Spawn(attack);
         }
 
@@ -76,6 +90,7 @@ namespace IGORR.Server.Logic
             _server.SetChannel(3);
             SpawnAttackMessage sam = (SpawnAttackMessage)ProtocolHelper.NewMessage(MessageTypes.SpawnAttack);
             sam.id = attack.ID;
+            sam.attackID = attack.AttackID;
             sam.position = attack.Rect;
             sam.move = attack.Movement;
             sam.Encode();

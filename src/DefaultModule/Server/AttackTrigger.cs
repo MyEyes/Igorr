@@ -11,7 +11,7 @@ namespace IGORR.Server.Logic
         float timeOut = 0;
         float updateTimeout = 1000;
         bool _global = false;
-        int val = 0;
+        int val = -1;
         string _triggerName;
 
         public AttackTrigger(string triggerName, bool global, IMap map, Rectangle rect, int id)
@@ -19,8 +19,14 @@ namespace IGORR.Server.Logic
         {
             _triggerName = triggerName;
             _global = global;
-            Val = 0;
             _objectType = 11;
+
+            if (_global)
+            {
+                Val = GlobalTriggers.GetTriggerValue(_triggerName);
+            }
+            else
+                Val = _map.GetTrigger(_triggerName) ? 1 : 0;
         }
 
         public override void Update(float ms)

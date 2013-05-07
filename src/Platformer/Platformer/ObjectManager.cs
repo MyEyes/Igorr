@@ -147,12 +147,12 @@ namespace IGORR.Client
             _sem.Release();
         }
 
-        public void SpawnAttack(Rectangle pos, Vector2 mov, int type, string info)
+        public void SpawnAttack(Rectangle pos, Vector2 mov, int id, string info, int attackID)
         {
             
             if (_map == null)
                 return;
-            GameObject obj = ModuleManager.SpawnByIdClient(type,-2,mov,new Point(pos.X,pos.Y),info);
+            GameObject obj = ModuleManager.SpawnByIdClient(attackID,id,mov,new Point(pos.X,pos.Y),info);
             if (obj != null && obj is Attack)
             {
                 _sem.WaitOne();
@@ -253,7 +253,9 @@ namespace IGORR.Client
             for (int x = 0; x < _draw.Count; x++)
             {
                 if (_draw[x] is Player)
+                {
                     (_draw[x] as Player).Update(_map, ms / 1000.0f);
+                }
                 else if (_draw[x] is Attack)
                 {
                     if (!(_draw[x] as Attack).Update(_map, ms / 1000.0f))

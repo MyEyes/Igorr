@@ -10,7 +10,7 @@ namespace IGORR.Server.Logic
     {
 
         public Grenade(IMap map, int damage, Rectangle rect, Vector2 mov, float lifeTime, int parentID, int groupID, int id)
-            :base(map,damage,rect,mov,lifeTime,parentID,groupID,id)
+            :base(map,damage,rect,mov,lifeTime,parentID,groupID,3,id)
         {
             Penetrates = true;
             _objectType = 3;
@@ -37,7 +37,7 @@ namespace IGORR.Server.Logic
             lifeTime -= ms*1000;
             if (lifeTime <= 0)
             {
-                Attack att = new Attack(_map, 64, new Rectangle((int)this.MidPosition.X-20, (int)this.MidPosition.Y-20, 40, 40), Vector2.Zero, 100, parentID, groupID, 4);
+                Attack att = new Attack(_map, 64, new Rectangle((int)this.MidPosition.X - 20, (int)this.MidPosition.Y - 20, 40, 40), Vector2.Zero, 100, parentID, groupID, 4, map.ObjectManager.getID());
                 att.Penetrates = true;
                 att.HitOnce = false;
                 _manager.Spawn(att);

@@ -42,7 +42,8 @@ namespace IGORR.Client
             if (connection.ServerConnection == null)
             {
                 MessageBox.Show("Could not connect to server.\nAddress: " + Settings.ServerAddress, "Connection Error");
-                Thread.CurrentThread.Abort();
+                //Thread.CurrentThread.Abort();
+                return;
             }
             ProtocolHelper.SetUp(connection);
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Spawn, new MessageHandler(HandleSpawn));
@@ -247,7 +248,7 @@ namespace IGORR.Client
         public static void HandleSpawnAttack(IgorrMessage message)
         {
             SpawnAttackMessage sam = (SpawnAttackMessage)message;
-            manager.SpawnAttack(sam.position, sam.move, sam.id, sam.info);
+            manager.SpawnAttack(sam.position, sam.move, sam.id, sam.info,sam.attackID);
         }
 
         public static void HandleDamage(IgorrMessage message)
@@ -383,6 +384,11 @@ namespace IGORR.Client
         public static Random Random
         {
             get { return _random; }
+        }
+
+        public static bool Connected
+        {
+            get { return !(connection.ConnectionStatus == NetConnectionStatus.Disconnected || connection.ConnectionStatus == NetConnectionStatus.Disconnecting || connection.ConnectionStatus == NetConnectionStatus.None); }
         }
     }
 }

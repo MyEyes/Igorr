@@ -216,5 +216,10 @@ namespace IGORR.Client
             batch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             batch.DrawString(_font, _text, _textStart, Color.Black,0, new Vector2(0,0),0.5f,SpriteEffects.None,0.11f);
         }
+
+        public GameObject Speaker
+        {
+            get { return _speaker; }
+        }
     }
 }

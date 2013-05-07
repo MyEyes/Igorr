@@ -57,7 +57,7 @@ namespace IGORR.Client
             // Erstellen Sie einen neuen SpriteBatch, der zum Zeichnen von Texturen verwendet werden kann.
             ContentInterface.SetContent(Services, "Content", "Content.7z");
             ContentInterface.SetGraphicsDevice(GraphicsDevice);
-            manager = new ScreenManager(Content, GraphicsDevice);
+            manager = new ScreenManager(Content, GraphicsDevice, this);
             manager.AddScreen(new MainMenuScreen(this));
             Window.Title = "IGORR";
             // TODO: Verwenden Sie this.Content, um Ihren Spiel-Content hier zu laden
@@ -81,7 +81,7 @@ namespace IGORR.Client
         {
             manager.Update(gameTime);
             if (this.IsActive)
-                MusicPlayer.Update(gameTime.ElapsedGameTime.Milliseconds);
+                MusicPlayer.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
             base.Update(gameTime);
         }
 
