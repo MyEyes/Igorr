@@ -33,14 +33,15 @@ namespace IGORR.Server.Logic.AI
         private float ShootDuration;
         private int ShotsCount = 0;
 
-        private float HPmod = 2;
+        private float HPmod = 1;
 
         //SpawnPhase
         private float spawnCountdown=1.2f;
 
         //EndPhase
         private float countdown = 10;
-        private float spawnCountdown2 = 7;
+        private float spawnRate = 0.2f;
+        private float spawnCountdown2 = 0.2f;
 
         public bool defeated = false;
         public bool reset = false;
@@ -282,10 +283,17 @@ namespace IGORR.Server.Logic.AI
                         #region SpawnPhase
                         case BossBlobPhase.SpawnPhase:
                             spawnCountdown -= seconds;
+                            spawnCountdown2 -= seconds;
+                            if (spawnCountdown2 < 0)
+                            {
+                                _map.ObjectManager.Add(new BossMinions(map, "bossminion", this.Rect, _map.ObjectManager.getID()));
+                                spawnCountdown2 = spawnRate;
+                            }
                             if (spawnCountdown < 0)
                             {
                                 _phase = BossBlobPhase.JumpPhase;
                                 spawnCountdown = 1.2f;
+                                spawnCountdown2 = spawnRate;
                             }
                             break;
                         #endregion
@@ -339,7 +347,16 @@ namespace IGORR.Server.Logic.AI
 
         public void ChangeHPMod(float hpMod)
         {
+            float diff = hpMod - HPmod;
             HPmod = hpMod;
+            _hp += (int)(_hp * diff);
+            _maxhp += (int)(_maxhp * diff);
+            IGORR.Protocol.Messages.SetPlayerStatusMessage hpm = (IGORR.Protocol.Messages.SetPlayerStatusMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetHP);
+            hpm.playerID = _id;
+            hpm.maxHP = _maxhp;
+            hpm.currentHP = _hp;
+            hpm.Encode();
+            _map.ObjectManager.Server.SendAllMap(_map, hpm, true);
         }
         /*
         public override Logic.Attack GetAttack(int id, int info)

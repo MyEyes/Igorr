@@ -47,10 +47,17 @@ namespace IGORR.Server
                 _currentMap.ObjectManager.Add(p);
             }
 
-            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)IGORR.Protocol.ProtocolHelper.NewMessage(MessageTypes.ChangeMap);
+            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)IGORR.Protocol.ProtocolHelper.GetContainerMessage(MessageTypes.ChangeMap, Connection);
             cmm.mapid = map.ID;
-            cmm.Encode();
-            _clientConnection.SendMessage(cmm.GetMessage(), NetDeliveryMethod.ReliableOrdered, 1);
+            ProtocolHelper.SendContainer(cmm, Connection);
+            //_clientConnection.SendMessage(cmm.GetMessage(), NetDeliveryMethod.ReliableOrdered, 1);
+
+            if (p != null)
+            {
+                AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.GetContainerMessage(MessageTypes.AssignPlayer, Connection);
+                apm.objectID = p.ID;
+                ProtocolHelper.SendContainer(apm, Connection);
+            }
 
             SpawnMessage sm;
             for (int x = 0; x < _currentMap.ObjectManager.Objects.Count; x++)
@@ -84,12 +91,6 @@ namespace IGORR.Server
                 ctm.y = _currentMap.TileMods[x].Position.Y;
                 ctm.layer = _currentMap.TileMods[x].layer;
                 ProtocolHelper.SendContainer(ctm, Connection);
-            }
-            if (p != null)
-            {
-                AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.GetContainerMessage(MessageTypes.AssignPlayer, Connection);
-                apm.objectID = p.ID;
-                ProtocolHelper.SendContainer(apm, Connection);
             }
             PlayMessage pm = (PlayMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Play, Connection);
             pm.Loop = true;

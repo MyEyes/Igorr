@@ -28,7 +28,7 @@ namespace IGORR.Client
             _text = Text;
             _origin = origin;
             if (_font == null)
-                _font = IGORR.Content.ContentInterface.LoadFont("textFont");
+                _font = IGORR.Content.ContentInterface.LoadFont("font2");
             _textSize = _font.MeasureString(_text);
             CalculateTextStart();
             CalculateVertices();
@@ -42,7 +42,7 @@ namespace IGORR.Client
                 _origin = speaker.MidPosition - Vector2.UnitY * speaker.Rect.Height * 0.5f;
             _speaker = speaker;
             if (_font == null)
-                _font = IGORR.Content.ContentInterface.LoadFont("textFont");
+                _font = IGORR.Content.ContentInterface.LoadFont("font2");
             _textSize = _font.MeasureString(_text);
             CalculateTextStart();
             CalculateVertices();

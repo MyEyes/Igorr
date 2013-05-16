@@ -58,7 +58,10 @@ namespace IGORR.Client
             ContentInterface.SetContent(Services, "Content", "Content.7z");
             ContentInterface.SetGraphicsDevice(GraphicsDevice);
             manager = new ScreenManager(Content, GraphicsDevice, this);
-            manager.AddScreen(new MainMenuScreen(this));
+
+            manager.AddScreen(new UI.MainMenuScreen());
+
+            //manager.AddScreen(new MainMenuScreen(this));
             Window.Title = "IGORR";
             // TODO: Verwenden Sie this.Content, um Ihren Spiel-Content hier zu laden
         }

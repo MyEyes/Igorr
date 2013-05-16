@@ -132,7 +132,6 @@ namespace IGORR.Client.Logic
             if (_lifeBar == null)
                 _lifeBar = ContentInterface.LoadTexture("White");
 
-
             string fileContent = ContentInterface.LoadFile("chars/" + CharFile);
             string[] lines = fileContent.Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.None);
             int.TryParse(lines[0], out _rect.Width);
@@ -360,7 +359,8 @@ namespace IGORR.Client.Logic
             {
                 if (_nameSize == Vector2.Zero)
                     _nameSize = font.MeasureString(_name);
-                batch.DrawString(font, this.Name, new Vector2(_rect.X + _rect.Width / 2 - 0.2f*_nameSize.X / 2, _rect.Y + _rect.Height), Color.White, 0, Vector2.Zero, 0.2f, SpriteEffects.None, 0);
+                batch.DrawString(font, this.Name, new Vector2(_rect.X + _rect.Width / 2 - 0.25f*_nameSize.X / 2, _rect.Y + _rect.Height), Color.White, 0, Vector2.Zero, 0.25f, SpriteEffects.None, 0);
+                _pointer.Draw(batch, new Vector2(_rect.X, _rect.Y), Camera.CurrentCam);
             }
             if (_lifeBar != null && !string.IsNullOrWhiteSpace(this.Name))
             {
@@ -497,6 +497,11 @@ namespace IGORR.Client.Logic
         {
             get { return _name; }
             set { _name = value; _pointer.SetName(_name); }
+        }
+
+        public List<BodyPart> Parts
+        {
+            get { return _bodyParts; }
         }
     }
 }

@@ -304,7 +304,6 @@ namespace IGORR.Server.Logic
                 Player newPlayer = new Player(_map, new Rectangle(spawnPoint.X, spawnPoint.Y, 16, 15), getID());
                 newPlayer.Name = player.Name;
                 newPlayer.SetTeam(player.GroupID);
-                Console.WriteLine("Killed Player: " + player.ID.ToString());
                 //Send client their new playerID
                 AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);
                 apm.objectID = newPlayer.ID;
@@ -330,6 +329,7 @@ namespace IGORR.Server.Logic
                 km.killerID = player.Attacker;
                 km.deadID = player.ID;
                 km.Encode();
+                player.Die();
                 _server.SendAllMapReliable(_map, km, true);
                 RemoveQuiet(player);
             }

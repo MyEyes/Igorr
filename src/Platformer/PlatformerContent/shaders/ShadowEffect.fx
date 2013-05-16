@@ -44,6 +44,7 @@ struct ClearPSInput
 
 ClearPSInput ClearVSFunction(ClearPSInput input)
 {
+	input.Position = mul(input.Position, Projection);
 	return input;
 }
 

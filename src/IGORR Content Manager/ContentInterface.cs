@@ -113,5 +113,7 @@ namespace IGORR.Content
         {
             get { return _contentSet; }
         }
+
+        public static Texture2D DefaultTexture { get { return TextureLoader.Default; } }
     }
 }

@@ -449,6 +449,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="effects\" />
+    <Folder Include="gfx\lightmaps\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="sound\Cave.mp3">
@@ -518,6 +519,12 @@
   <ItemGroup>
     <Compile Include="map\Field1.map">
       <Name>Field1</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="map\Cave1.map">
+      <Name>Cave1</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -674,6 +681,13 @@
   <ItemGroup>
     <Compile Include="gfx\Egg.png">
       <Name>Egg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gfx\UITest.png">
+      <Name>UITest</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

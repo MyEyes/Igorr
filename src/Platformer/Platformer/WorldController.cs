@@ -207,9 +207,10 @@ namespace IGORR.Client
         {
             PickupMessage pum = (PickupMessage)(message);
             GameObject obj = ModuleManager.SpawnByIdClient(null, pum.id, -1, Point.Zero, "");
-            if (obj != null && obj is PartContainer)
+            if (obj != null && manager.Player!=null && obj is PartContainer)
             {
                 manager.Player.GivePart((obj as PartContainer).Part);
+                _gameRef.GUI.UpdateInventoryWindow();
             }
             /*
             PickupMessage pum = (PickupMessage)(message);

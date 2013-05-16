@@ -11,8 +11,9 @@ namespace IGORR.Server.Logic
     public class DummyObject:GameObject
     {
 
-        public DummyObject(int typeID, IMap map, Rectangle boundingRect, int id):base(map,boundingRect,id)
+        public DummyObject(int typeID, IMap map, Rectangle boundingRect, int id, string info=""):base(map,boundingRect,id)
         {
+            _info = info;
             _objectType = typeID;
             _id = id;
         }

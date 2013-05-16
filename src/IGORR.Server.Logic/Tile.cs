@@ -59,5 +59,7 @@ namespace IGORR.Server.Logic
         {
             get { return _eventObject; }
         }
+
+        public int TileID { get { return _selectRect.X / 16; } }
     }
 }

@@ -21,9 +21,9 @@ namespace IGORR.Content
         {
             try
             {
-                if (File.Exists("gfx/"+name))
+                if (File.Exists(content.RootDirectory+"/gfx/"+name))
                 {
-                    return Texture2D.FromStream(device, File.OpenRead("gfx/"+name));
+                    return Texture2D.FromStream(device, File.OpenRead(content.RootDirectory + "/gfx/" + name));
                 }
                 else
                     return content.Load<Texture2D>("gfx/"+name);
@@ -33,7 +33,8 @@ namespace IGORR.Content
                 Console.WriteLine("Error loading texture: " + "gfx/"+name);
                 return _default;
             }
-
         }
+
+        public static Texture2D Default { get { return _default; } }
     }
 }

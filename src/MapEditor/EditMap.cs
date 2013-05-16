@@ -263,6 +263,41 @@ for (int x = 0; x < tpCount; x++)
                     }
             }
         }
+        public void FloodFill(int layer, float positionX, float positionY, int tileID)
+        {
+            int posX = (int)(positionX / tileSize);
+            int posY = (int)(positionY / tileSize);
+            if (isValid(layer, posX, posY) && layer >= 0 && layer < 3)
+            {
+                int previousTileID = _layers[layer][posX, posY].TileID;
+                if (previousTileID == tileID)
+                    return;
+                List<Point> _toDO = new List<Point>();
+                List<Point> _done = new List<Point>();
+                _toDO.Add(new Point(posX, posY));
+                while (_toDO.Count > 0)
+                {
+                    Point cur = _toDO[0];
+                    cur.X += 1;
+                    if (isValid(layer,cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.X -= 2;
+                    if (isValid(layer, cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.X += 1;
+                    cur.Y += 1;
+                    if (isValid(layer, cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.Y -= 2;
+                    if (isValid(layer, cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.Y += 1;
+                    ChangeTile(layer, 16 * cur.X+8, 16 * cur.Y+8, tileID);
+                    _done.Add(cur);
+                    _toDO.RemoveAt(0);
+                }
+            }
+        }
 
         public void ChangeTile(int layer, float worldX, float worldY, int tileNum)
         {

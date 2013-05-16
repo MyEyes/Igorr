@@ -145,7 +145,7 @@ namespace IGORR.Server.Logic
             get { return _objectType; }
         }
 
-        public string Name
+        public virtual string Name
         {
             get { return _name; }
             set { _name = value; }

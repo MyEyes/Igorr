@@ -10,7 +10,9 @@ namespace DefaultModule.Templates
     {
         public override IGORR.Client.Logic.GameObject CreateClient(IGORR.Client.Logic.IMap map, int objectID, Microsoft.Xna.Framework.Point p, string info)
         {
-            return new IGORR.Client.Logic.Player("default", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 16, 16), objectID);
+            IGORR.Client.Logic.Player player = new IGORR.Client.Logic.Player("default", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 16, 16), objectID);
+            player.Name = info;
+            return player;
         }
 
         public override int TypeID

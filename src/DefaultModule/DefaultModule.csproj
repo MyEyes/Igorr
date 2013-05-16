@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Piercer.cs" />
+    <Compile Include="Client\GrenadeLauncher.cs" />
     <Compile Include="Client\StaticLight.cs" />
     <Compile Include="Client\SlimeShot.cs" />
     <Compile Include="Client\LightCircle.cs" />
@@ -64,6 +66,12 @@
     <Compile Include="Client\ScorePost.cs" />
     <Compile Include="Client\Striker.cs" />
     <Compile Include="Client\Wings.cs" />
+    <Compile Include="EditorControls\LightColorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorControls\LightColorControl.Designer.cs">
+      <DependentUpon>LightColorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditorControls\LuaNPCControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,6 +105,7 @@
     <Compile Include="Templates\BlockerTemplate.cs" />
     <Compile Include="Templates\BirdTemplate.cs" />
     <Compile Include="Templates\BossAttackTemplates.cs" />
+    <Compile Include="Templates\BossMinionTemplate.cs" />
     <Compile Include="Templates\StaticLightTemplate.cs" />
     <Compile Include="Templates\SlimeShotAttackTemplate.cs" />
     <Compile Include="Templates\SlimeShooterTemplate.cs" />
@@ -190,6 +199,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EditorControls\LightColorControl.resx">
+      <DependentUpon>LightColorControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditorControls\LuaNPCControl.resx">
       <DependentUpon>LuaNPCControl.cs</DependentUpon>
     </EmbeddedResource>

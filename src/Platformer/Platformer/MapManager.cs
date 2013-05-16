@@ -16,7 +16,7 @@ namespace IGORR.Client
         public static void LoadMaps(GraphicsDevice dev)
         {
             _maps = new List<Map>();
-            StreamReader reader = new StreamReader("maps.lst");
+            StreamReader reader = new StreamReader("Content\\map\\maps.lst");
             string[] lines = reader.ReadToEnd().Split(new string[] { "\n", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             for (int x = 0; x < lines.Length; x++)
             {

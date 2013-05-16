@@ -76,6 +76,12 @@ namespace MapEditor
 				float scrollValue = ((mouse.ScrollWheelValue - _prevMouse.ScrollWheelValue) / 120) * 0.1f;
 				cam.ZoomFactor = MathHelper.Clamp (cam.ZoomFactor + scrollValue, maxZoom, minZoom);
 			}
+            if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F))
+            {
+                Vector2 worldPos = cam.ScreenToWorld(new Vector2(mouse.X, mouse.Y));
+                if (selecter != null && layer >= 0 && layer < 3)
+                    map.FloodFill(layer, worldPos.X, worldPos.Y, selecter.SelectedTile);
+            }
 
             _prevMouse = mouse;
         }

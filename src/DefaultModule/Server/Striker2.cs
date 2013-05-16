@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Server.Logic
 {
-    public class Striker2 : BodyPart
+    public class Piercer : BodyPart
     {
-        public Striker2()
+        public Piercer()
             : base()
         {
             //attackID = 2;

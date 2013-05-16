@@ -14,12 +14,17 @@ namespace IGORR.Client.Logic
         Rectangle _selectRect;
         bool _collides;
         EventObject _eventObject;
+        int textureWidth = 0;
+        int tilesPerLine = 0;
+        const int tileSize = 16;
 
         public Tile(Rectangle tile,Rectangle rect, Texture2D texture, bool collides)
             : base(texture, rect, -1)
         {
             _collides = collides;
             _selectRect = tile;
+            textureWidth = texture.Width;
+            tilesPerLine = textureWidth /tileSize;
         }
 
         public void SetChild(EventObject obj)
@@ -36,7 +41,13 @@ namespace IGORR.Client.Logic
 
         public void SetTile(int id)
         {
-            _selectRect = new Rectangle(16 * id, 0, 16, 16);
+            int line = id / tilesPerLine;
+            _selectRect = new Rectangle(tileSize * (id%tilesPerLine), line*tileSize, tileSize,tileSize);
+        }
+
+        public int GetTileID()
+        {
+            return _selectRect.X / 16;
         }
 
         public void SetCollides(bool val)

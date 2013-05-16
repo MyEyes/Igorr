@@ -14,6 +14,8 @@ namespace IGORR.Client.Logic
         Vector2 _dim;
         float zoom=2f;
         bool _jump;
+        Matrix projection=Matrix.Identity;
+        public static Camera CurrentCam = null;
 
         public Camera(Vector2 position, Rectangle ScreenSize)
         {
@@ -78,7 +80,13 @@ namespace IGORR.Client.Logic
         {
             get
             {
-                return Matrix.CreateTranslation(-_screenSize.Width / 2 - 0.5f, -_screenSize.Height / 2 - 0.5f, 0) * Matrix.CreateScale(2 / ((float)_screenSize.Width), -2 / ((float)_screenSize.Height), 1);
+                if (projection == Matrix.Identity)
+                    projection = Matrix.CreateTranslation(-_screenSize.Width / 2 - 0.5f, -_screenSize.Height / 2 - 0.5f, 0) * Matrix.CreateScale(2 / ((float)_screenSize.Width), -2 / ((float)_screenSize.Height), 1);
+                return projection;
+            }
+            set
+            {
+                projection = value;
             }
         }
 

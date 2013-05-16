@@ -11,11 +11,11 @@ namespace IGORR.Client.Logic
     {
         IMap _map;
 
-        public StaticLight(IMap map, Texture2D texture, Rectangle position, int id)
+        public StaticLight(IMap map, Texture2D texture, Rectangle position, int id, Color c, int radius)
             : base(texture, position, id)
         {
             _map = map;
-            _map.SetGlow(_id, this._position, Color.LightYellow, 80*16, true);
+            _map.SetGlow(_id, this._position, c, radius, true);
         }
 
         public override void Update(float ms)
@@ -26,6 +26,7 @@ namespace IGORR.Client.Logic
 
         public override void Draw(SpriteBatch batch)
         {
+
         }
     }
 }

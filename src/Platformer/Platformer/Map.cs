@@ -20,7 +20,9 @@ namespace IGORR.Client
         EventObject[,] _events;
         Texture2D tileSet;
         const int tileSize = 16;
+        const int tileSampleSize = 16;
         int GeometryRects = 0;
+        public readonly string Name;
 
         Random random;
 
@@ -29,7 +31,9 @@ namespace IGORR.Client
             random = new Random();
             int maxX = 30;
             int maxY = 30;
-            
+
+            Name = fileName;
+
             LoadNew(fileName);
             /*
             #if WINDOWS
@@ -79,6 +83,22 @@ namespace IGORR.Client
              */
             //SpawnItem(1);
             //SpawnItem(2);
+
+        }
+
+        public void TryLoadLightmap()
+        {
+            try
+            {
+                Texture2D lm = ContentInterface.LoadTexture("lightmaps\\" + Name + ".png");
+                if (!(lm == IGORR.Content.ContentInterface.DefaultTexture))
+                    LightMap.LightReference.SetLightMap(lm);
+            }
+            catch (ContentLoadException e) { }
+            catch (FileNotFoundException fnf)
+            {
+
+            }
         }
 
         public void LoadNew(string file)
@@ -97,6 +117,7 @@ namespace IGORR.Client
             }
              */
             _layers = new Tile[3][,];
+            int tilesPerLine = tileSet.Width / tileSize;
             for (int layer = 0; layer < 3; layer++)
             {
                 int count = 0;
@@ -107,7 +128,8 @@ namespace IGORR.Client
                             int tileID = reader.ReadInt32();
                             if (tileID >= 0)
                             {
-                                _layers[layer][x, y] = new Tile(new Rectangle(tileID * tileSize, 0, tileSize, tileSize), new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize), tileSet, layer == 1);
+                                int line = tileID / tilesPerLine;
+                                _layers[layer][x, y] = new Tile(new Rectangle(tileSampleSize * (tileID% tilesPerLine), line * tileSampleSize, tileSampleSize, tileSampleSize), new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize), tileSet, layer == 1);
                                 count++;
                             }
                             else
@@ -165,17 +187,11 @@ namespace IGORR.Client
                             _layers[layer][x, y].Draw(0.6f - layer / 10.0f, batch);
                         }
 
-            //Texture2D testdefault = ContentInterface.LoadTexture("selectRect");
             for (int x = minX; x < maxX; x++)
                 for (int y = minY; y < maxY; y++)
                 {
                     if (_events[x, y] != null)
                         _events[x, y].Draw(batch);
-                    /*
-                    if (isValid(x, y) && _layers[1][x, y] != null)
-                        batch.Draw(testdefault, _layers[1][x, y].Geometry.BoundingRect, Color.White);
-                     */
-
                 }
         }
 
@@ -220,6 +236,37 @@ namespace IGORR.Client
                              _events[x, y].Update(ms);
         }
 
+        public void SetUpLightMapPrecomputeLights()
+        {
+            int counter = 0;
+            for(int x=0; x<_layers[0].GetLength(0); x++)
+                for (int y = 0; y < _layers[0].GetLength(1); y++)
+                {
+                    if (CheckIfLightSource(x,y)) 
+                        LightMap.LightReference.SetGlow(counter--, _layers[0][x, y].MidPosition, Color.White, 100, true);
+                }
+        }
+
+        public bool CheckIfLightSource(int x, int y)
+        {
+            if (_layers[0][x, y] != null && _layers[0][x, y].GetTileID() < 2 && _layers[1][x, y] == null)
+            {
+                return true;
+                int count = 0;
+                if (isValid(x+1,y) &&_layers[1][x+1, y] != null)
+                    count++;
+                if (isValid(x - 1, y) && _layers[1][x - 1, y] != null)
+                    count++;
+                if (isValid(x, y+1) && _layers[1][x, y + 1] != null)
+                    count++;
+                if (isValid(x, y-1) && _layers[1][x, y - 1] != null)
+                    count++;
+                if (count <= 1)
+                    return true;
+            }
+            return false;
+        }
+
         public bool Collides(GameObject obj)
         {
             int posX = (int)(obj.MidPosition.X / tileSize);
@@ -249,7 +296,7 @@ namespace IGORR.Client
         //Precalculate level geometry to reduce rendering overhead for shadow generation
         void CalculateLevelGeometry()
         {
-            int rectIDs = 0;
+            int rectIDs = 1;
             //Find a tile to add to a Rectangle
             for (int x = 0; x < _layers[1].GetLength(0); x++)
             {
@@ -277,7 +324,7 @@ namespace IGORR.Client
                 while (isValid(currentX, currentY) && _layers[1][currentX, currentY] != null)
                 {
                     Rectangle testRect = new Rectangle(x, y, currentX - x+1, currentY - y+1);
-                    if (testRect.Width * testRect.Height >= max && AllNotNull(testRect))
+                    if (testRect.Width * testRect.Height >= max && AllNotNullAndFree(testRect))
                     {
                         max = testRect.Width * testRect.Height;
                         maxRect = testRect;
@@ -299,12 +346,12 @@ namespace IGORR.Client
         }
 
         //Checks if all tiles inside a rectangle are not null
-        bool AllNotNull(Rectangle rect)
+        bool AllNotNullAndFree(Rectangle rect)
         {
             for(int x=rect.X; x<rect.Right; x++)
                 for (int y = rect.Y; y < rect.Bottom; y++)
                 {
-                    if (_layers[1][x, y] == null)
+                    if (_layers[1][x, y] == null || _layers[1][x,y].Geometry.ID!=0)
                         return false;
                 }
             return true;
@@ -332,10 +379,11 @@ namespace IGORR.Client
             int vertexCount = 0;
             //Iterate over all tiles we need to consider, this method is slower than using a BSP tree or something
             //But it is sufficient for this game
+            //48,24
             for (int x = minX; x < maxX; x++)
                 for (int y = minY; y < maxY; y++)
                     //Check if there's a tile here and wether we have drawn this rect already
-                    if (_layers[1][x, y] != null && !RectDrawn[_layers[1][x,y].Geometry.ID])
+                    if (_layers[1][x, y] != null && (!RectDrawn[_layers[1][x,y].Geometry.ID] || _layers[1][x,y].Geometry.ID==0))
                     {
                         //Set up helper values
                         //Offset for the diagonal of the rectangle
@@ -343,14 +391,30 @@ namespace IGORR.Client
                         //mid point of the rectangle, this way we can directly compute the corners over the diagonals
                         Vector2 midPoint = new Vector2(_layers[1][x, y].Geometry.BoundingRect.Center.X, _layers[1][x, y].Geometry.BoundingRect.Center.Y);
                         //vector from light source to rectangles center to calculate which edges are facing away from light source
+                        if (_layers[1][x, y].Geometry.ID == 0)
+                        {
+                            tileSizeVec = new Vector2(_layers[1][x, y].Rect.Width * 0.5f, _layers[1][x, y].Rect.Height * 0.5f);
+                            midPoint = new Vector2(_layers[1][x, y].Rect.Center.X, _layers[1][x, y].Rect.Center.Y);
+                        }
                         Vector3 diff = new Vector3(midPoint - center, 0);
                         Vector3 edge1, edge2, edge3, edge4;
                         //Find a sensible order for the 4 edges, sort them so that if you only take the first 3 edges the left out side is closest to the center of the rectangle
                         //This simplifies the shadow geometry calculation a lot
                         //Note: This seems like a lot of code, but it's just 2 branches and 4 vector 3 creators
-                        if (diff.X > diff.Y)
+
+                        /*        2*                         3*
+                         * 
+                         *                                              
+                         * 
+                         * 
+                         *        1*                         4*
+                         *                      x
+                         *                      
+                         * diff.X/tileSizeVec.X > diff.Y/tileSizeVec.Y
+                         */
+                        if (diff.X * tileSizeVec.Y > diff.Y * tileSizeVec.X)
                         {
-                            if (diff.X > -diff.Y)
+                            if (diff.X * tileSizeVec.Y > -diff.Y * tileSizeVec.X)
                             {
 
                                 edge1 = new Vector3(midPoint + new Vector2(-tileSizeVec.X, -tileSizeVec.Y), 0);//1
@@ -368,7 +432,7 @@ namespace IGORR.Client
                         }
                         else
                         {
-                            if (diff.X > -diff.Y)
+                            if (diff.X * tileSizeVec.Y > -diff.Y * tileSizeVec.X)
                             {
                                 edge1 = new Vector3(midPoint + new Vector2(tileSizeVec.X, -tileSizeVec.Y), 0);//2
                                 edge2 = new Vector3(midPoint + new Vector2(tileSizeVec.X, tileSizeVec.Y), 0);//3
@@ -391,7 +455,7 @@ namespace IGORR.Client
 
                         //Check which of the 3 interesting sides are facing away from the light center and write appropriate
                         //Geometry into the dynamic vertex buffer
-                        if (vertexCount < shadowVB.VertexCount && Vector3.Dot((edge1 + edge2) / 2 - new Vector3(center, 0), new Vector3(-(edge2 - edge1).Y, (edge2 - edge1).X, 0)) < 0)
+                        if (vertexCount < shadowVB.VertexCount)// && Vector3.Dot((edge1 + edge2) / 2 - new Vector3(center, 0), new Vector3(-(edge2 - edge1).Y, (edge2 - edge1).X, 0)) < 0)
                         {
                             dir1 = edge1 - new Vector3(center, 0);
                             dir1.Normalize();
@@ -430,7 +494,7 @@ namespace IGORR.Client
                             vertexCount += 6;
                         }
 
-                        if (vertexCount < shadowVB.VertexCount && Vector3.Dot((edge3 + edge4) / 2 - new Vector3(center, 0), new Vector3(-(edge4 - edge3).Y, (edge4 - edge3).X, 0)) < 0)
+                        if (vertexCount < shadowVB.VertexCount)// && Vector3.Dot((edge3 + edge4) / 2 - new Vector3(center, 0), new Vector3(-(edge4 - edge3).Y, (edge4 - edge3).X, 0)) < 0)
                         {
                             dir1 = edge3 - new Vector3(center, 0);
                             dir1.Normalize();
@@ -447,8 +511,7 @@ namespace IGORR.Client
                             0, 6, VertexPositionColor.VertexDeclaration.VertexStride);
                             vertexCount += 6;
                         }
-
-
+                        RectDrawn[_layers[1][x, y].Geometry.ID] = true;
                     }
             return vertexCount;
         }

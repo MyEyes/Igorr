@@ -24,6 +24,7 @@ namespace IGORR.Server.Logic.AI
         {
             _groupID = 2;
             GivePart(new BossBlobLegs());
+            _objectType = 5008;
         }
 
         public override void Update(IMap map, float seconds)
@@ -56,7 +57,6 @@ namespace IGORR.Server.Logic.AI
                     Move(1);
                 if (_random.NextDouble() > 0.99f)
                     Jump();
-                _map.ObjectManager.SpawnAttack(ID,Vector2.Zero, 0, 0);
             }
             base.Update(map, seconds);
         }

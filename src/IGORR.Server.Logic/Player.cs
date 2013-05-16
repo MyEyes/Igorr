@@ -88,7 +88,7 @@ namespace IGORR.Server.Logic
             int.TryParse(lines[1], out _rect.Height);
             _position.X -= _rect.Width - 16;
             _position.Y -= _rect.Height - 16;
-            int.TryParse(lines[3], out _hp);
+            int.TryParse(lines[5], out _hp);
             _maxhp = _hp;
             ShadowsOn = true;
             _speed = Vector2.Zero;
@@ -451,6 +451,11 @@ namespace IGORR.Server.Logic
              * */
         }
 
+        public virtual void Die()
+        {
+
+        }
+
         public int HP
         {
             get { return _hp; }
@@ -475,6 +480,19 @@ namespace IGORR.Server.Logic
         public bool Flying
         {
             get { return flying; }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                _info = _name;
+            }
         }
 
         public bool Jumping

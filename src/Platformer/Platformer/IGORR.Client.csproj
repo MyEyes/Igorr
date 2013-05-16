@@ -119,6 +119,7 @@
     <Compile Include="GameScreen.cs" />
     <Compile Include="Glow.cs" />
     <Compile Include="InteractiveTextBubble.cs" />
+    <Compile Include="InventoryMenu.cs" />
     <Compile Include="IScreen.cs" />
     <Compile Include="MainMenuScreen.cs" />
     <Compile Include="LightMap.cs" />
@@ -135,6 +136,17 @@
     <Compile Include="SpriteEffect.cs" />
     <Compile Include="TextBubble.cs" />
     <Compile Include="TextManager.cs" />
+    <Compile Include="UI\BodyPartListWindow.cs" />
+    <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\GUIScreen.cs" />
+    <Compile Include="UI\InGameMenu.cs" />
+    <Compile Include="UI\MainMenuScreen.cs" />
+    <Compile Include="UI\Panel.cs" />
+    <Compile Include="UI\PictureBox.cs" />
+    <Compile Include="UI\UIElement.cs" />
+    <Compile Include="UI\UIScreen.cs" />
+    <Compile Include="UI\UIWindow.cs" />
+    <Compile Include="UI\WindowToggler.cs" />
     <Compile Include="WorldController.cs" />
   </ItemGroup>
   <ItemGroup>

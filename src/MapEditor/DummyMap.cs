@@ -312,6 +312,41 @@ for (int x = 0; x < tpCount; x++)
             }
         }
 
+        public void FloodFill(int layer, Vector2 position, int tileID)
+        {
+            int posX = (int)(position.X / tileSize);
+            int posY = (int)(position.Y / tileSize);
+            if (isValid(posX, posY) && layer >= 0 && layer < 3)
+            {
+                int previousTileID = _layers[layer][posX, posY].TileID;
+                if (previousTileID == tileID)
+                    return;
+                List<Point> _toDO = new List<Point>();
+                List<Point> _done = new List<Point>();
+                _toDO.Add(new Point(posX, posY));
+                while (_toDO.Count > 0)
+                {
+                    Point cur = _toDO[0];
+                    cur.X += 1;
+                    if (isValid(cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X,cur.Y].TileID==previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.X -= 2;
+                    if (isValid(cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.X += 1;
+                    cur.Y += 1;
+                    if (isValid(cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    cur.Y -= 2;
+                    if (isValid(cur.X, cur.Y) && !_done.Contains(new Point(cur.X, cur.Y)) && !_toDO.Contains(new Point(cur.X, cur.Y)) && _layers[layer][cur.X, cur.Y].TileID == previousTileID)
+                        _toDO.Add(new Point(cur.X, cur.Y));
+                    ChangeTile(layer, 16 * new Vector2(cur.X, cur.Y), tileID);
+                    cur.Y += 1;
+                    _done.Add(cur);
+                }
+            }
+        }
+
         public bool GetTrigger(string triggerName)
         {
             if (!_triggers.ContainsKey(triggerName))

@@ -32,8 +32,8 @@ namespace IGORR.Client
 
         public void AddScreen(IScreen screen)
         {
-            screen.Initialize(_device, this);
             _screens.Add(screen);
+            screen.Initialize(_device, this);
         }
 
         public void RemoveScreen(IScreen screen)

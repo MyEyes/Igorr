@@ -36,6 +36,10 @@ namespace IGORR.Client
         GraphicsDevice GraphicsDevice;
         ScreenManager _manager;
 
+        UI.GUIScreen _GUIOverlay;
+
+        System.Threading.Mutex _mapMutex;
+
         Vector2 _mouseDir = Vector2.Zero;
         #if WINDOWS
         Player player;
@@ -48,10 +52,12 @@ namespace IGORR.Client
             GraphicsDevice = Device;
             spriteBatch = new SpriteBatch(Device);
             cam = new Camera(new Vector2(520, 440), new Rectangle(0, 0, 800, 600));
+
+            _lightMap = new LightMap(Device);
+
             MapManager.LoadMaps(Device);
             //map = MapManager.GetMapByID(0);
             objectManager = new ObjectManager(map);
-            _lightMap = new LightMap(Device);
             objectManager.SetLight(_lightMap);
             pm = new ParticleManager();
             TextManager.SetUp(ContentInterface.LoadFont("font"));
@@ -64,19 +70,26 @@ namespace IGORR.Client
             _spriteEffect.CurrentTechnique = _spriteEffect.Techniques["Sprite"];
             _manager = manager;
 
+            _mapMutex = new System.Threading.Mutex();
+
             WorldController.SetObjectManager(objectManager);
             WorldController.SetGame(this);
             WorldController.Start();
-
-            TextManager.Ask(new Choice[] { new Choice(1, "TestChoice 1"), new Choice(2, "TestChoice 2") }, "TestText", null);
+            _GUIOverlay = new UI.GUIScreen();
+            manager.AddScreen(_GUIOverlay);
         }
 
         public void LoadMap(int id)
         {
-            map = MapManager.GetMapByID(id);
-            objectManager.SetMap(map);
-            _lightMap.SetMap(map);
+            _mapMutex.WaitOne();
+            map = null;
+            player = null;
+            Map NewMap = MapManager.GetMapByID(id);
+            objectManager.SetMap(NewMap);
+            _lightMap.SetMap(NewMap);
             cam.JumpNext();
+            map = NewMap; 
+            _mapMutex.ReleaseMutex();
         }
 
         private void DrawInteractMarker()
@@ -91,8 +104,12 @@ namespace IGORR.Client
 
         public void Draw(GameTime gameTime)
         {
+            Camera.CurrentCam = cam;
+            _mapMutex.WaitOne();
             if (map != null && player!=null)
             {
+                if (!_lightMap.HasLightmap)
+                    _lightMap.ComputeLightMap(spriteBatch, map, "Content\\gfx\\lightmaps\\"+map.Name+".png");
                 _lightMap.DrawLights(shadowCountdown, cam, spriteBatch);
                 GraphicsDevice.Clear(Color.Black);
                 _spriteEffect.Parameters["View"].SetValue(cam.ViewMatrix);
@@ -123,6 +140,7 @@ namespace IGORR.Client
                     spriteBatch.DrawString(font, "Loading", new Vector2(50, 50), Color.White);
                 spriteBatch.End();
             }
+            _mapMutex.ReleaseMutex();
         }
 
         public void Update(GameTime gameTime)
@@ -130,9 +148,10 @@ namespace IGORR.Client
             if (!WorldController.Connected)
             {
                 _manager.RemoveScreen(this);
+                _manager.RemoveScreen(_GUIOverlay);
                 _manager.AddScreen(new MainMenuScreen(_manager.Game));
             }
-
+            _mapMutex.WaitOne();
             if (map != null)
             {
 
@@ -145,7 +164,7 @@ namespace IGORR.Client
                     _mouseDir = cam.ViewToWorldPosition(new Vector2(mouse.X, mouse.Y)) - player.MidPosition;
                 }
                 GamePadState pad = GamePad.GetState(PlayerIndex.One);
-                player = objectManager.Player;
+                Player = objectManager.Player;
                 if (player != null)
                 {
                     if (keyboard.IsKeyDown(Keys.A))
@@ -171,12 +190,8 @@ namespace IGORR.Client
                         WorldController.SendAttack(1, _mouseDir, player.ID);
                     if (keyboard.IsKeyDown(Keys.C) && !_prevKeyboard.IsKeyDown(Keys.C))
                         WorldController.SendAttack(2, _mouseDir, player.ID);
-                    /*                
-                                    if (keyboard.IsKeyDown(Keys.Q))
-                                        cam.ZoomInOn(1.1f, new Vector2(mouse.X, mouse.Y));
-                                    if (keyboard.IsKeyDown(Keys.E))
-                                        cam.ZoomInOn(1 / 1.1f, new Vector2(mouse.X, mouse.Y));
-                     */
+                    if (keyboard.IsKeyDown(Keys.I) && !_prevKeyboard.IsKeyDown(Keys.I))
+                        _GUIOverlay.ToggleInventoryWindow();
                     if (pad.ThumbSticks.Right.LengthSquared() > 0.2f)
                     {
                         _mouseDir = pad.ThumbSticks.Right;
@@ -196,6 +211,7 @@ namespace IGORR.Client
                         WorldController.SendAttack(1, _mouseDir, player.ID);
                     if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
                         WorldController.SendAttack(2, _mouseDir, player.ID);
+
                     GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
                     if (interactObject != null && keyboard.IsKeyDown(Keys.Enter) && !_prevKeyboard.IsKeyDown(Keys.Enter))
                     {
@@ -212,7 +228,7 @@ namespace IGORR.Client
                     objectManager.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
                     cam.MoveTo(player.Position , 0.1f);
                     //cam.SetPos(player.Position);
-                    _lightMap.SetGlow(-1, player.MidPosition, Color.White, shadowCountdown * 50, true);
+                    _lightMap.SetGlow(-1, player.MidPosition, Color.White, 150, true);
                 }
 
                 if (shadowTurnOn)
@@ -252,6 +268,7 @@ namespace IGORR.Client
                 _prevMouseState = mouse;
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
+            _mapMutex.ReleaseMutex();
             IGORR.Protocol.ProtocolHelper.Update((int)(float)gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
@@ -298,6 +315,17 @@ namespace IGORR.Client
         public LightMap Light
         {
             get { return _lightMap; }
+        }
+
+        public UI.GUIScreen GUI
+        {
+            get { return _GUIOverlay; }
+        }
+
+        public Player Player
+        {
+            get { return player; }
+            set { if (value == null || (player != null && player == value)) return; player = value; _GUIOverlay.SetPlayer(player); }
         }
     }
 }

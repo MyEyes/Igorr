@@ -125,12 +125,11 @@ namespace IGORR.Server.Logic.AI
                 Left = _target.MidPosition.X < this.MidPosition.X;
                 _map.ObjectManager.SpawnAttack(ID, s * new Vector2(Left ? -1 : 1, -1), 0, 0);
                  */
-                float t = 1 + (float)_random.NextDouble() * 1.0f;
-                t = 1;
+                float t = 0.75f + (float)_random.NextDouble();
                 Vector2 diff = _target.MidPosition - this.MidPosition;
                 diff.Normalize();
                 diff = new Vector2(diff.Y, -diff.X);
-                float dist = 48 * (float)(-1+2*_random.NextDouble());
+                float dist = 48 *(float)(-1 + 2 * _random.NextDouble());
 
                 dx = _target.MidPosition.X+diff.X*dist - this.MidPosition.X;
                 dy = (_target.MidPosition.Y + diff.Y* dist - this.MidPosition.Y);
