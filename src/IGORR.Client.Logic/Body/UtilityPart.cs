@@ -14,9 +14,5 @@ namespace IGORR.Client.Logic.Body
 
         }
 
-        public void Update(float ms)
-        {
-
-        }
     }
 }

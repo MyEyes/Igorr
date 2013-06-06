@@ -74,6 +74,7 @@ namespace IGORR.Client.Logic
         Vector2 _speed;
         Vector2 _moveVector;
         public const float gravity = 60*2.5f;
+        const float baseSpeed = 60f;
         bool _onGround;
         int _maxhp = 50;
         int _hp = 50;
@@ -90,8 +91,8 @@ namespace IGORR.Client.Logic
         float stunTimeout;
         bool airstun = false;
 
-        List<BodyPart> _bodyParts;
-        BodyPart _completeBody;
+        //List<BodyPart> _bodyParts;
+        //BodyPart _completeBody;
 
         Body.Body _body;
 
@@ -117,11 +118,11 @@ namespace IGORR.Client.Logic
             _pointer = new PlayerPointer(this._name, ContentInterface.LoadTexture("Arrow"));
             _speed = Vector2.Zero;
             _onGround = false;
-            _bodyParts = new List<BodyPart>();
+            //_bodyParts = new List<BodyPart>();
             _inventory = new Logic.Inventory(this);
             flying = true;
             _collisionOffset = new Vector4((((16 - spawnPos.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - spawnPos.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
-            _completeBody = new BaseBody(null);
+            //_completeBody = new BaseBody(null);
             int dim = _texture.Bounds.Height;
             _aniControl = new AnimationController();
             _aniControl.Run = new Animation(100, dim,dim, new int[] { 0, 1, 2, 3, 4, 5, 6});
@@ -131,7 +132,7 @@ namespace IGORR.Client.Logic
             _aniControl.Fall = _aniControl.Fly;
             _aniControl.Land = new Animation(100, dim,dim, new int[] { 13, 14, 15, 16, 17 });
             _aniControl.Wall = new Animation(100, dim,dim, new int[] { 18, 19, 20, 21, 22, 23 });
-            CalculateTotalBonus();
+            //CalculateTotalBonus();
         }
 
         public Player(string CharFile, Rectangle spawnPos, int id):base(null,spawnPos,id)
@@ -179,11 +180,11 @@ namespace IGORR.Client.Logic
 
             _speed = Vector2.Zero;
             _onGround = false;
-            _bodyParts = new List<BodyPart>();
+            //_bodyParts = new List<BodyPart>();
             flying = true;
             _collisionOffset = new Vector4((((16 - _rect.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - _rect.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
-            _completeBody = new BaseBody(null);
-            CalculateTotalBonus();
+            //_completeBody = new BaseBody(null);
+            //CalculateTotalBonus();
             _pointer = new PlayerPointer(this._name, ContentInterface.LoadTexture("Arrow"));
             _body = new Body.Body(this);
         }
@@ -208,6 +209,8 @@ namespace IGORR.Client.Logic
             else if (_speed.X > 0) Left = false;
             _lastSpeed = _speed;
 
+            _body.Update(seconds * 1000f);
+
             if (_onGround && !flying && Math.Abs(_speed.X) > 0 && !wallCollision && (_aniControl.Run.GetFrameNum() == 3 || _aniControl.Run.GetFrameNum() == 0))
             {
                 Vector2 pos = _position;
@@ -221,7 +224,7 @@ namespace IGORR.Client.Logic
             if (wallCollision)
             {
                 _speed.Y = 0;
-                TryMove(-seconds*_completeBody.speedBonus * Vector2.UnitY,map);
+                TryMove(-seconds*(float)Math.Abs(_lastSpeed.X) * Vector2.UnitY,map);
             }
 
             #region Animation Handling
@@ -297,7 +300,6 @@ namespace IGORR.Client.Logic
             Position += Vector2.UnitX * movement.X;
             if (map.Collides(this))
             {
-                //Position -= Vector2.UnitX * movement.X;
                 if (movement.X > 0)
                 {
                     _position.X = (float)(16 * Math.Floor(_position.X / 16.0)+_collisionOffset.X);
@@ -319,7 +321,6 @@ namespace IGORR.Client.Logic
                 if (_speed.Y > 0)
                 {
                     _onGround = true;
-                    _completeBody.airJumpCount = 0;
                     _position.Y = (float)(16 * Math.Floor(_position.Y / 16.0)) + _collisionOffset.Z;
                     Position = _position;
                 }
@@ -327,7 +328,6 @@ namespace IGORR.Client.Logic
                 {
                     _position.Y = (float)(16 * Math.Ceiling(_position.Y / 16.0)) + _collisionOffset.W;
                     Position = _position;
-                    //Position -= Vector2.UnitY * movement.Y;
                 }
                 _speed = Vector2.Zero;
             }
@@ -345,11 +345,12 @@ namespace IGORR.Client.Logic
         {
             if (stunned)
                 return;
-            _speed.X += _completeBody.speedBonus * xDiff;
-            if (_speed.X < -_completeBody.speedBonus)
-                _speed.X = -_completeBody.speedBonus;
-            else if (_speed.X > _completeBody.speedBonus)
-                _speed.X = _completeBody.speedBonus;
+            _speed.X += baseSpeed * xDiff;
+            if (_speed.X < -baseSpeed)
+                _speed.X = -baseSpeed;
+            else if (_speed.X > baseSpeed)
+                _speed.X = baseSpeed;
+            _body.Move(xDiff);
             _moveVector = Vector2.Zero;
         }
 
@@ -386,6 +387,7 @@ namespace IGORR.Client.Logic
             _hp = _maxhp > _hp ? _hp : _maxhp;
         }
 
+        /*
         public void CalculateTotalBonus()
         {
             _completeBody.Clear();
@@ -394,29 +396,36 @@ namespace IGORR.Client.Logic
             for (int x = 0; x < _bodyParts.Count; x++)
                 _completeBody.Add(_bodyParts[x]);
         }
+         */
 
         public void GivePart(BodyPart part)
         {
-            bool newPart = true;
+            //bool newPart = true;
+            /*
             for (int x = 0; x < _bodyParts.Count; x++)
                 if (_bodyParts[x].GetID() == part.GetID())
                     newPart = false;
             if (newPart)
             {
-                _inventory.Add(part);
-                _bodyParts.Add(part);
-                CalculateTotalBonus();
-            }
+             */
+            _inventory.Add(part);
+            _body.TryEquip(-1,part);
+            //_bodyParts.Add(part);
+            //CalculateTotalBonus();
+            //}
         }
-
+        /*
         public void RemovePart(BodyPart part)
         {
             _bodyParts.Remove(part);
             CalculateTotalBonus();
         }
+         */
 
         public void Jump()
         {
+            _body.Jump(1);
+            /*
             if (_onGround)
             {
                 _speed.Y = -_completeBody.jumpBonus;
@@ -430,6 +439,7 @@ namespace IGORR.Client.Logic
                 _speed.Y -= _completeBody.airJumpStrength;
                 _speed.Y = _speed.Y > -_completeBody.jumpBonus ? _speed.Y : -_completeBody.jumpBonus;
             }
+             */
         }
 
         public void SetGroup(int id)
@@ -500,6 +510,7 @@ namespace IGORR.Client.Logic
 
         public Vector2 Speed
         {
+            set { _speed = value; }
             get { return _speed; }
         }
 
@@ -514,10 +525,12 @@ namespace IGORR.Client.Logic
             set { _name = value; _pointer.SetName(_name); }
         }
 
+        /*
         public List<BodyPart> Parts
         {
             get { return _bodyParts; }
         }
+         */
 
         public Inventory Inventory
         {

@@ -11,7 +11,7 @@ namespace IGORR.Client.Logic.Body
         public ArmorPart(Texture2D texture)
             : base(texture, BodyPartType.Armor)
         {
-
         }
+
     }
 }

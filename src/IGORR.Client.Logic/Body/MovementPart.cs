@@ -14,17 +14,13 @@ namespace IGORR.Client.Logic.Body
 
         }
 
-        public void Update(float ms)
-        {
-            
-        }
 
-        public void Move(Player player, float dir)
+        public virtual void Move(Player player, float dir)
         {
 
         }
 
-        public void Jump(Player player, float strength)
+        public virtual void Jump(Player player, float strength)
         {
 
         }

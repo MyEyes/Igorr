@@ -9,14 +9,8 @@ namespace IGORR.Client.Logic.Body
 {
     public class BodyPart:ICollectible
     {
-        public float speedBonus = 0f;
-        public float jumpBonus = 0f;
         public Texture2D _texture;
         AnimationController _animations;
-
-        public int airJumpMax = 0;
-        public int airJumpCount = 0;
-        public float airJumpStrength = 0f;
 
         bool _behind;
 
@@ -27,20 +21,9 @@ namespace IGORR.Client.Logic.Body
             MaxStacks = 1;
         }
 
-        public void Clear()
+        public virtual void Update(Player player, float ms)
         {
-            speedBonus = 0;
-            jumpBonus = 0;
-            airJumpMax = 0;
-            airJumpStrength = 0;
-        }
 
-        public void Add(BodyPart part)
-        {
-            this.speedBonus += part.speedBonus;
-            this.jumpBonus += part.jumpBonus;
-            this.airJumpMax += part.airJumpMax;
-            this.airJumpStrength += part.airJumpStrength;
         }
 
         public virtual string GetName()
