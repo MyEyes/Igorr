@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Client.Logic
 {
-    class Piercer : BodyPart
+    class Piercer : Body.AttackPart
     {
         public Piercer(Texture2D tex)
             : base(tex)

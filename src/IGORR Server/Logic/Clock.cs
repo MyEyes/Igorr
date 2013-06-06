@@ -100,6 +100,10 @@ namespace IGORR.Server.Logic
                     _clock.Stamp();
                     _event.Invoke(_clock.ElapsedStampTime);
                 }
+                else if(_clock.ElapsedStampTime.Milliseconds<_interval/2)
+                {
+                    Thread.Sleep((_interval - _clock.ElapsedStampTime.Milliseconds) / 2);
+                }
             }
         }
     }

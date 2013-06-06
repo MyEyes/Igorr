@@ -9,12 +9,12 @@ namespace IGORR.Client.Logic
 {
     class PartPickup:PartContainer
     {
-        BodyPart _bodyPart;
+        Body.BodyPart _bodyPart;
         float counter = 0;
         Vector2 offset;
         bool up = false;
 
-        public PartPickup(BodyPart part, IMap map, Rectangle rect, int id)
+        public PartPickup(Body.BodyPart part, IMap map, Rectangle rect, int id)
             : base(map, part, rect, id)
         {
             _bodyPart = part;

@@ -13,9 +13,7 @@ namespace IGORR.Client.UI
         const int topSize = 16;
         Panel _topElement;
         Panel _mainWindow;
-        Vector2 _size;
 
-        MouseState _prevState;
         bool _dragged = false;
 
         public UIWindow(Vector2 offset, Vector2 size, Texture2D top, Texture2D main)
@@ -26,14 +24,13 @@ namespace IGORR.Client.UI
             _mainWindow = new Panel(this, Vector2.Zero, new Vector2(size.X, size.Y), top);
             AddChild(_topElement);
             AddChild(_mainWindow);
-            AddChild(new Button(this, new Vector2(_size.X - topSize, -topSize), new Vector2(topSize, topSize), top, delegate { Console.WriteLine("clicked"); _parent.RemoveChild(this); }, "X"));
+            AddChild(new Button(this, new Vector2(_size.X - topSize, -topSize), new Vector2(topSize, topSize), top, delegate { _parent.RemoveChild(this); }, "X"));
         }
 
-        public override void Update(float ms)
+        public override void Update(float ms, MouseState mouse)
         {
-            MouseState mouse = Mouse.GetState();
-
-            if (mouse.LeftButton == ButtonState.Pressed && _prevState.LeftButton == ButtonState.Released
+            base.Update(ms, mouse);
+            if (mouse.LeftButton == ButtonState.Pressed && _lastMouse.LeftButton == ButtonState.Released
                 && new Rectangle((int)_topElement.TotalOffset.X, (int)_topElement.TotalOffset.Y, (int)_size.X, topSize).Contains(mouse.X, mouse.Y))
             {
                 _dragged = true;
@@ -43,9 +40,7 @@ namespace IGORR.Client.UI
                 _dragged = false;
 
             if (_dragged)
-                this.SetOffset(Offset + new Vector2(mouse.X - _prevState.X, mouse.Y - _prevState.Y));
-            UpdateChildren(ms);
-            _prevState = mouse;
+                this.SetOffset(Offset + new Vector2(mouse.X - _lastMouse.X, mouse.Y - _lastMouse.Y));
         }
 
         public override void Draw(SpriteBatch batch)

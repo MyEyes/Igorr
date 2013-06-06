@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using IGORR.Content;
+using IGORR.Client.Logic.Body;
 
 namespace IGORR.Client.Logic
 {
@@ -83,6 +84,7 @@ namespace IGORR.Client.Logic
         int _targetExp=0;
         int nextLevelExp=70;
         int lastExp=0;
+        int level=1;
 
         bool stunned = false;
         float stunTimeout;
@@ -90,6 +92,8 @@ namespace IGORR.Client.Logic
 
         List<BodyPart> _bodyParts;
         BodyPart _completeBody;
+
+        Body.Body _body;
 
         AnimationController _aniControl;
         Vector4 _collisionOffset;
@@ -103,6 +107,8 @@ namespace IGORR.Client.Logic
 
         PlayerPointer _pointer;
 
+        Inventory _inventory;
+
         public Player(Texture2D texture, Rectangle spawnPos, int id)
             : base(texture, spawnPos, id)
         {
@@ -112,9 +118,10 @@ namespace IGORR.Client.Logic
             _speed = Vector2.Zero;
             _onGround = false;
             _bodyParts = new List<BodyPart>();
+            _inventory = new Logic.Inventory(this);
             flying = true;
             _collisionOffset = new Vector4((((16 - spawnPos.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - spawnPos.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
-            _completeBody = new BodyPart(null);
+            _completeBody = new BaseBody(null);
             int dim = _texture.Bounds.Height;
             _aniControl = new AnimationController();
             _aniControl.Run = new Animation(100, dim,dim, new int[] { 0, 1, 2, 3, 4, 5, 6});
@@ -129,6 +136,7 @@ namespace IGORR.Client.Logic
 
         public Player(string CharFile, Rectangle spawnPos, int id):base(null,spawnPos,id)
         {
+            _inventory = new Logic.Inventory(this);
             if (_lifeBar == null)
                 _lifeBar = ContentInterface.LoadTexture("White");
 
@@ -174,10 +182,10 @@ namespace IGORR.Client.Logic
             _bodyParts = new List<BodyPart>();
             flying = true;
             _collisionOffset = new Vector4((((16 - _rect.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - _rect.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
-            _completeBody = new BodyPart(null);
+            _completeBody = new BaseBody(null);
             CalculateTotalBonus();
             _pointer = new PlayerPointer(this._name, ContentInterface.LoadTexture("Arrow"));
-
+            _body = new Body.Body(this);
         }
 
         public Player(CharTemplate info, Rectangle spawnPos, int id)
@@ -254,6 +262,7 @@ namespace IGORR.Client.Logic
                     int add = nextLevelExp - lastExp;
                     lastExp = _exp;
                     nextLevelExp += add + add / 3;
+                    level++;
                 }
             }
 
@@ -394,6 +403,7 @@ namespace IGORR.Client.Logic
                     newPart = false;
             if (newPart)
             {
+                _inventory.Add(part);
                 _bodyParts.Add(part);
                 CalculateTotalBonus();
             }
@@ -483,6 +493,11 @@ namespace IGORR.Client.Logic
             get { return lastExp; }
         }
 
+        public int Level
+        {
+            get { return level; }
+        }
+
         public Vector2 Speed
         {
             get { return _speed; }
@@ -502,6 +517,11 @@ namespace IGORR.Client.Logic
         public List<BodyPart> Parts
         {
             get { return _bodyParts; }
+        }
+
+        public Inventory Inventory
+        {
+            get { return _inventory; }
         }
     }
 }

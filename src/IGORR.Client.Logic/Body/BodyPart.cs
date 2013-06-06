@@ -5,9 +5,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace IGORR.Client.Logic
+namespace IGORR.Client.Logic.Body
 {
-    public class BodyPart
+    public class BodyPart:ICollectible
     {
         public float speedBonus = 0f;
         public float jumpBonus = 0f;
@@ -20,9 +20,11 @@ namespace IGORR.Client.Logic
 
         bool _behind;
 
-        public BodyPart(Texture2D texture)
+        public BodyPart(Texture2D texture, BodyPartType type)
         {
             _texture = texture;
+            Type = type;
+            MaxStacks = 1;
         }
 
         public void Clear()
@@ -59,6 +61,18 @@ namespace IGORR.Client.Logic
         public Texture2D Texture
         {
             get { return _texture; }
+        }
+
+        public BodyPartType Type
+        {
+            get;
+            private set;
+        }
+
+        public int MaxStacks
+        {
+            get;
+            protected set;
         }
     }
 }

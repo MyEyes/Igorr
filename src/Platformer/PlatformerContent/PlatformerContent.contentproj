@@ -529,6 +529,12 @@
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="chars\AbstractEnemy.chr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>AbstractEnemy</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+    </Compile>
     <None Include="map\BlueBasePvP.map">
       <Name>BlueBasePvP</Name>
       <Importer>XmlImporter</Importer>
@@ -688,6 +694,13 @@
   <ItemGroup>
     <Compile Include="gfx\UITest.png">
       <Name>UITest</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gfx\AbstractEnemy.png">
+      <Name>AbstractEnemy</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

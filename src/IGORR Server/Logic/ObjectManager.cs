@@ -132,7 +132,7 @@ namespace IGORR.Server.Logic
                         {
                             bool sendAgain = false;
                             player.SetUpdateTime(timestamp);
-                            sendAgain = (player.Position - newPos).Length() > 1;
+                            sendAgain = (player.Position - newPos).Length() > 5;
                             sendAgain |= player.UpdateCountdown;
                             sendAgain |= (player.LastMovement != newMove);
                             //Console.WriteLine(player.Movement.ToString()+" "+newMove.ToString());

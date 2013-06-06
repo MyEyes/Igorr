@@ -11,7 +11,6 @@ namespace IGORR.Client.UI
     class PictureBox:UIElement
     {
         Texture2D _texture;
-        Vector2 _size;
 
         public PictureBox(UIElement parent, Vector2 offset, Vector2 size, Texture2D texture)
             : base(parent, offset)
@@ -27,7 +26,7 @@ namespace IGORR.Client.UI
 
         public override void Draw(SpriteBatch batch)
         {
-            batch.Draw(_texture, TotalOffset, null, Color.White, 0, Vector2.Zero, new Vector2(_size.X / _texture.Width, _size.Y / _texture.Height), SpriteEffects.None, 0.1f);
+            batch.Draw(_texture, TotalOffset, null, Color.White, 0, Vector2.Zero, new Vector2(_size.X / _texture.Width, _size.Y / _texture.Height), SpriteEffects.None, 0.5f);
             DrawChildren(batch);
         }
     }

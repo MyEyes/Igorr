@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Client.UI
@@ -31,12 +32,14 @@ namespace IGORR.Client.UI
 
         public void Update(GameTime gameTime)
         {
-            Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            MouseState mouse = Mouse.GetState();
+            Update((float)gameTime.ElapsedGameTime.TotalMilliseconds, mouse);
+            _lastMouse = mouse;
         }
 
         public void Draw(GameTime gameTime)
         {
-            batch.Begin();
+            batch.Begin( SpriteSortMode.FrontToBack, null);
             Draw(batch);
             batch.End();
         }

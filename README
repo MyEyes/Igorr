@@ -1,31 +1,50 @@
-Igorr
-=====
+############################ Objects ################################
 
-The blobbiest Game Project around.
+0	PlayerTemplate
+1	LegsTemplate
+3	StrikerTemplate
+4	WingsTemplate
+5	KingBlobSpawnerTemplate
+6	MapChangerTemplate
+8	TouchTriggerTemplate
+9	PiercerTemplate
+10	TriggeredBlockerTemplate
+11	AttackTriggerTemplate
+12	InvTriggeredBlockerTemplate
+13	ShadowOnTemplate
+14	ShadowOffTemplate
+15	Heal5Template
+16	Heal10Template
+17	Heal20Template
+18	SpawnPointTemplate
+19	LavaTemplate
+20	ExpOrbTemplate
+80	GrenadeLauncherTemplate
+100	BlockerTemplate
+3000	VaseTemplate
+5000	SlimerTemplate
+5002	BossBlobTemplate
+5005	ShyFollowerTemplate
+5006	BirdTemplate
+5008	BossMinionTemplate
+5050	SlimeShooterTemplate
+10000	SleepingOrbTemplate
+10001	LuaNPCTemplate
+10002	LightCircleTemplate
+10003	StaticLightTemplate
 
-Attack IDs
-====
+############################ Attacks ################################
 
-1
-Basic attack (Striker)
+1	StrikerAttackTemplate
+2	Striker2AttackTemplate
+3	GrenadeAttackTemplate
+5	SlimeShotAttackTemplate
+5004	BossAttack1Template
+5005	BossAttack2Template
 
-2
-Basic attack 2 (Piercer)
+############################ Effects ################################
 
-3
-Grenade
-
-4
-Explosion
--------------------------
-5003
-Enemy Blob
-
-5004
-King Blob Stomp
-
-5005
-King Blob Shot
-
-5006
-King Blob Minion Shot
+1	ExplosionEffectTemplate
+2	VaseDestroyedEffectTemplate
+3	SlimeExplosionEffectTemplate
+4	SlimeTrailEffectTemplate

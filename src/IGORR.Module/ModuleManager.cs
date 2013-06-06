@@ -122,6 +122,26 @@ namespace IGORR.Modules
             return _templates;
         }
 
+        public static List<AttackTemplate> GetAttackTemplates()
+        {
+            List<AttackTemplate> _templates = new List<AttackTemplate>();
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                _templates.AddRange(_modules[x].GetAttackTemplates());
+            }
+            return _templates;
+        }
+
+        public static List<EffectTemplate> GetEffectTemplates()
+        {
+            List<EffectTemplate> _templates = new List<EffectTemplate>();
+            for (int x = 0; x < _modules.Count; x++)
+            {
+                _templates.AddRange(_modules[x].GetEffectTemplates());
+            }
+            return _templates;
+        }
+
         public static List<IGORR.Modules.ObjectModule> Modules
         {
             get { return _modules; }

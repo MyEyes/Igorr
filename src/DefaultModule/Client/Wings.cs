@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using IGORR.Client.Logic.Body;
 
 namespace IGORR.Client.Logic
 {
-    class Wings : BodyPart
+    class Wings : MovementPart
     {
         public Wings(Texture2D tex)
             : base(tex)

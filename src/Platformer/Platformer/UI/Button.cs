@@ -20,8 +20,6 @@ namespace IGORR.Client.UI
     {
         Panel buttonBorder;
         Action _action;
-        MouseState _prevState;
-        Vector2 _size;
         Vector2 _textOffset;
 
         string _text;
@@ -41,10 +39,8 @@ namespace IGORR.Client.UI
             _state = UIButtonState.Nothing;
         }
 
-        public override void Update(float ms)
+        public override void Update(float ms, MouseState mouse)
         {
-            base.Update(ms);
-            MouseState mouse = Mouse.GetState();
             if (!(mouse.LeftButton == ButtonState.Pressed && _state == UIButtonState.Clicked))
             {
                 if (_state == UIButtonState.Clicked)
@@ -55,13 +51,13 @@ namespace IGORR.Client.UI
                 if (new Rectangle((int)buttonBorder.TotalOffset.X, (int)buttonBorder.TotalOffset.Y, (int)_size.X, (int)_size.Y).Contains(mouse.X, mouse.Y))
                 {
                     _state = UIButtonState.Hover;
-                    if (mouse.LeftButton == ButtonState.Pressed && _prevState.LeftButton == ButtonState.Released)
+                    if (mouse.LeftButton == ButtonState.Pressed && _lastMouse.LeftButton == ButtonState.Released)
                     {
                         _state = UIButtonState.Clicked;
                     }
                 }
             }
-            _prevState = mouse;
+            base.Update(ms,mouse);
         }
         public string Text
         {
@@ -85,7 +81,7 @@ namespace IGORR.Client.UI
                 case UIButtonState.Clicked: color = Color.White; break;
             }
             buttonBorder.Draw(batch, color);
-            batch.DrawString(_font, Text, TotalOffset+_textOffset, color);
+            batch.DrawString(_font, Text, TotalOffset + _textOffset, color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.05f);
         }
     }
      

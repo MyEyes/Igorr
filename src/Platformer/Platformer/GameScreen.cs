@@ -149,7 +149,7 @@ namespace IGORR.Client
             {
                 _manager.RemoveScreen(this);
                 _manager.RemoveScreen(_GUIOverlay);
-                _manager.AddScreen(new MainMenuScreen(_manager.Game));
+                _manager.AddScreen(new UI.MainMenuScreen());
             }
             _mapMutex.WaitOne();
             if (map != null)

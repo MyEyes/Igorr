@@ -34,6 +34,7 @@ namespace IGORR.Server
                 string input;
                 AddCommand(new Command("ListCommands", new Action<string>(ListCommands)));
                 AddCommand(new Command("Status", new Action<string>(server.Status)));
+                AddCommand(new Command("WriteTypes", new Action<string>(WriteTypeList)));
                 while ((input = Console.ReadLine()) != "exit")
                 {
                     string[] split = input.Split(new string[] { }, StringSplitOptions.None);
@@ -74,6 +75,38 @@ namespace IGORR.Server
             for (int x = 0; x < _commands.Count; x++)
                 Console.WriteLine("\t-"+_commands[x].Name);
             Console.WriteLine("End Command List");
+        }
+
+        static void WriteTypeList(string fileName)
+        {
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(fileName);
+            List<Modules.ObjectTemplate> templates = Modules.ModuleManager.GetTemplates();
+            writer.WriteLine("############################ Objects ################################");
+            writer.WriteLine();
+            templates.Sort((a,b)=>a.TypeID-b.TypeID);
+            for (int x = 0; x < templates.Count; x++)
+            {
+                writer.WriteLine(templates[x].TypeID.ToString() + "\t" + templates[x].GetType().Name);
+            }
+            writer.WriteLine();
+            List<Modules.AttackTemplate> atemplates = Modules.ModuleManager.GetAttackTemplates();
+            writer.WriteLine("############################ Attacks ################################");
+            writer.WriteLine();
+            atemplates.Sort((a, b) => a.TypeID - b.TypeID);
+            for (int x = 0; x < atemplates.Count; x++)
+            {
+                writer.WriteLine(atemplates[x].TypeID.ToString() + "\t" + atemplates[x].GetType().Name);
+            }
+            writer.WriteLine();
+            List<Modules.EffectTemplate> etemplates = Modules.ModuleManager.GetEffectTemplates();
+            writer.WriteLine("############################ Effects ################################");
+            writer.WriteLine();
+            etemplates.Sort((a, b) => a.EffectID - b.EffectID);
+            for (int x = 0; x < etemplates.Count; x++)
+            {
+                writer.WriteLine(etemplates[x].EffectID.ToString() + "\t" + etemplates[x].GetType().Name);
+            }
+            writer.Close();
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Client.Logic
 {
-    class Striker : BodyPart
+    class Striker : Body.AttackPart
     {
         public Striker(Texture2D tex)
             : base(tex)

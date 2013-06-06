@@ -106,6 +106,7 @@
     <Compile Include="Templates\BirdTemplate.cs" />
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\BossMinionTemplate.cs" />
+    <Compile Include="Templates\AbstractEnemyTemplate.cs" />
     <Compile Include="Templates\StaticLightTemplate.cs" />
     <Compile Include="Templates\SlimeShotAttackTemplate.cs" />
     <Compile Include="Templates\SlimeShooterTemplate.cs" />

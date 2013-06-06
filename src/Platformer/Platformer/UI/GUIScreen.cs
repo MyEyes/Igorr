@@ -9,25 +9,32 @@ namespace IGORR.Client.UI
 {
     class GUIScreen : UIScreen
     {
-        BodyPartListWindow _inventory;
+        InventoryWindow _inventory;
+        CharacterWindow _character;
         InGameMenu _menu;
         UIWindow _buttonWindow;
         Logic.Player _player;
 
         public GUIScreen()
         {
-            _buttonWindow = new UIWindow(new Vector2(0, 0), new Vector2(100, 80), Content.ContentInterface.LoadTexture("UITest"), Content.ContentInterface.LoadTexture("UITest"));
+            _buttonWindow = new UIWindow(new Vector2(0, 0), new Vector2(100, 112), Content.ContentInterface.LoadTexture("UITest"), Content.ContentInterface.LoadTexture("UITest"));
             AddChild(_buttonWindow);
             _buttonWindow.AddChild(new Button(_buttonWindow, new Vector2(9, 10), new Vector2(82, 24), Content.ContentInterface.LoadTexture("UITest"),
-                delegate { if(_player!=null)ToggleInventoryWindow(); }, "Inventory"));
+                delegate { if (_player != null)ToggleInventoryWindow(); }, "Inventory"));
             _buttonWindow.AddChild(new Button(_buttonWindow, new Vector2(9, 44), new Vector2(82, 24), Content.ContentInterface.LoadTexture("UITest"),
-    delegate { if (_player != null)ToggleMenuWindow(); }, "Menu"));
+    delegate { if (_player != null)ToggleCharacterWindow(); },
+    "Character"));
+            _buttonWindow.AddChild(new Button(_buttonWindow, new Vector2(9, 78), new Vector2(82, 24), Content.ContentInterface.LoadTexture("UITest"),
+delegate { if (_player != null)ToggleMenuWindow(); },
+"Menu"));
+
         }
 
         public void SetPlayer(Logic.Player player)
         {
             _player = player;
             _inventory = null;
+            _character = null;
         }
 
         public void UpdateInventoryWindow()
@@ -38,12 +45,26 @@ namespace IGORR.Client.UI
 
         public void ToggleInventoryWindow()
         {
-            if(_inventory==null && _player!=null)
-                _inventory=new UI.BodyPartListWindow(new Vector2(200, 200), new Vector2(95, 100), _player);
+            if (_inventory == null && _player != null)
+            {
+                _inventory = new UI.InventoryWindow(new Vector2(200, 200), new Vector2(95, 100), _player.Inventory);
+            }
             if (!_childs.Contains(_inventory))
                 AddChild(_inventory);
             else
                 RemoveChild(_inventory);
+
+        }
+
+        public void ToggleCharacterWindow()
+        {
+            if (_character == null && _player != null)
+                _character = new CharacterWindow(new Vector2(300, 180), new Vector2(100, 100), _player);
+            if (!_childs.Contains(_character))
+                AddChild(_character);
+            else
+                RemoveChild(_character);
+
         }
 
         public void ToggleMenuWindow()

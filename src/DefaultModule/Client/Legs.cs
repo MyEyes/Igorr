@@ -7,7 +7,7 @@ using IGORR.Client.Logic;
 
 namespace IGORR.Client.Logic
 {
-    class Legs:BodyPart
+    class Legs:Body.MovementPart
     {
         public Legs(Texture2D tex)
             : base(tex)

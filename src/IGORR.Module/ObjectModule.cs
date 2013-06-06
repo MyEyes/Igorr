@@ -109,5 +109,15 @@ namespace IGORR.Modules
         {
             return _objectTemplates.Values.ToList();
         }
+
+        public List<AttackTemplate> GetAttackTemplates()
+        {
+            return _attackTemplates.Values.ToList();
+        }
+
+        public List<EffectTemplate> GetEffectTemplates()
+        {
+            return _effectTemplates.Values.ToList();
+        }
     }
 }

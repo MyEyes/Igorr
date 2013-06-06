@@ -213,7 +213,7 @@ namespace IGORR.Client
 
         public void ComputeLightMap(SpriteBatch batch, Map map, string Path)
         {
-            Camera cam = new Camera(Vector2.Zero, device.PresentationParameters.Bounds);
+            Camera cam = new Camera(Vector2.Zero, map.MapBoundaries);
             cam.Zoom(-1);
             Vector2 viewFieldDiagonal = new Vector2(cam.ViewSpace.Width *0.5f, cam.ViewSpace.Height *0.5f);
             cam.SetPos(viewFieldDiagonal);
@@ -237,10 +237,10 @@ namespace IGORR.Client
             shadowEffect.CurrentTechnique.Passes[0].Apply();
             device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 4, 0, 2);
 
-            Matrix UpperLeftShift = Matrix.CreateTranslation(-1+(float)cam.ViewSpace.Width / (float)map.MapBoundaries.Width, 1-(float)cam.ViewSpace.Height / (float)map.MapBoundaries.Height, 0);
-            cam.ProjectionMatrix = baseProjection * Matrix.CreateScale((float)cam.ViewSpace.Width / map.MapBoundaries.Width, (float)cam.ViewSpace.Height / map.MapBoundaries.Height, 1) * UpperLeftShift * Matrix.CreateTranslation(cam.ViewSpace.Left / map.MapBoundaries.Width, cam.ViewSpace.Top / map.MapBoundaries.Height, 0);
+            //Matrix UpperLeftShift = Matrix.CreateTranslation(-1+(float)cam.ViewSpace.Width / (float)map.MapBoundaries.Width, 1-(float)cam.ViewSpace.Height / (float)map.MapBoundaries.Height, 0);
+            //cam.ProjectionMatrix = baseProjection * Matrix.CreateScale((float)cam.ViewSpace.Width / map.MapBoundaries.Width, (float)cam.ViewSpace.Height / map.MapBoundaries.Height, 1) * UpperLeftShift * Matrix.CreateTranslation(cam.ViewSpace.Left / map.MapBoundaries.Width, cam.ViewSpace.Top / map.MapBoundaries.Height, 0);
             DrawLights(1, cam, batch, lightMapTarget);
-            cam.Move(new Vector2(0, viewFieldDiagonal.Y * 2));
+            //cam.Move(new Vector2(0, viewFieldDiagonal.Y * 2));
 
             RenderTarget2D blurTarget = new RenderTarget2D(device,lightMapTarget.Width,lightMapTarget.Height);
 
@@ -415,9 +415,9 @@ namespace IGORR.Client
             if (light.shadows)
             {
                 Vector2 camPosition = cam.Position;
-                cam.MoveTo(light.position, 1);
+                //cam.MoveTo(light.position, 1);
                 UnShadowTiles(cam, batch, map);
-                cam.MoveTo(camPosition,1);
+                //cam.MoveTo(camPosition,1);
 
                 //Build shadow geometry for the light
                 int vertexCount = map.CreateShadowGeometry(light.position, new Rectangle((int)(light.position.X - light.radius), (int)(light.position.Y - light.radius), (int)(2*light.radius), (int)(2*light.radius)), shadowVB);

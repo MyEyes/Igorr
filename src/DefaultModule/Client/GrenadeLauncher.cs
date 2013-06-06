@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Client.Logic
 {
-    public class GrenadeLauncher : BodyPart
+    public class GrenadeLauncher : Body.AttackPart
     {
         public GrenadeLauncher(Texture2D tex)
             : base(tex)
