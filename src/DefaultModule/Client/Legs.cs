@@ -30,6 +30,13 @@ namespace IGORR.Client.Logic
             }
         }
 
+        public override void Move(Player player, float dir)
+        {
+            Vector2 newSpeed = player.Speed;
+            newSpeed.X += speedBonus * dir;
+            player.Speed = newSpeed;
+        }
+
         public override string GetName()
         {
             return "Legs";

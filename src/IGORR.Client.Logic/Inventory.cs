@@ -16,6 +16,7 @@ namespace IGORR.Client.Logic
     {
         Player _owner;
         List<ICollectible> _items;
+        int _actions = 0;
 
         public Inventory(Player owner)
         {
@@ -26,11 +27,13 @@ namespace IGORR.Client.Logic
         public void Add(ICollectible c)
         {
             _items.Add(c);
+            _actions++;
         }
 
         public void Remove(ICollectible c)
         {
             _items.Remove(c);
+            _actions++;
         }
 
         public void Insert(ICollectible c, int index)
@@ -39,6 +42,7 @@ namespace IGORR.Client.Logic
             if (index >= _items.Count)
                 index = _items.Count;
             _items.Insert(index, c);
+            _actions++;
         }
 
         public ICollectible this[int i]
@@ -50,5 +54,7 @@ namespace IGORR.Client.Logic
         {
             get { return _items.Count; }
         }
+
+        public int Actions { get { return _actions; } }
     }
 }

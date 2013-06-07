@@ -385,8 +385,9 @@ namespace IGORR.Client
 
         void DrawPrecalculatedLightMap(Camera cam, SpriteBatch batch)
         {
+            Color slightlyDimmer = new Color(240, 240, 240);
             batch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, cam.ViewMatrix);
-            batch.Draw(lightMap, Vector2.Zero, null, Color.White, 0, Vector2.Zero, lightMapDownSample, SpriteEffects.None, 0.5f);
+            batch.Draw(lightMap, Vector2.Zero, null, slightlyDimmer, 0, Vector2.Zero, lightMapDownSample, SpriteEffects.None, 0.5f);
             batch.End();
         }
 

@@ -346,10 +346,6 @@ namespace IGORR.Client.Logic
             if (stunned)
                 return;
             _speed.X += baseSpeed * xDiff;
-            if (_speed.X < -baseSpeed)
-                _speed.X = -baseSpeed;
-            else if (_speed.X > baseSpeed)
-                _speed.X = baseSpeed;
             _body.Move(xDiff);
             _moveVector = Vector2.Zero;
         }
@@ -408,8 +404,8 @@ namespace IGORR.Client.Logic
             if (newPart)
             {
              */
-            _inventory.Add(part);
-            _body.TryEquip(-1,part);
+            if (!_body.TryEquip(-1, part))
+                _inventory.Add(part);
             //_bodyParts.Add(part);
             //CalculateTotalBonus();
             //}
@@ -531,6 +527,11 @@ namespace IGORR.Client.Logic
             get { return _bodyParts; }
         }
          */
+
+        public Body.Body Body
+        {
+            get { return _body; }
+        }
 
         public Inventory Inventory
         {

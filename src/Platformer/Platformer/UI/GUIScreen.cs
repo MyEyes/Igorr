@@ -47,7 +47,7 @@ delegate { if (_player != null)ToggleMenuWindow(); },
         {
             if (_inventory == null && _player != null)
             {
-                _inventory = new UI.InventoryWindow(new Vector2(200, 200), new Vector2(95, 100), _player.Inventory);
+                _inventory = new UI.InventoryWindow(new Vector2(200, 200), new Vector2(100, 100), _player.Inventory);
             }
             if (!_childs.Contains(_inventory))
                 AddChild(_inventory);
@@ -59,7 +59,7 @@ delegate { if (_player != null)ToggleMenuWindow(); },
         public void ToggleCharacterWindow()
         {
             if (_character == null && _player != null)
-                _character = new CharacterWindow(new Vector2(300, 180), new Vector2(100, 100), _player);
+                _character = new CharacterWindow(new Vector2(300, 180), new Vector2(160, 160), _player);
             if (!_childs.Contains(_character))
                 AddChild(_character);
             else

@@ -20,9 +20,12 @@ namespace IGORR.Client
         Camera cam;
         ObjectManager objectManager;
         ParticleManager pm;
+        
         KeyboardState _prevKeyboard;
         GamePadState _prevGamePadState;
         MouseState _prevMouseState;
+
+        InputManager input;
         SpriteFont font;
         Effect _spriteEffect;
         LightMap _lightMap;
@@ -41,11 +44,7 @@ namespace IGORR.Client
         System.Threading.Mutex _mapMutex;
 
         Vector2 _mouseDir = Vector2.Zero;
-        #if WINDOWS
         Player player;
-        #elif XBOX
-        Player[] players;
-        #endif
 
         public void Initialize(GraphicsDevice Device, ScreenManager manager)
         {
@@ -71,6 +70,8 @@ namespace IGORR.Client
             _manager = manager;
 
             _mapMutex = new System.Threading.Mutex();
+
+            input = new InputManager();
 
             WorldController.SetObjectManager(objectManager);
             WorldController.SetGame(this);
@@ -154,7 +155,7 @@ namespace IGORR.Client
             _mapMutex.WaitOne();
             if (map != null)
             {
-
+                input.Update();
                 KeyboardState keyboard = Keyboard.GetState();
 
                 MouseState mouse = Mouse.GetState();
@@ -167,21 +168,8 @@ namespace IGORR.Client
                 Player = objectManager.Player;
                 if (player != null)
                 {
-                    if (keyboard.IsKeyDown(Keys.A))
-                        player.Move(-1);
-                    if (keyboard.IsKeyDown(Keys.D))
-                        player.Move(1);
-                    if (keyboard.IsKeyDown(Keys.Space) && !_prevKeyboard.IsKeyDown(Keys.Space))
-                        player.Jump();
                     if (keyboard.IsKeyDown(Keys.LeftControl) && !_prevKeyboard.IsKeyDown(Keys.LeftControl))
                         WorldController.SendAttack(0,_mouseDir, player.ID);
-
-                    if (keyboard.IsKeyDown(Keys.Left))
-                        player.Move(-1);
-                    if (keyboard.IsKeyDown(Keys.Up) && !_prevKeyboard.IsKeyDown(Keys.Up))
-                        player.Jump();
-                    if (keyboard.IsKeyDown(Keys.Right))
-                        player.Move(1);
                     if (keyboard.IsKeyDown(Keys.Y) && !_prevKeyboard.IsKeyDown(Keys.Y))
                         WorldController.SendAttack(0, _mouseDir, player.ID);
                     if (keyboard.IsKeyDown(Keys.Z) && !_prevKeyboard.IsKeyDown(Keys.Z))
@@ -198,19 +186,16 @@ namespace IGORR.Client
                         _mouseDir.Y = -_mouseDir.Y;
                     }
 
-                    player.Move(pad.ThumbSticks.Left.X);
-                    if (pad.IsButtonDown(Buttons.DPadLeft))
-                        player.Move(-1);
-                    if (pad.IsButtonDown(Buttons.DPadRight))
-                        player.Move(1);
-                    if (pad.IsButtonDown(Buttons.A) && !_prevGamePadState.IsButtonDown(Buttons.A))
-                        player.Jump();
                     if (pad.IsButtonDown(Buttons.X) && !_prevGamePadState.IsButtonDown(Buttons.X))
                         WorldController.SendAttack(0, _mouseDir, player.ID);
                     if (pad.IsButtonDown(Buttons.B) && !_prevGamePadState.IsButtonDown(Buttons.B))
                         WorldController.SendAttack(1, _mouseDir, player.ID);
                     if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
                         WorldController.SendAttack(2, _mouseDir, player.ID);
+
+                    if (input.Jump)
+                        player.Jump();
+                    player.Move(input.Direction);
 
                     GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
                     if (interactObject != null && keyboard.IsKeyDown(Keys.Enter) && !_prevKeyboard.IsKeyDown(Keys.Enter))

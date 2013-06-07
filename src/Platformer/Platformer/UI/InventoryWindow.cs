@@ -16,12 +16,25 @@ namespace IGORR.Client.UI
         float iconSpread = 1.3f;
         Inventory _inventory;
 
+        int _lastActions;
+
         public InventoryWindow(Vector2 position, Vector2 size, Inventory inventory)
             : base(position, size, ContentInterface.LoadTexture("UITest"), ContentInterface.LoadTexture("UITest"))
         {
             _size = size;
             _inventory = inventory;
+            _lastActions = inventory.Actions;
             UpdateContent();
+        }
+
+        public override void Update(float ms, Microsoft.Xna.Framework.Input.MouseState mouse)
+        {
+            if (_lastActions != _inventory.Actions)
+            {
+                _lastActions = _inventory.Actions;
+                UpdateContent();
+            }
+            base.Update(ms, mouse);
         }
 
         public void UpdateContent()
@@ -38,7 +51,7 @@ namespace IGORR.Client.UI
         public bool Drop(IDraggable item)
         {
             ItemIcon ii = item as ItemIcon;
-            if (ii == null)
+            if (ii == null || ii.Item==null)
                 return false;
             UIElement element = item as UIElement;
             Vector2 relPos = element.TotalOffset - this.TotalOffset + 0.5f * new Vector2(item.Rect.Width, item.Rect.Height);
@@ -63,6 +76,7 @@ namespace IGORR.Client.UI
             {
                 _inventory.Remove(ii.Item);
                 RemoveChild(item as UIElement);
+                UpdateContent();
             }
         }
     }

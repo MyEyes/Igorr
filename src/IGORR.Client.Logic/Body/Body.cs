@@ -17,7 +17,7 @@ namespace IGORR.Client.Logic.Body
         None
     }
 
-    class Body
+    public class Body
     {
         Player owner;
 
@@ -52,32 +52,40 @@ namespace IGORR.Client.Logic.Body
             {
                 case BodyPartType.Armor:
                     for (int x = 0; x < Armor.Length; x++)
-                        if ((Armor[x] == null && slot < 0) || x == slot)
+                        if ((Armor[x] == null && (slot < 0 || slot >= Armor.Length)) || x == slot)
                         {
+                            if (x == slot && Armor[x] != null && Armor[x] != part)
+                                owner.Inventory.Add(Armor[x]);
                             Armor[x] = part as ArmorPart;
                             return true;
                         }
                     break;
                 case BodyPartType.Attack:
                     for (int x = 0; x < Attacks.Length; x++)
-                        if ((Attacks[x] == null && slot < 0) || x == slot)
+                        if ((Attacks[x] == null && (slot < 0 || slot >= Attacks.Length)) || x == slot)
                         {
+                            if (x == slot && Attacks[x] != null && Attacks[x] != part)
+                                owner.Inventory.Add(Attacks[x]);
                             Attacks[x] = part as AttackPart;
                             return true;
                         }
                     break;
                 case BodyPartType.Movement:
                     for (int x = 0; x < Movement.Length; x++)
-                        if ((Movement[x] == null && slot < 0) || x == slot)
+                        if ((Movement[x] == null && (slot < 0 || slot >= Movement.Length)) || x == slot)
                         {
+                            if (x == slot && Movement[x] != null && Movement[x] != part)
+                                owner.Inventory.Add(Movement[x]);
                             Movement[x] = part as MovementPart;
                             return true;
                         }
                     break;
                 case BodyPartType.Utility:
                     for (int x = 0; x < Utility.Length; x++)
-                        if ((Utility[x] == null && slot < 0) || x == slot)
+                        if ((Utility[x] == null && (slot < 0 ||slot>=Utility.Length)) || x == slot)
                         {
+                            if (x == slot && Utility[x]!=null && Utility[x]!=part)
+                                owner.Inventory.Add(Utility[x]);
                             Utility[x] = part as UtilityPart;
                             return true;
                         }
@@ -88,6 +96,84 @@ namespace IGORR.Client.Logic.Body
                     return true;
             }
             return false;
+        }
+
+        public bool CanEquip(int slot, BodyPart part)
+        {
+            BodyPartType type = part.Type;
+            switch (type)
+            {
+                case BodyPartType.Armor:
+                    for (int x = 0; x < Armor.Length; x++)
+                        if ((Armor[x] == null && (slot < 0 || slot >= Armor.Length)) || x == slot)
+                        {
+                            return true;
+                        }
+                    break;
+                case BodyPartType.Attack:
+                    for (int x = 0; x < Attacks.Length; x++)
+                        if ((Attacks[x] == null && (slot < 0 || slot >= Attacks.Length)) || x == slot)
+                        {
+                            return true;
+                        }
+                    break;
+                case BodyPartType.Movement:
+                    for (int x = 0; x < Movement.Length; x++)
+                        if ((Movement[x] == null && (slot < 0 || slot >= Movement.Length)) || x == slot)
+                        {
+                            return true;
+                        }
+                    break;
+                case BodyPartType.Utility:
+                    for (int x = 0; x < Utility.Length; x++)
+                        if ((Utility[x] == null && (slot < 0 || slot >= Utility.Length)) || x == slot)
+                        {
+                            return true;
+                        }
+                    break;
+                case BodyPartType.BaseBody:
+                    return true;
+            }
+            return false;
+        }
+
+        public void Unequip(BodyPart part)
+        {
+            for (int x = 0; x < Movement.Length; x++)
+            {
+                if (part == Movement[x])
+                {
+                    Movement[x] = null;
+                    return;
+                }
+            }
+
+            for (int x = 0; x < Utility.Length; x++)
+            {
+                if (part == Utility[x])
+                {
+                    Utility[x] = null;
+                    return;
+                }
+            }
+
+            for (int x = 0; x < Armor.Length; x++)
+            {
+                if (part == Armor[x])
+                {
+                    Armor[x] = null;
+                    return;
+                }
+            }
+
+            for (int x = 0; x < Attacks.Length; x++)
+            {
+                if (part == Attacks[x])
+                {
+                    Attacks[x] = null;
+                    return;
+                }
+            }
         }
 
         public void Update(float ms) 
