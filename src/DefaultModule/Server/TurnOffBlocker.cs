@@ -11,21 +11,31 @@ namespace IGORR.Server.Logic
         string triggerName;
         bool wantToBlock;
         bool blocked;
+        int tileID;
         float countdown = 1000f;
+        bool global;
 
-        public TurnOffBlocker(string triggerName, bool global, IMap map, Rectangle position, int id)
+        public TurnOffBlocker(string triggerName, bool global, IMap map, Rectangle position, int id, int tileID=20)
             : base(map, position, id)
         {
+            this.triggerName = triggerName;
+            this.tileID = tileID;
+            this.global = global;
             _objectType = 100;
-            _map.ChangeTile(1, this.MidPosition, 20);
-            GlobalTriggers.RegisterTriggerCallback(triggerName, new Action<int>(FreeBlock));
+            _map.ChangeTile(1, this.MidPosition, tileID);
+            if (global)
+                GlobalTriggers.RegisterTriggerCallback(triggerName, new Action<int>(FreeBlock));
         }
 
         public override void Update(float ms)
         {
+            if (!global)
+            {
+                FreeBlock(map.GetTrigger(triggerName) ? 1 : 0);
+            }
             if (!blocked && wantToBlock && countdown <= 0)
             {
-                _map.ChangeTile(1, this.MidPosition, 20);
+                _map.ChangeTile(1, this.MidPosition, tileID);
                 wantToBlock = false;
             }
             if (wantToBlock)
