@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
-using IGORR.Protocol;
-using IGORR.Protocol.Messages;
 
-namespace IGORR.Client.Logic
+namespace IGORR.Server.Logic
 {
     public interface ICollectible
     {
-        Texture2D Texture { get; }
         int MaxStacks { get; }
         int GetID();
     }
@@ -29,29 +26,12 @@ namespace IGORR.Client.Logic
 
         public void Add(ICollectible c)
         {
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = -1;
-            mim.Quantity = 1;
-            mim.id = c.GetID();
-            mim.To = MoveTarget.Inventory;
-            mim.Encode();
-
-            if (_owner.Map != null)
-                _owner.Map.SendMessage(mim, true);
             _items.Add(c);
             _actions++;
         }
 
         public void Remove(ICollectible c)
         {
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = -1;
-            mim.Quantity = 1;
-            mim.id = c.GetID();
-            mim.From = MoveTarget.Inventory;
-            mim.Encode();
-
-            _owner.Map.SendMessage(mim, true);
             _items.Remove(c);
             _actions++;
         }
@@ -61,15 +41,6 @@ namespace IGORR.Client.Logic
             if (index < 0) index = 0;
             if (index >= _items.Count)
                 index = _items.Count;
-
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = index;
-            mim.Quantity = 1;
-            mim.id = c.GetID();
-            mim.To = MoveTarget.Inventory;
-            mim.Encode();
-            _owner.Map.SendMessage(mim, true);
-
             _items.Insert(index, c);
             _actions++;
         }

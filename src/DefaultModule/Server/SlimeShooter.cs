@@ -24,7 +24,7 @@ namespace IGORR.Server.Logic.AI
         {
             _XPBonus = 25;
             GivePart(new Legs());
-            BodyPart part = new SlimeLauncher();
+            Logic.Body.AttackPart part = new SlimeLauncher();
             GivePart(part);
             EquipAttack(0, part);
             _groupID = 5;
@@ -38,7 +38,7 @@ namespace IGORR.Server.Logic.AI
             : base(map, charfile, spawnRect, id)
         {
             GivePart(new Legs());
-            BodyPart part = new SlimeLauncher();
+            Body.AttackPart part = new SlimeLauncher();
             GivePart(part);
             _groupID = 5;
             _XPBonus = 25;

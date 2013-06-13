@@ -23,6 +23,7 @@ namespace IGORR.Client
         static Thread receiveThread;
         static bool _started = false;
         static Random _random;
+        static bool _enabled=true;
 
         static WorldController()
         {
@@ -68,6 +69,8 @@ namespace IGORR.Client
             ProtocolHelper.RegisterMessageHandler(MessageTypes.DoEffect, new MessageHandler(HandleDoEffect));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Chat, new MessageHandler(HandleChat));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Interact, new MessageHandler(HandleInteract));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Container, new MessageHandler(HandleContainer));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.BodyConfiguration, new MessageHandler(HandleBodyConfiguration));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -92,6 +95,8 @@ namespace IGORR.Client
 
         public static void SendReliable(IgorrMessage m)
         {
+            if (!_enabled)
+                return;
             m.Encode();
             if (connection.ServerConnection != null)
                     connection.SendMessage(m.GetMessage(), NetDeliveryMethod.ReliableOrdered);
@@ -135,7 +140,7 @@ namespace IGORR.Client
 
         public static void SendPosition(GameObject obj)
         {
-            if (!_started)
+            if (!_started || !_enabled)
                 return;
             PositionMessage message = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
             message.Position = obj.Position;
@@ -147,6 +152,8 @@ namespace IGORR.Client
 
         public static void SendAttack(int attackID, Vector2 dir, int playerID)
         {
+            if (!_enabled)
+                return;
             AttackMessage am = (AttackMessage)ProtocolHelper.NewMessage(MessageTypes.Attack);
             am.attackerID = playerID;
             dir.Normalize();
@@ -158,6 +165,8 @@ namespace IGORR.Client
 
         public static void Send(IgorrMessage message, bool Sequenced)
         {
+            if (!_enabled)
+                return;
             message.Encode();
             if (connection.ServerConnection != null)
                 if (Sequenced)
@@ -364,6 +373,43 @@ namespace IGORR.Client
                 }
                 TextManager.Ask(choices.ToArray(), text, player);
             }
+        }
+
+        public static void HandleBodyConfiguration(IgorrMessage message)
+        {
+            BodyConfigurationMessage bcm = (BodyConfigurationMessage)message;
+            TryEquip(bcm.BaseBodyID, manager.Player);
+            for(int x=0; x<bcm.AttackIDs.Length; x++)
+            {
+                TryEquip(bcm.AttackIDs[x], manager.Player);
+            }
+            for (int x = 0; x < bcm.UtilityIDs.Length; x++)
+            {
+                TryEquip(bcm.UtilityIDs[x], manager.Player);
+            }
+            for (int x = 0; x < bcm.MovementIDs.Length; x++)
+            {
+                TryEquip(bcm.MovementIDs[x], manager.Player);
+            }
+            for (int x = 0; x < bcm.ArmorIDs.Length; x++)
+            {
+                TryEquip(bcm.ArmorIDs[x], manager.Player);
+            }
+        }
+
+        private static void TryEquip(int id, Player player)
+        {
+            GameObject obj = ModuleManager.SpawnByIdClient(null, id, -1, Point.Zero, "");
+            PartContainer cont = obj as PartContainer;
+            if (cont != null && cont.Part != null)
+                player.Body.TryEquip(-1, cont.Part);
+        }
+
+        public static void HandleContainer(IgorrMessage m)
+        {
+            _enabled = false;
+            ProtocolHelper.HandleContainer(m);
+            _enabled = true;
         }
 
         public static void Exit()

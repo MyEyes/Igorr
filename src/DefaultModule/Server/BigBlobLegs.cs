@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Server.Logic
 {
-    class BigBlobLegs:BodyPart
+    class BigBlobLegs:Body.MovementPart
     {
         public BigBlobLegs()
             : base()
         {
-            speedBonus = 10;
-            jumpBonus = 50;
+            //speedBonus = 10;
+            //jumpBonus = 50;
         }
 
         public override string GetName()

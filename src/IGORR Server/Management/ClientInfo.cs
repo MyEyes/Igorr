@@ -90,10 +90,22 @@ namespace IGORR.Server.Management
             _posX = (int)player.Position.X;
             _posY = (int)player.Position.Y;
             _partIDs.Clear();
-            foreach (Logic.BodyPart part in player.Parts)
-            {
-                _partIDs.Add(part.GetID());
-            }
+            if(player.Body.BaseBody!=null)
+                _partIDs.Add(player.Body.BaseBody.GetID());
+            for (int x = 0; x < player.Body.Attacks.Length; x++)
+                if (player.Body.Attacks[x] != null)
+                    _partIDs.Add(player.Body.Attacks[x].GetID());
+            for (int x = 0; x < player.Body.Armor.Length; x++)
+                if (player.Body.Armor[x] != null)
+                    _partIDs.Add(player.Body.Armor[x].GetID());
+            for (int x = 0; x < player.Body.Utility.Length; x++)
+                if (player.Body.Utility[x] != null)
+                    _partIDs.Add(player.Body.Utility[x].GetID());
+            for (int x = 0; x < player.Body.Movement.Length; x++)
+                if (player.Body.Movement[x] != null)
+                    _partIDs.Add(player.Body.Movement[x].GetID());
+            for (int x = 0; x < player.Inventory.Count; x++)
+                _partIDs.Add(player.Inventory[x].GetID());
         }
 
         public PlayerInfo GetInfo(Logic.Player player)

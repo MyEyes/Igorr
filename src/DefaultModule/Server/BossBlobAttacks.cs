@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Server.Logic
 {
-    class BossBlobAttack1:BodyPart
+    class BossBlobAttack1:Body.AttackPart
     {
         public BossBlobAttack1()
             : base()
         {
-            hasAttack = true;
+            //hasAttack = true;
         }
 
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
@@ -28,12 +28,12 @@ namespace IGORR.Server.Logic
         }
     }
 
-    class BossBlobAttack2 : BodyPart
+    class BossBlobAttack2 : Body.AttackPart
     {
         public BossBlobAttack2()
             : base()
         {
-            hasAttack = true;
+            //hasAttack = true;
         }
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)
         {
@@ -50,13 +50,13 @@ namespace IGORR.Server.Logic
         }
     }
 
-    class BossBlobAttack3 : BodyPart
+    class BossBlobAttack3 : Body.AttackPart
     {
         public BossBlobAttack3()
             : base()
         {
             //attackID = 3;
-            hasAttack = true;
+            //hasAttack = true;
         }
 
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)

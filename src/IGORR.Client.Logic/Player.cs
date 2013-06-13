@@ -110,6 +110,8 @@ namespace IGORR.Client.Logic
 
         Inventory _inventory;
 
+        IMap _map;
+
         public Player(Texture2D texture, Rectangle spawnPos, int id)
             : base(texture, spawnPos, id)
         {
@@ -197,6 +199,7 @@ namespace IGORR.Client.Logic
 
         public void Update(IMap map, float seconds)
         {
+            _map=map;
             if (_moveVector.X != 0)
                 _speed.X = _moveVector.X;
             if (_moveVector.Y != 0)
@@ -207,9 +210,10 @@ namespace IGORR.Client.Logic
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
-            _lastSpeed = _speed;
 
             _body.Update(seconds * 1000f);
+
+            _lastSpeed = _speed;
 
             if (_onGround && !flying && Math.Abs(_speed.X) > 0 && !wallCollision && (_aniControl.Run.GetFrameNum() == 3 || _aniControl.Run.GetFrameNum() == 0))
             {
@@ -537,5 +541,8 @@ namespace IGORR.Client.Logic
         {
             get { return _inventory; }
         }
+
+        public IMap Map
+        { get { return _map; } }
     }
 }

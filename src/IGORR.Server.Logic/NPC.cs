@@ -16,14 +16,14 @@ namespace IGORR.Server.Logic
             : base(map, spawnPos, id)
         {
             _invincibleTime = 0;
-            _baseBody.speedBonus = 30;
+            //_baseBody.speedBonus = 30;
         }
 
         public NPC(IMap map,string charfile, Rectangle spawnPos, int id)
             : base(map,charfile, spawnPos, id)
         {
             _invincibleTime = 0;
-            _baseBody.speedBonus = 30;
+            //_baseBody.speedBonus = 30;
         }
 
         public override void Update(IMap map, float seconds)

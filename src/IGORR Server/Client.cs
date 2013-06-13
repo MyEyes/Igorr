@@ -76,9 +76,9 @@ namespace IGORR.Server
                 dm.playerID = play.ID;
                 dm.currentHP = play.HP;
                 dm.maxHP = play.MaxHP;
-                dm.Exp = play.TotalXP;
-                dm.lastLevelExp = play.LastLevelXP;
-                dm.nextLevelExp = play.NextLevelXP;
+                dm.Exp = 0;// play.TotalXP;
+                dm.lastLevelExp = 0;// play.LastLevelXP;
+                dm.nextLevelExp = 0;// play.NextLevelXP;
                 ProtocolHelper.SendContainer(dm, Connection);
                 }
             }
@@ -99,12 +99,13 @@ namespace IGORR.Server
 
             if (p != null)
             {
-                for (int x = 0; x < p.Parts.Count; x++)
+                for (int x = 0; x < p.Inventory.Count; x++)
                 {
                     PickupMessage pum = (PickupMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Pickup, Connection);
-                    pum.id = p.Parts[x].GetID();
+                    pum.id = p.Inventory[x].GetID();
                     ProtocolHelper.SendContainer(pum, Connection);
                 }
+                p.Body.SendBody(Connection, true);
             }
 
             ProtocolHelper.FlushContainer(Connection, 1);

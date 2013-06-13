@@ -9,13 +9,13 @@ using IGORR.Protocol.Messages;
 
 namespace IGORR.Server.Logic
 {
-    public class PartPickup:EventObject, Logic.IPartContainer
+    public class PartPickup:EventObject, Logic.Body.IPartContainer
     {
-        BodyPart _bodyPart;
+        Body.BodyPart _bodyPart;
         bool _respawn = true;
         public bool Respawn { get { return _respawn; } }
 
-        public PartPickup(BodyPart part, IMap map, Rectangle rect, int id, bool respawn)
+        public PartPickup(Body.BodyPart part, IMap map, Rectangle rect, int id, bool respawn)
             : base(map, rect, id)
         {
             _bodyPart = part;
@@ -56,7 +56,7 @@ namespace IGORR.Server.Logic
             _map.ObjectManager.Remove(this);
         }
 
-        public BodyPart Part
+        public Body.BodyPart Part
         {
             get { return _bodyPart; }
         }

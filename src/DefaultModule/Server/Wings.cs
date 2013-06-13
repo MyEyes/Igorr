@@ -5,13 +5,13 @@ using System.Text;
 
 namespace IGORR.Server.Logic
 {
-    class Wings : BodyPart
+    class Wings : Body.MovementPart
     {
         public Wings()
             : base()
         {
-            airJumpMax = 6;
-            airJumpStrength = 60f;
+            //airJumpMax = 6;
+            //airJumpStrength = 60f;
         }
 
         public override string GetName()

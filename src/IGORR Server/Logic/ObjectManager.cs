@@ -311,20 +311,29 @@ namespace IGORR.Server.Logic
                 _server.SendClient(player, apm);
                 //Add the new player to the game objects
                 Add(newPlayer);
-                for (int x = 0; x < player.Parts.Count; x++)
+                newPlayer.Body = player.Body;
+                for (int x = 0; x < player.Inventory.Count; x++)
                 {
-                    newPlayer.GivePart(player.Parts[x]);
+                    Body.BodyPart part = player.Inventory[x] as Body.BodyPart;
+                    if(part==null)
+                        continue;
+                    newPlayer.GivePart(part);
                     PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
-                    pum.id = player.Parts[x].GetID();
+                    pum.id = part.GetID();
                     pum.Encode();
                     _map.ObjectManager.Server.SendClient(player, pum);
                 }
-                newPlayer.GetExp(player.TotalXP, Vector2.Zero);
+                //newPlayer.GetExp(player.TotalXP, Vector2.Zero);
+                newPlayer.GetExp(0, Vector2.Zero);
                 //Change the local clients stored playerid
                 Client client = _server.getClient(player);
                 if (client == null)
                     return;
                 client.PlayerID = newPlayer.ID;
+
+                newPlayer.Body.SetOwner(newPlayer);
+                newPlayer.Body.SendBody(client.Connection, false);
+
                 KillMessage km = (KillMessage)ProtocolHelper.NewMessage(MessageTypes.Kill);
                 km.killerID = player.Attacker;
                 km.deadID = player.ID;

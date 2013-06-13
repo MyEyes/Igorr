@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Server.Logic
 {
-    public class Piercer : BodyPart
+    public class Piercer : Body.AttackPart
     {
         public Piercer()
             : base()
         {
             //attackID = 2;
-            hasAttack = true;
+            //hasAttack = true;
         }
 
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)

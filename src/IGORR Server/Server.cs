@@ -57,6 +57,7 @@ namespace IGORR.Server
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Join, new MessageHandler(HandleJoin));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Attack, new MessageHandler(HandleAttack));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Interact, new MessageHandler(HandleInteract));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.MoveItem, new MessageHandler(HandleMoveItem));
             _clientids = new Dictionary<long, int>();
             _clients = new Dictionary<int, Client>();
             _connections = new List<NetConnection>();
@@ -336,7 +337,7 @@ namespace IGORR.Server
                     for (int x = 0; x < pinfo.Parts.Count; x++)
                     {
                         GameObject obj = Modules.ModuleManager.SpawnByIdServer(null, pinfo.Parts[x], -1, Point.Zero, null);
-                        Logic.IPartContainer cont = obj as Logic.IPartContainer;
+                        Logic.Body.IPartContainer cont = obj as Logic.Body.IPartContainer;
                         if (cont == null)
                             continue;
                         player.GivePart(cont.Part);
@@ -390,6 +391,25 @@ namespace IGORR.Server
                 client.Connection.Disconnect("Ciao");
                 Console.WriteLine(clientID.ToString() + " left");
             }
+        }
+
+        void HandleMoveItem(IgorrMessage m)
+        {
+            MoveItemMessage mim = (MoveItemMessage)m;            
+            Client cl = _clients[mim.clientID];
+            Player player = cl.CurrentMap.ObjectManager.GetPlayer(cl.PlayerID);
+            if(player==null)
+                return;
+            Logic.Body.IPartContainer cont = Modules.ModuleManager.SpawnByIdServer(null, mim.id, -1, Point.Zero, null) as Logic.Body.IPartContainer;
+            Logic.Body.BodyPart part = cont!=null?cont.Part:null;
+            if (mim.To == MoveTarget.Body)
+                player.Body.TryEquip(mim.Slot, part);
+            if (mim.To == MoveTarget.Inventory)
+                player.Inventory.Add(part);
+            if (mim.From == MoveTarget.Body)
+                player.Body.Unequip(part);
+            if (mim.From == MoveTarget.Inventory)
+                player.Inventory.Remove(part);
         }
 
         public void Status(string par)

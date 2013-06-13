@@ -42,7 +42,9 @@
       <HintPath>..\..\lib\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,13 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIQueue.cs" />
+    <Compile Include="Body\ArmorPart.cs" />
+    <Compile Include="Body\AttackPart.cs" />
+    <Compile Include="Body\BaseBody.cs" />
+    <Compile Include="Body\Body.cs" />
+    <Compile Include="Body\BodyPart.cs" />
+    <Compile Include="Body\MovementPart.cs" />
+    <Compile Include="Body\UtilityPart.cs" />
     <Compile Include="DummyObject.cs" />
     <Compile Include="GlobalTriggers.cs" />
     <Compile Include="IAttackManager.cs" />
-    <Compile Include="BaseBody.cs" />
-    <Compile Include="BodyPart.cs" />
     <Compile Include="EventObject.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="IPartContainer.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="IMap.cs" />

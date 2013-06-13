@@ -24,7 +24,7 @@ namespace IGORR.Server.Logic.AI
         {
             _XPBonus = 25;
             GivePart(new Legs());
-            BodyPart part = new Striker();
+            Logic.Body.AttackPart part = new Striker();
             GivePart(part);
             EquipAttack(0, part);
             _groupID = 5;
@@ -38,7 +38,7 @@ namespace IGORR.Server.Logic.AI
             : base(map, charfile, spawnRect, id)
         {
             GivePart(new Legs());
-            BodyPart part = new Striker();
+            Body.BodyPart part = new Striker();
             GivePart(part);
             _groupID = 5;
             _XPBonus = 25;

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using IGORR.Protocol;
 using IGORR.Protocol.Messages;
+using IGORR.Server.Logic.Body;
 
 namespace IGORR.Server.Logic
 {
@@ -25,6 +26,8 @@ namespace IGORR.Server.Logic
 
         public bool ShadowsOn { get; set; }
 
+        const float baseSpeed = 60;
+
         /*
         int Level=1;
         int Exp=0;
@@ -36,9 +39,11 @@ namespace IGORR.Server.Logic
 
         protected bool _invincible = false;
         string _charFile = "";
-        List<BodyPart> _bodyParts;
-        BodyPart[] _attackSlots = new BodyPart[3];
-        BodyPart _completeBody;
+        //List<BodyPart> _bodyParts;
+        //BodyPart[] _attackSlots = new BodyPart[3];
+        //BodyPart _completeBody;
+        Body.Body _body;
+        Inventory _inventory;
         bool jump = false;
         bool flying = false;
         bool Left = false;
@@ -48,7 +53,7 @@ namespace IGORR.Server.Logic
         protected float attackerTimeout = 0f;
         int attackerID;
 
-        protected BaseBody _baseBody = new BaseBody();
+        //protected BaseBody _baseBody = new BaseBody();
 
         const int updateAtLeastAllXFrames = 20;
         int updateCountdown = updateAtLeastAllXFrames;
@@ -66,14 +71,17 @@ namespace IGORR.Server.Logic
             _groupID = 1;
             _speed = Vector2.Zero;
             _onGround = false;
-            _bodyParts = new List<BodyPart>();
-            _bodyParts.Add(_baseBody);
+            //_bodyParts = new List<BodyPart>();
+            //_bodyParts.Add(_baseBody);
             _collisionOffset = new Vector4((((16 - spawnPos.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - spawnPos.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
             flying = true;
-            _completeBody = new BodyPart();
-            CalculateTotalBonus();
+            //_completeBody = new BodyPart();
+            _body = new Body.Body(this);
+            //CalculateTotalBonus();
             ShadowsOn = true;
             _objectType = 0;
+            _body = new Body.Body(this);
+            _inventory = new Inventory(this);
         }
 
         public Player(IMap map, string CharFile, Rectangle spawnPos, int id):base(map,spawnPos,id)
@@ -93,13 +101,16 @@ namespace IGORR.Server.Logic
             ShadowsOn = true;
             _speed = Vector2.Zero;
             _onGround = false;
-            _bodyParts = new List<BodyPart>();
-            _bodyParts.Add(_baseBody);
+            //_bodyParts = new List<BodyPart>();
+            //_bodyParts.Add(_baseBody);
             _collisionOffset = new Vector4((((16 - _rect.Width) % 16 + 16) % 16) + 0.6f, 0, (((16 - _rect.Height) % 16 + 16) % 16) + 0.99975f, 0.0015f);
             flying = true;
-            _completeBody = new BodyPart();
-            CalculateTotalBonus();
+            //_completeBody = new BodyPart();
+            //CalculateTotalBonus();
             _objectType = 0;
+
+            _body = new Body.Body(this);
+            _inventory = new Inventory(this);
         }
 
         public virtual void Update(IMap map, float seconds)
@@ -114,16 +125,21 @@ namespace IGORR.Server.Logic
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
+            //Making sure we don't glitch through walls
             if (_speed.Y * seconds >= 7)
                 _speed.Y = 7 / seconds;
             //_lastlastSpeed = _lastSpeed;
             //_lastPosition = _position;
+
+            _body.Update(seconds * 1000f);
+            
             _lastSpeed = _speed;
+
             wallCollision = false;
             TryMove(_speed * seconds);
             if (wallCollision)
             {
-                _speed.Y = -_completeBody.speedBonus;
+                _speed.Y = -(float)Math.Abs(_lastSpeed.X);
                 TryMove(seconds * _speed.Y * Vector2.UnitY);
             }
 
@@ -238,7 +254,7 @@ namespace IGORR.Server.Logic
             bool can = false;
 
             if (attackCooldown < 0)
-                if (attackID>=0 && attackID<3 && _attackSlots[attackID] != null)
+                if (attackID>=0 && attackID<_body.Attacks.Length && _body.Attacks[attackID] != null)
                     can = true;
              
             if (stunned)
@@ -253,26 +269,32 @@ namespace IGORR.Server.Logic
 
         public void Move(float xDiff)
         {
-            _speed.X += _completeBody.speedBonus * xDiff;
+            if (stunned)
+                return;
+            _speed.X += baseSpeed * xDiff;
+            _body.Move(xDiff);
             _moveVector = Vector2.Zero;
         }
 
         public void GetExp(int xp, Vector2 startPos)
         {
-            _baseBody.Exp += xp;
+            //_baseBody.Exp += xp;
             IGORR.Protocol.Messages.ExpMessage xpm = (IGORR.Protocol.Messages.ExpMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.ExpMessage);
             xpm.exp = xp;
             xpm.startPos = startPos;
             xpm.Encode();
             _map.ObjectManager.Server.SendClient(this, xpm);
+            /*
             if (_baseBody.Exp > _baseBody.ExpToNextLevel)
             {
                 LevelUp();
             }
+             */
         }
-
+        
         private void LevelUp()
         {
+            /*
             _baseBody.Level++;
             int add = _baseBody.ExpToNextLevel - _baseBody.LastExp;
             _baseBody.LastExp = _baseBody.ExpToNextLevel;
@@ -296,6 +318,7 @@ namespace IGORR.Server.Logic
                 pim.Encode();
                 _map.ObjectManager.Server.SendAllMap(_map, pim, true);
             }
+             */
         }
 
         public void GetDamage(int damage)
@@ -304,8 +327,8 @@ namespace IGORR.Server.Logic
             {
                 if (damage > 0)
                 {
-                    int dmgReduction = _random.Next(_baseBody.DefBonus / 2, _baseBody.DefBonus);
-                    damage = damage - dmgReduction;
+                    //int dmgReduction = _random.Next(_baseBody.DefBonus / 2, _baseBody.DefBonus);
+                    //damage = damage - dmgReduction;
                     if (damage < 0)
                         damage = 1;
                 }
@@ -332,7 +355,7 @@ namespace IGORR.Server.Logic
             _invincibleTime = 0;
             attackerTimeout = 2;
         }
-
+        /*
         public void CalculateTotalBonus()
         {
             _completeBody.Clear();
@@ -341,9 +364,10 @@ namespace IGORR.Server.Logic
             for (int x = 0; x < _bodyParts.Count; x++)
                 _completeBody.Add(_bodyParts[x]);
         }
+         */
 
         public bool GivePart(BodyPart part)
-        {
+        {/*
             for (int x = 0; x < _bodyParts.Count; x++)
                 if (_bodyParts[x].GetID() == part.GetID())
                     return false;
@@ -359,6 +383,10 @@ namespace IGORR.Server.Logic
             _bodyParts.Add(part);
             CalculateTotalBonus();
             return true;
+          */
+            if (!_body.TryEquip(-1, part))
+                _inventory.Add(part);
+                    return true;
         }
 
         public void GivePart(int id)
@@ -376,12 +404,15 @@ namespace IGORR.Server.Logic
 
         public void RemovePart(BodyPart part)
         {
-            _bodyParts.Remove(part);
-            CalculateTotalBonus();
+            //_bodyParts.Remove(part);
+            //CalculateTotalBonus();
+            _body.Unequip(part);
         }
 
         public void Jump()
         {
+            _body.Jump(1);
+            /*
             if (_onGround)
             {
                 _speed.Y = -_completeBody.jumpBonus;
@@ -395,22 +426,21 @@ namespace IGORR.Server.Logic
                 _speed.Y -= _completeBody.airJumpStrength;
                 _speed.Y = _speed.Y > -_completeBody.jumpBonus ? _speed.Y : -_completeBody.jumpBonus;
             }
+             */
         }
 
-        public void EquipAttack(int slot, BodyPart part)
+        public void EquipAttack(int slot, Body.AttackPart part)
         {
-            if (slot < 0 || slot > 2)
-                return;
-            _attackSlots[slot] = part;
+            _body.TryEquip(slot, part);
         }
 
         public Attack GetAttack(int id,Vector2 dir, int info)
         {
             Logic.Attack att = null;
-            if (id < 0 || id > 2 || _attackSlots[id]==null)
+            if (id < 0 || id > _body.Attacks.Length || _body.Attacks[id]==null)
                 return null;
-            int DmgBonus = _random.Next(_baseBody.AttBonus / 2, _baseBody.AttBonus + 1);
-            att = _attackSlots[id].GetAttack(this,dir,DmgBonus,info);
+            int DmgBonus = 0;// _random.Next(_baseBody.AttBonus / 2, _baseBody.AttBonus + 1);
+            att = _body.Attacks[id].GetAttack(this, dir, DmgBonus, info);
             if (att == null)
                 return null;
             return att;
@@ -502,6 +532,7 @@ namespace IGORR.Server.Logic
 
         public Vector2 Speed
         {
+            set { _speed = value; }
             get { return _speed; }
         }
 
@@ -534,17 +565,18 @@ namespace IGORR.Server.Logic
         {
             get { return _groupID; }
         }
-
+        /*
         public List<BodyPart> Parts
         {
             get { return _bodyParts; }
         }
+         */
 
         public Vector2 LastMovement
         {
             get { return _moveVector; }
         }
-
+        /*
         public int TotalXP
         {
             get { return _baseBody.Exp; }
@@ -559,6 +591,7 @@ namespace IGORR.Server.Logic
         {
             get { return _baseBody.LastExp; }
         }
+         */
 
         public bool UpdateCountdown
         {
@@ -574,6 +607,17 @@ namespace IGORR.Server.Logic
         public void SetTeam(int id)
         {
             _groupID = id;
+        }
+
+        public Body.Body Body
+        {
+            get { return _body; }
+            set { _body = value; }
+        }
+
+        public Inventory Inventory
+        {
+            get { return _inventory; }
         }
     }
 }

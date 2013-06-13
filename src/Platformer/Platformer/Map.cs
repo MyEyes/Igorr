@@ -367,9 +367,9 @@ namespace IGORR.Client
             Vector2 center = pos;
             Rectangle drawRect = viewSpace;
             //Calculate minimal and maximal tile index to consider for shadow calculation
-            int minX = (int)(pos.X / tileSize) - drawRect.Width / 2;
+            int minX = (int)((pos.X - drawRect.Width / 2) / tileSize);
             minX = minX >= 0 ? minX : 0;
-            int minY = (int)(pos.Y / tileSize) - drawRect.Height / 2;
+            int minY = (int)((pos.Y - drawRect.Height / 2) / tileSize);
             minY = minY >= 0 ? minY : 0;
             int maxX = (drawRect.Width + drawRect.X) / tileSize + 1;
             maxX = maxX < _layers[1].GetLength(0) ? maxX : _layers[1].GetLength(0);
@@ -601,6 +601,14 @@ namespace IGORR.Client
             if (isValid(posX, posY) && _events[posX, posY] == null)
                 _events[posX, posY]=obj;
             _sem.Release();                                                
+        }
+
+        public void SendMessage(IGORR.Protocol.IgorrMessage m, bool Sequenced)
+        {
+            if (Sequenced)
+                WorldController.SendReliable(m);
+            else
+                WorldController.Send(m, false);
         }
 
         public void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows)

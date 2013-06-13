@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Server.Logic
 {
-    class Striker:BodyPart
+    class Striker:Body.AttackPart
     {
         public Striker()
             : base()
         {
             //attackID = 1;
-            hasAttack = true;
+            //hasAttack = true;
         }
 
         public override Attack GetAttack(Player owner,Vector2 dir, int DmgBonus, int info)

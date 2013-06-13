@@ -69,7 +69,9 @@ namespace IGORR.Protocol
         SpawnAttack,
         ObjectInfo,
         Interact,
-        DoEffect
+        DoEffect,
+        BodyConfiguration,
+        MoveItem
     }
 
     public delegate void MessageHandler(IgorrMessage message);
@@ -154,6 +156,8 @@ namespace IGORR.Protocol
                 case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(outgoing, _timeStamp); break;
                 case MessageTypes.Interact: message = new Messages.InteractMessage(outgoing, _timeStamp); break;
                 case MessageTypes.DoEffect: message = new Messages.DoEffectMessage(outgoing, _timeStamp); break;
+                case MessageTypes.MoveItem: message = new Messages.MoveItemMessage(outgoing, _timeStamp); break;
+                case MessageTypes.BodyConfiguration: message = new Messages.BodyConfigurationMessage(outgoing, _timeStamp); break;
             }
              
             return message;
@@ -195,6 +199,8 @@ namespace IGORR.Protocol
                 case MessageTypes.ObjectInfo: message = new Messages.ObjectInfoMessage(m); break;
                 case MessageTypes.Interact: message = new Messages.InteractMessage(m); break;
                 case MessageTypes.DoEffect: message = new Messages.DoEffectMessage(m); break;
+                case MessageTypes.BodyConfiguration: message = new Messages.BodyConfigurationMessage(m); break;
+                case MessageTypes.MoveItem: message = new Messages.MoveItemMessage(m); break;
             }
             return message;
         }
@@ -265,7 +271,7 @@ namespace IGORR.Protocol
                 Logger.LogMessageToFile("Could not handle " + message.MessageType.ToString() + " message!");
         }
 
-        private static void HandleContainer(IgorrMessage message)
+        public static void HandleContainer(IgorrMessage message)
         {
             Messages.ContainerMessage ctm = (Messages.ContainerMessage)(message);
             for (int x = 0; x < ctm.Messages.Count; x++)

@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Server.Logic
 {
-    public class SlimeLauncher : BodyPart
+    public class SlimeLauncher : Body.AttackPart
     {
         public SlimeLauncher()
             : base()
         {
             //attackID = 3;
-            hasAttack = true;
+            //hasAttack = true;
         }
 
         public override string GetName()

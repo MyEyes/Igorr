@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace IGORR.Server.Logic
 {
-    public class GrenadeLauncher : BodyPart
+    public class GrenadeLauncher : Body.AttackPart
     {
         public GrenadeLauncher()
             : base()
         {
             //attackID = 3;
-            hasAttack = true;
+            //hasAttack = true;
         }
 
         public override string GetName()

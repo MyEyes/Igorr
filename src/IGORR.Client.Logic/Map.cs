@@ -20,6 +20,7 @@ namespace IGORR.Client.Logic
         void SetGlow(int id, Vector2 position, Color color, float radius, bool shadows, float timeout);
         EventObject GetEvent(GameObject obj);
         ParticleManager Particles { get; }
+        void SendMessage(Protocol.IgorrMessage message, bool Sequenced);
     }
 
 }

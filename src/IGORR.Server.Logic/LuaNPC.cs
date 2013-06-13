@@ -33,7 +33,7 @@ namespace IGORR.Server.Logic.AI
             : base(map, charfile, spawnPos, id)
         {
             _invincibleTime = 0;
-            _baseBody.speedBonus = 30;
+            //_baseBody.speedBonus = 30;
 
             _script_file="Content/scripts/"+script_file;
             queue = new AIQueue(this);

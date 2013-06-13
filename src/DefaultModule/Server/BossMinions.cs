@@ -16,14 +16,14 @@ namespace IGORR.Server.Logic.AI
             : base(map,spawnPos, id)
         {
             _groupID = 2;
-            GivePart(new BossBlobLegs());
+            GivePart(new Legs());
         }
 
         public BossMinions(IMap map,string charfile, Rectangle spawnPos, int id)
             : base(map, charfile, spawnPos, id)
         {
             _groupID = 2;
-            GivePart(new BossBlobLegs());
+            GivePart(new Legs());
             _objectType = 5008;
         }
 

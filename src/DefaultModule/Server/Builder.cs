@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IGORR.Server.Logic.Body_Parts
 {
-    public class Builder : BodyPart
+    public class Builder : Body.AttackPart
     {
         public Builder()
             : base()
