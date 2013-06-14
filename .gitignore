@@ -1,5 +1,8 @@
 bin/
 obj/
+src/BuildPack\ and\ Upload.bat
+src/ftp.txt
+src/*.zip
 *.dll
 *.user
 *.suo
