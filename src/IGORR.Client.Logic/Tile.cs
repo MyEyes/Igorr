@@ -66,7 +66,7 @@ namespace IGORR.Client.Logic
             if(_eventObject!=null)_eventObject.Draw(batch);
         }
 
-        public virtual bool Collides(GameObject obj)
+        public override bool Collides(GameObject obj)
         {
             if (_collides)
                 return base.Collides(obj);

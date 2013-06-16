@@ -26,11 +26,6 @@ namespace IGORR.Client.Logic
             _map.RemoveEvent(this);
         }
 
-        public virtual void Update(float ms)
-        {
-
-        }
-
         public virtual void Event(Player obj)
         {
 

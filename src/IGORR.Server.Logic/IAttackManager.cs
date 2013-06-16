@@ -38,7 +38,7 @@ namespace IGORR.Server.Logic
             _manager = am;
         }
 
-        public virtual void Update(float ms)
+        public override void Update(float ms)
         {
             Move(_movement * ms / 1000f);
             lifeTime -= ms;

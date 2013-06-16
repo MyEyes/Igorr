@@ -35,7 +35,6 @@ namespace IGORR.Client
         Texture2D expBorder;
         Texture2D bar;
         Texture2D crosshair;
-        Texture2D interactMarker;
         GraphicsDevice GraphicsDevice;
         ScreenManager _manager;
 
@@ -129,6 +128,7 @@ namespace IGORR.Client
                 TextManager.Draw(spriteBatch, cam);
                 spriteBatch.Begin();
                 DrawExpBar();
+                DrawCurrentAttacks();
                 TextManager.DrawInfo(spriteBatch);
                 spriteBatch.End();
                 // TODO: Fügen Sie Ihren Zeichnungscode hier hinzu
@@ -168,37 +168,31 @@ namespace IGORR.Client
                 Player = objectManager.Player;
                 if (player != null)
                 {
-                    if (keyboard.IsKeyDown(Keys.LeftControl) && !_prevKeyboard.IsKeyDown(Keys.LeftControl))
-                        WorldController.SendAttack(0,_mouseDir, player.ID);
-                    if (keyboard.IsKeyDown(Keys.Y) && !_prevKeyboard.IsKeyDown(Keys.Y))
-                        WorldController.SendAttack(0, _mouseDir, player.ID);
-                    if (keyboard.IsKeyDown(Keys.Z) && !_prevKeyboard.IsKeyDown(Keys.Z))
-                        WorldController.SendAttack(0, _mouseDir, player.ID);
-                    if (keyboard.IsKeyDown(Keys.X) && !_prevKeyboard.IsKeyDown(Keys.X))
-                        WorldController.SendAttack(1, _mouseDir, player.ID);
-                    if (keyboard.IsKeyDown(Keys.C) && !_prevKeyboard.IsKeyDown(Keys.C))
-                        WorldController.SendAttack(2, _mouseDir, player.ID);
-                    if (keyboard.IsKeyDown(Keys.I) && !_prevKeyboard.IsKeyDown(Keys.I))
+                    if (input.isActive(Actions.Inventory))
                         _GUIOverlay.ToggleInventoryWindow();
+                    if (input.isActive(Actions.Character))
+                        _GUIOverlay.ToggleCharacterWindow();
                     if (pad.ThumbSticks.Right.LengthSquared() > 0.2f)
                     {
                         _mouseDir = pad.ThumbSticks.Right;
                         _mouseDir.Y = -_mouseDir.Y;
                     }
 
-                    if (pad.IsButtonDown(Buttons.X) && !_prevGamePadState.IsButtonDown(Buttons.X))
+                    if (input.isActive(Actions.Attack1))
                         WorldController.SendAttack(0, _mouseDir, player.ID);
-                    if (pad.IsButtonDown(Buttons.B) && !_prevGamePadState.IsButtonDown(Buttons.B))
+                    if (input.isActive(Actions.Attack2))
                         WorldController.SendAttack(1, _mouseDir, player.ID);
-                    if (pad.IsButtonDown(Buttons.Y) && !_prevGamePadState.IsButtonDown(Buttons.Y))
+                    if (input.isActive(Actions.Attack3))
                         WorldController.SendAttack(2, _mouseDir, player.ID);
+                    if (input.isActive(Actions.Attack4))
+                        WorldController.SendAttack(3, _mouseDir, player.ID);
 
                     if (input.Jump)
                         player.Jump();
                     player.Move(input.Direction);
 
                     GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
-                    if (interactObject != null && keyboard.IsKeyDown(Keys.Enter) && !_prevKeyboard.IsKeyDown(Keys.Enter))
+                    if (interactObject != null && input.isActive(Actions.Interact))
                     {
                         IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
                         im.objectID = interactObject.ID;
@@ -268,6 +262,16 @@ namespace IGORR.Client
             spriteBatch.Draw(expBorder, new Rectangle(0, 600 - 16, sizeX, 16), Color.White);
             if (font != null)
                 spriteBatch.DrawString(font, (player.Exp - player.LastLevelExp).ToString() + "/" + (player.NextLevelExp - player.LastLevelExp).ToString(), new Vector2(sizeX / 2 - 50, 600 - 16 - 20), Color.White, 0, Vector2.Zero, 0.45f, SpriteEffects.None, 0.5f);
+        }
+
+        void DrawCurrentAttacks()
+        {
+            int left = (int)input.LeftAttack-(int)Actions.Attack1;
+            int right = (int)input.RightAttack-(int)Actions.Attack1;
+            if (player.Body.Attacks[left] != null)
+                spriteBatch.Draw(player.Body.Attacks[left].Texture, new Rectangle(360, 4, 16, 16), Color.White);
+            if (player.Body.Attacks[right] != null)
+                spriteBatch.Draw(player.Body.Attacks[right].Texture, new Rectangle(440, 4, 16, 16), Color.White);
         }
 
         public IMap Map

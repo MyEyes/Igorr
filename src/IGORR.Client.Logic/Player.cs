@@ -51,7 +51,7 @@ namespace IGORR.Client.Logic
             }
             
             float angle = (float)Math.Atan2(pos.Y - targetEnd.Y, pos.X - targetEnd.X);
-            batch.Draw(tex, targetEnd, null, color, angle, _textureOffset, 1, SpriteEffects.None, 0.1f);
+            batch.Draw(tex, targetEnd, null, color, angle, _textureOffset, 0.5f, SpriteEffects.None, 0.1f);
         }
 
         public void SetName(string name)

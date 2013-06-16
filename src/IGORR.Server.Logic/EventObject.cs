@@ -22,11 +22,6 @@ namespace IGORR.Server.Logic
             _parent = obj;
         }
 
-        public virtual void Update(float ms)
-        {
-
-        }
-
         public virtual void Event(Player obj)
         {
 
