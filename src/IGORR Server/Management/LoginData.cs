@@ -16,7 +16,7 @@ namespace IGORR.Server.Management
     static class LoginData
     {
         static List<Login> _logins;
-        const bool fastCreate = true;
+        static bool fastCreate = true;
 
         static LoginData()
         {

@@ -74,7 +74,6 @@
     <Compile Include="Client.cs" />
     <Compile Include="Logic\AttackManager.cs" />
     <Compile Include="Logic\Clock.cs" />
-    <Compile Include="Logic\GlobalTriggers.cs" />
     <Compile Include="Logic\LogicHandler.cs" />
     <Compile Include="Logic\Map.cs" />
     <Compile Include="Logic\MapManager.cs" />

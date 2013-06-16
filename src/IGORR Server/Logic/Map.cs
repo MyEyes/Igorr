@@ -16,13 +16,6 @@ namespace IGORR.Server.Logic
         public Vector2 position;
     }
 
-    struct TeleportPoint
-    {
-        public int mapID;
-        public int X;
-        public int Y;
-    }
-
     public class TileModification
     {
         public int layer;
@@ -33,11 +26,9 @@ namespace IGORR.Server.Logic
     public class Map:IMap
     {
         Tile[][,] _layers;
-        Texture2D tileSet;
         const int tileSize = 16;
         int[,] _spawnIDs;
         Dictionary<int, List<Point>> _spawnPoints;
-        List<TeleportPoint> _teleportPoints;
         List<SpawnCountdown> _spawns;
         List<TileModification> _tileMods = new List<TileModification>();
         Dictionary<string,bool> _triggers = new Dictionary<string, bool>();
@@ -45,7 +36,6 @@ namespace IGORR.Server.Logic
         List<IGORR.Modules.ObjectModule> _modules;
 
         Random random;
-        ContentManager _content;
 
         string _mapname;
         int _id;

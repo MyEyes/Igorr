@@ -29,8 +29,6 @@ namespace IGORR.Client
         public Map(string fileName, GraphicsDevice device)
         {
             random = new Random();
-            int maxX = 30;
-            int maxY = 30;
 
             Name = fileName;
 
@@ -252,17 +250,6 @@ namespace IGORR.Client
             if (_layers[0][x, y] != null && _layers[0][x, y].GetTileID() < 2 && _layers[1][x, y] == null)
             {
                 return true;
-                int count = 0;
-                if (isValid(x+1,y) &&_layers[1][x+1, y] != null)
-                    count++;
-                if (isValid(x - 1, y) && _layers[1][x - 1, y] != null)
-                    count++;
-                if (isValid(x, y+1) && _layers[1][x, y + 1] != null)
-                    count++;
-                if (isValid(x, y-1) && _layers[1][x, y - 1] != null)
-                    count++;
-                if (count <= 1)
-                    return true;
             }
             return false;
         }
