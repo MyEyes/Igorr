@@ -23,7 +23,7 @@ namespace IGORR.Modules
             string curDir = Directory.GetCurrentDirectory();
             if (File.Exists(_rootDir + "/modules/" + name + ".dll"))
             {
-                Assembly asm = Assembly.LoadFile(curDir + "/" + _rootDir + "/modules/" + name + ".dll");
+                Assembly asm = Assembly.LoadFrom(curDir + "/" + _rootDir + "/modules/" + name + ".dll");
                 Type[] types = asm.GetTypes();
                 for (int x = 0; x < types.Length; x++)
                 {
