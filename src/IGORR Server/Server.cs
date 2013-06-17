@@ -21,6 +21,7 @@ namespace IGORR.Server
         Dictionary<long, int> _clientids;
         Dictionary<int, Client> _clients;
         List<NetConnection> _connections;
+        ProtocolHelper _protocolHelper;
         DateTime _startTime;
         DateTime _lastTime;
         int lastSent=0;
@@ -50,7 +51,7 @@ namespace IGORR.Server
             //config.LocalAddress = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 });
             connection = new NetServer(config);
             connection.Start();
-            ProtocolHelper.SetUp(connection);
+            _protocolHelper = new ProtocolHelper(connection);
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Chat, new MessageHandler(HandleChat));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Position, new MessageHandler(HandlePosition));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Leave, new MessageHandler(HandleLeave));
@@ -297,7 +298,7 @@ namespace IGORR.Server
                 Management.PlayerInfo pinfo = Management.ClientInfoInterface.GetInfo(player);
                 targetMap = MapManager.GetMapByID(pinfo.Map);
 
-                Client client = new Client(message.SenderConnection, jm.Name);
+                Client client = new Client(message.SenderConnection, jm.Name, _protocolHelper);
                 client.PlayerID = id;
                 _clientids.Add(client.Connection.RemoteUniqueIdentifier, client.ID);
                 _clients.Add(client.ID, client);
@@ -456,6 +457,11 @@ namespace IGORR.Server
         public int Channel
         {
             get { return currentChannel; }
+        }
+
+        public ProtocolHelper ProtocolHelper
+        {
+            get { return _protocolHelper; }
         }
     }
 }

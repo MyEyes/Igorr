@@ -38,6 +38,7 @@ namespace IGORR.Client
 
         public void RemoveScreen(IScreen screen)
         {
+            screen.OnRemove();
             _screens.Remove(screen);
         }
 

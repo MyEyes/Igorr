@@ -87,7 +87,7 @@ namespace IGORR.Client
             }
             if (_choiceRects[selected].Contains((int)_worldSpaceMouse.X, (int)_worldSpaceMouse.Y))
             {
-                InteractMessage im = (InteractMessage)ProtocolHelper.NewMessage(MessageTypes.Interact);
+                InteractMessage im = (InteractMessage)WorldController.ProtocolHelper.NewMessage(MessageTypes.Interact);
                 im.action = InteractAction.Respond;
                 im.info = _choices[selected].id;
                 if (_speaker != null)

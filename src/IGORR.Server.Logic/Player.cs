@@ -177,7 +177,7 @@ namespace IGORR.Server.Logic
 
         public void SetAnimation(bool force, int extraID)
         {
-            SetAnimationMessage ani = (SetAnimationMessage)ProtocolHelper.NewMessage(MessageTypes.SetAnimation);
+            SetAnimationMessage ani = (SetAnimationMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.SetAnimation);
             ani.force = force;
             ani.animationNumber = extraID;
             ani.objectID = _id;
@@ -192,7 +192,7 @@ namespace IGORR.Server.Logic
             stunned = true;
             airstun = true;
             _onGround = false;
-            IGORR.Protocol.Messages.KnockbackMessage kbm = (IGORR.Protocol.Messages.KnockbackMessage) IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Knockback);
+            IGORR.Protocol.Messages.KnockbackMessage kbm = (IGORR.Protocol.Messages.KnockbackMessage) map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Knockback);
             kbm.id = this.ID;
             kbm.Move = move;
             kbm.Encode();
@@ -279,7 +279,7 @@ namespace IGORR.Server.Logic
         public void GetExp(int xp, Vector2 startPos)
         {
             //_baseBody.Exp += xp;
-            IGORR.Protocol.Messages.ExpMessage xpm = (IGORR.Protocol.Messages.ExpMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.ExpMessage);
+            IGORR.Protocol.Messages.ExpMessage xpm = (IGORR.Protocol.Messages.ExpMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.ExpMessage);
             xpm.exp = xp;
             xpm.startPos = startPos;
             xpm.Encode();
@@ -336,7 +336,7 @@ namespace IGORR.Server.Logic
                 _hp = _maxhp > _hp ? _hp : _maxhp;
                 _invincibleTime = 0.6f;
 
-                IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Damage);
+                IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Damage);
                 dm.posX = this.MidPosition.X;
                 dm.posY = this.MidPosition.Y;
                 dm.playerID = this.ID;
@@ -395,7 +395,7 @@ namespace IGORR.Server.Logic
             if (ip != null)
             {
                 this.GivePart(ip.Part);
-                PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
+                PickupMessage pum = (PickupMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.Pickup);
                 pum.id = ip.Part.GetID();
                 pum.Encode();
                 _map.ObjectManager.Server.SendClient(this, pum);

@@ -27,49 +27,59 @@ namespace IGORR.Client.Logic
             _owner = owner;
         }
 
-        public void Add(ICollectible c)
+        public void Add(ICollectible c, bool dropped=false)
         {
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = -1;
-            mim.Quantity = 1;
-            mim.id = c.GetID();
-            mim.To = MoveTarget.Inventory;
-            mim.Encode();
+            if (dropped)
+            {
+                MoveItemMessage mim = (MoveItemMessage)_owner.Map.ProtocolHelper.NewMessage(MessageTypes.MoveItem);
+                mim.Slot = -1;
+                mim.Quantity = 1;
+                mim.id = c.GetID();
+                mim.To = MoveTarget.Inventory;
+                mim.Encode();
 
-            if (_owner.Map != null)
-                _owner.Map.SendMessage(mim, true);
+                if (_owner.Map != null)
+                    _owner.Map.SendMessage(mim, true);
+            }
             _items.Add(c);
             _actions++;
         }
 
-        public void Remove(ICollectible c)
+        public void Remove(ICollectible c, bool dropped)
         {
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = -1;
-            mim.Quantity = 1;
-            mim.id = c.GetID();
-            mim.From = MoveTarget.Inventory;
-            mim.Encode();
+            if (dropped)
+            {
+                MoveItemMessage mim = (MoveItemMessage)_owner.Map.ProtocolHelper.NewMessage(MessageTypes.MoveItem);
+                mim.Slot = -1;
+                mim.Quantity = 1;
+                mim.id = c.GetID();
+                mim.From = MoveTarget.Inventory;
+                mim.Encode();
 
-            _owner.Map.SendMessage(mim, true);
+                if (_owner.Map != null)
+                    _owner.Map.SendMessage(mim, true);
+            }
             _items.Remove(c);
             _actions++;
         }
 
-        public void Insert(ICollectible c, int index)
+        public void Insert(ICollectible c, int index, bool dropped)
         {
             if (index < 0) index = 0;
             if (index >= _items.Count)
                 index = _items.Count;
 
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = index;
-            mim.Quantity = 1;
-            mim.id = c.GetID();
-            mim.To = MoveTarget.Inventory;
-            mim.Encode();
-            _owner.Map.SendMessage(mim, true);
-
+            if (dropped)
+            {
+                MoveItemMessage mim = (MoveItemMessage)_owner.Map.ProtocolHelper.NewMessage(MessageTypes.MoveItem);
+                mim.Slot = index;
+                mim.Quantity = 1;
+                mim.id = c.GetID();
+                mim.To = MoveTarget.Inventory;
+                mim.Encode();
+                if (_owner.Map != null)
+                    _owner.Map.SendMessage(mim, true);
+            }
             _items.Insert(index, c);
             _actions++;
         }

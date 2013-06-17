@@ -22,12 +22,12 @@ namespace IGORR.Client.Logic.Body
     public class Body
     {
         Player owner;
-
         BaseBody BaseBody = null;
         public AttackPart[] Attacks = new AttackPart[4];
         public UtilityPart[] Utility = new UtilityPart[2];
         public MovementPart[] Movement = new MovementPart[2];
         public ArmorPart[] Armor = new ArmorPart[2];
+        public int changes = 0;
 
         public Body(Player owner)
         {
@@ -41,22 +41,26 @@ namespace IGORR.Client.Logic.Body
 
         void ReturnToInventory()
         {
+            changes++;
             for (int x = 0; x < Attacks.Length; x++)
             {
                 owner.Inventory.Add(Attacks[x]);
             }
         }
 
-        public bool TryEquip(int slot, BodyPart part)
+        public bool TryEquip(int slot, BodyPart part, bool dropped=false)
         {
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = slot;
-            mim.Quantity = 1;
-            mim.id = part.GetID();
-            mim.To = MoveTarget.Body;
-            mim.Encode();
-            if (owner.Map != null)
+            changes++;
+            if (owner.Map != null && dropped)
+            {
+                MoveItemMessage mim = (MoveItemMessage)owner.Map.ProtocolHelper.NewMessage(MessageTypes.MoveItem);
+                mim.Slot = slot;
+                mim.Quantity = 1;
+                mim.id = part.GetID();
+                mim.To = MoveTarget.Body;
+                mim.Encode();
                 owner.Map.SendMessage(mim, true);
+            }
 
             BodyPartType type = part.Type;
             switch (type)
@@ -148,16 +152,19 @@ namespace IGORR.Client.Logic.Body
             return false;
         }
 
-        public void Unequip(BodyPart part)
+        public void Unequip(BodyPart part, bool dropped=false)
         {
-
-            MoveItemMessage mim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
-            mim.Slot = -1;
-            mim.Quantity = 1;
-            mim.id = part.GetID();
-            mim.From = MoveTarget.Body;
-            mim.Encode();
-            owner.Map.SendMessage(mim, true);
+            changes++;
+            if (owner.Map != null && dropped)
+            {
+                MoveItemMessage mim = (MoveItemMessage)owner.Map.ProtocolHelper.NewMessage(MessageTypes.MoveItem);
+                mim.Slot = -1;
+                mim.Quantity = 1;
+                mim.id = part.GetID();
+                mim.From = MoveTarget.Body;
+                mim.Encode();
+                owner.Map.SendMessage(mim, true);
+            }
 
             for (int x = 0; x < Movement.Length; x++)
             {

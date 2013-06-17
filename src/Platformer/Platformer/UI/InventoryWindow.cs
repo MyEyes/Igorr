@@ -64,7 +64,7 @@ namespace IGORR.Client.UI
             column = column < rowLength ? column : rowLength - 1; 
             int index = column + row * rowLength;
             item.Drop(this);
-            _inventory.Insert(ii.Item, index);
+            _inventory.Insert(ii.Item, index, true);
             UpdateContent();
             return true;
         }
@@ -74,7 +74,7 @@ namespace IGORR.Client.UI
             ItemIcon ii = item as ItemIcon;
             if (ii != null)
             {
-                _inventory.Remove(ii.Item);
+                _inventory.Remove(ii.Item, true);
                 RemoveChild(item as UIElement);
                 UpdateContent();
             }

@@ -149,8 +149,6 @@ namespace IGORR.Client
             if (!WorldController.Connected)
             {
                 _manager.RemoveScreen(this);
-                _manager.RemoveScreen(_GUIOverlay);
-                _manager.AddScreen(new UI.MainMenuScreen());
             }
             _mapMutex.WaitOne();
             if (map != null)
@@ -194,7 +192,7 @@ namespace IGORR.Client
                     GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
                     if (interactObject != null && input.isActive(Actions.Interact))
                     {
-                        IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
+                        IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)WorldController.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
                         im.objectID = interactObject.ID;
                         im.info = 0;
                         im.sinfo = "";
@@ -249,6 +247,15 @@ namespace IGORR.Client
             }
             _mapMutex.ReleaseMutex();
             IGORR.Protocol.ProtocolHelper.Update((int)(float)gameTime.ElapsedGameTime.TotalMilliseconds);
+        }
+
+        public void OnRemove()
+        {
+            if (Server != null)
+                Server.Exit();
+
+            _manager.RemoveScreen(_GUIOverlay);
+            _manager.AddScreen(new UI.MainMenuScreen());
         }
 
         void DrawExpBar()
@@ -315,6 +322,12 @@ namespace IGORR.Client
         {
             get { return player; }
             set { if (value == null || (player != null && player == value)) return; player = value; _GUIOverlay.SetPlayer(player); }
+        }
+
+        public Server.Server Server
+        {
+            get;
+            set;
         }
     }
 }

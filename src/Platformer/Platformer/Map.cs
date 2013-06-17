@@ -627,5 +627,10 @@ namespace IGORR.Client
         {
             return WorldController.Manager.Player;
         }
+
+        public Protocol.ProtocolHelper ProtocolHelper
+        {
+            get { return WorldController.ProtocolHelper; }
+        }
     }
 }

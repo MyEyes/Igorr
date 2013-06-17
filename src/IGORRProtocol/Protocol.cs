@@ -76,26 +76,22 @@ namespace IGORR.Protocol
 
     public delegate void MessageHandler(IgorrMessage message);
 
-    public static class ProtocolHelper
+    public class ProtocolHelper
     {
-        static NetPeer _connection;
+        NetPeer _connection;
         static long _timeStamp;
-        static Dictionary<MessageTypes, MessageHandler> _handlers;
-        static Dictionary<NetConnection, Messages.ContainerMessage> _containers;
+        Dictionary<MessageTypes, MessageHandler> _handlers;
+        Dictionary<NetConnection, Messages.ContainerMessage> _containers;
         static Messages.ContainerMessage _allcontainer;
-        static ProtocolHelper()
+        public ProtocolHelper(NetPeer connection)
         {
             _handlers = new Dictionary<MessageTypes, MessageHandler>();
             _containers = new Dictionary<NetConnection, Messages.ContainerMessage>();
             RegisterMessageHandler(MessageTypes.Container, new MessageHandler(HandleContainer));
-        }
-
-        public static void SetUp(NetPeer connection)
-        {
             _connection = connection;
         }
 
-        public static void RegisterMessageHandler(MessageTypes type, MessageHandler handler)
+        public void RegisterMessageHandler(MessageTypes type, MessageHandler handler)
         {
             if (!_handlers.ContainsKey(type))
                 _handlers.Add(type, handler);
@@ -103,7 +99,7 @@ namespace IGORR.Protocol
                 _handlers[type] = handler;
         }
 
-        public static IgorrMessage GetContainerMessage(MessageTypes type, NetConnection target)
+        public IgorrMessage GetContainerMessage(MessageTypes type, NetConnection target)
         {
             if (target == null)
             {
@@ -121,7 +117,7 @@ namespace IGORR.Protocol
             }
         }
 
-        public static IgorrMessage NewMessage(MessageTypes type)
+        public IgorrMessage NewMessage(MessageTypes type)
         {
             return NewMessage(type, _connection.CreateMessage());
         }
@@ -213,7 +209,7 @@ namespace IGORR.Protocol
         }
          */
         
-        public static void SendContainer(IgorrMessage message, NetConnection target)
+        public void SendContainer(IgorrMessage message, NetConnection target)
         {
             if (target == null)
             {
@@ -224,7 +220,7 @@ namespace IGORR.Protocol
         }
          
 
-        public static void FlushContainer(NetConnection target, int channel)
+        public void FlushContainer(NetConnection target, int channel)
         {
             //Console.WriteLine("Sending Container to: " + target.ToString());
             if (target == null &&_allcontainer!=null)
@@ -253,7 +249,7 @@ namespace IGORR.Protocol
             }
         }
 
-        public static void HandleMessage(NetIncomingMessage incoming, int clientID)
+        public void HandleMessage(NetIncomingMessage incoming, int clientID)
         {
             IgorrMessage message = null;
 
@@ -262,7 +258,7 @@ namespace IGORR.Protocol
             HandleMessage(DecodeMessage(message));
         }
 
-        public static void HandleMessage(IgorrMessage message)
+        public void HandleMessage(IgorrMessage message)
         {
             //Logger.LogMessageToFile("Trying to handle " + message.MessageType.ToString() + " message!");
             if (_handlers.ContainsKey(message.MessageType))
@@ -271,7 +267,7 @@ namespace IGORR.Protocol
                 Logger.LogMessageToFile("Could not handle " + message.MessageType.ToString() + " message!");
         }
 
-        public static void HandleContainer(IgorrMessage message)
+        public void HandleContainer(IgorrMessage message)
         {
             Messages.ContainerMessage ctm = (Messages.ContainerMessage)(message);
             for (int x = 0; x < ctm.Messages.Count; x++)

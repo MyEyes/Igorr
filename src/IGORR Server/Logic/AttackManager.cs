@@ -51,7 +51,7 @@ namespace IGORR.Server.Logic
         {
             if (_attacks.Count > index)
             {
-                Protocol.Messages.DeSpawnMessage dsm = (Protocol.Messages.DeSpawnMessage) Protocol.ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
+                Protocol.Messages.DeSpawnMessage dsm = (Protocol.Messages.DeSpawnMessage) _server.ProtocolHelper.NewMessage(MessageTypes.DeSpawn);
                 dsm.id = _attacks[index].ID;
                 dsm.Encode();
                 _server.SendAllMapReliable(_attacks[index].map, dsm, true);
@@ -88,7 +88,7 @@ namespace IGORR.Server.Logic
         public void Spawn(Attack attack)
         {
             _server.SetChannel(3);
-            SpawnAttackMessage sam = (SpawnAttackMessage)ProtocolHelper.NewMessage(MessageTypes.SpawnAttack);
+            SpawnAttackMessage sam = (SpawnAttackMessage)_server.ProtocolHelper.NewMessage(MessageTypes.SpawnAttack);
             sam.id = attack.ID;
             sam.attackID = attack.AttackID;
             sam.position = attack.Rect;

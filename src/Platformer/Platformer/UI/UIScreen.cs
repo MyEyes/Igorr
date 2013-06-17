@@ -43,5 +43,10 @@ namespace IGORR.Client.UI
             Draw(batch);
             batch.End();
         }
+
+        public void OnRemove()
+        {
+
+        }
     }
 }

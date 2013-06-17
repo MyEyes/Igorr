@@ -46,6 +46,7 @@ namespace IGORR.Modules
 
         public static void LoadAllModules()
         {
+            _modules.Clear();
             string path = _rootDir + "/modules/";
             string[] files = Directory.GetFiles(path);
             for (int x = 0; x < files.Length; x++)

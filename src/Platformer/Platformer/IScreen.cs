@@ -13,5 +13,6 @@ namespace IGORR.Client
         void Initialize(GraphicsDevice Device, ScreenManager manager);
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime);
+        void OnRemove();
     }
 }

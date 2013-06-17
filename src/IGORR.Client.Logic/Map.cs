@@ -21,6 +21,7 @@ namespace IGORR.Client.Logic
         Player GetPlayer();
         EventObject GetEvent(GameObject obj);
         ParticleManager Particles { get; }
+        Protocol.ProtocolHelper ProtocolHelper { get; }
         void SendMessage(Protocol.IgorrMessage message, bool Sequenced);
     }
 

@@ -89,12 +89,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConversationMenu.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="Glow.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="InteractiveTextBubble.cs" />
-    <Compile Include="InventoryMenu.cs" />
     <Compile Include="IScreen.cs" />
     <Compile Include="LightMap.cs" />
     <Compile Include="Map.cs" />
@@ -139,6 +137,10 @@
       <Project>{1EB89B6A-F9E9-40D7-8B74-F22D0A5ED087}</Project>
       <Name>IGORR Content Manager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\IGORR Server\IGORR.Server.csproj">
+      <Project>{E9C022D5-5379-4DAB-B5BD-EBC6C5E35207}</Project>
+      <Name>IGORR.Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\IGORR.Client.Logic\IGORR.Client.Logic.csproj">
       <Project>{07431AD6-5D80-44C3-A7DD-A5AFEA003EAC}</Project>
       <Name>IGORR.Client.Logic</Name>
@@ -146,6 +148,10 @@
     <ProjectReference Include="..\..\IGORR.Module\IGORR.Module.csproj">
       <Project>{7B5193AD-C540-4453-9A20-9C3F3BCEEC69}</Project>
       <Name>IGORR.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IGORR.Server.Logic\IGORR.Server.Logic.csproj">
+      <Project>{40DE2C7E-6B92-4F2B-A280-61BC1D7169A1}</Project>
+      <Name>IGORR.Server.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\IGORRProtocol\IGORR Protocol.csproj">
       <Project>{5DA6E156-6632-4B52-BAAF-59EE0B644E1B}</Project>

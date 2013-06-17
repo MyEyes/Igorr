@@ -23,6 +23,8 @@ namespace IGORR.Client.UI
         ItemIcon[] UtilityParts;
         ItemIcon[] ArmorParts;
 
+        int lastChanges = 0;
+
         public CharacterWindow(Vector2 position, Vector2 size, Logic.Player player)
             :base(position, size, Content.ContentInterface.LoadTexture("UITest"),Content.ContentInterface.LoadTexture("UITest"))
         {
@@ -35,12 +37,18 @@ namespace IGORR.Client.UI
             AddChild(_nameVLabel);
             AddChild(_LevelLabel);
             AddChild(_LevelVLabel);
+            lastChanges = _player.Body.changes;
             Update();
         }
 
         public override void Update(float ms, Microsoft.Xna.Framework.Input.MouseState mouse)
         {
             base.Update(ms, mouse);
+            if (lastChanges != _player.Body.changes)
+            {
+                Update();
+                lastChanges = _player.Body.changes;
+            }
         }
 
         public void Update()
@@ -96,7 +104,7 @@ namespace IGORR.Client.UI
                     if (_player.Body.CanEquip((int)((_lastMouse.X - TotalOffset.X)/IconDistance.X), part))
                     {
                         ic.Drop(this);
-                        _player.Body.TryEquip((int)((_lastMouse.X - TotalOffset.X)/IconDistance.X), part);
+                        _player.Body.TryEquip((int)((_lastMouse.X - TotalOffset.X)/IconDistance.X), part, true);
                         Update();
                         return true;
                     }

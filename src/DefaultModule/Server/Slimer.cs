@@ -82,8 +82,8 @@ namespace IGORR.Server.Logic.AI
                 {
                     _Move = false;
                     attack = true;
-                    attackCooldown = 0.4f; 
-                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                    attackCooldown = 0.4f;
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = true;
                     sam.animationNumber = 0;
                     sam.objectID = ID;
@@ -98,7 +98,7 @@ namespace IGORR.Server.Logic.AI
                 _map.ObjectManager.SpawnAttack(ID,new Vector2(Left?-1:1,0), 0,0);
                 _Move = Left != _target.MidPosition.X < this.MidPosition.X;
                 Left = _target.MidPosition.X < this.MidPosition.X;
-                IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                 sam.force = false;
                 sam.animationNumber = 0;
                 sam.objectID = ID;

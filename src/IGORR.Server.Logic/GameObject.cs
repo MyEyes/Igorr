@@ -75,7 +75,7 @@ namespace IGORR.Server.Logic
         {
             if(_map==null)
                 return;
-            IGORR.Protocol.Messages.DoEffectMessage dem = (IGORR.Protocol.Messages.DoEffectMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.DoEffect);
+            IGORR.Protocol.Messages.DoEffectMessage dem = (IGORR.Protocol.Messages.DoEffectMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.DoEffect);
             dem.Info = info;
             dem.Position = pos;
             dem.Dir = dir;
@@ -88,7 +88,7 @@ namespace IGORR.Server.Logic
         {
             if (map == null)
                 return;
-            IGORR.Protocol.Messages.ChatMessage cm = (IGORR.Protocol.Messages.ChatMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Chat);
+            IGORR.Protocol.Messages.ChatMessage cm = (IGORR.Protocol.Messages.ChatMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.Chat);
             cm.Text = Text;
             cm.timeout = timeout;
             cm.objID = this._id;
@@ -100,7 +100,7 @@ namespace IGORR.Server.Logic
         {
             if (map == null)
                 return;
-            IGORR.Protocol.Messages.ChatMessage cm = (IGORR.Protocol.Messages.ChatMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Chat);
+            IGORR.Protocol.Messages.ChatMessage cm = (IGORR.Protocol.Messages.ChatMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.Chat);
             cm.Text = Text;
             cm.timeout = timeout;
             cm.objID = this._id;
@@ -112,7 +112,7 @@ namespace IGORR.Server.Logic
         {
             if (map == null)
                 return;
-            IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)IGORR.Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
+            IGORR.Protocol.Messages.InteractMessage im = (IGORR.Protocol.Messages.InteractMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.Interact);
             im.action = Protocol.Messages.InteractAction.Ask;
             im.objectID = this._id;
             im.sinfo = questionString;

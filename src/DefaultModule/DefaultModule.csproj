@@ -158,13 +158,11 @@
     <Compile Include="Server\LookAround.cs" />
     <Compile Include="Server\LowHPPlus.cs" />
     <Compile Include="Server\MapChanger.cs" />
-    <Compile Include="Server\MessageBoard.cs" />
     <Compile Include="Server\MiniBossBlob.cs" />
     <Compile Include="Server\Mysterycat.cs" />
     <Compile Include="Server\PartPickup.cs" />
     <Compile Include="Server\PvETeleport.cs" />
     <Compile Include="Server\Red Team Teleport.cs" />
-    <Compile Include="Server\ScorePost.cs" />
     <Compile Include="Server\ShadowOff.cs" />
     <Compile Include="Server\ShadowOn.cs" />
     <Compile Include="Server\ShyFollower.cs" />

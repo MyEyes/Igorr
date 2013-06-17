@@ -18,6 +18,7 @@ namespace IGORR.Server.Logic
         void SendAllExcept(IMap map, Player player, IgorrMessage message, bool Reliable);
 
         GameObject GetObject(int typeId);
+        ProtocolHelper ProtocolHelper { get; }
         
         void SetChannel(int channel);
         int Channel { get; }

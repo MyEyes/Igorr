@@ -24,7 +24,8 @@ namespace IGORR.Server
 
     class Program
     {
-        static List<Command> _commands;
+        static List<Command> _commands = new List<Command>();
+
         static void Main(string[] args)
         {
             try

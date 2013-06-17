@@ -20,6 +20,7 @@ namespace IGORR.Client
         static GameScreen _gameRef;
         static NetClient connection;
         static ObjectManager manager;
+        static ProtocolHelper _protocolHelper;
         static Thread receiveThread;
         static bool _started = false;
         static Random _random;
@@ -46,7 +47,8 @@ namespace IGORR.Client
                 //Thread.CurrentThread.Abort();
                 return;
             }
-            ProtocolHelper.SetUp(connection);
+
+            _protocolHelper = new ProtocolHelper(connection);
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Spawn, new MessageHandler(HandleSpawn));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.SpawnAttack, new MessageHandler(HandleSpawnAttack));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.AssignPlayer, new MessageHandler(HandleAssignPlayer));
@@ -169,7 +171,7 @@ namespace IGORR.Client
                 return;
             message.Encode();
             if (connection.ServerConnection != null)
-                if (Sequenced)
+                if (!Sequenced)
                     connection.SendMessage(message.GetMessage(), NetDeliveryMethod.Unreliable);
                 else
                     connection.SendMessage(message.GetMessage(), NetDeliveryMethod.UnreliableSequenced);
@@ -441,6 +443,11 @@ namespace IGORR.Client
         public static bool Connected
         {
             get { return !(connection.ConnectionStatus == NetConnectionStatus.Disconnected || connection.ConnectionStatus == NetConnectionStatus.Disconnecting || connection.ConnectionStatus == NetConnectionStatus.None); }
+        }
+
+        public static ProtocolHelper ProtocolHelper
+        {
+            get { return _protocolHelper; }
         }
     }
 }

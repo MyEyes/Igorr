@@ -93,19 +93,19 @@ namespace IGORR.Server.Logic.AI
             _invincible = true;
             ShootDuration = 0.3f;
             ShootCountdown = 1.5f;
-            IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
+            IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
             pm.SongName = "BossIntro01";
             pm.Loop = false;
             pm.Queue = false;
             pm.Encode();
             _map.ObjectManager.Server.SendAllMap(_map, pm, true);
-            pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
+            pm = (IGORR.Protocol.Messages.PlayMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
             pm.SongName = "Boss01";
             pm.Loop = true;
             pm.Queue = true;
             pm.Encode();
             _map.ObjectManager.Server.SendAllMap(_map, pm, true);
-            pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
+            pm = (IGORR.Protocol.Messages.PlayMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
             pm.SongName = "Level01";
             pm.Loop = true;
             pm.Queue = true;
@@ -113,7 +113,7 @@ namespace IGORR.Server.Logic.AI
             _map.ObjectManager.Server.SendAllMap(_map, pm, true);
             _hp = (int)(_hp * HPmod);
             _maxhp = (int)(_maxhp * HPmod);
-            IGORR.Protocol.Messages.SetPlayerStatusMessage hpm = (IGORR.Protocol.Messages.SetPlayerStatusMessage) IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetHP);
+            IGORR.Protocol.Messages.SetPlayerStatusMessage hpm = (IGORR.Protocol.Messages.SetPlayerStatusMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetHP);
             hpm.playerID = id;
             hpm.maxHP = _maxhp;
             hpm.currentHP = _hp;
@@ -129,7 +129,7 @@ namespace IGORR.Server.Logic.AI
                 if (activityCountdown < 0)
                 {
                     _invincible = false;
-                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = false;
                     sam.animationNumber = 0;
                     sam.objectID = ID;
@@ -140,7 +140,7 @@ namespace IGORR.Server.Logic.AI
 
                 if (!SetIntro)
                 {
-                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = true;
                     sam.animationNumber = 1;
                     sam.objectID = ID;
@@ -156,7 +156,7 @@ namespace IGORR.Server.Logic.AI
                     AcquireTarget();
                     if (_hp < _maxhp && _phase != BossBlobPhase.EndPhase && target == null)
                     {
-                        IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Damage);
+                        IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Damage);
                         dm.posX=this._position.X;
                         dm.posY = this._position.Y;
                         dm.playerID = this.ID;
@@ -183,7 +183,7 @@ namespace IGORR.Server.Logic.AI
                     defeated = true;
                     attackerTimeout = 15;
                     _phase = BossBlobPhase.EndPhase;
-                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
+                    IGORR.Protocol.Messages.SetAnimationMessage sam = (IGORR.Protocol.Messages.SetAnimationMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetAnimation);
                     sam.force = true;
                     sam.animationNumber = 0;
                     sam.objectID = ID;
@@ -319,14 +319,14 @@ namespace IGORR.Server.Logic.AI
                                 
                                 _invincible = false;
                                 GetDamage(1000);
-                                IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Damage);
+                                IGORR.Protocol.Messages.DamageMessage dm = (IGORR.Protocol.Messages.DamageMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Damage);
                                 dm.playerID = this._id;
                                 dm.posX = this._position.X;
                                 dm.posY = this._position.Y;
                                 dm.damage = 1000;
                                 dm.Encode();
                                 _map.ObjectManager.Server.SendAllMap(_map, dm, false);
-                                IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
+                                IGORR.Protocol.Messages.PlayMessage pm = (IGORR.Protocol.Messages.PlayMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Play);
                                 pm.SongName = "";
                                 pm.Loop = false;
                                 pm.Queue = false;
@@ -351,7 +351,7 @@ namespace IGORR.Server.Logic.AI
             HPmod = hpMod;
             _hp += (int)(_hp * diff);
             _maxhp += (int)(_maxhp * diff);
-            IGORR.Protocol.Messages.SetPlayerStatusMessage hpm = (IGORR.Protocol.Messages.SetPlayerStatusMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetHP);
+            IGORR.Protocol.Messages.SetPlayerStatusMessage hpm = (IGORR.Protocol.Messages.SetPlayerStatusMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.SetHP);
             hpm.playerID = _id;
             hpm.maxHP = _maxhp;
             hpm.currentHP = _hp;

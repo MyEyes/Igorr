@@ -230,9 +230,9 @@ namespace IGORR.Server.Logic.Body
         {
             Protocol.Messages.BodyConfigurationMessage bcm;
             if (Container)
-                bcm = (Protocol.Messages.BodyConfigurationMessage)Protocol.ProtocolHelper.GetContainerMessage(Protocol.MessageTypes.BodyConfiguration, Connection);
+                bcm = (Protocol.Messages.BodyConfigurationMessage)owner.map.ObjectManager.Server.ProtocolHelper.GetContainerMessage(Protocol.MessageTypes.BodyConfiguration, Connection);
             else
-                bcm = (Protocol.Messages.BodyConfigurationMessage)Protocol.ProtocolHelper.NewMessage(Protocol.MessageTypes.BodyConfiguration);
+                bcm = (Protocol.Messages.BodyConfigurationMessage)owner.map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.BodyConfiguration);
             
             bcm.BaseBodyID = BaseBody != null ? BaseBody.GetID() : -1;
             
@@ -252,7 +252,7 @@ namespace IGORR.Server.Logic.Body
             for (int x = 0; x < Utility.Length; x++)
                 bcm.UtilityIDs[x] = Utility[x] != null ? Utility[x].GetID() : -1;
             if (Container)
-                Protocol.ProtocolHelper.SendContainer(bcm, Connection);
+                owner.map.ObjectManager.Server.ProtocolHelper.SendContainer(bcm, Connection);
             else
             {
                 bcm.Encode();

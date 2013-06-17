@@ -48,7 +48,7 @@ namespace IGORR.Server.Logic
             _parent.RemoveChild();
             if (_respawn)
                 _map.TimeSpawn(_bodyPart.GetID(), _position, _bodyPart.GetSpawnTime());
-            PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
+            PickupMessage pum = (PickupMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.Pickup);
             pum.id = _bodyPart.GetID();
             pum.Encode();
             _map.ObjectManager.Server.SendClient(plr, pum);

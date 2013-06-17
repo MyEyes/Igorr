@@ -14,16 +14,18 @@ namespace IGORR.Server
     {
         static int idcounter = 1;
         NetConnection _clientConnection;
+        ProtocolHelper ProtocolHelper;
         int playerID;
         int id;
         string _name;
         Map _currentMap;
 
-        public Client(NetConnection connection, string name)
+        public Client(NetConnection connection, string name, ProtocolHelper ph)
         {
             id = idcounter++;
             _clientConnection = connection;
             _name = name;
+            ProtocolHelper = ph;
         }
 
         public NetConnection Connection
@@ -47,7 +49,7 @@ namespace IGORR.Server
                 _currentMap.ObjectManager.Add(p);
             }
 
-            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)IGORR.Protocol.ProtocolHelper.GetContainerMessage(MessageTypes.ChangeMap, Connection);
+            IGORR.Protocol.Messages.ChangeMapMessage cmm = (IGORR.Protocol.Messages.ChangeMapMessage)ProtocolHelper.GetContainerMessage(MessageTypes.ChangeMap, Connection);
             cmm.mapid = map.ID;
             ProtocolHelper.SendContainer(cmm, Connection);
             //_clientConnection.SendMessage(cmm.GetMessage(), NetDeliveryMethod.ReliableOrdered, 1);

@@ -26,7 +26,8 @@ namespace IGORR.Server
 
         public static void DoFile(string file)
         {
-            _lua.DoFile(file);
+            if (System.IO.File.Exists(file))
+                _lua.DoFile(file);
         }
 
         public static void Register(string functionName, object invokee, MethodBase method)

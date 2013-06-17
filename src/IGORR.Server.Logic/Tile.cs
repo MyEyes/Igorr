@@ -13,12 +13,14 @@ namespace IGORR.Server.Logic
         Rectangle _selectRect;
         bool _collides;
         EventObject _eventObject;
+        IMap _map;
 
         public Tile(IMap map,Rectangle tile,Rectangle rect,  bool collides)
             : base(map,rect, -1)
         {
             _collides = collides;
             _selectRect = tile;
+            _map = map;
         }
 
         public void SetChild(EventObject obj)
@@ -31,7 +33,7 @@ namespace IGORR.Server.Logic
         {
             _selectRect = new Rectangle(16 * id, 0, 16, 16);
             SetCollides(collides);
-            IGORR.Protocol.Messages.ChangeTileMessage ctm = (IGORR.Protocol.Messages.ChangeTileMessage)IGORR.Protocol.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.ChangeTile);
+            IGORR.Protocol.Messages.ChangeTileMessage ctm = (IGORR.Protocol.Messages.ChangeTileMessage) map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.ChangeTile);
             ctm.x = _rect.X / 16;
             ctm.y = _rect.Y / 16;
             ctm.tileID = id;
