@@ -13,7 +13,7 @@ namespace IGORR.Server.Management
         public string Password;
     }
 
-    static class LoginData
+    public static class LoginData
     {
         static List<Login> _logins;
         static bool fastCreate = true;
@@ -37,7 +37,7 @@ namespace IGORR.Server.Management
             Program.AddCommand(new Command("ListAccounts", new Action<string>(PrintList)));
         }
 
-        static void PrintList(string str)
+        public static void PrintList(string str)
         {
             Console.WriteLine("Start Accounts list:");
             for (int x = 0; x < _logins.Count; x++)

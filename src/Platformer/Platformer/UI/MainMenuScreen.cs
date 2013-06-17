@@ -17,7 +17,7 @@ namespace IGORR.Client.UI
             Button button = new Button(this, new Vector2(60, 30), new Vector2(80, 40), Content.ContentInterface.LoadTexture("UITest"),
                 delegate { Settings.ServerAddress = "localhost";
                     _manager.RemoveScreen(this); GameScreen screen = new GameScreen();
-                    Server.Server server = new Server.Server(); screen.Server = server; _manager.AddScreen(new GameScreen()); },
+                    screen.SetupLocalServer(); _manager.AddScreen(screen); },
                 "Local");
             AddChild(panel);
             panel.AddChild(button);

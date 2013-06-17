@@ -32,6 +32,11 @@ namespace IGORR.Server.Logic
              */
         }
 
+        public static void Exit()
+        {
+            _clock.Stop();
+        }
+
         public static void Update(TimeSpan elapsedTime)
         {
             _sem.Wait();

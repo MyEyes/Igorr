@@ -50,6 +50,15 @@ namespace IGORR.Client
             }
         }
 
+        public void Clear()
+        {
+            for (int x = 0; x < _screens.Count; x++)
+            {
+                _screens[x].OnRemove();
+            }
+            _screens.Clear();
+        }
+
         public Game1 Game
         {
             get;

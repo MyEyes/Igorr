@@ -101,6 +101,7 @@ namespace IGORR.Client
 
         protected override void OnExiting(object sender, EventArgs args)
         {
+            manager.Clear();
             WorldController.Leave();
             WorldController.Exit();
             base.OnExiting(sender, args);

@@ -72,6 +72,7 @@ namespace IGORR.Server
 
         public void Exit()
         {
+            LogicHandler.Exit();
             receiveThread.Abort();
         }
 

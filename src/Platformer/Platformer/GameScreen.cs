@@ -249,10 +249,18 @@ namespace IGORR.Client
             IGORR.Protocol.ProtocolHelper.Update((int)(float)gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
+        public void SetupLocalServer()
+        {
+            Server = new Server.Server();
+        }
+
         public void OnRemove()
         {
             if (Server != null)
                 Server.Exit();
+
+            IGORR.Server.Management.LoginData.Close();
+            IGORR.Server.Management.ClientInfoInterface.StoreInfo();
 
             _manager.RemoveScreen(_GUIOverlay);
             _manager.AddScreen(new UI.MainMenuScreen());

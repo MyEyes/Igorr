@@ -64,6 +64,7 @@ namespace IGORR.Server.Logic
             return TimeSpan.FromTicks(
                 (timestamp * TimeSpan.TicksPerSecond) / Frequency);
         }
+
     }
 
     internal class ClockTrigger
@@ -105,6 +106,11 @@ namespace IGORR.Server.Logic
                     Thread.Sleep((_interval - _clock.ElapsedStampTime.Milliseconds) / 2);
                 }
             }
+        }
+
+        public void Stop()
+        {
+            _thread.Abort();              
         }
     }
 }
