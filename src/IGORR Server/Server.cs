@@ -72,6 +72,15 @@ namespace IGORR.Server
 
         public void Exit()
         {
+            //Make sure to update saved client data
+            foreach (Client client in _clients.Values)
+            {
+                Player player = _clients[client.ID].CurrentMap.ObjectManager.GetPlayer(client.PlayerID);
+                if (player != null)
+                {
+                    Management.ClientInfoInterface.UpdateInfo(player);
+                }
+            }
             LogicHandler.Exit();
             receiveThread.Abort();
         }
