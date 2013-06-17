@@ -16,7 +16,7 @@ namespace IGORR.Client.Logic
             aInfo.HitDespawn = false;
             aInfo.LifeTime = 0.2f;
             aInfo.Physics = false;
-            return new Attack(Content.ContentInterface.LoadTexture("Attack"), new Microsoft.Xna.Framework.Rectangle(position.X, position.Y, 16, 12), dir, objectID, aInfo);
+            return new Attack(Content.ContentInterface.LoadTexture("Piercer"), new Microsoft.Xna.Framework.Rectangle(position.X, position.Y, 16, 12), dir, objectID, aInfo);
         }
 
         public override int TypeID

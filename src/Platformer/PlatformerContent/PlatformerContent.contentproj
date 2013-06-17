@@ -535,6 +535,11 @@
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
+    <Compile Include="gfx\Piercer.dds">
+      <Name>Piercer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="map\BlueBasePvP.map">
       <Name>BlueBasePvP</Name>
       <Importer>XmlImporter</Importer>

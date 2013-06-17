@@ -365,13 +365,24 @@ namespace IGORR.Client.Logic
 
         public override void Draw(SpriteBatch batch)
         {
-            if (font != null && !string.IsNullOrWhiteSpace(this.Name))
+            if (font != null && !string.IsNullOrWhiteSpace(this.Name) || CanInteract)
             {
                 if (_nameSize == Vector2.Zero)
                     _nameSize = font.MeasureString(_name);
                 batch.DrawString(font, this.Name, new Vector2(_rect.X + _rect.Width / 2 - 0.25f*_nameSize.X / 2, _rect.Y + _rect.Height), Color.White, 0, Vector2.Zero, 0.25f, SpriteEffects.None, 0);
-                _pointer.Draw(batch, new Vector2(_rect.X, _rect.Y), Camera.CurrentCam);
+                if (CanInteract)
+                {
+                    _pointer.SetColor(Color.Gray);
+                    Player player = _map.GetPlayer();
+                    if (player != null && (player.Position - Position).Length() < 150)
+                        _pointer.Draw(batch, new Vector2(_rect.X, _rect.Y), Camera.CurrentCam);
+                }
+                else
+                {
+                    _pointer.Draw(batch, new Vector2(_rect.X, _rect.Y), Camera.CurrentCam);
+                }
             }
+            
             if (_lifeBar != null && !string.IsNullOrWhiteSpace(this.Name))
             {
                 batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, _rect.Width, 3), null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 0.45f);

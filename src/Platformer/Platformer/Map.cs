@@ -622,5 +622,10 @@ namespace IGORR.Client
         {
             get { return WorldController.Particles; }
         }
+
+        public Player GetPlayer()
+        {
+            return WorldController.Manager.Player;
+        }
     }
 }

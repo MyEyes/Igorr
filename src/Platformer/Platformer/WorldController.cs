@@ -418,6 +418,11 @@ namespace IGORR.Client
                 receiveThread.Abort();
         }
 
+        public static ObjectManager Manager
+        {
+            get { return manager; }
+        }
+
         public static ParticleManager Particles
         {
             get { return _gameRef.Particles; }

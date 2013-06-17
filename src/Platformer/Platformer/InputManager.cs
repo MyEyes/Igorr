@@ -54,8 +54,8 @@ namespace IGORR.Client
             _keybinds.Add(Actions.Inventory, Keys.I);
             _keybinds.Add(Actions.Interact, Keys.Enter);
             _keybinds.Add(Actions.Menu, Keys.Escape);
-            _keybinds.Add(Actions.SwitchAttackLeft, Keys.Q);
-            _keybinds.Add(Actions.SwitchAttackRight, Keys.E);
+            _keybinds.Add(Actions.SwitchAttackLeft, Keys.E);
+            _keybinds.Add(Actions.SwitchAttackRight, Keys.Q);
             _leftAttack = Actions.Attack1;
             _rightAttack = Actions.Attack2;
         }
