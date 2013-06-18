@@ -409,7 +409,7 @@ namespace IGORR.Client.Logic
         }
          */
 
-        public void GivePart(BodyPart part)
+        public void GivePart(BodyPart part, bool autoequip)
         {
             //bool newPart = true;
             /*
@@ -419,7 +419,7 @@ namespace IGORR.Client.Logic
             if (newPart)
             {
              */
-            if (!_body.TryEquip(-1, part))
+            if (!autoequip || !_body.TryEquip(-1, part))
                 _inventory.Add(part);
             //_bodyParts.Add(part);
             //CalculateTotalBonus();

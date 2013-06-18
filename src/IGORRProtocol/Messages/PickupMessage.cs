@@ -9,6 +9,7 @@ namespace IGORR.Protocol.Messages
     public class PickupMessage : IgorrMessage
     {
         public int id;
+        public bool autoEquip = true;
 
         public PickupMessage(NetOutgoingMessage outgoing, long timestamp) : base(outgoing, timestamp, MessageTypes.Pickup) { }
 
@@ -17,12 +18,14 @@ namespace IGORR.Protocol.Messages
         protected override void Decode()
         {
             id = _incoming.ReadInt32();
+            autoEquip = _incoming.ReadBoolean();
         }
 
         public override void Encode()
         {
             base.Encode();
             _outgoing.Write(id);
+            _outgoing.Write(autoEquip);
         }
     }
 }

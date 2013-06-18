@@ -91,11 +91,11 @@ namespace IGORR.Client
 
             #region Attacks
 
-            if (mouse.LeftButton == ButtonState.Pressed && _prevMouse.LeftButton != ButtonState.Pressed)
+            if (mouse.LeftButton == ButtonState.Pressed && _prevMouse.LeftButton != ButtonState.Pressed || (gamepad.Buttons.LeftShoulder == ButtonState.Pressed && _prevPad.Buttons.LeftShoulder != ButtonState.Pressed))
             {
                 _activated[(int)_leftAttack] = true;
             }
-            if (mouse.RightButton == ButtonState.Pressed && _prevMouse.RightButton != ButtonState.Pressed)
+            if (mouse.RightButton == ButtonState.Pressed && _prevMouse.RightButton != ButtonState.Pressed || (gamepad.Buttons.RightShoulder == ButtonState.Pressed && _prevPad.Buttons.RightShoulder != ButtonState.Pressed))
             {
                 _activated[(int)_rightAttack] = true;
             }
@@ -107,14 +107,14 @@ namespace IGORR.Client
                 _activated[(int)Actions.Inventory] = true;
             if ((keyboard.IsKeyDown(_keybinds[Actions.Character]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.Character])))
                 _activated[(int)Actions.Character] = true;
-            if ((keyboard.IsKeyDown(_keybinds[Actions.Interact]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.Interact])))
+            if ((keyboard.IsKeyDown(_keybinds[Actions.Interact]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.Interact])) || gamepad.Buttons.X== ButtonState.Pressed)
                 _activated[(int)Actions.Interact] = true;
             if ((keyboard.IsKeyDown(_keybinds[Actions.Menu]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.Menu])))
                 _activated[(int)Actions.Menu] = true;
             #endregion
 
             #region AttackSwitching
-            if((keyboard.IsKeyDown(_keybinds[Actions.SwitchAttackLeft]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.SwitchAttackLeft])))
+            if((keyboard.IsKeyDown(_keybinds[Actions.SwitchAttackLeft]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.SwitchAttackLeft])) || (gamepad.Buttons.Y== ButtonState.Pressed && _prevPad.Buttons.Y!=ButtonState.Pressed))
             {
                 _leftAttack = _rightAttack;
                 if (_rightAttack != Actions.Attack4)
@@ -127,7 +127,7 @@ namespace IGORR.Client
                     _rightAttack = Actions.Attack1;
             }
 
-            if ((keyboard.IsKeyDown(_keybinds[Actions.SwitchAttackRight]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.SwitchAttackRight])))
+            if ((keyboard.IsKeyDown(_keybinds[Actions.SwitchAttackRight]) && !_prevKeyboard.IsKeyDown(_keybinds[Actions.SwitchAttackRight])) || (gamepad.Buttons.B == ButtonState.Pressed && _prevPad.Buttons.B != ButtonState.Pressed))
             {
                 _rightAttack = _leftAttack;
                 if (_leftAttack != Actions.Attack1)

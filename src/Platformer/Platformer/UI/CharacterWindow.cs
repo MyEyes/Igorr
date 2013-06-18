@@ -119,7 +119,7 @@ namespace IGORR.Client.UI
             if (ic != null)
             {
                 this.RemoveChild(ic);
-                _player.Body.Unequip(ic.Item as Logic.Body.BodyPart);
+                _player.Body.Unequip(ic.Item as Logic.Body.BodyPart, true);
             }
             Update();
         }

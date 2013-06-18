@@ -121,7 +121,7 @@ namespace IGORR.Server.Management
 
     public static class ClientInfoInterface
     {
-        static Dictionary<string, ClientInfo> _clientInfos;
+        static Dictionary<string, ClientInfo> _clientInfos = new Dictionary<string,ClientInfo>();
 
         public static void LoadInfos()
         {

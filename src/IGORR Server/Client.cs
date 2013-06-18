@@ -101,13 +101,14 @@ namespace IGORR.Server
 
             if (p != null)
             {
+                p.Body.SendBody(Connection, true);
                 for (int x = 0; x < p.Inventory.Count; x++)
                 {
                     PickupMessage pum = (PickupMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Pickup, Connection);
                     pum.id = p.Inventory[x].GetID();
+                    pum.autoEquip = false;
                     ProtocolHelper.SendContainer(pum, Connection);
                 }
-                p.Body.SendBody(Connection, true);
             }
 
             ProtocolHelper.FlushContainer(Connection, 1);

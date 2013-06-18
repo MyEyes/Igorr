@@ -618,6 +618,7 @@ namespace IGORR.Server.Logic
         public Inventory Inventory
         {
             get { return _inventory; }
+            set { _inventory = value; }
         }
     }
 }

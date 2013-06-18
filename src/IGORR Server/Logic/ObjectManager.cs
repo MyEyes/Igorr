@@ -312,14 +312,15 @@ namespace IGORR.Server.Logic
                 //Add the new player to the game objects
                 Add(newPlayer);
                 newPlayer.Body = player.Body;
+                newPlayer.Inventory = player.Inventory;
                 for (int x = 0; x < player.Inventory.Count; x++)
                 {
                     Body.BodyPart part = player.Inventory[x] as Body.BodyPart;
                     if(part==null)
                         continue;
-                    newPlayer.GivePart(part);
                     PickupMessage pum = (PickupMessage)Server.ProtocolHelper.NewMessage(MessageTypes.Pickup);
                     pum.id = part.GetID();
+                    pum.autoEquip = false;
                     pum.Encode();
                     _map.ObjectManager.Server.SendClient(player, pum);
                 }

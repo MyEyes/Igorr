@@ -220,7 +220,7 @@ namespace IGORR.Client
             GameObject obj = ModuleManager.SpawnByIdClient(null, pum.id, -1, Point.Zero, "");
             if (obj != null && manager.Player!=null && obj is PartContainer)
             {
-                manager.Player.GivePart((obj as PartContainer).Part);
+                manager.Player.GivePart((obj as PartContainer).Part, pum.autoEquip);
                 _gameRef.GUI.UpdateInventoryWindow();
             }
             /*
