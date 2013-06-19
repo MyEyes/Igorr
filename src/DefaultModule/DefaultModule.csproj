@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Wire.cs" />
     <Compile Include="Client\StepButton.cs" />
     <Compile Include="Client\Pusher.cs" />
     <Compile Include="Client\GlowPart.cs" />

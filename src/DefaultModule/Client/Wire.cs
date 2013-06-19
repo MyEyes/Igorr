@@ -7,10 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Client.Logic
 {
-    class StepButton : EventObject
+    class Wire : EventObject
     {
         int frame=0;
-        public StepButton(IMap map, Texture2D texture, Rectangle position, int id)
+        bool on = false;
+
+        public Wire(IMap map, Texture2D texture, Rectangle position, int id)
             : base(map, texture, position, id)
         {
 
@@ -27,11 +29,12 @@ namespace IGORR.Client.Logic
         public override void GetInfo(string info)
         {
             frame = (int)info[0];
+            on = info[1] == 1;
         }
 
         public override void Draw(SpriteBatch batch)
         {
-            batch.Draw(_texture, _rect, new Rectangle(16 * frame, 0, 16, 16), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
+            batch.Draw(_texture, _rect, new Rectangle(16 * frame, 0, 16, 16), !on ? new Color(50, 50, 50) : Color.Yellow);
         }
     }
 }

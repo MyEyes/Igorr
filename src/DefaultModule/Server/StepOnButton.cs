@@ -12,26 +12,40 @@ namespace IGORR.Server.Logic
         bool _touchAgain = false;
         bool _global = false;
         string _triggerName;
-        Player lastToucher = null;
 
         public StepOnButton(string triggerName, bool global, IMap map, Rectangle rect, int id)
             : base(map, rect, id)
         {
             _triggerName = triggerName;
             _global = global;
+            _objectType = 84;
         }
 
         public override void Update(float ms)
         {
-            if (!_touched)
+            if (!_touched && !_touchAgain)
+            {
                 _touchAgain = true;
+                UpdateState();
+            }
             _touched = false;
             base.Update(ms);
+        }
+
+        public void UpdateState()
+        {
+            Protocol.Messages.ObjectInfoMessage oim = (Protocol.Messages.ObjectInfoMessage)_map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.ObjectInfo);
+            oim.objectID = _id;
+            oim.info = "" + (char)(_touched ? 1 : 0);
+            oim.Encode();
+            _map.ObjectManager.Server.SendAllMap(_map, oim, false);
         }
 
         public override void Event(Player obj)
         {
             //Trigger should only be set one frame when someone steps on it.
+            if (!obj.OnGround)
+                return;
             _touched = true;
             if (_touchAgain)
             {
@@ -41,6 +55,7 @@ namespace IGORR.Server.Logic
                     _map.SetTrigger(_triggerName, true);
 
                 _touchAgain = false;
+                UpdateState();
             }
             else
             {

@@ -131,8 +131,8 @@ namespace IGORR.Server.Logic.AI
                 diff = new Vector2(diff.Y, -diff.X);
                 float dist = 48 *(float)(-1 + 2 * _random.NextDouble());
 
-                dx = _target.MidPosition.X+diff.X*dist - this.MidPosition.X;
-                dy = (_target.MidPosition.Y + diff.Y* dist - this.MidPosition.Y);
+                dx = _target.MidPosition.X + t * _target.LastSpeed.X + diff.X * dist - this.MidPosition.X;
+                dy = (_target.MidPosition.Y + t * _target.LastSpeed.Y + diff.Y * dist - this.MidPosition.Y);
                 float a = (float)Math.Atan((dy - 0.5f * t * t * gravity) / dx);
                 float s = (float)(dx / (t * (float)Math.Cos(a)));
                 _map.ObjectManager.SpawnAttack(ID, s * new Vector2((float)Math.Cos(a), (float)Math.Sin(a)), 0, 0);

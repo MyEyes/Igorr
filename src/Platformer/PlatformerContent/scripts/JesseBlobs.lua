@@ -1,9 +1,12 @@
 module(..., package.seeall)
 
+local startPosition;
+
 function spawn()
 me.reacts_spotFriendly = true;
 me.interacts = true;
 me.lookingForFriend=true
+startPosition=me.Position;
 end
 
 function spawn_equip()
@@ -35,8 +38,11 @@ function react_damageTaken()
 end
 
 function interact(sinfo, info)
-me:ClearState();
-me:Move(4300,0.2);
-me:Wait(2000);
-me:Move(4300,-0.2);
+local diff = me.Position.X-startPosition.x;
+if diff<0.5 and diff>-0.5 then
+	me:ClearState();
+	me:Move(4300,0.2);
+	me:Wait(2000);
+	me:Move(4300,-0.2);
+end
 end
