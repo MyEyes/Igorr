@@ -427,6 +427,15 @@ namespace IGORR.Server.Logic
              */
         }
 
+        public bool HasPart(BodyPart part)
+        {
+            if(_inventory.Contains(part))
+                return true;
+            if (_body.HasEquipped(part))
+                return true;
+            return false;
+        }
+
         public void EquipAttack(int slot, Body.AttackPart part)
         {
             _body.TryEquip(slot, part);

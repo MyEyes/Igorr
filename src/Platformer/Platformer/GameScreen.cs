@@ -205,7 +205,7 @@ namespace IGORR.Client
                     objectManager.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
                     cam.MoveTo(player.Position , 0.1f);
                     //cam.SetPos(player.Position);
-                    _lightMap.SetGlow(-1, player.MidPosition, Color.White, 150, true);
+                    //_lightMap.SetGlow(-1, player.MidPosition, Color.White, 150, true);
                 }
 
                 if (shadowTurnOn)

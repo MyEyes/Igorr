@@ -45,6 +45,11 @@ namespace IGORR.Server.Logic
             _actions++;
         }
 
+        public bool Contains(ICollectible c)
+        {
+            return _items.Contains(c);
+        }
+
         public ICollectible this[int i]
         {
             get { return _items[i]; }

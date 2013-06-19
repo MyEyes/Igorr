@@ -540,6 +540,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="map\LegsMap.map">
+      <Name>LegsMap</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <None Include="map\Old\BlueBasePvP.map">
       <Name>BlueBasePvP</Name>
       <Importer>XmlImporter</Importer>
@@ -728,6 +734,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>maps</Name>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gfx\Glow.png">
+      <Name>Glow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

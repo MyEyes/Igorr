@@ -43,6 +43,8 @@ namespace IGORR.Server.Logic
 
         public override void Event(Player plr)
         {
+            if (plr.HasPart(_bodyPart))
+                return;
             if (!plr.GivePart(_bodyPart))
                 return;
             _parent.RemoveChild();

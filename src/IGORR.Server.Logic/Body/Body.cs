@@ -142,6 +142,44 @@ namespace IGORR.Server.Logic.Body
             return false;
         }
 
+        public bool HasEquipped(BodyPart part)
+        {
+            if (part.Equals(BaseBody))
+                return true;
+            for (int x = 0; x < Movement.Length; x++)
+            {
+                if (part.Equals(Movement[x]))
+                {
+                    return true;
+                }
+            }
+
+            for (int x = 0; x < Utility.Length; x++)
+            {
+                if (part.Equals(Utility[x]))
+                {
+                    return true;
+                }
+            }
+
+            for (int x = 0; x < Armor.Length; x++)
+            {
+                if (part.Equals(Armor[x]))
+                {
+                    return true;
+                }
+            }
+
+            for (int x = 0; x < Attacks.Length; x++)
+            {
+                if (part.Equals(Attacks[x]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void Unequip(BodyPart part)
         {
             for (int x = 0; x < Movement.Length; x++)
