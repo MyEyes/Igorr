@@ -25,6 +25,10 @@ namespace IGORR.Server.Logic
         {
             if (!_touched && !_touchAgain)
             {
+                if (_global)
+                    GlobalTriggers.SetTriggerValue(_triggerName, 0);
+                else
+                    _map.SetTrigger(_triggerName, false);
                 _touchAgain = true;
                 UpdateState();
             }
