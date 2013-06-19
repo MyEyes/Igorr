@@ -13,5 +13,20 @@ namespace IGORR.Client.Logic.Body
         {
 
         }
+
+        public virtual void Update(float ms)
+        {
+
+        }
+
+        public virtual void Move(float x, float y)
+        {
+
+        }
+
+        public virtual void Jump(float strength)
+        {
+
+        }
     }
 }

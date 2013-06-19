@@ -205,6 +205,10 @@ namespace IGORR.Client.Logic.Body
 
         public void Update(float ms) 
         {
+            if (BaseBody != null)
+            {
+                BaseBody.Update(ms);
+            }
             for (int x = 0; x < Movement.Length; x++)
             {
                 if (Movement[x] == null) continue;
@@ -232,6 +236,11 @@ namespace IGORR.Client.Logic.Body
 
         public void Move(float dir, float yDir)
         {
+            if (BaseBody != null)
+            {
+                BaseBody.Move(dir,yDir);
+            }
+
             for (int x = 0; x < Movement.Length; x++)
             {
                 if (Movement[x] == null) continue;
@@ -241,6 +250,10 @@ namespace IGORR.Client.Logic.Body
 
         public void Jump(float strength)
         {
+            if (BaseBody != null)
+            {
+                BaseBody.Jump(strength);
+            }
             for (int x = 0; x < Movement.Length; x++)
             {
                 if (Movement[x] == null) continue;

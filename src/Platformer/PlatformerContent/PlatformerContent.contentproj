@@ -517,13 +517,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="map\Field1.map">
+    <Compile Include="map\Old\Field1.map">
       <Name>Field1</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="map\Cave1.map">
+    <Compile Include="map\Old\Cave1.map">
       <Name>Cave1</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -540,73 +540,79 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <None Include="map\BlueBasePvP.map">
+    <None Include="map\Old\BlueBasePvP.map">
       <Name>BlueBasePvP</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\Bonus.map">
+    <None Include="map\Old\Bonus.map">
       <Name>Bonus</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\castle.map">
+    <None Include="map\Old\castle.map">
       <Name>castle</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\PvP Arena.map">
+    <None Include="map\Old\PvP Arena.map">
       <Name>PvP Arena</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\PvP Hub.map">
+    <None Include="map\Old\PvP Hub.map">
       <Name>PvP Hub</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\RedBasePvP.map">
+    <None Include="map\Old\RedBasePvP.map">
       <Name>RedBasePvP</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\Sewers.map">
+    <None Include="map\Old\Sewers.map">
       <Name>Sewers</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\testmap2.map">
+    <Compile Include="map\Startmap.map">
+      <Name>Startmap</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <None Include="map\Old\testmap2.map">
       <Name>testmap2</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\testmap2philipp.map">
+    <None Include="map\Old\testmap2philipp.map">
       <Name>testmap2philipp</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\testmap3.map">
+    <None Include="map\Old\testmap3.map">
       <Name>testmap3</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\testmap4.map">
+    <None Include="map\Old\testmap4.map">
       <Name>testmap4</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\TutorialMap.map">
+    <None Include="map\Old\TutorialMap.map">
       <Name>TutorialMap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -628,7 +634,7 @@
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
-    <Compile Include="map\testmap.map">
+    <Compile Include="map\Old\testmap.map">
       <Name>testmap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -641,7 +647,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="map\maps.lst">
+    <None Include="map\Old\maps.lst">
       <Name>maps</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -716,6 +722,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="map\maps.lst">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>maps</Name>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

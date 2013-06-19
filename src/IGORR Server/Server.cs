@@ -307,13 +307,14 @@ namespace IGORR.Server
 
                 Management.PlayerInfo pinfo = Management.ClientInfoInterface.GetInfo(player);
                 targetMap = MapManager.GetMapByID(pinfo.Map);
+                if(targetMap==null)
+                    targetMap = MapManager.GetMapByID(0);
 
                 Client client = new Client(message.SenderConnection, jm.Name, _protocolHelper);
                 client.PlayerID = id;
                 _clientids.Add(client.Connection.RemoteUniqueIdentifier, client.ID);
                 _clients.Add(client.ID, client);
                 _connections.Add(client.Connection);
-
                 client.SetMap(targetMap, new Vector2(pinfo.PosX, pinfo.PosY));
 
                 /*
