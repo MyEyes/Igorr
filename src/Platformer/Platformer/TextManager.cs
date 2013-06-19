@@ -82,8 +82,18 @@ namespace IGORR.Client
         public static void Say(GameObject obj, string Text, float timeout)
         {
             for (int x = 0; x < _bubbles.Count; x++)
-                if (_bubbles[x].Speaker!=null && _bubbles[x].Speaker.ID == obj.ID && _bubbles[x].alive)
-                    return;
+                if (_bubbles[x].Speaker != null && _bubbles[x].Speaker.ID == obj.ID && !(_bubbles[x] is InteractiveTextBubble) && _bubbles[x].alive)
+                {
+                    if (_bubbles[x] is InteractiveTextBubble)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        _bubbles.RemoveAt(x);
+                        break;
+                    }
+                }
             _bubbles.Add(new TextBubble(Text,obj,timeout));
         }
 
@@ -98,6 +108,7 @@ namespace IGORR.Client
                 if (_bubbles[x].Speaker != null && _bubbles[x].Speaker.ID == obj.ID && _bubbles[x].alive)
                 {
                     _bubbles.RemoveAt(x);
+                    break;
                 }
             _bubbles.Add(new InteractiveTextBubble(choices, text, obj));
         }

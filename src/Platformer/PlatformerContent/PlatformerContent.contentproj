@@ -669,6 +669,12 @@
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
+    <Compile Include="scripts\TB.lua">
+      <Name>TB</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="map\Old\maps.lst">

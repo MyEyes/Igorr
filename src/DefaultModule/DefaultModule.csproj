@@ -85,6 +85,12 @@
     <Compile Include="EditorControls\LuaNPCControl.Designer.cs">
       <DependentUpon>LuaNPCControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditorControls\SpawnerInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorControls\SpawnerInfoControl.Designer.cs">
+      <DependentUpon>SpawnerInfoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditorControls\TeleporterInfoControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -102,6 +108,7 @@
     <Compile Include="EffectTemplates\SlimeExplosionEffectTemplate.cs" />
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
+    <Compile Include="Server\EnemySpawner.cs" />
     <Compile Include="Server\StepOnButton.cs" />
     <Compile Include="Server\Launcher.cs" />
     <Compile Include="Server\GlowPart.cs" />
@@ -119,6 +126,7 @@
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\BossMinionTemplate.cs" />
     <Compile Include="Templates\AbstractEnemyTemplate.cs" />
+    <Compile Include="Templates\SpawnerTemplate.cs" />
     <Compile Include="Templates\PusherTemplate.cs" />
     <Compile Include="Templates\StepButtonTemplate.cs" />
     <Compile Include="Templates\GlowTemplate.cs" />
@@ -219,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditorControls\LuaNPCControl.resx">
       <DependentUpon>LuaNPCControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditorControls\SpawnerInfoControl.resx">
+      <DependentUpon>SpawnerInfoControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditorControls\TeleporterInfoControl.resx">
       <DependentUpon>TeleporterInfoControl.cs</DependentUpon>

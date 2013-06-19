@@ -21,7 +21,6 @@ namespace DefaultModule.EditorControls
                 string CharFile = reader.ReadString();
                 txtScriptFile.Text = ScriptFile;
                 txtCharFile.Text = CharFile;
-                
             }
         }
 

@@ -49,6 +49,8 @@ namespace IGORR.Client.Logic
                 }
                 targetEnd = cam.Position + diff;
             }
+            targetEnd.X = (int)targetEnd.X;
+            targetEnd.Y = (int)targetEnd.Y;
             
             float angle = (float)Math.Atan2(pos.Y - targetEnd.Y, pos.X - targetEnd.X);
             batch.Draw(tex, targetEnd, null, color, angle, _textureOffset, 0.5f, SpriteEffects.None, 0.1f);
@@ -368,7 +370,10 @@ namespace IGORR.Client.Logic
             {
                 if (_nameSize == Vector2.Zero)
                     _nameSize = font.MeasureString(_name);
-                batch.DrawString(font, this.Name, new Vector2(_rect.X + _rect.Width / 2 - 0.25f*_nameSize.X / 2, _rect.Y + _rect.Height), Color.White, 0, Vector2.Zero, 0.25f, SpriteEffects.None, 0);
+                Vector2 stringPosition = new Vector2(_rect.X + _rect.Width / 2 - 0.25f*_nameSize.X / 2, _rect.Y + _rect.Height);
+                stringPosition.X = (int)stringPosition.X;
+                stringPosition.Y = (int)stringPosition.Y;
+                batch.DrawString(font, this.Name, stringPosition, Color.White, 0, Vector2.Zero, 0.25f, SpriteEffects.None, 0);
                 if (CanInteract)
                 {
                     _pointer.SetColor(Color.Gray);
