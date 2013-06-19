@@ -222,13 +222,12 @@ namespace IGORR.Client.Logic
                 pos.X += Left ? Rect.Width : 0;
             }
 
-            _aniControl.Update(seconds*1000,this);
             wallCollision = false;
             TryMove(_speed * seconds, map);
+            _aniControl.Update(seconds * 1000, this);
             if (wallCollision)
             {
                 _speed.Y = 0;
-                TryMove(-seconds*(float)Math.Abs(_lastSpeed.X) * Vector2.UnitY,map);
             }
 
             #region Animation Handling
@@ -345,12 +344,12 @@ namespace IGORR.Client.Logic
             _targetExp += amount;
         }
 
-        public void Move(float xDiff)
+        public void Move(float xDiff, float yDiff)
         {
             if (stunned)
                 return;
             _speed.X += baseSpeed * xDiff;
-            _body.Move(xDiff);
+            _body.Move(xDiff, yDiff);
             _moveVector = Vector2.Zero;
         }
 

@@ -47,7 +47,7 @@ namespace IGORR.Server.Logic.AI
 
         public override bool Update(float ms)
         {
-            _parent.Move(_dir);
+            _parent.Move(_dir,0);
             _time -= ms;
             return _time > 0;
         }

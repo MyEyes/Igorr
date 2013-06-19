@@ -50,15 +50,15 @@ namespace IGORR.Server.Logic.AI
                 {
                     if (target.Position.X > this._position.X + _rect.Width)
                     {
-                        Move(1);
+                        Move(1,0);
                     }
                     else if (target.Position.X+target.Rect.Width < this._position.X)
                     {
-                        Move(-1);
+                        Move(-1,0);
                     }
                     else if (target.Position.X > this._position.X)
                     {
-                        Move(0.0001f);
+                        Move(0.0001f,0);
                     }
                     if (target.Position.Y < this._position.Y)
                         Jump();
@@ -84,9 +84,9 @@ namespace IGORR.Server.Logic.AI
                 }
                 moveCountdown -= seconds;
                 if(moveLeft)
-                    Move(-0.5f);
+                    Move(-0.5f,0);
                 else
-                    Move(0.5f);
+                    Move(0.5f,0);
             }
             base.Update(map, seconds);
         }

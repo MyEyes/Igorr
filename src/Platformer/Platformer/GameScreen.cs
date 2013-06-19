@@ -187,7 +187,7 @@ namespace IGORR.Client
 
                     if (input.Jump)
                         player.Jump();
-                    player.Move(input.Direction);
+                    player.Move(input.Direction, input.yDirection);
 
                     GameObject interactObject = objectManager.GetObjectInteract(player.MidPosition, 32);
                     if (interactObject != null && input.isActive(Actions.Interact))

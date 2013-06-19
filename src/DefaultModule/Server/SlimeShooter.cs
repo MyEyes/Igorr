@@ -83,8 +83,8 @@ namespace IGORR.Server.Logic.AI
                     
                 Left = _target.MidPosition.X < this.MidPosition.X;
                 //Cheat to make enemy face in the right direction, look wrong way first, then the right way, this way we don't actually move
-                Move(!Left ? -0.01f : 0.01f);
-                Move(Left ? -0.01f : 0.01f);
+                Move(!Left ? -0.01f : 0.01f,0);
+                Move(Left ? -0.01f : 0.01f,0);
                 if (_target.HP <= 0)
                     _target = null;
                 if (attackCooldown <= 0 &&!attack)

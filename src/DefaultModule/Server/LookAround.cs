@@ -38,9 +38,9 @@ namespace IGORR.Server.Logic.AI
             if (_Move)
             {
                 if (Left)
-                    Move(-0.00001f);
+                    Move(-0.00001f,0);
                 else
-                    Move(0.00001f);
+                    Move(0.00001f,0);
             }
             base.Update(map, seconds);
         }

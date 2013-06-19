@@ -13,6 +13,8 @@ namespace IGORR.Client
     {
         Left,
         Right,
+        Up,
+        Down,
         Jump,
         Interact,
         Attack1,
@@ -28,8 +30,9 @@ namespace IGORR.Client
 
     class InputManager
     {
-        const int TotalActions = 13;
+        const int TotalActions = 15;
         float _direction;
+        float _yDirection;
         bool _jump;
 
         KeyboardState _prevKeyboard;
@@ -49,6 +52,8 @@ namespace IGORR.Client
             _activated = new bool[TotalActions];
             _keybinds.Add(Actions.Left, Keys.A);
             _keybinds.Add(Actions.Right, Keys.D);
+            _keybinds.Add(Actions.Up, Keys.W);
+            _keybinds.Add(Actions.Down, Keys.S);
             _keybinds.Add(Actions.Jump, Keys.Space);
             _keybinds.Add(Actions.Character, Keys.C);
             _keybinds.Add(Actions.Inventory, Keys.I);
@@ -70,14 +75,22 @@ namespace IGORR.Client
 
             #region Movement Direction
             _direction = 0;
+            _yDirection = 0;
 
             if (keyboard.IsKeyDown(_keybinds[Actions.Left]) || gamepad.DPad.Left== ButtonState.Pressed)
                 _direction += -1;
             if (keyboard.IsKeyDown(_keybinds[Actions.Right]) || gamepad.DPad.Right==ButtonState.Pressed)
                 _direction += 1;
+            if (keyboard.IsKeyDown(_keybinds[Actions.Up]) || gamepad.DPad.Up == ButtonState.Pressed)
+                _yDirection += -1;
+            if (keyboard.IsKeyDown(_keybinds[Actions.Down]) || gamepad.DPad.Down == ButtonState.Pressed)
+                _yDirection += 1;
             _direction += gamepad.ThumbSticks.Left.X;
+            _yDirection -= gamepad.ThumbSticks.Left.Y;
             if (_direction < -1) _direction = -1;
             if (_direction > 1) _direction = 1;
+            if (_yDirection < -1) _yDirection = -1;
+            if (_yDirection > 1) _yDirection = 1;
             #endregion
 
             #region Jumping
@@ -163,6 +176,7 @@ namespace IGORR.Client
         }
 
         public float Direction { get { return _direction; } }
+        public float yDirection { get { return _yDirection; } }
 
         public Actions LeftAttack { get { return _leftAttack; } }
         public Actions RightAttack { get { return _rightAttack; } }

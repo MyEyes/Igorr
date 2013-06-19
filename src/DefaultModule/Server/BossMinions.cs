@@ -52,9 +52,9 @@ namespace IGORR.Server.Logic.AI
                     moveCountdown = (float)_random.NextDouble() + 0.5f;
                 }
                 if (left)
-                    Move(-1);
+                    Move(-1,0);
                 else
-                    Move(1);
+                    Move(1,0);
                 if (_random.NextDouble() > 0.99f)
                     Jump();
             }

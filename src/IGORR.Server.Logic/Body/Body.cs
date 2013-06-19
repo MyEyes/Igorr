@@ -208,12 +208,12 @@ namespace IGORR.Server.Logic.Body
             }
         }
 
-        public void Move(float dir)
+        public void Move(float dir, float yDir)
         {
             for (int x = 0; x < Movement.Length; x++)
             {
                 if (Movement[x] == null) continue;
-                Movement[x].Move(owner, dir);
+                Movement[x].Move(owner, dir, yDir);
             }
         }
 

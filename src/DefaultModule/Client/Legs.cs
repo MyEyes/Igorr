@@ -30,7 +30,7 @@ namespace IGORR.Client.Logic
             }
         }
 
-        public override void Move(Player player, float dir)
+        public override void Move(Player player, float dir, float yDir)
         {
             Vector2 newSpeed = player.Speed;
             newSpeed.X += speedBonus * dir;

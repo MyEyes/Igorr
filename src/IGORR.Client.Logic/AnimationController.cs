@@ -45,14 +45,14 @@ namespace IGORR.Client.Logic
                     SetAnimation(Idle);
                 else if (player.OnGround && player.Flying)
                     SetAnimation(Land);
+                else if (player.OnWall)
+                    SetAnimation(Wall);
                 else if (!player.OnGround && player.Flying && player.Speed.Y < 0)
                     SetAnimation(Fly);
                 else if (!player.OnGround && player.Flying && player.Speed.Y > 0)
                     SetAnimation(Fall);
                 else if (player.Jumping)
                     SetAnimation(Jump);
-                else if (player.OnWall)
-                    SetAnimation(Wall);
             }
 
             if (currentAnimation != null)

@@ -15,7 +15,7 @@ namespace IGORR.Server.Logic.Body
         }
 
 
-        public virtual void Move(Player player, float dir)
+        public virtual void Move(Player player, float dir, float yDir)
         {
 
         }

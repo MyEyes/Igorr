@@ -109,9 +109,9 @@ namespace IGORR.Server.Logic.AI
             if (_Move)
             {
                 if (Left)
-                    Move(-1);
+                    Move(-1,0);
                 else
-                    Move(1);
+                    Move(1,0);
             }
             attackCooldown -= seconds;
             base.Update(map, seconds);

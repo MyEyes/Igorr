@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\WallWalker.cs" />
     <Compile Include="Client\Piercer.cs" />
     <Compile Include="Client\GrenadeLauncher.cs" />
     <Compile Include="Client\StaticLight.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="EffectTemplates\SlimeExplosionEffectTemplate.cs" />
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
+    <Compile Include="Server\WallWalker.cs" />
     <Compile Include="Server\SlimeLauncher.cs" />
     <Compile Include="Server\SlimeShot.cs" />
     <Compile Include="Server\SlimeShooter.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\BossMinionTemplate.cs" />
     <Compile Include="Templates\AbstractEnemyTemplate.cs" />
+    <Compile Include="Templates\WallWalkTemplate.cs" />
     <Compile Include="Templates\StaticLightTemplate.cs" />
     <Compile Include="Templates\SlimeShotAttackTemplate.cs" />
     <Compile Include="Templates\SlimeShooterTemplate.cs" />

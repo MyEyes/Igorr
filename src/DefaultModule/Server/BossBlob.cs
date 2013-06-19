@@ -229,9 +229,9 @@ namespace IGORR.Server.Logic.AI
                             else
                             {
                                 if (jumpLeft)
-                                    Move(-0.65f);
+                                    Move(-0.65f,0);
                                 else
-                                    Move(0.65f);
+                                    Move(0.65f,0);
                             }
                             break;
                         #endregion
@@ -240,9 +240,9 @@ namespace IGORR.Server.Logic.AI
                             //if (!FixedDir)
                             //{
                             if (target.MidPosition.X > this.MidPosition.X)
-                                Move(0.0001f);
+                                Move(0.0001f,0);
                             else
-                                Move(-0.0001f);
+                                Move(-0.0001f,0);
                             //    FixedDir = true;
                             //}
                             ShootCountdown -= seconds;
@@ -310,9 +310,9 @@ namespace IGORR.Server.Logic.AI
                             if (countdown > 6 && !OnGround )
                             {
                                 if (_position.X>startPos.X)
-                                    Move(-0.7f);
+                                    Move(-0.7f,0);
                                 else
-                                    Move(0.7f);
+                                    Move(0.7f,0);
                             }
                             if (countdown < 0)
                             {

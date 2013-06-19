@@ -137,11 +137,9 @@ namespace IGORR.Server.Logic
 
             wallCollision = false;
             TryMove(_speed * seconds);
+
             if (wallCollision)
-            {
-                _speed.Y = -(float)Math.Abs(_lastSpeed.X);
-                TryMove(seconds * _speed.Y * Vector2.UnitY);
-            }
+                _speed.Y = 0;
 
             if (!map.MapBoundaries.Contains((int)MidPosition.X, (int)MidPosition.Y))
             {
@@ -267,12 +265,12 @@ namespace IGORR.Server.Logic
             attackCooldown = coolDown;
         }
 
-        public void Move(float xDiff)
+        public void Move(float xDiff, float yDiff)
         {
             if (stunned)
                 return;
             _speed.X += baseSpeed * xDiff;
-            _body.Move(xDiff);
+            _body.Move(xDiff, yDiff);
             _moveVector = Vector2.Zero;
         }
 

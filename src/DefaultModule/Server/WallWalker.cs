@@ -7,40 +7,38 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace IGORR.Server.Logic
 {
-    class BossBlobLegs:Body.MovementPart
+    class WallWalker:Body.MovementPart
     {
-        public BossBlobLegs()
+        float speedBonus;
+        public WallWalker()
             : base()
         {
-            //speedBonus = 80;
-            //jumpBonus = 180;
+            speedBonus = 80;
+            //jumpBonus = 100;
         }
 
         public override void Jump(Player player, float strength)
         {
-            if (player.OnGround)
-            {
-                Vector2 currentSpeed = player.Speed;
-                currentSpeed.Y -= 100;
-                player.Speed = currentSpeed;
-            }
         }
 
         public override void Move(Player player, float dir, float yDir)
         {
-            Vector2 currentSpeed = player.Speed;
-            currentSpeed.X += 20*dir;
-            player.Speed = currentSpeed;
+            if (player.OnWall)
+            {
+                Vector2 speed = player.Speed;
+                speed.Y += yDir*speedBonus;
+                player.Speed = speed;
+            }
         }
 
         public override string GetName()
         {
-            return "BossBlobLegs";
+            return "WallWalker";
         }
 
         public override int GetID()
         {
-            return 'b'-'a';
+            return 81;
         }
     }
 }
