@@ -30,5 +30,11 @@ namespace IGORR.Modules
             get { return -1; }
         }
 
+        public override string ToString()
+        {
+            string[] split = base.ToString().Split('.');
+            return split[split.Length - 1];
+        }
+
     }
 }

@@ -203,7 +203,7 @@ namespace IGORR.Client
                     //Test stuff
                     WorldController.SendPosition(player);
                     objectManager.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
-                    cam.MoveTo(player.Position , 0.1f);
+                    cam.MoveTo(player.Position , 0.05f);
                     //cam.SetPos(player.Position);
                     //_lightMap.SetGlow(-1, player.MidPosition, Color.White, 150, true);
                 }

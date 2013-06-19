@@ -383,8 +383,10 @@ for (int x = 0; x < tpCount; x++)
 
         public void DoPlayerEvents(Player player)
         {
+            /*
             if (player is NPC)
                 return ;
+             */
             int posX = (int)(player.MidPosition.X / tileSize);
             int posY = (int)(player.MidPosition.Y / tileSize);
 

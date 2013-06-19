@@ -54,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\StepButton.cs" />
+    <Compile Include="Client\Pusher.cs" />
     <Compile Include="Client\GlowPart.cs" />
     <Compile Include="Client\WallWalker.cs" />
     <Compile Include="Client\Piercer.cs" />
@@ -94,10 +96,13 @@
     <Compile Include="EditorControls\TriggerInfoControl.Designer.cs">
       <DependentUpon>TriggerInfoControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="EffectTemplates\PusherEffectTemplate.cs" />
     <Compile Include="EffectTemplates\SlimeTrailEffectTemplate.cs" />
     <Compile Include="EffectTemplates\SlimeExplosionEffectTemplate.cs" />
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
+    <Compile Include="Server\StepOnButton.cs" />
+    <Compile Include="Server\Launcher.cs" />
     <Compile Include="Server\GlowPart.cs" />
     <Compile Include="Server\WallWalker.cs" />
     <Compile Include="Server\SlimeLauncher.cs" />
@@ -113,6 +118,8 @@
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\BossMinionTemplate.cs" />
     <Compile Include="Templates\AbstractEnemyTemplate.cs" />
+    <Compile Include="Templates\PusherTemplate.cs" />
+    <Compile Include="Templates\StepButtonTemplate.cs" />
     <Compile Include="Templates\GlowTemplate.cs" />
     <Compile Include="Templates\WallWalkTemplate.cs" />
     <Compile Include="Templates\StaticLightTemplate.cs" />

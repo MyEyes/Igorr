@@ -624,6 +624,12 @@
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="map\PusherMap.map">
+      <Name>PusherMap</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <None Include="modules\DefaultModule.dll">
       <Name>DefaultModule</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -650,6 +656,12 @@
       <Name>tileset</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="scripts\JesseBlobs.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>JesseBlobs</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -738,6 +750,13 @@
   <ItemGroup>
     <Compile Include="gfx\Glow.png">
       <Name>Glow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gfx\StepButton.png">
+      <Name>StepButton</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
