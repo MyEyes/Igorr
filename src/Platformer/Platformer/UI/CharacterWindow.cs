@@ -12,11 +12,11 @@ namespace IGORR.Client.UI
         Label _LevelLabel, _LevelVLabel;
         Logic.Player _player;
 
-        readonly Vector2 IconDistance = new Vector2(20, 0);
+        readonly Vector2 IconDistance = new Vector2(40, 0);
         readonly Vector2 AttackOffset = new Vector2(10, 50);
-        readonly Vector2 UtilityOffset = new Vector2(10, 80);
-        readonly Vector2 MovementOffset = new Vector2(10, 110);
-        readonly Vector2 ArmorOffset = new Vector2(10, 140);
+        readonly Vector2 UtilityOffset = new Vector2(10, 110);
+        readonly Vector2 MovementOffset = new Vector2(10, 170);
+        readonly Vector2 ArmorOffset = new Vector2(10, 230);
 
         ItemIcon[] AttackParts;
         ItemIcon[] MovementParts;

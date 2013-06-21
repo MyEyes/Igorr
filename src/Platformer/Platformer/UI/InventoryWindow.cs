@@ -11,7 +11,7 @@ namespace IGORR.Client.UI
 {
     class InventoryWindow : UIWindow,IDroppable
     {
-        const int partSize = 16;
+        const int partSize = 32;
         const int sideOffset = 8;
         float iconSpread = 1.3f;
         Inventory _inventory;

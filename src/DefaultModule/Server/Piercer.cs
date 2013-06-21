@@ -32,7 +32,7 @@ namespace IGORR.Server.Logic
 
         public override string GetName()
         {
-            return "Striker2";
+            return "Piercer";
         }
 
         public override int GetID()

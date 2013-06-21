@@ -119,7 +119,7 @@ namespace IGORR.Server.Logic
             }
         }
 
-        public bool UpdatePosition(Vector2 newPos, Vector2 newMove, int id, long timestamp)
+        public bool UpdatePosition(Vector2 newPos, Vector3 newMove, int id, long timestamp)
         {
             for (int x = 0; x < _objects.Count; x++)
             {
@@ -134,7 +134,7 @@ namespace IGORR.Server.Logic
                             player.SetUpdateTime(timestamp);
                             sendAgain = (player.Position - newPos).Length() > 5;
                             sendAgain |= player.UpdateCountdown;
-                            sendAgain |= (player.LastMovement != newMove);
+                            sendAgain |= (player.LastSpeed != new Vector2(newMove.X, newMove.Z));
                             //Console.WriteLine(player.Movement.ToString()+" "+newMove.ToString());
                             //if (player.Movement != newMove && newMove == Vector2.Zero)
                                 //player.SetPosition(newPos); ;
@@ -230,7 +230,7 @@ namespace IGORR.Server.Logic
                     {
                         PositionMessage pm = (PositionMessage)_server.ProtocolHelper.NewMessage(MessageTypes.Position);
                         pm.id = npc.ID;
-                        pm.Move = npc.LastSpeed;
+                        pm.Move = new Vector3(npc.Movement, npc.Speed.Y);
                         pm.Position = npc.Position;
                         npc._lastPosition = npc.Position;
                         npc._lastlastSpeed = npc.LastSpeed;

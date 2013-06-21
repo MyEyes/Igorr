@@ -57,6 +57,8 @@
     <Compile Include="Messages\ChatMessage.cs" />
     <Compile Include="Messages\ContainerMessage.cs" />
     <Compile Include="Messages\BodyConfigurationMessage.cs" />
+    <Compile Include="Messages\AttachAnimationMessage.cs" />
+    <Compile Include="Messages\StunMessage.cs" />
     <Compile Include="Messages\MoveItemMessage.cs" />
     <Compile Include="Messages\DoEffectMessage.cs" />
     <Compile Include="Messages\InteractMessage.cs" />

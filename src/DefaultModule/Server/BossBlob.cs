@@ -43,6 +43,8 @@ namespace IGORR.Server.Logic.AI
         private float spawnRate = 0.2f;
         private float spawnCountdown2 = 0.2f;
 
+        Rectangle _targetRect;
+
         public bool defeated = false;
         public bool reset = false;
         bool hadTarget = false;
@@ -78,6 +80,7 @@ namespace IGORR.Server.Logic.AI
             _groupID = 2;
             _objectType = 5002;
             startPos = new Vector2(spawnPos.X, spawnPos.Y);
+            _targetRect = new Rectangle(spawnPos.X - 160, spawnPos.Y + 48, spawnPos.X + 320, spawnPos.Y - 96);
             Logic.Body.BodyPart currentPart = new BossBlobLegs();
             GivePart(currentPart);
             Logic.Body.AttackPart attack = new BossBlobAttack1();
@@ -392,7 +395,7 @@ namespace IGORR.Server.Logic.AI
 
         private void AcquireTarget()
         {
-            target = _map.ObjectManager.GetPlayerInArea(new Rectangle(16 * 58, 16 * 13, 16 * 27, 16 * 14));
+            target = _map.ObjectManager.GetPlayerInArea(_targetRect);
         }
     }
 }

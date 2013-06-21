@@ -15,6 +15,7 @@ namespace IGORR.Server.Logic
     {
         Vector2 _speed;
         Vector2 _moveVector;
+        bool _moveSet = false;
         Vector2 _lastSpeed = Vector2.Zero;
         public const float gravity = 60*2.5f;
         bool _onGround;
@@ -55,7 +56,7 @@ namespace IGORR.Server.Logic
 
         //protected BaseBody _baseBody = new BaseBody();
 
-        const int updateAtLeastAllXFrames = 20;
+        const int updateAtLeastAllXFrames = 60;
         int updateCountdown = updateAtLeastAllXFrames;
 
         public Vector2 _lastPosition;
@@ -116,12 +117,10 @@ namespace IGORR.Server.Logic
         public virtual void Update(IMap map, float seconds)
         {
             _map = map;
-            if (_moveVector.Y != 0)
+            if (_moveSet)
             {
-                _speed.Y = _moveVector.Y;
-                _moveVector.Y = 0;
+                Move(_moveVector.X, _moveVector.Y, true);
             }
-            if (_moveVector.X != 0) _speed.X = _moveVector.X;
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
@@ -197,9 +196,11 @@ namespace IGORR.Server.Logic
             _map.ObjectManager.Server.SendClient(this, kbm);
         }
 
-        public void SetMove(Vector2 move)
+        public void SetMove(Vector3 move)
         {
-            _moveVector = move;
+            _moveVector = new Vector2(move.X,move.Y);
+            _moveSet = true;
+            _speed.Y = move.Z;
         }
 
         void TryMove(Vector2 movement)
@@ -265,13 +266,13 @@ namespace IGORR.Server.Logic
             attackCooldown = coolDown;
         }
 
-        public void Move(float xDiff, float yDiff)
+        public void Move(float xDiff, float yDiff, bool forced=false)
         {
             if (stunned)
                 return;
             _speed.X += baseSpeed * xDiff;
             _body.Move(xDiff, yDiff);
-            _moveVector = Vector2.Zero;
+            _moveSet = forced;
         }
 
         public void GetExp(int xp, Vector2 startPos)
@@ -490,6 +491,25 @@ namespace IGORR.Server.Logic
 
         public virtual void Die()
         {
+
+        }
+
+        public void AttachAnimation(string animation)
+        {
+            AttachAnimationMessage aam = (AttachAnimationMessage)_map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.AttachAnimation);
+            aam.playerID = this._id;
+            aam.animationFile = animation;
+            aam.Encode();
+            _map.ObjectManager.Server.SendAllMap(_map, aam, false);
+        }
+
+        public void Stun(float stunTime)
+        {
+            StunMessage aam = (StunMessage)_map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.Stun);
+            aam.id = this._id;
+            aam.stunTime = stunTime;
+            aam.Encode();
+            _map.ObjectManager.Server.SendAllMap(_map, aam, false);
 
         }
 

@@ -57,6 +57,10 @@ namespace IGORR.Content
                 string data2 = _content.Load<string>(file);
                 return data2;
             }
+            catch (Microsoft.Xna.Framework.Content.ContentLoadException cle)
+            {
+                return "";
+            }
             finally
             {
                 _mutex.ReleaseMutex();

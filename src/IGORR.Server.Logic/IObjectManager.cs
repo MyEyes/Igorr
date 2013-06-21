@@ -19,7 +19,7 @@ namespace IGORR.Server.Logic
         void RemoveQuiet(GameObject obj);
         void Remove(int id);
 
-        bool UpdatePosition(Vector2 newPos, Vector2 newMove, int id, long timestamp);
+        bool UpdatePosition(Vector2 newPos, Vector3 newMove, int id, long timestamp);
 
         GameObject GetObject(int id);
         Player GetPlayer(int id);

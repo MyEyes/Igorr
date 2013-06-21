@@ -285,7 +285,7 @@ namespace IGORR.Client
             }
         }
 
-        public void SetPosition(Vector2 position, Vector2 newmove, int id, long updateTime)
+        public void SetPosition(Vector2 position, Vector3 newmove, int id, long updateTime)
         {
             for (int x = 0; x < _objects.Count; x++)
             {

@@ -15,11 +15,11 @@ namespace IGORR.Client.UI
         Panel backgroundPanel;
 
         public ItemIcon(UIElement parent, Vector2 position, Logic.ICollectible item)
-            : base(parent, position, new Vector2(16, 16), item != null ? item.Texture : null)
+            : base(parent, position, new Vector2(32, 32), item != null ? item.Texture : null)
         {
             oldPos = position;
             _item = item;
-            backgroundPanel = new Panel(this, new Vector2(-2, -2), new Vector2(20, 20), Content.ContentInterface.LoadTexture("UITest"));
+            backgroundPanel = new Panel(this, new Vector2(-2, -2), new Vector2(40, 40), Content.ContentInterface.LoadTexture("UITest"));
         }
 
         public override void Update(float ms, MouseState mouse)

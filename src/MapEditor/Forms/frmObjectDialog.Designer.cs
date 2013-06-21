@@ -43,7 +43,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(12, 264);
+            this.btnOK.Location = new System.Drawing.Point(12, 292);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -53,7 +53,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(177, 264);
+            this.btnCancel.Location = new System.Drawing.Point(174, 292);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -109,13 +109,13 @@
             this.splitContainer1.Panel1.Controls.Add(this.lblPos);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(240, 226);
-            this.splitContainer1.SplitterDistance = 122;
+            this.splitContainer1.Size = new System.Drawing.Size(240, 274);
+            this.splitContainer1.SplitterDistance = 86;
             this.splitContainer1.TabIndex = 7;
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(93, 264);
+            this.btnRemove.Location = new System.Drawing.Point(93, 292);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 8;
@@ -127,7 +127,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 302);
+            this.ClientSize = new System.Drawing.Size(262, 329);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnCancel);

@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Hover.cs" />
     <Compile Include="Client\Wire.cs" />
     <Compile Include="Client\StepButton.cs" />
     <Compile Include="Client\Pusher.cs" />
@@ -73,6 +74,12 @@
     <Compile Include="Client\ScorePost.cs" />
     <Compile Include="Client\Striker.cs" />
     <Compile Include="Client\Wings.cs" />
+    <Compile Include="EditorControls\TriggeredSpawnerInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorControls\TriggeredSpawnerInfoControl.Designer.cs">
+      <DependentUpon>TriggeredSpawnerInfoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditorControls\LightColorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,6 +115,8 @@
     <Compile Include="EffectTemplates\SlimeExplosionEffectTemplate.cs" />
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
+    <Compile Include="Server\Hover.cs" />
+    <Compile Include="Server\TriggeredEnemySpawner.cs" />
     <Compile Include="Server\EnemySpawner.cs" />
     <Compile Include="Server\StepOnButton.cs" />
     <Compile Include="Server\Launcher.cs" />
@@ -126,6 +135,8 @@
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\BossMinionTemplate.cs" />
     <Compile Include="Templates\AbstractEnemyTemplate.cs" />
+    <Compile Include="Templates\HoverTemplate.cs" />
+    <Compile Include="Templates\SpawnerTriggerTemplate.cs" />
     <Compile Include="Templates\SpawnerTemplate.cs" />
     <Compile Include="Templates\PusherTemplate.cs" />
     <Compile Include="Templates\StepButtonTemplate.cs" />
@@ -190,7 +201,7 @@
     <Compile Include="Server\ShyFollower.cs" />
     <Compile Include="Server\Slimer.cs" />
     <Compile Include="Server\Strike.cs" />
-    <Compile Include="Server\Striker2.cs" />
+    <Compile Include="Server\Piercer.cs" />
     <Compile Include="Server\TouchTrigger.cs" />
     <Compile Include="Server\TurnOffBlocker.cs" />
     <Compile Include="Server\TurnOnBlocker.cs" />
@@ -222,6 +233,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EditorControls\TriggeredSpawnerInfoControl.resx">
+      <DependentUpon>TriggeredSpawnerInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditorControls\LightColorControl.resx">
       <DependentUpon>LightColorControl.cs</DependentUpon>
     </EmbeddedResource>

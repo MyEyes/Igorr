@@ -93,6 +93,8 @@ namespace IGORR.Client.Logic
         float stunTimeout;
         bool airstun = false;
 
+        List<AnimationContainer> _attachedAnimations;
+
         //List<BodyPart> _bodyParts;
         //BodyPart _completeBody;
 
@@ -107,6 +109,7 @@ namespace IGORR.Client.Logic
         string _name = "";
         Vector2 _nameSize = Vector2.Zero;
         Vector2 _lastSpeed;
+        bool _moveVectorSet = false;
 
         PlayerPointer _pointer;
 
@@ -136,6 +139,7 @@ namespace IGORR.Client.Logic
             _aniControl.Fall = _aniControl.Fly;
             _aniControl.Land = new Animation(100, dim,dim, new int[] { 13, 14, 15, 16, 17 });
             _aniControl.Wall = new Animation(100, dim,dim, new int[] { 18, 19, 20, 21, 22, 23 });
+            _attachedAnimations = new List<AnimationContainer>();
             //CalculateTotalBonus();
         }
 
@@ -191,6 +195,7 @@ namespace IGORR.Client.Logic
             //CalculateTotalBonus();
             _pointer = new PlayerPointer(this._name, ContentInterface.LoadTexture("Arrow"));
             _body = new Body.Body(this);
+            _attachedAnimations = new List<AnimationContainer>();
         }
 
         public Player(CharTemplate info, Rectangle spawnPos, int id)
@@ -202,18 +207,22 @@ namespace IGORR.Client.Logic
         public void Update(IMap map, float seconds)
         {
             _map=map;
-            if (_moveVector.X != 0)
-                _speed.X = _moveVector.X;
-            if (_moveVector.Y != 0)
-            {
-                _speed.Y = _moveVector.Y;
-                _moveVector.Y = 0;
-            }
+            if (_moveVectorSet)
+                Move(_moveVector.X, _moveVector.Y, true);
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
 
             _body.Update(seconds * 1000f);
+
+            for (int x = 0; x < _attachedAnimations.Count; x++)
+            {
+                if (!_attachedAnimations[x].Update(seconds * 1000f))
+                {
+                    _attachedAnimations.RemoveAt(x);
+                    x--;
+                }
+            }
 
             _lastSpeed = _speed;
 
@@ -226,7 +235,8 @@ namespace IGORR.Client.Logic
 
             wallCollision = false;
             TryMove(_speed * seconds, map);
-            _aniControl.Update(seconds * 1000, this);
+            if (!stunned)
+                _aniControl.Update(seconds * 1000, this);
             if (wallCollision)
             {
                 _speed.Y = 0;
@@ -290,9 +300,12 @@ namespace IGORR.Client.Logic
             _speed.X = 0;
         }
 
-        public void SetMove(Vector2 move)
+        public void SetMove(Vector3 move)
         {
-            _moveVector = move;
+            _moveVector.X = move.X;
+            _moveVector.Y = move.Y;
+            _speed.Y = move.Z;
+            _moveVectorSet = true;
         }
 
         public void SetAnimation(bool force, int id)
@@ -346,22 +359,29 @@ namespace IGORR.Client.Logic
             _targetExp += amount;
         }
 
-        public void Move(float xDiff, float yDiff)
+        public void Move(float xDiff, float yDiff, bool forced=false)
         {
             if (stunned)
                 return;
+            _moveVector = new Vector2(xDiff, yDiff);
+            _moveVectorSet = forced;
             _speed.X += baseSpeed * xDiff;
             _body.Move(xDiff, yDiff);
-            _moveVector = Vector2.Zero;
         }
 
         public void Knockback(Vector2 movement)
         {
-            _moveVector = movement;
+            SetMove(new Vector3(movement.X, 0, movement.Y));
             _onGround = false;
             stunned = true;
             airstun = true;
             stunTimeout = 0.3f;
+        }
+
+        public void Stun(float stunTime)
+        {
+            stunTimeout = stunTime;
+            stunned = true;
         }
 
         public override void Draw(SpriteBatch batch)
@@ -371,8 +391,8 @@ namespace IGORR.Client.Logic
                 if (_nameSize == Vector2.Zero)
                     _nameSize = font.MeasureString(_name);
                 Vector2 stringPosition = new Vector2(_rect.X + _rect.Width / 2 - 0.25f*_nameSize.X / 2, _rect.Y + _rect.Height);
-                stringPosition.X = (int)stringPosition.X;
-                stringPosition.Y = (int)stringPosition.Y;
+                stringPosition.X = (int)(stringPosition.X*2)/2;
+                stringPosition.Y = (int)(stringPosition.Y*2)/2;
                 batch.DrawString(font, this.Name, stringPosition, Color.White, 0, Vector2.Zero, 0.25f, SpriteEffects.None, 0);
                 if (CanInteract)
                 {
@@ -389,10 +409,12 @@ namespace IGORR.Client.Logic
             
             if (_lifeBar != null && !string.IsNullOrWhiteSpace(this.Name))
             {
-                batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, _rect.Width, 3), null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 0.45f);
-                batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, (int)(_rect.Width * _hp / _maxhp), 3), null, Color.Green, 0, Vector2.Zero, SpriteEffects.None, 0.42f);
+                batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, _rect.Width, 3), null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 0.15f);
+                batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, (int)(_rect.Width * _hp / _maxhp), 3), null, Color.Green, 0, Vector2.Zero, SpriteEffects.None, 0.12f);
             }
             batch.Draw(_texture, _rect, _aniControl.GetFrame(), Color.White, 0, Vector2.Zero, Left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0.45f);
+            for (int x = 0; x < _attachedAnimations.Count; x++)
+                _attachedAnimations[x].Draw(batch, MidPosition,Left);
             
         }
 
@@ -439,7 +461,8 @@ namespace IGORR.Client.Logic
 
         public void Jump()
         {
-            _body.Jump(1);
+            if (!stunned)
+                _body.Jump(1);
             /*
             if (_onGround)
             {
@@ -455,6 +478,11 @@ namespace IGORR.Client.Logic
                 _speed.Y = _speed.Y > -_completeBody.jumpBonus ? _speed.Y : -_completeBody.jumpBonus;
             }
              */
+        }
+
+        public void AttachAnimation(string animationFile)
+        {
+            _attachedAnimations.Add(new AnimationContainer(animationFile));
         }
 
         public void SetGroup(int id)
@@ -546,6 +574,11 @@ namespace IGORR.Client.Logic
             get { return _bodyParts; }
         }
          */
+
+        public Vector2 Movement
+        {
+            get { return _moveVector; }
+        }
 
         public Body.Body Body
         {

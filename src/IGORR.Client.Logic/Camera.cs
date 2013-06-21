@@ -70,8 +70,8 @@ namespace IGORR.Client.Logic
         {
             get {
                 Vector2 targetPos = new Vector2(_screenSize.Width, _screenSize.Height) / (2 * zoom) - new Vector2((int)_position.X, (int)_position.Y);
-                targetPos.X = (int)(zoom * targetPos.X) / zoom;
-                targetPos.Y = (int)(zoom * targetPos.Y) / zoom;
+                targetPos.X = ((int)(zoom * targetPos.X)) / zoom;
+                targetPos.Y = ((int)(zoom * targetPos.Y)) / zoom;
                 return Matrix.CreateTranslation(new Vector3(targetPos, 0)) * Matrix.CreateScale(zoom, zoom, 1);
             }
         }

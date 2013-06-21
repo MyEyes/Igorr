@@ -448,7 +448,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="effects\" />
     <Folder Include="gfx\lightmaps\" />
   </ItemGroup>
   <ItemGroup>
@@ -540,18 +539,26 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="map\LegsMap.map">
+    <None Include="map\LegsMap.map">
       <Name>LegsMap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="map\Cover and Duck.map">
+    </None>
+    <None Include="map\Cover and Duck.map">
       <Name>Cover and Duck</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Compile Include="gfx\Punch.dds">
+      <Name>Punch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
+    <None Include="map\Fighting.map">
+      <Name>Fighting</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+    </None>
     <None Include="map\Old\BlueBasePvP.map">
       <Name>BlueBasePvP</Name>
       <Importer>XmlImporter</Importer>
@@ -658,11 +665,6 @@
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="gfx\tileset.dds">
-      <Name>tileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="scripts\JesseBlobs.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>JesseBlobs</Name>
@@ -672,6 +674,17 @@
     <Compile Include="scripts\TB.lua">
       <Name>TB</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+    </Compile>
+    <Compile Include="gfx\tileset.dds">
+      <Name>tileset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="scripts\AttackGiver.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>AttackGiver</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
@@ -778,6 +791,14 @@
       <Name>Wires</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="animations\Punch.anim">
+      <Name>Punch</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

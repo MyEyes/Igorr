@@ -71,7 +71,9 @@ namespace IGORR.Protocol
         Interact,
         DoEffect,
         BodyConfiguration,
-        MoveItem
+        MoveItem,
+        AttachAnimation,
+        Stun
     }
 
     public delegate void MessageHandler(IgorrMessage message);
@@ -154,6 +156,8 @@ namespace IGORR.Protocol
                 case MessageTypes.DoEffect: message = new Messages.DoEffectMessage(outgoing, _timeStamp); break;
                 case MessageTypes.MoveItem: message = new Messages.MoveItemMessage(outgoing, _timeStamp); break;
                 case MessageTypes.BodyConfiguration: message = new Messages.BodyConfigurationMessage(outgoing, _timeStamp); break;
+                case MessageTypes.AttachAnimation: message = new Messages.AttachAnimationMessage(outgoing, _timeStamp); break;
+                case MessageTypes.Stun: message = new Messages.StunMessage(outgoing, _timeStamp); break;
             }
              
             return message;
@@ -197,6 +201,8 @@ namespace IGORR.Protocol
                 case MessageTypes.DoEffect: message = new Messages.DoEffectMessage(m); break;
                 case MessageTypes.BodyConfiguration: message = new Messages.BodyConfigurationMessage(m); break;
                 case MessageTypes.MoveItem: message = new Messages.MoveItemMessage(m); break;
+                case MessageTypes.AttachAnimation: message = new Messages.AttachAnimationMessage(m); break;
+                case MessageTypes.Stun: message = new Messages.StunMessage(m); break;
             }
             return message;
         }

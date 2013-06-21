@@ -73,6 +73,8 @@ namespace IGORR.Client
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Interact, new MessageHandler(HandleInteract));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Container, new MessageHandler(HandleContainer));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.BodyConfiguration, new MessageHandler(HandleBodyConfiguration));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.AttachAnimation, new MessageHandler(HandleAttachAnimation));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.Stun, new MessageHandler(HandleStun));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -147,7 +149,7 @@ namespace IGORR.Client
             PositionMessage message = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
             message.Position = obj.Position;
             if (obj is Player)
-                message.Move = (obj as Player).Speed;
+                message.Move = new Vector3((obj as Player).Movement, (obj as Player).Speed.Y);
             message.id = obj.ID;
             Send(message, true);
         }
@@ -332,6 +334,22 @@ namespace IGORR.Client
             Player player=manager.GetPlayer(pim.playerID);
             if (player != null)
                 TextManager.AddText(player.Position, 0, pim.Text, 5000, Microsoft.Xna.Framework.Color.Yellow, Microsoft.Xna.Framework.Color.Transparent);
+        }
+
+        public static void HandleAttachAnimation(IgorrMessage message)
+        {
+            AttachAnimationMessage aam = (AttachAnimationMessage)message;
+            Player player = manager.GetPlayer(aam.playerID);
+            if (player != null)
+                player.AttachAnimation(aam.animationFile);
+        }
+
+        public static void HandleStun(IgorrMessage message)
+        {
+            StunMessage sm = (StunMessage)message;
+            Player player = manager.GetPlayer(sm.id);
+            if (player != null)
+                player.Stun(sm.stunTime);
         }
 
         public static void HandleDoEffect(IgorrMessage message)

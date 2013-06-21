@@ -10,8 +10,7 @@ namespace DefaultModule
     {
         public override IGORR.Server.Logic.GameObject CreateServer(IMap map, int objectID, Microsoft.Xna.Framework.Point p, System.IO.BinaryReader bin)
         {
-            Console.WriteLine("Spawned Boss Blob!");
-            return new IGORR.Server.Logic.AI.BossBlob(map, "kingblob", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 64, 64), objectID);
+            return new IGORR.Server.Logic.AI.BossBlob(map, "boss", new Microsoft.Xna.Framework.Rectangle(p.X, p.Y, 64, 64), objectID);
         }
 
         public override IGORR.Client.Logic.GameObject CreateClient(IGORR.Client.Logic.IMap map, int objectID, Microsoft.Xna.Framework.Point p, string info)
