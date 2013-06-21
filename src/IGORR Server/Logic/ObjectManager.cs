@@ -230,7 +230,7 @@ namespace IGORR.Server.Logic
                     {
                         PositionMessage pm = (PositionMessage)_server.ProtocolHelper.NewMessage(MessageTypes.Position);
                         pm.id = npc.ID;
-                        pm.Move = new Vector3(npc.Movement, npc.Speed.Y);
+                        pm.Move = new Vector3(npc.LastMovement, npc.Speed.Y);
                         pm.Position = npc.Position;
                         npc._lastPosition = npc.Position;
                         npc._lastlastSpeed = npc.LastSpeed;

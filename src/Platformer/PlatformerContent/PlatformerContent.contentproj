@@ -543,11 +543,13 @@
       <Name>LegsMap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="map\Cover and Duck.map">
       <Name>Cover and Duck</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="gfx\Punch.dds">
       <Name>Punch</Name>
@@ -558,6 +560,7 @@
       <Name>Fighting</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="map\Old\BlueBasePvP.map">
       <Name>BlueBasePvP</Name>

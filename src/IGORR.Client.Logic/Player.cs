@@ -208,7 +208,12 @@ namespace IGORR.Client.Logic
         {
             _map=map;
             if (_moveVectorSet)
-                Move(_moveVector.X, _moveVector.Y, true);
+            {
+                if (!stunned)
+                    Move(_moveVector.X, _moveVector.Y, true);
+                else
+                    _speed.X = _moveVector.X;
+            }
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
@@ -375,7 +380,9 @@ namespace IGORR.Client.Logic
             _onGround = false;
             stunned = true;
             airstun = true;
+            flying = true;
             stunTimeout = 0.3f;
+            _aniControl.Update(0, this);
         }
 
         public void Stun(float stunTime)

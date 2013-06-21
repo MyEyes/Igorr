@@ -141,7 +141,7 @@ namespace IGORR.Server.Logic
                 _speed.Y = 0;
 
             if (!map.MapBoundaries.Contains((int)MidPosition.X, (int)MidPosition.Y))
-            {
+            {  
                 GetDamage(10);
             }
 
@@ -270,6 +270,7 @@ namespace IGORR.Server.Logic
         {
             if (stunned)
                 return;
+            _moveVector = new Vector2(xDiff, yDiff);
             _speed.X += baseSpeed * xDiff;
             _body.Move(xDiff, yDiff);
             _moveSet = forced;
