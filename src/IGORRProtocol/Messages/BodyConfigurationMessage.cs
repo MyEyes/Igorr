@@ -8,6 +8,7 @@ namespace IGORR.Protocol.Messages
 {
     public class BodyConfigurationMessage : IgorrMessage
     {
+        public int PlayerID;
         public int BaseBodyID;
         public int[] AttackIDs;
         public int[] ArmorIDs;
@@ -20,6 +21,7 @@ namespace IGORR.Protocol.Messages
 
         protected override void Decode()
         {
+            PlayerID = _incoming.ReadInt32();
             BaseBodyID=_incoming.ReadInt32();
             AttackIDs=new int[_incoming.ReadInt32()];
             for(int x=0; x<AttackIDs.Length; x++)
@@ -38,6 +40,7 @@ namespace IGORR.Protocol.Messages
         public override void Encode()
         {
             base.Encode();
+            _outgoing.Write(PlayerID);
             _outgoing.Write(BaseBodyID);
             _outgoing.Write(AttackIDs.Length);
             for(int x=0; x<AttackIDs.Length; x++)

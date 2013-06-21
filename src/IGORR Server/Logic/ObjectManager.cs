@@ -59,7 +59,8 @@ namespace IGORR.Server.Logic
         {
             _server.SetChannel(1);
             _objects.Add(obj);
-            if (obj is Player && !(obj is NPC))
+            Player player = obj as Player;
+            if (player!=null && !(obj is NPC))
                 _playerCounter++;
             SpawnMessage spawn = (SpawnMessage)Server.ProtocolHelper.NewMessage(MessageTypes.Spawn);
             spawn.id = obj.ID;
@@ -68,8 +69,12 @@ namespace IGORR.Server.Logic
             spawn.move = obj.Movement;
             spawn.Info = obj.Info;
             spawn.Encode();
+
+            BodyConfigurationMessage bcm = (BodyConfigurationMessage)Server.ProtocolHelper.NewMessage(MessageTypes.BodyConfiguration);
             if (!(obj is Attack))
+            {
                 _server.SendAllMapReliable(_map, spawn, true);
+            }
             else
                 _server.SendAllMapReliable(_map, spawn, false);
         }
@@ -119,6 +124,7 @@ namespace IGORR.Server.Logic
             }
         }
 
+
         public bool UpdatePosition(Vector2 newPos, Vector3 newMove, int id, long timestamp)
         {
             for (int x = 0; x < _objects.Count; x++)
@@ -131,10 +137,12 @@ namespace IGORR.Server.Logic
                         if (timestamp >= player.LastUpdate)
                         {
                             bool sendAgain = false;
+                            float timeDiff = timestamp - player.LastUpdate;
                             player.SetUpdateTime(timestamp);
                             sendAgain = (player.Position - newPos).Length() > 5;
                             sendAgain |= player.UpdateCountdown;
-                            sendAgain |= (player.LastSpeed != new Vector2(newMove.X, newMove.Z));
+                            sendAgain |= (Math.Abs(player.LastSpeed.Y - newMove.Z) > 10 || player.LastMovement.X != newMove.X || player.LastMovement.Y != newMove.Y);
+
                             //Console.WriteLine(player.Movement.ToString()+" "+newMove.ToString());
                             //if (player.Movement != newMove && newMove == Vector2.Zero)
                                 //player.SetPosition(newPos); ;
@@ -226,7 +234,7 @@ namespace IGORR.Server.Logic
                 {
                     NPC npc = _objects[x] as NPC;
                     npc.Update(_map, ms / 1000f);
-                    if (_server.Enabled && (updateCounter == 0 || (npc._lastPosition-npc.Position).LengthSquared()>100f || (npc._lastlastSpeed-npc.LastSpeed).LengthSquared()>0.01f))
+                    if (_server.Enabled && (updateCounter == 0 || (npc._lastPosition-npc.Position).LengthSquared()>256f || (npc._lastlastSpeed-npc.LastSpeed).LengthSquared()>0.01f))
                     {
                         PositionMessage pm = (PositionMessage)_server.ProtocolHelper.NewMessage(MessageTypes.Position);
                         pm.id = npc.ID;
@@ -333,7 +341,7 @@ namespace IGORR.Server.Logic
                 client.PlayerID = newPlayer.ID;
 
                 newPlayer.Body.SetOwner(newPlayer);
-                newPlayer.Body.SendBody(client.Connection, false);
+                newPlayer.Body.SendBody(null);
 
                 KillMessage km = (KillMessage)Server.ProtocolHelper.NewMessage(MessageTypes.Kill);
                 km.killerID = player.Attacker;

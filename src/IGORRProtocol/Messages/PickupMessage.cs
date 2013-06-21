@@ -8,6 +8,7 @@ namespace IGORR.Protocol.Messages
 {
     public class PickupMessage : IgorrMessage
     {
+        public int PlayerID;
         public int id;
         public bool autoEquip = true;
 
@@ -17,6 +18,7 @@ namespace IGORR.Protocol.Messages
 
         protected override void Decode()
         {
+            PlayerID = _incoming.ReadInt32();
             id = _incoming.ReadInt32();
             autoEquip = _incoming.ReadBoolean();
         }
@@ -24,6 +26,7 @@ namespace IGORR.Protocol.Messages
         public override void Encode()
         {
             base.Encode();
+            _outgoing.Write(PlayerID);
             _outgoing.Write(id);
             _outgoing.Write(autoEquip);
         }

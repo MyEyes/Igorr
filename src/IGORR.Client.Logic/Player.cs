@@ -207,6 +207,7 @@ namespace IGORR.Client.Logic
         public void Update(IMap map, float seconds)
         {
             _map=map;
+            _lastSpeed = _speed;
             if (_moveVectorSet)
             {
                 if (!stunned)
@@ -214,6 +215,7 @@ namespace IGORR.Client.Logic
                 else
                     _speed.X = _moveVector.X;
             }
+
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
@@ -229,7 +231,6 @@ namespace IGORR.Client.Logic
                 }
             }
 
-            _lastSpeed = _speed;
 
             if (_onGround && !flying && Math.Abs(_speed.X) > 0 && !wallCollision && (_aniControl.Run.GetFrameNum() == 3 || _aniControl.Run.GetFrameNum() == 0))
             {

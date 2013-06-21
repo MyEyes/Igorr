@@ -29,7 +29,7 @@ namespace IGORR.Client.Logic
                 up = false;
             if(currentPulse<-pulseMax)
                 up=true;
-            player.Map.SetGlow(-1, player.MidPosition, Color.DarkGreen, strength + currentPulse, true, 2000);
+            player.Map.SetGlow(player.ID, player.MidPosition, Color.DarkGreen, strength + currentPulse, true, 2000);
         }
 
         public override string GetName()

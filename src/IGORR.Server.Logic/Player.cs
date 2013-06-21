@@ -117,6 +117,7 @@ namespace IGORR.Server.Logic
         public virtual void Update(IMap map, float seconds)
         {
             _map = map;
+            _lastSpeed = Speed;
             if (_moveSet)
             {
                 Move(_moveVector.X, _moveVector.Y, true);
@@ -131,8 +132,7 @@ namespace IGORR.Server.Logic
             //_lastPosition = _position;
 
             _body.Update(seconds * 1000f);
-            
-            _lastSpeed = _speed;
+
 
             wallCollision = false;
             TryMove(_speed * seconds);
@@ -396,9 +396,10 @@ namespace IGORR.Server.Logic
             {
                 this.GivePart(ip.Part);
                 PickupMessage pum = (PickupMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.Pickup);
+                pum.PlayerID = this.ID;
                 pum.id = ip.Part.GetID();
                 pum.Encode();
-                _map.ObjectManager.Server.SendClient(this, pum);
+                _map.ObjectManager.Server.SendAllMapReliable(map, pum, false);
             }
         }
 

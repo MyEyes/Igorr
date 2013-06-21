@@ -317,27 +317,12 @@ namespace IGORR.Server
                 _connections.Add(client.Connection);
                 client.SetMap(targetMap, new Vector2(pinfo.PosX, pinfo.PosY));
 
-                /*
-                SpawnMessage sm = (SpawnMessage)Protocol.NewMessage(MessageTypes.Spawn);
-                sm.position = new Vector2(400, 440);
-                sm.objectType = 'a' - 'a';
-                sm.id = id;
-                sm.Encode();
-                SendAll(sm);
-                 */
-
-                /*
-                ChatMessage cm = (ChatMessage)Protocol.GetContainerMessage(MessageTypes.Chat, client.Connection);
-                Protocol.SendContainer(cm, client.Connection);
-                Protocol.FlushContainer(client.Connection);
-                 */
                 Point spawnPoint;
                 if (pinfo.PosX == 0 && pinfo.PosY == 0)
                     spawnPoint = targetMap.getRandomSpawn();
                 else spawnPoint = new Point(pinfo.PosX, pinfo.PosY);
                 player = new Player(targetMap, new Rectangle((int)spawnPoint.X, (int)spawnPoint.Y, 16, 15), id);
                 player.Name = jm.Name;
-                //player.GivePart(new GrenadeLauncher());
                 targetMap.ObjectManager.Add(player);
 
                 AssignPlayerMessage apm = (AssignPlayerMessage)ProtocolHelper.NewMessage(MessageTypes.AssignPlayer);
@@ -354,10 +339,20 @@ namespace IGORR.Server
                             continue;
                         player.GivePart(cont.Part);
                         PickupMessage pum = (PickupMessage)ProtocolHelper.NewMessage(MessageTypes.Pickup);
+                        pum.PlayerID = player.ID;
                         pum.id = cont.Part.GetID();
                         pum.Encode();
-                        SendClient(client, pum);
+                        SendAllMapReliable(client.CurrentMap, pum, true);
                     }
+
+                for (int x = 0; x < targetMap.ObjectManager.Objects.Count; x++)
+                {
+                    Player play = targetMap.ObjectManager.Objects[x] as Player;
+                    if (play != null && play!=player)
+                    {
+                        play.Body.SendBody(player);
+                    }
+                }
 
                 Console.WriteLine(client.Name + " joined");
             }
@@ -422,6 +417,17 @@ namespace IGORR.Server
                 player.Body.Unequip(part);
             if (mim.From == MoveTarget.Inventory)
                 player.Inventory.Remove(part);
+
+            MoveItemMessage nmim = (MoveItemMessage)ProtocolHelper.NewMessage(MessageTypes.MoveItem);
+            nmim.PlayerID = player.ID;
+            nmim.id = mim.id;
+            nmim.Quantity = mim.Quantity;
+            nmim.Slot = mim.Slot;
+            nmim.To = mim.To;
+            nmim.From = mim.From;
+            nmim.Encode();
+            SendAllExcept(cl.CurrentMap, player, nmim, true);
+
         }
 
         public void Status(string par)

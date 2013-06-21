@@ -71,17 +71,17 @@ namespace IGORR.Server
                 sm.Info = _currentMap.ObjectManager.Objects[x].Info;
                 ProtocolHelper.SendContainer(sm, Connection);
                 _currentMap.ObjectManager.Objects[x].SendInfo(Connection);
-                if(_currentMap.ObjectManager.Objects[x] is Player)
+                Player play = _currentMap.ObjectManager.Objects[x] as Player;
+                if (play != null)
                 {
-                    Player play=_currentMap.ObjectManager.Objects[x] as Player;
-                SetPlayerStatusMessage dm = (SetPlayerStatusMessage)ProtocolHelper.GetContainerMessage(MessageTypes.SetHP, Connection);
-                dm.playerID = play.ID;
-                dm.currentHP = play.HP;
-                dm.maxHP = play.MaxHP;
-                dm.Exp = 0;// play.TotalXP;
-                dm.lastLevelExp = 0;// play.LastLevelXP;
-                dm.nextLevelExp = 0;// play.NextLevelXP;
-                ProtocolHelper.SendContainer(dm, Connection);
+                    SetPlayerStatusMessage dm = (SetPlayerStatusMessage)ProtocolHelper.GetContainerMessage(MessageTypes.SetHP, Connection);
+                    dm.playerID = play.ID;
+                    dm.currentHP = play.HP;
+                    dm.maxHP = play.MaxHP;
+                    dm.Exp = 0;// play.TotalXP;
+                    dm.lastLevelExp = 0;// play.LastLevelXP;
+                    dm.nextLevelExp = 0;// play.NextLevelXP;
+                    ProtocolHelper.SendContainer(dm, Connection);
                 }
             }
 
@@ -101,7 +101,6 @@ namespace IGORR.Server
 
             if (p != null)
             {
-                p.Body.SendBody(Connection, true);
                 for (int x = 0; x < p.Inventory.Count; x++)
                 {
                     PickupMessage pum = (PickupMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Pickup, Connection);
@@ -112,6 +111,19 @@ namespace IGORR.Server
             }
 
             ProtocolHelper.FlushContainer(Connection, 1);
+
+            if (p != null)
+            {
+                p.Body.SendBody(null);
+                for (int x = 0; x < _currentMap.ObjectManager.Objects.Count; x++)
+                {
+                    Player play = _currentMap.ObjectManager.Objects[x] as Player;
+                    if (play != null)
+                    {
+                        play.Body.SendBody(p);
+                    }
+                }
+            }
         }
 
         public int ID

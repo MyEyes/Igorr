@@ -15,6 +15,7 @@ namespace IGORR.Protocol.Messages
 
     public class MoveItemMessage : IgorrMessage
     {
+        public int PlayerID;
         public int id;
         public int Quantity;
         public int Slot;
@@ -27,6 +28,7 @@ namespace IGORR.Protocol.Messages
 
         protected override void Decode()
         {
+            PlayerID = _incoming.ReadInt32();
             id = _incoming.ReadInt32();
             Quantity = _incoming.ReadInt32();
             Slot = _incoming.ReadInt32();
@@ -37,6 +39,7 @@ namespace IGORR.Protocol.Messages
         public override void Encode()
         {
             base.Encode();
+            _outgoing.Write(PlayerID);
             _outgoing.Write(id);
             _outgoing.Write(Quantity);
             _outgoing.Write(Slot);

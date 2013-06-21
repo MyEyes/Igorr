@@ -75,6 +75,7 @@ namespace IGORR.Client
             ProtocolHelper.RegisterMessageHandler(MessageTypes.BodyConfiguration, new MessageHandler(HandleBodyConfiguration));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.AttachAnimation, new MessageHandler(HandleAttachAnimation));
             ProtocolHelper.RegisterMessageHandler(MessageTypes.Stun, new MessageHandler(HandleStun));
+            ProtocolHelper.RegisterMessageHandler(MessageTypes.MoveItem, new MessageHandler(HandleMoveItem));
             receiveThread = new Thread(new ThreadStart(Receive));
             receiveThread.Start();
             System.Threading.SpinWait.SpinUntil(new Func<bool>(delegate { return connection.ServerConnection.Status == NetConnectionStatus.Connected; }), 5000);
@@ -149,7 +150,7 @@ namespace IGORR.Client
             PositionMessage message = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
             message.Position = obj.Position;
             if (obj is Player)
-                message.Move = new Vector3((obj as Player).Movement, (obj as Player).Speed.Y);
+                message.Move = new Vector3((obj as Player).Movement, (obj as Player).LastSpeed.Y);
             message.id = obj.ID;
             Send(message, true);
         }
@@ -220,9 +221,10 @@ namespace IGORR.Client
         {
             PickupMessage pum = (PickupMessage)(message);
             GameObject obj = ModuleManager.SpawnByIdClient(null, pum.id, -1, Point.Zero, "");
-            if (obj != null && manager.Player!=null && obj is PartContainer)
+            Player player = manager.GetPlayer(pum.PlayerID);
+            if (obj != null && player!=null && obj is PartContainer)
             {
-                manager.Player.GivePart((obj as PartContainer).Part, pum.autoEquip);
+                player.GivePart((obj as PartContainer).Part, pum.autoEquip);
                 _gameRef.GUI.UpdateInventoryWindow();
             }
             /*
@@ -368,6 +370,20 @@ namespace IGORR.Client
             }
         }
 
+        public static void HandleMoveItem(IgorrMessage message)
+        {
+            MoveItemMessage mim = (MoveItemMessage)(message);
+            Player player = manager.GetPlayer(mim.PlayerID);
+            if (player == null)
+                return;
+            PartContainer cont = Modules.ModuleManager.SpawnByIdClient(null, mim.id, -1, Point.Zero, null) as PartContainer;
+            Logic.Body.BodyPart part = cont != null ? cont.Part : null;
+            if (mim.To == MoveTarget.Body)
+                player.Body.TryEquip(mim.Slot, part);
+            if (mim.From == MoveTarget.Body)
+                player.Body.Unequip(part);
+        }
+
         public static void HandleKnockback(IgorrMessage message)
         {
             KnockbackMessage kbm = (KnockbackMessage)message;
@@ -398,22 +414,23 @@ namespace IGORR.Client
         public static void HandleBodyConfiguration(IgorrMessage message)
         {
             BodyConfigurationMessage bcm = (BodyConfigurationMessage)message;
-            TryEquip(bcm.BaseBodyID, manager.Player);
+            Player player = manager.GetPlayer(bcm.PlayerID);
+            TryEquip(bcm.BaseBodyID, player);
             for(int x=0; x<bcm.AttackIDs.Length; x++)
             {
-                TryEquip(bcm.AttackIDs[x], manager.Player);
+                TryEquip(bcm.AttackIDs[x], player);
             }
             for (int x = 0; x < bcm.UtilityIDs.Length; x++)
             {
-                TryEquip(bcm.UtilityIDs[x], manager.Player);
+                TryEquip(bcm.UtilityIDs[x], player);
             }
             for (int x = 0; x < bcm.MovementIDs.Length; x++)
             {
-                TryEquip(bcm.MovementIDs[x], manager.Player);
+                TryEquip(bcm.MovementIDs[x],player);
             }
             for (int x = 0; x < bcm.ArmorIDs.Length; x++)
             {
-                TryEquip(bcm.ArmorIDs[x], manager.Player);
+                TryEquip(bcm.ArmorIDs[x], player);
             }
         }
 

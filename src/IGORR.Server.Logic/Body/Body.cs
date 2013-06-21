@@ -264,38 +264,37 @@ namespace IGORR.Server.Logic.Body
             }
         }
 
-        public void SendBody(Lidgren.Network.NetConnection Connection, bool Container)
+        public void SendBody(Player player)
         {
             Protocol.Messages.BodyConfigurationMessage bcm;
-            if (Container)
-                bcm = (Protocol.Messages.BodyConfigurationMessage)owner.map.ObjectManager.Server.ProtocolHelper.GetContainerMessage(Protocol.MessageTypes.BodyConfiguration, Connection);
-            else
-                bcm = (Protocol.Messages.BodyConfigurationMessage)owner.map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.BodyConfiguration);
-            
+            bcm = (Protocol.Messages.BodyConfigurationMessage)owner.map.ObjectManager.Server.ProtocolHelper.NewMessage(Protocol.MessageTypes.BodyConfiguration);
+
+            bcm.PlayerID = owner.ID;
+
             bcm.BaseBodyID = BaseBody != null ? BaseBody.GetID() : -1;
-            
+
             bcm.AttackIDs = new int[Attacks.Length];
             for (int x = 0; x < Attacks.Length; x++)
                 bcm.AttackIDs[x] = Attacks[x] != null ? Attacks[x].GetID() : -1;
-            
+
             bcm.ArmorIDs = new int[Armor.Length];
             for (int x = 0; x < Armor.Length; x++)
                 bcm.ArmorIDs[x] = Armor[x] != null ? Armor[x].GetID() : -1;
-            
+
             bcm.MovementIDs = new int[Movement.Length];
             for (int x = 0; x < Movement.Length; x++)
                 bcm.MovementIDs[x] = Movement[x] != null ? Movement[x].GetID() : -1;
-            
+
             bcm.UtilityIDs = new int[Utility.Length];
             for (int x = 0; x < Utility.Length; x++)
                 bcm.UtilityIDs[x] = Utility[x] != null ? Utility[x].GetID() : -1;
-            if (Container)
-                owner.map.ObjectManager.Server.ProtocolHelper.SendContainer(bcm, Connection);
+
+            bcm.Encode();
+            if (player == null)
+                owner.map.ObjectManager.Server.SendAllMapReliable(owner.map, bcm, true);
             else
-            {
-                bcm.Encode();
-                owner.map.ObjectManager.Server.SendClient(owner, bcm);
-            }
+                owner.map.ObjectManager.Server.SendClient(player, bcm);
+
         }
     }
 }
