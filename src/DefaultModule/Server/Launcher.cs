@@ -42,7 +42,7 @@ namespace IGORR.Server.Logic
             }
             else if (_map.GetTrigger(_triggerName))
             {
-                obj.Knockback(new Vector2(120, -160));
+                obj.Knockback(new Vector2(1, -160));
                 DoEffect(5, new Point((int)MidPosition.X, (int)MidPosition.Y), new Vector2(120, -160), "");
             }
         }

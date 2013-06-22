@@ -214,10 +214,7 @@ namespace IGORR.Client.Logic
                 changed--;
             if (_moveVectorSet)
             {
-                if (!stunned)
-                    Move(_moveVector.X, _moveVector.Y, true);
-                else
-                    _speed.X = _moveVector.X;
+                Move(_moveVector.X, _moveVector.Y, true);
             }
 
             if (!wallCollision) _speed.Y += gravity * seconds;
@@ -371,7 +368,7 @@ namespace IGORR.Client.Logic
 
         public void Move(float xDiff, float yDiff, bool forced=false)
         {
-            if (stunned)
+            if (stunned && !forced)
                 return;
             changed = (changed==2 || !forced && (_moveVector.X != xDiff || _moveVector.Y != yDiff)) ? 2 : 0;
             _moveVector = new Vector2(xDiff, yDiff);

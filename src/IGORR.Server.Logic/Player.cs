@@ -207,7 +207,7 @@ namespace IGORR.Server.Logic
 
         public void Knockback(Vector2 move)
         {
-            _moveVector = move;
+            _speed = move;
             stunTimeout = 0.3f;
             stunned = true;
             airstun = true;
