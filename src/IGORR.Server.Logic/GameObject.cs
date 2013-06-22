@@ -164,6 +164,7 @@ namespace IGORR.Server.Logic
         public IMap map
         {
             get { return _map; }
+            set { _map = value; }
         }
 
         public string Info

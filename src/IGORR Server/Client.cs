@@ -98,9 +98,9 @@ namespace IGORR.Server
             pm.Loop = true;
             pm.Queue = false;
             pm.SongName = "Level01";
-
             if (p != null)
             {
+                p.map = _currentMap;
                 for (int x = 0; x < p.Inventory.Count; x++)
                 {
                     PickupMessage pum = (PickupMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Pickup, Connection);
@@ -118,7 +118,7 @@ namespace IGORR.Server
                 for (int x = 0; x < _currentMap.ObjectManager.Objects.Count; x++)
                 {
                     Player play = _currentMap.ObjectManager.Objects[x] as Player;
-                    if (play != null)
+                    if (play != null && play != p)
                     {
                         play.Body.SendBody(p);
                     }

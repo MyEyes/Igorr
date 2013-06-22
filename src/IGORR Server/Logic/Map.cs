@@ -411,6 +411,8 @@ for (int x = 0; x < tpCount; x++)
             int posY = (int)(position.Y / tileSize);
             if (isValid(posX, posY) && layer >= 0 && layer < 3)
             {
+                if ((_layers[layer][posX, posY] == null && tileID < 0) || (_layers[layer][posX, posY] != null && tileID == _layers[layer][posX, posY].TileID))
+                    return;
                 Tile newTile = new Tile(this, new Rectangle(tileID * tileSize, 0, tileSize, tileSize), new Rectangle(posX * tileSize, posY * tileSize, tileSize, tileSize), layer == 1);
                 if (tileID == -1)
                     _layers[layer][posX, posY] = null;

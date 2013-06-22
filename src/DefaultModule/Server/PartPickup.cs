@@ -52,8 +52,9 @@ namespace IGORR.Server.Logic
                 _map.TimeSpawn(_bodyPart.GetID(), _position, _bodyPart.GetSpawnTime());
             PickupMessage pum = (PickupMessage)map.ObjectManager.Server.ProtocolHelper.NewMessage(MessageTypes.Pickup);
             pum.id = _bodyPart.GetID();
+            pum.PlayerID = plr.ID;
             pum.Encode();
-            _map.ObjectManager.Server.SendClient(plr, pum);
+            _map.ObjectManager.Server.SendAllMapReliable(map, pum, true);
             Console.WriteLine("Player " + plr.ID.ToString() + " picked up " + _bodyPart.GetName());
             _map.ObjectManager.Remove(this);
         }

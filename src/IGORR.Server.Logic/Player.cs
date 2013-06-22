@@ -16,6 +16,7 @@ namespace IGORR.Server.Logic
         Vector2 _speed;
         Vector2 _moveVector;
         bool _moveSet = false;
+        bool hasStoppedMoving = false;
         Vector2 _lastSpeed = Vector2.Zero;
         public const float gravity = 60*2.5f;
         bool _onGround;
@@ -28,6 +29,10 @@ namespace IGORR.Server.Logic
         public bool ShadowsOn { get; set; }
 
         const float baseSpeed = 60;
+
+        int wasMoving = 0;
+
+        int changed = 0;
 
         /*
         int Level=1;
@@ -116,18 +121,20 @@ namespace IGORR.Server.Logic
 
         public virtual void Update(IMap map, float seconds)
         {
+            if (changed > 0)
+                changed--;
             _map = map;
+            _lastlastSpeed = _lastSpeed;
             _lastSpeed = Speed;
             if (_moveSet)
             {
                 Move(_moveVector.X, _moveVector.Y, true);
             }
+
             if (!wallCollision) _speed.Y += gravity * seconds;
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
             //Making sure we don't glitch through walls
-            if (_speed.Y * seconds >= 7)
-                _speed.Y = 7 / seconds;
             //_lastlastSpeed = _lastSpeed;
             //_lastPosition = _position;
 
@@ -170,6 +177,22 @@ namespace IGORR.Server.Logic
             if (stunTimeout <= 0 && !airstun)
                 stunned = false;
             stunTimeout -= seconds;
+
+            //Make sure that hasStoppedMoving is only set for one frame
+            //when this guy stops moving
+            if (wasMoving > 0)
+            {
+                hasStoppedMoving = false;
+                wasMoving--;
+            }
+            else if (wasMoving == 0)
+            {
+                hasStoppedMoving = true;
+                _moveVector = Vector2.Zero;
+                wasMoving--;
+            }
+            else
+                hasStoppedMoving = false;
         }
 
         public void SetAnimation(bool force, int extraID)
@@ -189,6 +212,7 @@ namespace IGORR.Server.Logic
             stunned = true;
             airstun = true;
             _onGround = false;
+            changed = 2;
             IGORR.Protocol.Messages.KnockbackMessage kbm = (IGORR.Protocol.Messages.KnockbackMessage) map.ObjectManager.Server.ProtocolHelper.NewMessage(IGORR.Protocol.MessageTypes.Knockback);
             kbm.id = this.ID;
             kbm.Move = move;
@@ -245,7 +269,6 @@ namespace IGORR.Server.Logic
                 Console.WriteLine("Collision not resolved!\n ObjectID: " + ID.ToString()+" "+this.ToString());
             if (!jump && !_onGround)
                 flying = true;
-
         }
 
         public bool CanAttack(int attackID)
@@ -270,10 +293,12 @@ namespace IGORR.Server.Logic
         {
             if (stunned)
                 return;
+            changed = (changed == 2 || (!forced && (_moveVector.X != xDiff || _moveVector.Y != yDiff)) ? 2 : 0);
             _moveVector = new Vector2(xDiff, yDiff);
             _speed.X += baseSpeed * xDiff;
             _body.Move(xDiff, yDiff);
             _moveSet = forced;
+            wasMoving = 2;
         }
 
         public void GetExp(int xp, Vector2 startPos)
@@ -386,7 +411,7 @@ namespace IGORR.Server.Logic
           */
             if (!_body.TryEquip(-1, part))
                 _inventory.Add(part);
-                    return true;
+            return true;
         }
 
         public void GivePart(int id)
@@ -399,7 +424,7 @@ namespace IGORR.Server.Logic
                 pum.PlayerID = this.ID;
                 pum.id = ip.Part.GetID();
                 pum.Encode();
-                _map.ObjectManager.Server.SendAllMapReliable(map, pum, false);
+                _map.ObjectManager.Server.SendAllMapReliable(map, pum, true);
             }
         }
 
@@ -412,7 +437,11 @@ namespace IGORR.Server.Logic
 
         public void Jump()
         {
-            _body.Jump(1);
+            if (!stunned)
+            {
+                _body.Jump(1);
+                changed = 2;
+            }
             /*
             if (_onGround)
             {
@@ -648,6 +677,16 @@ namespace IGORR.Server.Logic
         {
             get { return _inventory; }
             set { _inventory = value; }
+        }
+
+        public bool MovementChanged
+        {
+            get { return changed > 0 || hasStoppedMoving; }
+        }
+
+        public bool StoppedMoving
+        {
+            get { return hasStoppedMoving; }
         }
     }
 }

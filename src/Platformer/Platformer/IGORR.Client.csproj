@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clock.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="Glow.cs" />
     <Compile Include="InputManager.cs" />

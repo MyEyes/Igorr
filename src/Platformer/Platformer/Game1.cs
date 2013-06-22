@@ -20,6 +20,8 @@ namespace IGORR.Client
     {
         GraphicsDeviceManager graphics;
         ScreenManager manager;
+        IGORR.Client.Logic.Clock _clock;
+        const int updateInterval=16;
 
         public Game1()
         {
@@ -63,6 +65,9 @@ namespace IGORR.Client
 
             //manager.AddScreen(new MainMenuScreen(this));
             Window.Title = "IGORR";
+
+            _clock = new Logic.Clock();
+            _clock.Stamp();
             // TODO: Verwenden Sie this.Content, um Ihren Spiel-Content hier zu laden
         }
 
@@ -82,9 +87,17 @@ namespace IGORR.Client
         /// <param name="gameTime">Bietet einen Schnappschuss der Timing-Werte.</param>
         protected override void Update(GameTime gameTime)
         {
-            manager.Update(gameTime);
-            if (this.IsActive)
-                MusicPlayer.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            _clock.Tick();
+            if (_clock.ElapsedStampTime.TotalMilliseconds >= updateInterval)
+            {
+                _clock.Stamp();
+
+                gameTime = new GameTime(TimeSpan.Zero, _clock.ElapsedStampTime);
+
+                manager.Update(gameTime);
+                if (this.IsActive)
+                    MusicPlayer.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            }
             base.Update(gameTime);
         }
 

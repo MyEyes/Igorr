@@ -44,6 +44,7 @@ namespace IGORR.Client
 
         Vector2 _mouseDir = Vector2.Zero;
         Player player;
+        
 
         public void Initialize(GraphicsDevice Device, ScreenManager manager)
         {

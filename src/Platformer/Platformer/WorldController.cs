@@ -25,6 +25,8 @@ namespace IGORR.Client
         static bool _started = false;
         static Random _random;
         static bool _enabled=true;
+        const int MaxNonUpdateTries = 30;
+        static int countdown = MaxNonUpdateTries;
 
         static WorldController()
         {
@@ -143,14 +145,15 @@ namespace IGORR.Client
             SendReliable(message);
         }
 
-        public static void SendPosition(GameObject obj)
+        public static void SendPosition(Player obj)
         {
-            if (!_started || !_enabled)
+            countdown--;
+            if (!_started || !_enabled || !(obj.ChangedMovement))
                 return;
+            countdown=MaxNonUpdateTries;
             PositionMessage message = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
             message.Position = obj.Position;
-            if (obj is Player)
-                message.Move = new Vector3((obj as Player).Movement, (obj as Player).LastSpeed.Y);
+            message.Move = new Vector3(obj.Movement, obj.Speed.Y);
             message.id = obj.ID;
             Send(message, true);
         }

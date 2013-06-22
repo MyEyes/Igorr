@@ -83,6 +83,8 @@ namespace IGORR.Client.Logic
         float _invincibleTime = 3;
         int groupID = 1;
 
+        int changed = 0;
+
         int _exp=0;
         int _targetExp=0;
         int nextLevelExp=70;
@@ -208,6 +210,8 @@ namespace IGORR.Client.Logic
         {
             _map=map;
             _lastSpeed = _speed;
+            if (changed > 0)
+                changed--;
             if (_moveVectorSet)
             {
                 if (!stunned)
@@ -369,6 +373,7 @@ namespace IGORR.Client.Logic
         {
             if (stunned)
                 return;
+            changed = (changed==2 || !forced && (_moveVector.X != xDiff || _moveVector.Y != yDiff)) ? 2 : 0;
             _moveVector = new Vector2(xDiff, yDiff);
             _moveVectorSet = forced;
             _speed.X += baseSpeed * xDiff;
@@ -378,6 +383,7 @@ namespace IGORR.Client.Logic
         public void Knockback(Vector2 movement)
         {
             SetMove(new Vector3(movement.X, 0, movement.Y));
+            changed = 2;
             _onGround = false;
             stunned = true;
             airstun = true;
@@ -470,7 +476,10 @@ namespace IGORR.Client.Logic
         public void Jump()
         {
             if (!stunned)
+            {
                 _body.Jump(1);
+                changed = 2;
+            }
             /*
             if (_onGround)
             {
@@ -600,5 +609,11 @@ namespace IGORR.Client.Logic
 
         public IMap Map
         { get { return _map; } }
+
+
+        public bool ChangedMovement
+        {
+            get { return changed > 0; }
+        }
     }
 }

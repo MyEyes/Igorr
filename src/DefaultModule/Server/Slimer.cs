@@ -23,9 +23,9 @@ namespace IGORR.Server.Logic.AI
             : base(map,spawnRect, id)
         {
             _XPBonus = 25;
-            GivePart(new Legs());
+            GivePart(new Legs().GetID());
             Logic.Body.AttackPart part = new Striker();
-            GivePart(part);
+            GivePart(part.GetID());
             EquipAttack(0, part);
             _groupID = 5;
 
@@ -37,9 +37,9 @@ namespace IGORR.Server.Logic.AI
         public Slimer(IMap map, string charfile, Rectangle spawnRect, int id)
             : base(map, charfile, spawnRect, id)
         {
-            GivePart(new Legs());
+            GivePart(new Legs().GetID());
             Body.BodyPart part = new Striker();
-            GivePart(part);
+            GivePart(part.GetID());
             _groupID = 5;
             _XPBonus = 25;
             followRect = new Rectangle(spawnRect.X - 80, spawnRect.Y - 16, 160, 32);
@@ -109,10 +109,12 @@ namespace IGORR.Server.Logic.AI
             if (_Move)
             {
                 if (Left)
-                    Move(-1,0);
+                    Move(-1, 0);
                 else
-                    Move(1,0);
+                    Move(1, 0);
             }
+            else
+                Move(0, 0);
             attackCooldown -= seconds;
             base.Update(map, seconds);
         }

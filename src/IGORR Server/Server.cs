@@ -233,6 +233,7 @@ namespace IGORR.Server
                     connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.ReliableUnordered, currentChannel);
             }
         }
+
         public void SendAllExcept(IMap map, Player player, IgorrMessage message, bool Reliable)
         {
             Client client = getClient(player);
