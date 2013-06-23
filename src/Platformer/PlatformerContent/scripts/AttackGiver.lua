@@ -36,5 +36,10 @@ end
 
 function interact(sinfo, info)
 	local status = GetInfo(player.Name, "AttackGiver");
-	me:Ask("I tried to go through the cave in the east.\nBut a scary monster is guarding the exit.\nSo I ran away. But I lost my weapon there I think",player);
+	local hasItem = GetInfo(player.Name, "TestItemPickup");
+	if(status==-1) then
+		if(info==0) then
+			me:Ask("I tried to go through the cave in the east.\nBut a scary monster is guarding the exit.\nSo I ran away. But I lost my weapon there I think;1;Testanswer1;2;Testanswer2",player);
+		end
+	end
 end

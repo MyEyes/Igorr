@@ -37,15 +37,15 @@ namespace IGORR.Client
         public InteractiveTextBubble(Choice[] choices, string text, GameObject partner):base(text,partner,0)
         {
             _selectRect = IGORR.Content.ContentInterface.LoadTexture("selectRect");
-            string bubbleText = text + Environment.NewLine;
+            string bubbleText = text + (choices.Length > 0 ? Environment.NewLine : "");
             _offset = _font.MeasureString(bubbleText)/2.0f;
             _offset.X = 0;
             _choices = choices;
-            _rectOffset = _font.MeasureString("- ").X/2.0f;
+            _rectOffset = _font.MeasureString("5: ").X/2.0f;
             _choiceRects = new Rectangle[choices.Length];
             for (int x = 0; x < _choices.Length; x++)
             {
-                _choices[x].text = "- " + _choices[x].text;
+                _choices[x].text = (x + 1).ToString() + ": " + _choices[x].text;
                 bubbleText += Environment.NewLine+_choices[x].text;
                 Vector2 size = _font.MeasureString(_choices[x].text);
                 _choiceRects[x] = new Rectangle(0, 0, (int)(size.X/2.0f), (int)(size.Y/2.0f));

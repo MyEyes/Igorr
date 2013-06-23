@@ -74,6 +74,12 @@
     <Compile Include="Client\ScorePost.cs" />
     <Compile Include="Client\Striker.cs" />
     <Compile Include="Client\Wings.cs" />
+    <Compile Include="EditorControls\TriggerPickupInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorControls\TriggerPickupInfoControl.Designer.cs">
+      <DependentUpon>TriggerPickupInfoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditorControls\TriggeredSpawnerInfoControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -115,6 +121,7 @@
     <Compile Include="EffectTemplates\SlimeExplosionEffectTemplate.cs" />
     <Compile Include="EffectTemplates\VaseDestroyedEffectTemplate.cs" />
     <Compile Include="EffectTemplates\ExplosionEffectTemplate.cs" />
+    <Compile Include="Server\TriggerPickup.cs" />
     <Compile Include="Server\Hover.cs" />
     <Compile Include="Server\TriggeredEnemySpawner.cs" />
     <Compile Include="Server\EnemySpawner.cs" />
@@ -135,6 +142,7 @@
     <Compile Include="Templates\BossAttackTemplates.cs" />
     <Compile Include="Templates\BossMinionTemplate.cs" />
     <Compile Include="Templates\AbstractEnemyTemplate.cs" />
+    <Compile Include="Templates\PickupTrigger.cs" />
     <Compile Include="Templates\HoverTemplate.cs" />
     <Compile Include="Templates\SpawnerTriggerTemplate.cs" />
     <Compile Include="Templates\SpawnerTemplate.cs" />
@@ -233,6 +241,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EditorControls\TriggerPickupInfoControl.resx">
+      <DependentUpon>TriggerPickupInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditorControls\TriggeredSpawnerInfoControl.resx">
       <DependentUpon>TriggeredSpawnerInfoControl.cs</DependentUpon>
     </EmbeddedResource>

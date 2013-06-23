@@ -230,6 +230,11 @@ for (int x = 0; x < tpCount; x++)
         {
         }
 
+        public void SetInfo(string a, string b, int c)
+        {
+
+        }
+
         public bool Collides(GameObject obj)
         {
             int posX=(int)(obj.MidPosition.X/tileSize);

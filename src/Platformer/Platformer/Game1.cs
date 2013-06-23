@@ -93,7 +93,6 @@ namespace IGORR.Client
                 _clock.Stamp();
 
                 gameTime = new GameTime(TimeSpan.Zero, _clock.ElapsedStampTime);
-
                 manager.Update(gameTime);
                 if (this.IsActive)
                     MusicPlayer.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);

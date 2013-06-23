@@ -460,6 +460,11 @@ for (int x = 0; x < tpCount; x++)
                 _triggers[triggerName] = val;
         }
 
+        public void SetInfo(string player, string info, int value)
+        {
+            Management.ClientInfoInterface.SetValue(player, info, value);
+        }
+
         public Rectangle MapBoundaries
         {
             get { return new Rectangle(0, 0, _layers[0].GetLength(0) * tileSize, _layers[0].GetLength(1) * tileSize); }
