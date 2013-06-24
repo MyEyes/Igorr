@@ -221,6 +221,10 @@ namespace IGORR.Client.Logic
             if (_speed.X < 0) Left = true;
             else if (_speed.X > 0) Left = false;
 
+            if (seconds > 0.1f)
+                if (_speed.Y * seconds > 8)
+                    _speed.Y = 8 / seconds;
+
             _body.Update(seconds * 1000f);
 
             for (int x = 0; x < _attachedAnimations.Count; x++)
@@ -231,7 +235,6 @@ namespace IGORR.Client.Logic
                     x--;
                 }
             }
-
 
             if (_onGround && !flying && Math.Abs(_speed.X) > 0 && !wallCollision && (_aniControl.Run.GetFrameNum() == 3 || _aniControl.Run.GetFrameNum() == 0))
             {
@@ -264,6 +267,7 @@ namespace IGORR.Client.Logic
             else
                 Run.Update(seconds * 1000);
              */
+
 
             if (_aniControl.Jump.GetFrameNum() == 5 && jump)
             {
@@ -423,7 +427,7 @@ namespace IGORR.Client.Logic
                 batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, _rect.Width, 3), null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 0.15f);
                 batch.Draw(_lifeBar, new Rectangle(_rect.X, _rect.Y - 3, (int)(_rect.Width * _hp / _maxhp), 3), null, Color.Green, 0, Vector2.Zero, SpriteEffects.None, 0.12f);
             }
-            batch.Draw(_texture, _rect, _aniControl.GetFrame(), Color.White, 0, Vector2.Zero, Left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0.45f);
+            batch.Draw(_texture, _rect, _aniControl.GetFrame(), ChangedMovement ? Color.Black : Color.White, 0, Vector2.Zero, Left ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0.45f);
             for (int x = 0; x < _attachedAnimations.Count; x++)
                 _attachedAnimations[x].Draw(batch, MidPosition,Left);
             
@@ -611,6 +615,7 @@ namespace IGORR.Client.Logic
         public bool ChangedMovement
         {
             get { return changed > 0; }
+            set { changed = value ? 2 : 0; }
         }
     }
 }

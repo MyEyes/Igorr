@@ -22,13 +22,13 @@ namespace IGORR.Client
         ScreenManager manager;
         IGORR.Client.Logic.Clock _clock;
         const int updateInterval=16;
+        float excessTime = 0;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            TargetElapsedTime = TimeSpan.FromSeconds(1 / 61f);
             IsFixedTimeStep = true;
             graphics.SynchronizeWithVerticalRetrace = true;
             graphics.PreferredBackBufferWidth = 800;
@@ -88,14 +88,19 @@ namespace IGORR.Client
         protected override void Update(GameTime gameTime)
         {
             _clock.Tick();
-            if (_clock.ElapsedStampTime.TotalMilliseconds >= updateInterval)
+            if (_clock.ElapsedStampTime.TotalMilliseconds+excessTime >= updateInterval)
             {
                 _clock.Stamp();
-
-                gameTime = new GameTime(TimeSpan.Zero, _clock.ElapsedStampTime);
-                manager.Update(gameTime);
-                if (this.IsActive)
-                    MusicPlayer.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
+                float time=(float)_clock.ElapsedStampTime.TotalMilliseconds+excessTime;
+                while (time > updateInterval)
+                {
+                    gameTime = new GameTime(TimeSpan.Zero, new TimeSpan(0, 0, 0, 0, updateInterval));
+                    manager.Update(gameTime);
+                    if (this.IsActive)
+                        MusicPlayer.Update((float)updateInterval);
+                    time -= updateInterval;
+                }
+                excessTime = time;
             }
             base.Update(gameTime);
         }
@@ -110,6 +115,7 @@ namespace IGORR.Client
             manager.Draw(gameTime);
             base.Draw(gameTime);
         }
+    
 
         protected override void OnExiting(object sender, EventArgs args)
         {

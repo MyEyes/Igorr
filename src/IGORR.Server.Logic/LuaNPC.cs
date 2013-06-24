@@ -24,6 +24,8 @@ namespace IGORR.Server.Logic.AI
 
         public bool interacts = false;
 
+        public int LookDistance=10;
+
         bool _could_Attack = true;
         int _lastHP = 0;
 
@@ -61,17 +63,18 @@ namespace IGORR.Server.Logic.AI
                 LuaVM.DoString(_script_file + ".react_idle()\n");
             }
             Player player;
-            if (reacts_spotEnemy && lookingForTarget && (player=_map.ObjectManager.GetPlayerInArea(new Rectangle(this._rect.Left-10,this._rect.Top-10,this._rect.Width+20,this._rect.Height+20),_groupID,false))!=null)
+            if (reacts_spotEnemy && lookingForTarget && (player = _map.ObjectManager.GetPlayerInArea(new Rectangle(this._rect.Left - LookDistance, this._rect.Top - 10, this._rect.Width + 2 * LookDistance, this._rect.Height + 20), _groupID, false)) != null)
             {
                 LuaVM.SetValue("me", this);
                 LuaVM.SetValue("enemy", player);
-                LuaVM.DoString(_script_file+".react_spotEnemy()\n");
+                LuaVM.DoString(_script_file + ".react_spotEnemy()\n");
             }
-            if (reacts_spotFriendly && lookingForFriend && (player = _map.ObjectManager.GetPlayerInArea(new Rectangle(this._rect.Left - 10, this._rect.Top - 10, this._rect.Width + 20, this._rect.Height + 20), _groupID, true)) != null)
+            if (reacts_spotFriendly && lookingForFriend && (player = _map.ObjectManager.GetPlayerInArea(new Rectangle(this._rect.Left - LookDistance, this._rect.Top - 10, this._rect.Width + 2*LookDistance, this._rect.Height + 20), _groupID, true)) != null)
             {
                 LuaVM.SetValue("me", this);
                 LuaVM.SetValue("enemy", player);
                 LuaVM.DoString(_script_file+".react_spotFriendly()\n");
+                lookingForFriend = false;
             }
             if (reacts_damageTaken&&(_lastHP>_hp))
             {
@@ -108,6 +111,11 @@ namespace IGORR.Server.Logic.AI
             queue.Add(new JumpCommand(this));
         }
 
+        public void Lua(string command, Player target)
+        {
+            queue.Add(new LuaCommand(this, target, command));
+        }
+
 
         public override void Interact(Player player, string sinfo, int info)
         {
@@ -116,6 +124,11 @@ namespace IGORR.Server.Logic.AI
             LuaVM.SetValue("me", this);
             LuaVM.SetValue("player", player);
             LuaVM.DoString(_script_file + ".interact(\"" + sinfo + "\"," + info.ToString() + ")\n");
+        }
+
+        public string ScriptFile
+        {
+            get { return _script_file; }
         }
         
     }

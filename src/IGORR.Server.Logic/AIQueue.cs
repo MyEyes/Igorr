@@ -20,6 +20,28 @@ namespace IGORR.Server.Logic.AI
         }
     }
 
+    class LuaCommand : AICommand
+    {
+        string _command;
+        Player _target;
+        
+        public LuaCommand(LuaNPC parent, Player player, string command)
+            : base(parent)
+        {
+            _command = command;
+            _target = player;
+        }
+
+        public override bool Update(float ms)
+        {
+            LuaVM.SetValue("me", _parent);
+            LuaVM.SetValue("enemy", _target);
+            LuaVM.DoString(_command);
+            return false;
+        }
+
+    }
+
     class WaitCommand : AICommand
     {
         float _time;

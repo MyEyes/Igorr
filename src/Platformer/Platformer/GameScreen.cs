@@ -32,6 +32,7 @@ namespace IGORR.Client
         bool shadows = true;
         float shadowCountdown;
         bool shadowTurnOn = true;
+        bool mapChanged = false;
         Texture2D expBorder;
         Texture2D bar;
         Texture2D crosshair;
@@ -89,7 +90,8 @@ namespace IGORR.Client
             objectManager.SetMap(NewMap);
             _lightMap.SetMap(NewMap);
             cam.JumpNext();
-            map = NewMap; 
+            map = NewMap;
+            mapChanged = true;
             _mapMutex.ReleaseMutex();
         }
 
@@ -202,9 +204,12 @@ namespace IGORR.Client
                         WorldController.SendReliable(im);
                     }
                     //Test stuff
+                    if (mapChanged)
+                        player.ChangedMovement = true;
                     WorldController.SendPosition(player);
                     objectManager.Update((float)gameTime.ElapsedGameTime.TotalMilliseconds);
                     cam.MoveTo(player.Position , 1);
+                    mapChanged = false;
                     //cam.SetPos(player.Position);
                     //_lightMap.SetGlow(-1, player.MidPosition, Color.White, 150, true);
                 }
@@ -247,7 +252,12 @@ namespace IGORR.Client
                 // TODO: Fügen Sie Ihre Aktualisierungslogik hier hinzu
             }
             _mapMutex.ReleaseMutex();
-            IGORR.Protocol.ProtocolHelper.Update((int)(float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            if (map != null)
+            {
+                if (gameTime.ElapsedGameTime.TotalMilliseconds < 0)
+                    Console.WriteLine("Weird shit");
+                map.ProtocolHelper.Update((int)(float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            }
         }
 
         public void SetupLocalServer()

@@ -57,5 +57,13 @@ namespace IGORR.Client.Logic.Body
             get;
             protected set;
         }
+
+        public override bool Equals(object obj)
+        {
+            BodyPart part = obj as BodyPart;
+            if (part.GetID() == GetID())
+                return true;
+            return base.Equals(obj);
+        }
     }
 }

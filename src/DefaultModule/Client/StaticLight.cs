@@ -15,7 +15,7 @@ namespace IGORR.Client.Logic
             : base(texture, position, id)
         {
             _map = map;
-            _map.SetGlow(_id, this._position, c, radius, true);
+            _map.SetGlow(_id, this._position+new Vector2(8,8), c, radius, true);
         }
 
         public override void Update(float ms)

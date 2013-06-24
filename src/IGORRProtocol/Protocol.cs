@@ -81,7 +81,7 @@ namespace IGORR.Protocol
     public class ProtocolHelper
     {
         NetPeer _connection;
-        static long _timeStamp;
+        long _timeStamp;
         Dictionary<MessageTypes, MessageHandler> _handlers;
         Dictionary<NetConnection, Messages.ContainerMessage> _containers;
         static Messages.ContainerMessage _allcontainer;
@@ -123,7 +123,8 @@ namespace IGORR.Protocol
         {
             return NewMessage(type, _connection.CreateMessage());
         }
-        private static IgorrMessage NewMessage(MessageTypes type, NetOutgoingMessage outgoing)
+
+        private IgorrMessage NewMessage(MessageTypes type, NetOutgoingMessage outgoing)
         {
             IgorrMessage message = null;
             switch (type)
@@ -163,7 +164,7 @@ namespace IGORR.Protocol
             return message;
         }
 
-        public static void Update(int ms)
+        public void Update(int ms)
         {
             _timeStamp += ms;
         }

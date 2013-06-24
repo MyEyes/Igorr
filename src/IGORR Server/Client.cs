@@ -74,6 +74,12 @@ namespace IGORR.Server
                 Player play = _currentMap.ObjectManager.Objects[x] as Player;
                 if (play != null)
                 {
+                    PositionMessage pm = (PositionMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Position, Connection);
+                    pm.Position = play.Position;
+                    pm.Move = new Vector3(play.Movement, play.LastSpeed.Y);
+                    pm.id = play.ID;
+                    ProtocolHelper.SendContainer(pm, Connection);
+
                     SetPlayerStatusMessage dm = (SetPlayerStatusMessage)ProtocolHelper.GetContainerMessage(MessageTypes.SetHP, Connection);
                     dm.playerID = play.ID;
                     dm.currentHP = play.HP;
@@ -94,10 +100,6 @@ namespace IGORR.Server
                 ctm.layer = _currentMap.TileMods[x].layer;
                 ProtocolHelper.SendContainer(ctm, Connection);
             }
-            PlayMessage pm = (PlayMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Play, Connection);
-            pm.Loop = true;
-            pm.Queue = false;
-            pm.SongName = "Level01";
             if (p != null)
             {
                 p.map = _currentMap;
@@ -106,6 +108,7 @@ namespace IGORR.Server
                     PickupMessage pum = (PickupMessage)ProtocolHelper.GetContainerMessage(MessageTypes.Pickup, Connection);
                     pum.id = p.Inventory[x].GetID();
                     pum.autoEquip = false;
+                    pum.PlayerID = playerID;
                     ProtocolHelper.SendContainer(pum, Connection);
                 }
             }

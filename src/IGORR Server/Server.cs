@@ -257,7 +257,7 @@ namespace IGORR.Server
                     message.Encode();
                 } 
                 if (recipients.Count > 0 && Reliable)
-                    connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.ReliableSequenced, currentChannel);
+                    connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.ReliableOrdered, currentChannel);
                 else if (recipients.Count > 0 && !Reliable && !_enableSend)
                     connection.SendMessage(message.GetMessage(), recipients, NetDeliveryMethod.Unreliable, currentChannel);
             }
@@ -281,7 +281,6 @@ namespace IGORR.Server
                 pm2.id = pm.id;
                 pm2.Position = pm.Position;
                 pm2.Move = pm.Move;
-                pm2.TimeStamp = pm.TimeStamp;
                 pm2.Encode();
                 if (client.CurrentMap.ObjectManager.UpdatePosition(pm.Position, pm.Move, pm.id, pm.TimeStamp))
                     SendAllExcept(client.CurrentMap, client.CurrentMap.ObjectManager.GetPlayer(client.PlayerID), pm2, true);
@@ -428,7 +427,6 @@ namespace IGORR.Server
             nmim.From = mim.From;
             nmim.Encode();
             SendAllExcept(cl.CurrentMap, player, nmim, true);
-
         }
 
         public void Status(string par)

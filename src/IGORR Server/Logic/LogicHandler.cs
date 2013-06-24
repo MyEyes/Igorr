@@ -57,7 +57,7 @@ namespace IGORR.Server.Logic
                     //Enable packet sending otherwise
                     else
                         _server.Enable();
-                    IGORR.Protocol.ProtocolHelper.Update(16);
+                     _server.ProtocolHelper.Update(16);
                     MapManager.Update(16);
                     ms -= 16;
                 }

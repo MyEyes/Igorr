@@ -80,6 +80,12 @@ namespace IGORR.Server.Logic
                     _playerCounter++;
                 else
                     player.Body.SendBody(null);
+                PositionMessage pm = (PositionMessage)_server.ProtocolHelper.NewMessage(MessageTypes.Position);
+                pm.Position = player.Position;
+                pm.Move = new Vector3(player.Movement, player.LastSpeed.Y);
+                pm.id = player.ID;
+                pm.Encode();
+                _server.SendAllMapReliable(_map, pm, true);
             }
         }
 

@@ -145,12 +145,12 @@ namespace IGORR.Client
             SendReliable(message);
         }
 
-        public static void SendPosition(Player obj)
+        public static void SendPosition(Player obj, bool forced=false)
         {
             countdown--;
-            if (!_started || !_enabled || !(obj.ChangedMovement))
+            if (!forced && (!_started || !_enabled || !obj.ChangedMovement))
                 return;
-            countdown=MaxNonUpdateTries;
+            countdown = MaxNonUpdateTries;
             PositionMessage message = (PositionMessage)ProtocolHelper.NewMessage(MessageTypes.Position);
             message.Position = obj.Position;
             message.Move = new Vector3(obj.Movement, obj.Speed.Y);

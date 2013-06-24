@@ -205,6 +205,11 @@ namespace IGORR.Server.Logic
             _map.ObjectManager.Server.SendAllMapReliable(_map, ani, true);
         }
 
+        public void Knockback(float x, float y)
+        {
+            Knockback(new Vector2(x, y));
+        }
+
         public void Knockback(Vector2 move)
         {
             _speed = move;

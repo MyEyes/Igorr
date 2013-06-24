@@ -539,13 +539,25 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <None Include="map\LegsMap.map">
+    <Compile Include="map\Drop.map">
+      <Name>Drop</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="chars\cDocBlob.chr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>cDocBlob</Name>
+      <Importer>PlainTextImporter</Importer>
+      <Processor>PlainTextProcessor</Processor>
+    </Compile>
+    <None Include="map\Old2\LegsMap.map">
       <Name>LegsMap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\Cover and Duck.map">
+    <None Include="map\Old2\Cover and Duck.map">
       <Name>Cover and Duck</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -556,7 +568,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <None Include="map\Fighting.map">
+    <None Include="map\Old2\Fighting.map">
       <Name>Fighting</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -604,7 +616,7 @@
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="map\Startmap.map">
+    <Compile Include="map\Old2\Startmap.map">
       <Name>Startmap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -640,7 +652,7 @@
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="map\PusherMap.map">
+    <Compile Include="map\Old2\PusherMap.map">
       <Name>PusherMap</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
@@ -680,17 +692,26 @@
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
-    <Compile Include="gfx\tileset.dds">
-      <Name>tileset</Name>
+    <Compile Include="gfx\DocBlob.png">
+      <Name>DocBlob</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Content Include="gfx\tileset.dds">
+      <Name>tilesetOld</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Content>
     <Compile Include="scripts\AttackGiver.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>AttackGiver</Name>
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
     </Compile>
+    <None Include="scripts\EvilMan.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>EvilMan</Name>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="map\Old\maps.lst">
@@ -802,6 +823,13 @@
       <Importer>PlainTextImporter</Importer>
       <Processor>PlainTextProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gfx\tileset.png">
+      <Name>tileset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

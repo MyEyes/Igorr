@@ -280,6 +280,7 @@ namespace IGORR.Client
                 if (_objects[x].ID == id && _objects[x] is Player)
                 {
                     _player = _objects[x] as Player;
+                    _player.ChangedMovement = true;
                     return;
                 }
             }

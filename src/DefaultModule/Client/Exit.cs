@@ -13,7 +13,7 @@ namespace IGORR.Client.Logic
         public Exit(Texture2D texture, IMap map, Rectangle position, int id)
             : base(map, texture, position, id)
         {
-
+            _map.SetGlow(_id, this._position + new Vector2(8, 8), Color.Purple, 32, true);
         }
 
         public override void Update(float ms)

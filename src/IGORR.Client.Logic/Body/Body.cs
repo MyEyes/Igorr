@@ -152,7 +152,7 @@ namespace IGORR.Client.Logic.Body
             return false;
         }
 
-        public void Unequip(BodyPart part, bool dropped=false)
+        public void Unequip(BodyPart part, bool dropped = false)
         {
             changes++;
             if (owner.Map != null && dropped)
@@ -168,7 +168,7 @@ namespace IGORR.Client.Logic.Body
 
             for (int x = 0; x < Movement.Length; x++)
             {
-                if (part == Movement[x])
+                if (part.Equals(Movement[x]))
                 {
                     Movement[x] = null;
                     return;
@@ -177,7 +177,7 @@ namespace IGORR.Client.Logic.Body
 
             for (int x = 0; x < Utility.Length; x++)
             {
-                if (part == Utility[x])
+                if (part.Equals(Utility[x]))
                 {
                     Utility[x] = null;
                     return;
@@ -186,7 +186,7 @@ namespace IGORR.Client.Logic.Body
 
             for (int x = 0; x < Armor.Length; x++)
             {
-                if (part == Armor[x])
+                if (part.Equals(Armor[x]))
                 {
                     Armor[x] = null;
                     return;
@@ -195,7 +195,7 @@ namespace IGORR.Client.Logic.Body
 
             for (int x = 0; x < Attacks.Length; x++)
             {
-                if (part == Attacks[x])
+                if (part.Equals(Attacks[x]))
                 {
                     Attacks[x] = null;
                     return;
